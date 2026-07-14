@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Uploads são feitos pelo Admin SDK (server-side), que ignora estas regras.
+// A leitura pública das imagens usa URLs com token de download.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

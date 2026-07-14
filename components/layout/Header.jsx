@@ -1,5 +1,6 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import Logo from '@/components/ui/Logo'
 import { WHATSAPP_URL } from '@/lib/constants'
 
@@ -8,7 +9,7 @@ const LINKS = [
   { label: 'Plataformas', href: '/#plataformas' },
   { label: 'Cases', href: '/#cases' },
   { label: 'Cobertura', href: '/#cobertura' },
-  { label: 'Blog', href: '#' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Trabalhe Conosco', href: '#' },
 ]
 
@@ -17,6 +18,20 @@ const LANGS = ['PT', 'EN', 'ES', '中文']
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [lang, setLang] = useState('PT')
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    let active = true
+    fetch('/api/auth/session')
+      .then((res) => res.json())
+      .then((data) => {
+        if (active) setIsAdmin(Boolean(data.isAdmin))
+      })
+      .catch(() => {})
+    return () => {
+      active = false
+    }
+  }, [])
 
   return (
     <header className="sticky top-0 z-[60] border-b border-line bg-paper/85 backdrop-blur-[10px]">
@@ -39,6 +54,15 @@ export default function Header() {
               {label}
             </a>
           ))}
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="hidden text-ink-soft transition-colors duration-150 hover:text-orange max-tab:inline"
+              onClick={() => setMenuOpen(false)}
+            >
+              Painel Admin
+            </Link>
+          )}
           <a
             href={WHATSAPP_URL}
             className="btn btn-fill mt-1.5 hidden justify-center max-tab:inline-flex"
@@ -61,6 +85,14 @@ export default function Header() {
               </button>
             ))}
           </div>
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="btn border-ink text-ink hover:border-ink hover:bg-ink hover:text-white max-tab:hidden"
+            >
+              Painel Admin
+            </Link>
+          )}
           <a href={WHATSAPP_URL} className="btn btn-fill max-mob:hidden">
             Falar agora
           </a>

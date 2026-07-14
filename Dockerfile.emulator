@@ -1,6 +1,7 @@
-# Imagem do Firebase Emulator Suite (apenas Auth) para desenvolvimento local.
-# O Auth emulator exige Java (JRE); o resto vem do firebase-tools.
-FROM node:20-slim
+# Imagem do Firebase Emulator Suite (Auth + Firestore + Storage) para
+# desenvolvimento local. Os emuladores exigem Java 21+ (JRE); o resto vem do
+# firebase-tools. Base em Debian trixie, que traz o OpenJDK 21.
+FROM node:22-trixie-slim
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends default-jre-headless \
@@ -12,10 +13,10 @@ WORKDIR /app
 # Diretório onde o emulador importa/exporta os dados (usuários seedados persistem)
 RUN mkdir -p /app/emulator-data
 
-EXPOSE 9099 4000
+EXPOSE 9099 8080 9199 4000
 
 CMD ["firebase", "emulators:start", \
   "--project", "demo-outdoormidia", \
-  "--only", "auth", \
+  "--only", "auth,firestore,storage", \
   "--import", "/app/emulator-data", \
   "--export-on-exit", "/app/emulator-data"]

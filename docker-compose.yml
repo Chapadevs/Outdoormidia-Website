@@ -6,10 +6,15 @@ services:
     container_name: outdoormidia-firebase-emulator
     ports:
       - "9099:9099"  # Auth emulator
+      - "8080:8080"  # Firestore emulator
+      - "9199:9199"  # Storage emulator
       - "4000:4000"  # Emulator UI
     volumes:
       - ./firebase.json:/app/firebase.json:ro
       - ./.firebaserc:/app/.firebaserc:ro
+      - ./firestore.rules:/app/firestore.rules:ro
+      - ./firestore.indexes.json:/app/firestore.indexes.json:ro
+      - ./storage.rules:/app/storage.rules:ro
       - firebase-emulator-data:/app/emulator-data
 
 volumes:
