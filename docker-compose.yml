@@ -1,0 +1,16 @@
+services:
+  firebase-emulator:
+    build:
+      context: .
+      dockerfile: Dockerfile.emulator
+    container_name: outdoormidia-firebase-emulator
+    ports:
+      - "9099:9099"  # Auth emulator
+      - "4000:4000"  # Emulator UI
+    volumes:
+      - ./firebase.json:/app/firebase.json:ro
+      - ./.firebaserc:/app/.firebaserc:ro
+      - firebase-emulator-data:/app/emulator-data
+
+volumes:
+  firebase-emulator-data:
