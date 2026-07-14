@@ -255,6 +255,12 @@ Implementar como modal ou página de mini-formulário antes do redirect.
 
 ---
 
+## Deploy
+
+Produção roda em **Firebase App Hosting** (Cloud Run), projeto `outdoormidia-ecf88` — nunca Vercel. Push na `main` dispara build + rollout automático do app Next.js; um GitHub Action publica as rules/indexes. Detalhes completos, setup e passos manuais de GCP em [`DEPLOY.md`](DEPLOY.md).
+
+---
+
 ## Convenções de Código
 
 - Componentes: `PascalCase.jsx`

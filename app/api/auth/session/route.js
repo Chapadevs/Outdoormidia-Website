@@ -5,9 +5,16 @@ import {
   createSessionCookie,
   SESSION_COOKIE,
   SESSION_MAX_AGE_MS,
+  verifyAdminSession,
 } from '@/lib/firebase/session'
 
 export const runtime = 'nodejs'
+
+export async function GET() {
+  const cookieStore = await cookies()
+  const claims = await verifyAdminSession(cookieStore.get(SESSION_COOKIE)?.value)
+  return NextResponse.json({ isAdmin: Boolean(claims) })
+}
 
 export async function POST(request) {
   const { idToken } = await request.json().catch(() => ({}))

@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    env:
+      # Config pública do client SDK (exposta ao browser de qualquer forma).
+      # Espelha apphosting.yaml para o `next build` refletir produção.
+      NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyCSKxh2OHAcW3Z60bAoH9ffQtyroNqUxuk
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: outdoormidia-ecf88.firebaseapp.com
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: outdoormidia-ecf88
+      NEXT_PUBLIC_USE_FIREBASE_EMULATOR: "false"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run build
