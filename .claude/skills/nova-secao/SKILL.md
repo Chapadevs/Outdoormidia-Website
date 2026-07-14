@@ -10,9 +10,10 @@ description: >
 
 # Criar seção / componente — Outdoormídia
 
-Site em **Next.js (App Router) + React 19**, JavaScript puro, **CSS puro** em
-`app/globals.css` (sem Tailwind, sem CSS-in-JS). Componentes são Server
-Components por padrão — só adicione `'use client'` quando usar hooks/estado.
+Site em **Next.js (App Router) + React 19**, JavaScript puro, **Tailwind CSS v4**.
+Tokens da marca no `@theme` de `app/globals.css`; estilo via classes utilitárias
+no JSX. Componentes são Server Components por padrão — só adicione `'use client'`
+quando usar hooks/estado.
 
 ## 1. Onde colocar o arquivo
 
@@ -32,24 +33,22 @@ componente na ordem desejada em `app/page.js`.
 Copie o padrão real do projeto (ver `components/sections/Formats.jsx`):
 
 ```jsx
+import SectionHeading from '@/components/ui/SectionHeading'
+
 const ITENS = [
   { title: 'Exemplo', text: 'Descrição curta.' },
 ]
 
 export default function MinhaSecao() {
   return (
-    <section className="block" id="minha-secao">
+    <section className="py-[110px] max-mob:py-[72px]" id="minha-secao">
       <div className="wrap">
-        <div className="lab reveal">
-          <span className="num">05</span>
-          <h2>Título da seção</h2>
-          <span className="rule"></span>
-        </div>
-        <div className="minha-grid">
+        <SectionHeading num="05" title="Título da seção" className="reveal mb-[34px]" />
+        <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
           {ITENS.map((it) => (
-            <div className="card reveal" key={it.title}>
-              <h3>{it.title}</h3>
-              <p>{it.text}</p>
+            <div className="reveal border border-line bg-white p-6" key={it.title}>
+              <h3 className="m-0 text-[19px] font-extrabold">{it.title}</h3>
+              <p className="m-0 text-[13.5px] text-ink-soft">{it.text}</p>
             </div>
           ))}
         </div>
@@ -62,44 +61,59 @@ export default function MinhaSecao() {
 **Padrão data-driven:** dados em constante `SCREAMING_SNAKE` no topo do arquivo,
 renderizados com `.map()`. Nunca repetir markup manualmente.
 
-## 3. Design system (classes que já existem em globals.css)
+## 3. Design system
 
-- **`.block`** — seção com `padding: 110px 0` (72px no mobile)
+Tokens de cor (usar como utilitários Tailwind): `bg-paper`, `bg-bone`, `text-ink`,
+`text-ink-soft`, `text-orange`, `border-line`, `border-line-2`, `bg-orange`.
+
+Fontes: `font-sans` (Archivo, padrão) e `font-display` (Anton, para números e
+headlines grandes).
+
+Primitivos em `@layer components` (`app/globals.css`):
+
 - **`.wrap`** — container centralizado, `max-width: 1280px`, `padding: 0 32px`
-- **`.lab`** — cabeçalho de seção: `.num` (laranja) + `<h2>` + `.rule` (linha)
-- **`.reveal`** — anima entrada via IntersectionObserver (o `RevealObserver`
-  global adiciona `.in`). Coloque em cada elemento que deve surgir ao rolar.
-- **`.ticks`** — cantoneiras laranja (motivo de identidade) em cards/CTAs
-- **`.display`** — Anton, uppercase, para números/headlines grandes
-- **`.eyebrow`** — rótulo pequeno, uppercase, `letter-spacing:.22em`
+- **`.display`** — Anton, uppercase, branco, `line-height: .86`
+- **`.eyebrow`** — rótulo pequeno, uppercase, `letter-spacing: .22em`
 - **`.btn`** (outline) · **`.btn-fill`** (laranja sólido) · **`.btn-on-orange`**
   (branco sobre laranja)
+- **`.ticks`** — cantoneiras laranja (motivo de identidade) em cards/CTAs;
+  sobrescrever cor com `[--tick-color:#fff]` em fundo laranja
+- **`.reveal`** — anima entrada via IntersectionObserver (o `RevealObserver`
+  global adiciona `.in`). Coloque em cada elemento que deve surgir ao rolar.
+- **`.select-caret`** — seta de `<select>` estilizado
+
+Componentes de UI: `SectionHeading` (número laranja + h2 + linha de regra).
+
+Padding de seção: `py-[110px] max-mob:py-[72px]` direto no JSX.
 
 ## 4. Regras visuais (obrigatórias)
 
-- **Nunca** usar `#000` ou `black` → sempre `var(--ink)` (#16110D). Preto não é
-  da identidade.
-- Paleta via CSS vars: `--paper` (fundo bege), `--bone`, `--ink`, `--ink-soft`,
-  `--orange` (#FF4D00), `--orange-2`.
-- Fundo padrão é `--paper`, não branco puro.
-- `border-radius: 2px` em cards/formulários (quase quadrado é intencional).
-  Arredondado só em logo e botão WhatsApp.
+- **Nunca** usar `#000` ou `black` → sempre `ink` (#16110D). Preto não é da
+  identidade. Para escuros translúcidos use `ink/[.42]` etc.
+- Fundo padrão é `paper` (bege), não branco puro.
+- `rounded-[2px]` em cards/formulários (quase quadrado é intencional).
+  Arredondado (`rounded-full`) só em logo e botão WhatsApp.
 
-## 5. CSS novo
+## 5. Responsividade
 
-Adicione as classes da seção em `app/globals.css` (kebab-case: `.minha-grid`,
-`.card`). CSS é **desktop-first**: base para desktop, overrides com
-`@media (max-width: Xpx)`. Breakpoints do projeto: 980px, 560px, 380px.
+**Desktop-first**: base para desktop, overrides com as variants
+`max-tab:` (≤980px), `max-mob:` (≤560px) e `max-xs:` (≤380px) — breakpoints
+customizados definidos no `@theme` de `app/globals.css`.
+
+Não adicionar CSS novo em `globals.css`, exceto quando for um primitivo
+reutilizável do design system (pseudo-elementos, keyframes) — nesse caso,
+adicionar em `@layer components` com nome `kebab-case`.
 
 ## 6. Convenções de código
 
 - Sem TypeScript — JavaScript puro.
-- Sem bibliotecas de UI externas.
+- Sem bibliotecas de UI externas — Tailwind é a única camada de estilo.
 - Sem comentários desnecessários — código autoexplicativo.
 - Texto de usuário sempre em **PT-BR**.
 - WhatsApp: importar `WHATSAPP_URL` de `@/lib/constants`, não hardcode.
+- Links internos: `<Link>` de `next/link` (nunca `<a>` para rotas internas).
 
 ## 7. Antes de concluir
 
 Rode o dev server (`npm run dev`, porta 3000) e verifique a seção renderizando
-no browser — não confie só no build.
+no browser — não confie só no build. Rode `npm run lint`.

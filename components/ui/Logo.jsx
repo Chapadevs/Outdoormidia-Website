@@ -1,7 +1,12 @@
+import Link from 'next/link'
+
 export default function Logo() {
   return (
-    <a href="/" className="logo">
+    <Link
+      href="/"
+      className="flex items-center gap-2.5 text-[21px] font-black tracking-[-0.03em] text-orange max-mob:text-lg"
+    >
       outdoormídia
-    </a>
+    </Link>
   )
 }

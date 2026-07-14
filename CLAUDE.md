@@ -12,41 +12,39 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 
 ## Stack Técnica
 
-### Atual (Fase 1)
-- **React 18** + **Vite 5** — SPA
-- **CSS puro** em `src/index.css` — única fonte de estilo (sem Tailwind, sem CSS-in-JS)
-- **Roteamento:** hash manual via `window.location.hash` (sem react-router)
-- **Fontes:** Anton + Archivo via Google Fonts
-- **Dev:** `npm run dev` → porta 5173
-- **Build:** `npm run build` → `/dist`
+### Atual
+- **Next.js 16** (App Router, Turbopack) + **React 19** — JavaScript puro (sem TypeScript)
+- **Tailwind CSS v4** — tokens da marca no `@theme` de `app/globals.css`; estilos via classes utilitárias no JSX. Primitivos do design system (`.wrap`, `.display`, `.eyebrow`, `.btn*`, `.ticks`, `.reveal`, `.select-caret`) em `@layer components`
+- **Fontes:** Anton + Archivo via `next/font/google` (vars `--font-anton` / `--font-archivo`, expostas como `font-display` / `font-sans`)
+- **Dev:** `npm run dev` → porta 3000
+- **Build:** `npm run build` → `.next`
 
 ### Planejada (ver roadmap de migração)
-- **Next.js 15** (App Router) — migração necessária para SEO, Blog e i18n
 - **Sanity** — CMS headless para Blog, Cases, Produtos, Avaliações
 - **next-intl** — internacionalização (PT / EN / ES / ZH)
 - **React Hook Form + Zod** — formulários com validação
 - **Resend** — envio de e-mails transacionais
 - **MapLibre GL JS** — mapa interativo de praças (tiles via Google Cloud Maps Platform)
 - **Vercel** — deploy e infraestrutura
-- **CSS Modules** — migração gradual do CSS global
 
 ---
 
 ## Design System
 
-### Paleta (CSS vars em `src/index.css`)
+### Paleta (tokens Tailwind no `@theme` de `app/globals.css`)
 
 ```css
---paper:    #F6F2EC   /* fundo principal — bege quente */
---bone:     #ECE5D9   /* fundo secundário */
---ink:      #16110D   /* texto principal */
---ink-soft: #4A3F35   /* texto secundário */
---orange:   #FF4D00   /* cor primária da marca */
---orange-2: #FF7A33   /* laranja claro */
---line:     rgba(22,17,13,.16)
---line-2:   rgba(22,17,13,.30)
---maxw:     1280px
+--color-paper:    #F6F2EC   /* fundo principal — bege quente */
+--color-bone:     #ECE5D9   /* fundo secundário */
+--color-ink:      #16110D   /* texto principal */
+--color-ink-soft: #4A3F35   /* texto secundário */
+--color-orange:   #FF4D00   /* cor primária da marca */
+--color-orange-2: #FF7A33   /* laranja claro */
+--color-line:     rgba(22,17,13,.16)
+--color-line-2:   rgba(22,17,13,.30)
 ```
+
+Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, `bg-orange`, etc.
 
 **Proibido:** usar `#000` ou `black` — usar `--ink`. Cor preta não faz parte da identidade.
 
@@ -58,15 +56,18 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 | `.eyebrow` | Archivo | 700 | 12px, uppercase, `letter-spacing:.22em` |
 | Corpo | Archivo | 400–900 | 17px base |
 
-### Componentes de UI
+### Primitivos do design system (`@layer components` em `app/globals.css`)
 
 - **`.btn`** — botão outline (borda branca, fundo transparente)
 - **`.btn-fill`** — botão laranja sólido
 - **`.btn-on-orange`** — botão branco sobre fundo laranja
-- **`.ticks`** — cantoneiras laranja via `::before/::after` (motivo de identidade visual)
-- **`.reveal`** — elemento com animação de entrada (adiciona `.in` via IntersectionObserver)
+- **`.ticks`** — cantoneiras laranja via `::before/::after` (motivo de identidade visual); cor sobrescrevível com `[--tick-color:#fff]`
+- **`.reveal`** — elemento com animação de entrada (adiciona `.in` via IntersectionObserver global)
 - **`.wrap`** — container centralizado com `max-width: 1280px` e `padding: 0 32px`
-- **`.block`** — seção com `padding: 110px 0`
+- **`.select-caret`** — seta de `<select>` estilizado
+- **`SectionHeading`** (`components/ui/SectionHeading.jsx`) — cabeçalho de seção (número laranja + h2 + linha)
+
+Padding de seção: `py-[110px] max-mob:py-[72px]` direto no JSX. Todo o restante do estilo é utilitário Tailwind no componente.
 
 ### Regras Visuais
 
@@ -77,16 +78,19 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 
 ---
 
-## Estrutura de Arquivos (Fase 1 — atual)
+## Estrutura de Arquivos (atual)
 
 ```
-src/
-  App.jsx              — hash routing + IntersectionObserver global
-  main.jsx
-  index.css            — todo o CSS
-  constants.js         — constantes globais
-  components/
+app/
+  layout.js            — fontes (next/font), metadata, WhatsAppButton + RevealObserver globais
+  page.js              — home (composição das seções)
+  globals.css          — Tailwind (@theme com tokens + @layer components com primitivos)
+  proposta/page.js     — página de briefing (rota /proposta)
+components/
+  layout/
     Header.jsx         — nav sticky com hamburger mobile
+    Footer.jsx
+  sections/
     Hero.jsx           — vídeo de fundo + headline principal
     Ticker.jsx         — faixa animada de diferenciais
     Formats.jsx        — cards de formatos OOH
@@ -95,21 +99,19 @@ src/
     Impact.jsx         — números de impacto (estatísticas)
     Coverage.jsx       — cobertura por praças (PR + SC)
     LeadCta.jsx        — seção laranja com CTA
-    Footer.jsx
-    WhatsAppButton.jsx — botão flutuante fixo (z-index: 70)
+  ui/
     Logo.jsx
-    ProposalForm.jsx   — página de briefing (rota #/proposta)
+    SectionHeading.jsx — cabeçalho de seção (número + título + linha)
+  widgets/
+    WhatsAppButton.jsx — botão flutuante fixo (z-[70])
+    RevealObserver.jsx — IntersectionObserver global (.reveal → .in)
+  forms/
+    ProposalForm.jsx   — formulário de briefing
+lib/
+  constants.js         — constantes globais (WHATSAPP_URL)
 public/
   cases/               — imagens de cases (case1.jpg–case4.jpg)
   media/               — hero-video.mp4
-```
-
-### Roteamento Hash
-
-```js
-// App.jsx — padrão de rota
-if (route === '/proposta') return <ProposalForm />
-// adicionar novas rotas aqui
 ```
 
 ---
@@ -123,7 +125,7 @@ if (route === '/proposta') return <ProposalForm />
 | `≤ 560px` | Mobile — grid 1 coluna, padding reduzido |
 | `≤ 380px` | Mobile pequeno — impact grid 1 coluna |
 
-Padrão: **desktop-first** no CSS base, overrides com `@media(max-width: Xpx)`.
+Padrão: **desktop-first** — base para desktop, overrides com as variants Tailwind `max-tab:` (≤980px), `max-mob:` (≤560px) e `max-xs:` (≤380px), definidas como breakpoints no `@theme`.
 
 ---
 
@@ -256,13 +258,13 @@ Implementar como modal ou página de mini-formulário antes do redirect.
 ## Convenções de Código
 
 - Componentes: `PascalCase.jsx`
-- Classes CSS: `kebab-case` (`.hero-bottom`, `.lead-grid`)
-- Constantes globais: `src/constants.js` (exportações nomeadas)
+- Estilo: utilitários Tailwind no JSX; classes custom só para primitivos do design system em `@layer components` (`kebab-case`)
+- Constantes globais: `lib/constants.js` (exportações nomeadas)
 - Sem TypeScript por ora — JavaScript puro
-- Sem bibliotecas de UI externas — CSS puro do projeto
+- Sem bibliotecas de UI externas (Tailwind CSS é a única camada de estilo)
 - Sem comentários desnecessários — código deve ser autoexplicativo
 - Texto de usuário sempre em PT-BR (suporte a i18n vem na Fase 3)
-- Imagens em `/public/` — referenciadas com `import.meta.env.BASE_URL`
+- Imagens em `/public/` — referenciadas por caminho absoluto (`/cases/case1.jpg`)
 
 ---
 

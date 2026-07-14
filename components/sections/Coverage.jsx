@@ -1,3 +1,4 @@
+import SectionHeading from '@/components/ui/SectionHeading'
 import { WHATSAPP_URL } from '@/lib/constants'
 
 const PRACAS = [
@@ -13,27 +14,31 @@ const PRACAS = [
 
 export default function Coverage() {
   return (
-    <section className="block" id="cobertura">
+    <section className="py-[110px] max-mob:py-[72px]" id="cobertura">
       <div className="wrap">
-        <div className="cover-grid">
+        <div className="grid grid-cols-[1fr_1.2fr] items-start gap-[50px] max-tab:grid-cols-1 max-tab:gap-[34px]">
           <div className="reveal">
-            <div className="lab" style={{ marginBottom: 18 }}>
-              <span className="num">04</span>
-              <h2>Cobertura</h2>
-            </div>
-            <p>
+            <SectionHeading num="04" title="Cobertura" rule={false} className="mb-[18px]" />
+            <p className="mt-[18px] max-w-[38ch] text-lg text-ink-soft">
               Do centro de Curitiba ao litoral, das rodovias a Santa Catarina — uma malha de mídia
               que acompanha o fluxo de pessoas em toda a região Sul.
             </p>
-            <a href={WHATSAPP_URL} className="btn" style={{ marginTop: 28 }}>
+            <a href={WHATSAPP_URL} className="btn mt-7">
               Consultar disponibilidade
             </a>
           </div>
-          <div className="pracas reveal">
+          <div className="reveal border-t border-ink">
             {PRACAS.map((p) => (
-              <div className="pl" key={p.title}>
-                <span className="pt">{p.title}</span>
-                <span className="pd">{p.desc}</span>
+              <div
+                className="flex items-baseline justify-between gap-5 border-b border-line px-1 py-[22px]"
+                key={p.title}
+              >
+                <span className="text-[clamp(20px,2.6vw,30px)] font-extrabold tracking-[-0.01em]">
+                  {p.title}
+                </span>
+                <span className="max-w-[42%] text-right text-[13px] text-ink-soft max-mob:hidden">
+                  {p.desc}
+                </span>
               </div>
             ))}
           </div>
