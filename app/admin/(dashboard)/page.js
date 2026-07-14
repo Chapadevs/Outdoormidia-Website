@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export const metadata = {
   title: 'Painel Admin — Outdoormídia',
   robots: { index: false, follow: false },
@@ -16,8 +18,13 @@ export default function AdminDashboardPage() {
           administrativo.
         </h1>
         <p className="mt-6 max-w-[46ch] text-lg text-ink-soft">
-          Em construção. Aqui vamos gerenciar leads, cases, blog e demais conteúdos do site.
+          Gerencie os conteúdos do site. Leads, cases e demais áreas chegam em breve.
         </p>
+        <div className="mt-9">
+          <Link href="/admin/blog" className="btn btn-fill">
+            Gerenciar blog
+          </Link>
+        </div>
       </div>
     </section>
   )

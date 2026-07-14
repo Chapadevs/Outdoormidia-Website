@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "demo-outdoormidia"
+    "default": "demo-outdoormidia",
+    "production": "outdoormidia-ecf88"
   }
 }

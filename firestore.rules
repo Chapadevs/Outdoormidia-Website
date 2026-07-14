@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Todo acesso ao Firestore é feito pelo Admin SDK (server-side), que ignora
+// estas regras. Nenhum acesso direto do client é permitido.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
