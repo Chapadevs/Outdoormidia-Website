@@ -22,9 +22,15 @@ export default function AdminDashboardPage() {
         <p className="mt-6 max-w-[46ch] text-lg text-ink-soft">
           Gerencie os conteúdos do site. Leads, cases e demais áreas chegam em breve.
         </p>
-        <div className="mt-9">
+        <div className="mt-9 flex flex-wrap items-center gap-3">
           <Link href="/admin/blog" className="btn btn-fill">
             Gerenciar blog
+          </Link>
+          <Link
+            href="/admin/locations"
+            className="btn border-ink text-ink hover:border-orange hover:text-orange"
+          >
+            Gerenciar cobertura
           </Link>
         </div>
       </div>

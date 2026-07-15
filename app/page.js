@@ -11,6 +11,8 @@ import Faq from '@/components/sections/Faq'
 import LeadCta from '@/components/sections/LeadCta'
 import Footer from '@/components/layout/Footer'
 
+export const revalidate = 3600
+
 export default function Home() {
   return (
     <>
