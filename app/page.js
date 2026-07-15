@@ -5,7 +5,9 @@ import Formats from '@/components/sections/Formats'
 import Platforms from '@/components/sections/Platforms'
 import Cases from '@/components/sections/Cases'
 import Impact from '@/components/sections/Impact'
+import Reviews from '@/components/sections/Reviews'
 import Coverage from '@/components/sections/Coverage'
+import Faq from '@/components/sections/Faq'
 import LeadCta from '@/components/sections/LeadCta'
 import Footer from '@/components/layout/Footer'
 
@@ -19,7 +21,9 @@ export default function Home() {
       <Platforms />
       <Cases />
       <Impact />
+      <Reviews />
       <Coverage />
+      <Faq />
       <LeadCta />
       <Footer />
     </>
