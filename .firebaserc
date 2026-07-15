@@ -2,5 +2,12 @@
   "projects": {
     "default": "demo-outdoormidia",
     "production": "outdoormidia-ecf88"
+  },
+  "targets": {
+    "outdoormidia-ecf88": {
+      "storage": {
+        "default-bucket": ["outdoormidia-ecf88.firebasestorage.app"]
+      }
+    }
   }
 }

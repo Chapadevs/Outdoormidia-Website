@@ -16,8 +16,8 @@ const COLUNAS = [
     links: [
       { label: 'A Outdoormídia', href: '#' },
       { label: 'Responsabilidade Social', href: '#' },
-      { label: 'Blog', href: '#' },
-      { label: 'Trabalhe Conosco', href: '#' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Trabalhe Conosco', href: '/trabalhe-conosco' },
     ],
   },
 ]
