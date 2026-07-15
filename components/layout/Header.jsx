@@ -11,7 +11,7 @@ const LINKS = [
   { label: 'Cobertura', href: '/#cobertura' },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Trabalhe Conosco', href: '#' },
+  { label: 'Trabalhe Conosco', href: '/trabalhe-conosco' },
 ]
 
 const LANGS = ['PT', 'EN', 'ES', '中文']

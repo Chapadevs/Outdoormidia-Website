@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 
 export const metadata = {
   title: 'Painel Admin — Outdoormídia',
@@ -7,8 +8,9 @@ export const metadata = {
 
 export default function AdminDashboardPage() {
   return (
-    <section className="py-[110px] max-mob:py-[72px]">
-      <div className="wrap">
+    <section className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
+      <Breadcrumb items={[{ label: 'Painel Admin' }]} />
+      <div className="wrap mt-[56px] max-mob:mt-9">
         <div className="eyebrow">
           <b>Área restrita</b>
         </div>
