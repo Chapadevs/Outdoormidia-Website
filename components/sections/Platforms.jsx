@@ -1,15 +1,5 @@
 import SectionHeading from '@/components/ui/SectionHeading'
-
-const PLATFORMS = [
-  { num: '01', name: 'Outdoor Digital', desc: 'LED · Dinâmico' },
-  { num: '02', name: 'Front Light', desc: '12 × 4 m' },
-  { num: '03', name: 'Rodovias', desc: '100 ativos' },
-  { num: '04', name: 'Aeroporto', desc: 'Público premium' },
-  { num: '05', name: 'Projetos Icônicos', desc: 'Monumental' },
-  { num: '06', name: 'Malls', desc: 'Ponto de compra' },
-  { num: '07', name: 'MUB', desc: 'Mobiliário urbano' },
-  { num: '08', name: 'Mídia Móvel', desc: 'Em movimento' },
-]
+import { PLATFORMS } from '@/lib/platforms'
 
 export default function Platforms() {
   return (
@@ -20,7 +10,7 @@ export default function Platforms() {
           {PLATFORMS.map((p) => (
             <a
               className="group relative grid grid-cols-[64px_1fr_auto_54px] items-center gap-6 overflow-hidden border-b border-line px-2 py-[26px] max-mob:grid-cols-[40px_1fr_34px] max-mob:gap-3.5 max-mob:px-1 max-mob:py-[22px]"
-              href="#"
+              href={`/plataformas/${p.slug}`}
               key={p.num}
             >
               <span
