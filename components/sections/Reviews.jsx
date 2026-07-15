@@ -38,7 +38,7 @@ export default function Reviews() {
     <section className="py-[110px] max-mob:py-[72px]" id="depoimentos">
       <div className="wrap">
         <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-          <SectionHeading num="04" title="O que dizem" className="flex-1" />
+          <SectionHeading num="03" title="O que dizem" className="flex-1" />
           <span className="eyebrow self-end whitespace-nowrap max-mob:hidden">Arraste →</span>
         </div>
         <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">

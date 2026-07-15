@@ -27,7 +27,7 @@ export default function FormatSpecCard({ formats }) {
     <div className="grid grid-cols-4 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
       {formats.map((f) => (
         <div
-          className="reveal flex flex-col gap-[18px] border border-line bg-white p-6 max-mob:p-5"
+          className="flex flex-col gap-[18px] border border-line bg-white p-6 max-mob:p-5"
           key={f.title}
         >
           <div

@@ -11,7 +11,7 @@ export default async function Coverage() {
       <div className="wrap">
         <div className="grid grid-cols-[1fr_1.2fr] items-start gap-[50px] max-tab:grid-cols-1 max-tab:gap-[34px]">
           <div className="reveal">
-            <SectionHeading num="05" title="Cobertura" rule={false} className="mb-[18px]" />
+            <SectionHeading num="04" title="Cobertura" rule={false} className="mb-[18px]" />
             <p className="mt-[18px] max-w-[38ch] text-lg text-ink-soft">
               Do centro de Curitiba ao litoral, das rodovias a Santa Catarina — uma malha de mídia
               que acompanha o fluxo de pessoas em toda a região Sul.
