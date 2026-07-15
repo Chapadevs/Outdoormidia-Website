@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 import Culture from '@/components/sections/Culture'
 import TalentForm from '@/components/forms/TalentForm'
 
@@ -23,7 +24,8 @@ export default function TrabalheConoscoPage() {
     <>
       <Header />
       <main>
-        <section className="pb-[70px] pt-[110px] max-mob:pb-12 max-mob:pt-[72px]">
+        <Breadcrumb items={[{ label: 'Trabalhe Conosco' }]} />
+        <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
               Carreiras · <b>PR + SC</b>
