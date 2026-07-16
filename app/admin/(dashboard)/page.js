@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import { listAllPosts } from '@/lib/blog/posts'
+import { listAllCases } from '@/lib/cases/cases'
 import { listLocations } from '@/lib/locations'
 import { listTags } from '@/lib/tags/tags'
 import { TAG_SCOPES } from '@/lib/tags/scopes'
@@ -16,10 +17,6 @@ const UPCOMING = [
   {
     title: 'Leads',
     desc: 'Briefings do formulário de proposta e pré-qualificação do WhatsApp em um só lugar.',
-  },
-  {
-    title: 'Cases',
-    desc: 'Cadastro de cases de grandes marcas com resultados de campanha.',
   },
   {
     title: 'Avaliações',
@@ -44,14 +41,17 @@ function plural(count, singular, pluralForm) {
 }
 
 export default async function AdminDashboardPage() {
-  const [posts, locations, tagLists] = await Promise.all([
+  const [posts, cases, locations, tagLists] = await Promise.all([
     listAllPosts(),
+    listAllCases(),
     listLocations(),
     Promise.all(TAG_SCOPES.map((s) => listTags(s.id))),
   ])
 
   const published = posts.filter((p) => p.status === 'published').length
   const drafts = posts.length - published
+  const casesPublished = cases.filter((c) => c.status === 'published').length
+  const casesDrafts = cases.length - casesPublished
   const totalTags = tagLists.reduce((sum, tags) => sum + tags.length, 0)
 
   const AREAS = [
@@ -61,6 +61,13 @@ export default async function AdminDashboardPage() {
       stat: posts.length,
       statLabel: `${plural(published, 'publicado', 'publicados')} · ${plural(drafts, 'rascunho', 'rascunhos')}`,
       desc: 'Crie e edite artigos com imagens, tags e status de publicação.',
+    },
+    {
+      title: 'Cases',
+      href: '/admin/cases',
+      stat: cases.length,
+      statLabel: `${plural(casesPublished, 'publicado', 'publicados')} · ${plural(casesDrafts, 'rascunho', 'rascunhos')}`,
+      desc: 'Cadastre cases de clientes com tags, plataformas usadas e resultados.',
     },
     {
       title: 'Cobertura',

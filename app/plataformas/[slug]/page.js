@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -6,11 +7,12 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import FormatSpecCard from '@/components/ui/FormatSpecCard'
 import PlatformFaq from '@/components/sections/PlatformFaq'
 import PlatformProposalForm from '@/components/forms/PlatformProposalForm'
-import { PLATFORMS, getPlatformBySlug } from '@/lib/platforms'
+import CaseCard from '@/components/cases/CaseCard'
+import { getPlatformBySlug } from '@/lib/platforms'
+import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
+import { listTags } from '@/lib/tags/tags'
 
-export function generateStaticParams() {
-  return PLATFORMS.map((p) => ({ slug: p.slug }))
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
@@ -34,6 +36,14 @@ export default async function PlatformPage({ params }) {
   const { slug } = await params
   const platform = getPlatformBySlug(slug)
   if (!platform) notFound()
+
+  const [cases, tags] = await Promise.all([
+    getPublishedCasesByPlatform(platform.slug),
+    listTags('cases'),
+  ])
+  const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
+  const faqNum = cases.length > 0 ? '03' : '02'
+  const formNum = cases.length > 0 ? '04' : '03'
 
   return (
     <>
@@ -69,15 +79,39 @@ export default async function PlatformPage({ params }) {
           </div>
         </section>
 
+        {cases.length > 0 && (
+          <section className="border-t border-line py-[90px] max-mob:py-[60px]">
+            <div className="wrap">
+              <SectionHeading num="02" title="Cases" className="reveal mb-[34px]" />
+              <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
+                {cases.map((caseItem) => (
+                  <div className="reveal flex" key={caseItem.id}>
+                    <CaseCard
+                      caseItem={caseItem}
+                      tags={caseItem.tags.map((slug) => tagMap.get(slug)).filter(Boolean)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <Link
+                className="mt-8 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 hover:text-orange"
+                href="/cases"
+              >
+                Ver todos os cases <span aria-hidden>→</span>
+              </Link>
+            </div>
+          </section>
+        )}
+
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
-            <PlatformFaq faqs={platform.faqs} num="02" />
+            <PlatformFaq faqs={platform.faqs} num={faqNum} />
           </div>
         </section>
 
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
-            <PlatformProposalForm platformName={platform.name} num="03" />
+            <PlatformProposalForm platformName={platform.name} num={formNum} />
           </div>
         </section>
       </main>

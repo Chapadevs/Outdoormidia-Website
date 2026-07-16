@@ -8,6 +8,7 @@ import { slugify } from '@/lib/slugify'
 export const runtime = 'nodejs'
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+const ALLOWED_FOLDERS = ['blog', 'cases']
 const MAX_SIZE = 5 * 1024 * 1024
 
 export async function POST(request) {
@@ -29,10 +30,13 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Imagem muito grande (máx. 5 MB).' }, { status: 400 })
   }
 
+  const folderInput = formData.get('folder')
+  const folder = ALLOWED_FOLDERS.includes(folderInput) ? folderInput : 'blog'
+
   const buffer = Buffer.from(await file.arrayBuffer())
   const ext = file.name.includes('.') ? file.name.split('.').pop().toLowerCase() : 'jpg'
   const base = slugify(file.name.replace(/\.[^.]+$/, '')) || 'imagem'
-  const path = `blog/${Date.now()}-${base}.${ext}`
+  const path = `${folder}/${Date.now()}-${base}.${ext}`
   const token = crypto.randomUUID()
 
   await adminBucket.file(path).save(buffer, {

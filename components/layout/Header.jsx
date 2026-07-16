@@ -6,7 +6,7 @@ import { WHATSAPP_URL } from '@/lib/constants'
 
 const LINKS = [
   { label: 'Plataformas', href: '/plataformas' },
-  { label: 'Cases', href: '/#cases' },
+  { label: 'Cases', href: '/cases' },
   { label: 'Cobertura', href: '/#cobertura' },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Blog', href: '/blog' },
