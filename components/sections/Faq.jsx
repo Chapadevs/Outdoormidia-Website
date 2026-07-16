@@ -52,7 +52,7 @@ export default function Faq() {
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="faq">
       <div className="wrap">
-        <SectionHeading num="06" title="Perguntas frequentes" className="reveal mb-[34px]" />
+        <SectionHeading num="05" title="Perguntas frequentes" className="reveal mb-[34px]" />
         <div className="reveal mx-auto max-w-[820px] border-t border-ink">
           {FAQS.map((item, i) => {
             const open = openIndex === i

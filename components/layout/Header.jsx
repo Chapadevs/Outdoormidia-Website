@@ -5,8 +5,7 @@ import Logo from '@/components/ui/Logo'
 import { WHATSAPP_URL } from '@/lib/constants'
 
 const LINKS = [
-  { label: 'Formatos', href: '/#formatos' },
-  { label: 'Plataformas', href: '/#plataformas' },
+  { label: 'Plataformas', href: '/plataformas' },
   { label: 'Cases', href: '/#cases' },
   { label: 'Cobertura', href: '/#cobertura' },
   { label: 'FAQ', href: '/#faq' },
