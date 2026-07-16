@@ -6,7 +6,7 @@ const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' })
 
 export default function PostCard({ post, tags = [] }) {
   return (
-    <article className="reveal ticks flex flex-col overflow-hidden border border-line bg-white">
+    <article className="ticks flex flex-col overflow-hidden border border-line bg-white">
       {post.coverImage && (
         <Link href={`/blog/${post.slug}`} className="block">
           {/* eslint-disable-next-line @next/next/no-img-element */}
