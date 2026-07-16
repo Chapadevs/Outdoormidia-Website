@@ -8,7 +8,7 @@ import MarkdownContent from '@/components/blog/MarkdownContent'
 import TagBadge from '@/components/blog/TagBadge'
 import ShareButtons from '@/components/blog/ShareButtons'
 import { getPublishedPostBySlug } from '@/lib/blog/posts'
-import { getTagsBySlugs } from '@/lib/blog/tags'
+import { getTagsBySlugs } from '@/lib/tags/tags'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
 
 export const dynamic = 'force-dynamic'
@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }) {
   const post = await getPublishedPostBySlug(slug)
   if (!post) notFound()
 
-  const tags = await getTagsBySlugs(post.tags)
+  const tags = await getTagsBySlugs('blog', post.tags)
 
   const headerList = await headers()
   const host = headerList.get('host')
