@@ -1,10 +1,11 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import PostCard from '@/components/blog/PostCard'
+import PostsExplorer from '@/components/blog/PostsExplorer'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { listPublishedPosts } from '@/lib/blog/posts'
 import { listTags } from '@/lib/tags/tags'
+import { listTagGroups } from '@/lib/tags/groups'
 
 export const metadata = {
   title: 'Blog — Outdoormídia',
@@ -23,8 +24,11 @@ export const metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function BlogPage() {
-  const [posts, tags] = await Promise.all([listPublishedPosts(), listTags('blog')])
-  const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
+  const [posts, tags, groups] = await Promise.all([
+    listPublishedPosts(),
+    listTags('blog'),
+    listTagGroups('blog'),
+  ])
 
   return (
     <>
@@ -51,15 +55,7 @@ export default async function BlogPage() {
                   Ainda não há artigos publicados. Volte em breve.
                 </p>
               ) : (
-                <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
-                  {posts.map((post) => (
-                    <PostCard
-                      key={post.id}
-                      post={post}
-                      tags={post.tags.map((slug) => tagMap.get(slug)).filter(Boolean)}
-                    />
-                  ))}
-                </div>
+                <PostsExplorer posts={posts} tags={tags} groups={groups} />
               )}
             </div>
           </div>

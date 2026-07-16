@@ -6,7 +6,7 @@ import { WHATSAPP_URL } from '@/lib/constants'
 
 const LINKS = [
   { label: 'Plataformas', href: '/plataformas' },
-  { label: 'Cases', href: '/#cases' },
+  { label: 'Cases', href: '/cases' },
   { label: 'Cobertura', href: '/#cobertura' },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Blog', href: '/blog' },
@@ -88,9 +88,10 @@ export default function Header() {
           {isAdmin && (
             <Link
               href="/admin"
-              className="btn border-ink text-ink hover:border-ink hover:bg-ink hover:text-white max-tab:hidden"
+              title="Painel administrativo"
+              className="text-xs font-bold tracking-[0.04em] text-ink-soft transition-colors duration-150 hover:text-orange max-tab:hidden"
             >
-              Painel Admin
+              Admin
             </Link>
           )}
           <a href={WHATSAPP_URL} className="btn btn-fill max-mob:hidden">
