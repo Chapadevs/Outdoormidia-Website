@@ -1,9 +1,10 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 import PostCard from '@/components/blog/PostCard'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { listPublishedPosts } from '@/lib/blog/posts'
-import { listTags } from '@/lib/blog/tags'
+import { listTags } from '@/lib/tags/tags'
 
 export const metadata = {
   title: 'Blog — Outdoormídia',
@@ -22,14 +23,15 @@ export const metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function BlogPage() {
-  const [posts, tags] = await Promise.all([listPublishedPosts(), listTags()])
+  const [posts, tags] = await Promise.all([listPublishedPosts(), listTags('blog')])
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
 
   return (
     <>
       <Header />
       <main>
-        <section className="py-[110px] max-mob:py-[72px]">
+        <Breadcrumb items={[{ label: 'Blog' }]} />
+        <section className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
               Conteúdo <b>Out of Home</b>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 import DeletePostButton from '@/components/widgets/DeletePostButton'
 import { listAllPosts } from '@/lib/blog/posts'
 
@@ -15,8 +16,9 @@ export default async function AdminBlogPage() {
   const posts = await listAllPosts()
 
   return (
-    <section className="py-[72px] max-mob:py-12">
-      <div className="wrap">
+    <section className="pb-[72px] pt-6 max-mob:pb-12">
+      <Breadcrumb items={[{ label: 'Painel Admin', href: '/admin' }, { label: 'Blog' }]} />
+      <div className="wrap mt-9">
         <div className="flex items-end justify-between gap-4 max-mob:flex-col max-mob:items-start">
           <div>
             <div className="eyebrow">
@@ -26,7 +28,7 @@ export default async function AdminBlogPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link
-              href="/admin/blog/tags"
+              href="/admin/tags/blog"
               className="btn border-ink text-ink hover:border-orange hover:text-orange"
             >
               Gerenciar tags

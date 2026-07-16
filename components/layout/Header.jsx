@@ -5,12 +5,12 @@ import Logo from '@/components/ui/Logo'
 import { WHATSAPP_URL } from '@/lib/constants'
 
 const LINKS = [
-  { label: 'Formatos', href: '/#formatos' },
-  { label: 'Plataformas', href: '/#plataformas' },
+  { label: 'Plataformas', href: '/plataformas' },
   { label: 'Cases', href: '/#cases' },
   { label: 'Cobertura', href: '/#cobertura' },
+  { label: 'FAQ', href: '/#faq' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Trabalhe Conosco', href: '#' },
+  { label: 'Trabalhe Conosco', href: '/trabalhe-conosco' },
 ]
 
 const LANGS = ['PT', 'EN', 'ES', '中文']

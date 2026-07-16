@@ -75,13 +75,39 @@ gcloud iam service-accounts add-iam-policy-binding \
 ### 6. Primeiro admin em produção
 Cria o usuário admin real com a claim `{ admin: true }`. Rodar localmente uma vez:
 
-```bash
+```powershell
 gcloud auth application-default login   # autentica no projeto
-SEED_TARGET=prod \
-  SEED_ADMIN_EMAIL="voce@outdoormidia.com.br" \
-  SEED_ADMIN_PASSWORD="uma-senha-forte" \
-  npm run seed:admin
+$env:SEED_TARGET='prod'
+$env:SEED_ADMIN_EMAIL='voce@outdoormidia.com.br'
+$env:SEED_ADMIN_PASSWORD='uma-senha-forte'
+npm run seed:admin
+Remove-Item Env:SEED_TARGET, Env:SEED_ADMIN_EMAIL, Env:SEED_ADMIN_PASSWORD
 ```
+
+### 7. Migração das tags para o modelo com escopo
+Passo único, **depois** do rollout que sobe as tags por escopo (blog/cases/localidades).
+Re-chaveia `tags/{slug}` → `tags/blog__{slug}` e semeia os grupos do blog. Os posts
+não são tocados. É idempotente: rodar duas vezes não muda nada na segunda.
+
+Entre o rollout e a migração, os posts renderizam sem as badges (degrada sem quebrar).
+Rodar logo em seguida encurta essa janela.
+
+```powershell
+gcloud auth application-default login
+gcloud auth application-default set-quota-project outdoormidia-ecf88
+
+# 1. Simular primeiro — só leitura, não escreve nada:
+$env:MIGRATE_TARGET='prod'; $env:DRY_RUN='1'; npm run migrate:tags
+
+# 2. Rodar de verdade:
+$env:MIGRATE_TARGET='prod'; Remove-Item Env:DRY_RUN; npm run migrate:tags
+
+# 3. Limpar — $env: persiste na sessão e a próxima rodada iria para produção:
+Remove-Item Env:MIGRATE_TARGET
+```
+
+A conta precisa do papel **Cloud Datastore User** no `outdoormidia-ecf88`. O script
+imprime o alvo (`PRODUÇÃO` ou `emulador`) na primeira linha — confira antes de seguir.
 
 ## Operação do dia a dia
 

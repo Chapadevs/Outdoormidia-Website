@@ -32,7 +32,7 @@ export default function Cases() {
     <section className="pb-[110px] max-mob:pb-[72px]" id="cases">
       <div className="wrap">
         <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-          <SectionHeading num="03" title="Cases" className="flex-1" />
+          <SectionHeading num="02" title="Cases" className="flex-1" />
           <span className="eyebrow self-end whitespace-nowrap max-mob:hidden">Arraste →</span>
         </div>
       </div>

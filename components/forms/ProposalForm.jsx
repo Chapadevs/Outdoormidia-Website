@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/ui/Logo'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 import { WHATSAPP_URL } from '@/lib/constants'
 
 const CIDADES = [
@@ -53,7 +54,9 @@ export default function ProposalForm() {
         </div>
       </header>
 
-      <section className="py-[110px] max-mob:py-[72px]">
+      <Breadcrumb items={[{ label: 'Solicitar Proposta' }]} />
+
+      <section className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
         <div className="wrap">
           {sent ? (
             <div className="max-w-[620px] pt-12">

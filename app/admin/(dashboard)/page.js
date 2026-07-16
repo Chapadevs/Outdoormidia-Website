@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 
 export const metadata = {
   title: 'Painel Admin — Outdoormídia',
@@ -7,8 +8,9 @@ export const metadata = {
 
 export default function AdminDashboardPage() {
   return (
-    <section className="py-[110px] max-mob:py-[72px]">
-      <div className="wrap">
+    <section className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
+      <Breadcrumb items={[{ label: 'Painel Admin' }]} />
+      <div className="wrap mt-[56px] max-mob:mt-9">
         <div className="eyebrow">
           <b>Área restrita</b>
         </div>
@@ -18,11 +20,23 @@ export default function AdminDashboardPage() {
           administrativo.
         </h1>
         <p className="mt-6 max-w-[46ch] text-lg text-ink-soft">
-          Gerencie os conteúdos do site. Leads, cases e demais áreas chegam em breve.
+          Gerencie os conteúdos e as taxonomias do site. Leads e demais áreas chegam em breve.
         </p>
-        <div className="mt-9">
+        <div className="mt-9 flex flex-wrap items-center gap-3">
           <Link href="/admin/blog" className="btn btn-fill">
             Gerenciar blog
+          </Link>
+          <Link
+            href="/admin/locations"
+            className="btn border-ink text-ink hover:border-orange hover:text-orange"
+          >
+            Gerenciar cobertura
+          </Link>
+          <Link
+            href="/admin/tags"
+            className="btn border-ink text-ink hover:border-orange hover:text-orange"
+          >
+            Gerenciar tags
           </Link>
         </div>
       </div>

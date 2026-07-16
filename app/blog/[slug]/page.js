@@ -3,11 +3,12 @@ import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 import MarkdownContent from '@/components/blog/MarkdownContent'
 import TagBadge from '@/components/blog/TagBadge'
 import ShareButtons from '@/components/blog/ShareButtons'
 import { getPublishedPostBySlug } from '@/lib/blog/posts'
-import { getTagsBySlugs } from '@/lib/blog/tags'
+import { getTagsBySlugs } from '@/lib/tags/tags'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
 
 export const dynamic = 'force-dynamic'
@@ -41,7 +42,7 @@ export default async function BlogPostPage({ params }) {
   const post = await getPublishedPostBySlug(slug)
   if (!post) notFound()
 
-  const tags = await getTagsBySlugs(post.tags)
+  const tags = await getTagsBySlugs('blog', post.tags)
 
   const headerList = await headers()
   const host = headerList.get('host')
@@ -52,7 +53,8 @@ export default async function BlogPostPage({ params }) {
     <>
       <Header />
       <main>
-        <article className="py-[110px] max-mob:py-[72px]">
+        <Breadcrumb items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]} />
+        <article className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
           <div className="wrap max-w-[860px]">
             <Link href="/blog" className="eyebrow hover:text-orange">
               ← Todos os artigos

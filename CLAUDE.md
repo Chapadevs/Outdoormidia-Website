@@ -281,3 +281,7 @@ Produção roda em **Firebase App Hosting** (Cloud Run), projeto `outdoormidia-e
 - https://obm.com — referência de praças e cobertura regional
 - https://clearchanneloutdoor.com — referência de dados e audiência
 - https://eletromidia.com.br — referência nacional
+
+## Navegação
+
+- Toda a pagina deve conter o caminho seguido incluindo caminhos anteriores, exemplo: Home/Trabalhe-Conosco, Home/Blog. Isto deve ser incluido no topo das páginas

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/api/adminGuard'
-import { createTag } from '@/lib/blog/tags'
-import { validateTagBody } from '@/lib/blog/validate'
+import { createLocation, validateLocationBody } from '@/lib/locations'
 
 export const runtime = 'nodejs'
 
@@ -10,15 +10,13 @@ export async function POST(request) {
   if (!claims) return response
 
   const body = await request.json().catch(() => ({}))
-  const invalid = validateTagBody(body)
+  const invalid = validateLocationBody(body)
   if (invalid) {
     return NextResponse.json({ error: invalid }, { status: 400 })
   }
 
-  const slug = await createTag(body)
-  if (!slug) {
-    return NextResponse.json({ error: 'Já existe uma tag com esse nome.' }, { status: 409 })
-  }
+  const id = await createLocation(body)
+  revalidatePath('/')
 
-  return NextResponse.json({ slug }, { status: 201 })
+  return NextResponse.json({ id }, { status: 201 })
 }

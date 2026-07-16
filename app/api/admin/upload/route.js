@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/api/adminGuard'
 import { adminBucket } from '@/lib/firebase/admin'
 import { publicStorageUrl } from '@/lib/firebase/storage'
-import { slugify } from '@/lib/blog/slugify'
+import { slugify } from '@/lib/slugify'
 
 export const runtime = 'nodejs'
 
