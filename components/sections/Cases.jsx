@@ -3,8 +3,18 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
 
+// Sem credenciais do Firestore (ex.: build no CI), a seção é omitida — a
+// regeneração (ISR) preenche em runtime, onde as credenciais existem.
+async function fetchFeatured() {
+  try {
+    return await Promise.all([listPublishedCases(), listTags('cases')])
+  } catch {
+    return [[], []]
+  }
+}
+
 export default async function Cases() {
-  const [cases, tags] = await Promise.all([listPublishedCases(), listTags('cases')])
+  const [cases, tags] = await fetchFeatured()
   const featured = cases.slice(0, 4)
   if (featured.length === 0) return null
 
