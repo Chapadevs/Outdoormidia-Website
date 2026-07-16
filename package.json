@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "emulators": "docker compose up",
-    "seed:admin": "node scripts/seed-admin.mjs"
+    "seed:admin": "node scripts/seed-admin.mjs",
+    "migrate:tags": "node scripts/migrate-tags-scope.mjs"
   },
   "dependencies": {
     "firebase": "^12.16.0",

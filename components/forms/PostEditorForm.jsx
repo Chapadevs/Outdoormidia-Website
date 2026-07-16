@@ -3,8 +3,7 @@ import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import MarkdownContent from '@/components/blog/MarkdownContent'
-import { slugify } from '@/lib/blog/slugify'
-import { TAG_GROUPS } from '@/lib/blog/tagGroups'
+import { slugify } from '@/lib/slugify'
 
 const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
 const INPUT =
@@ -47,7 +46,7 @@ const TOOLBAR = [
   { label: 'Linha', title: 'Linha divisória', icon: '—', block: '\n---\n' },
 ]
 
-export default function PostEditorForm({ initialPost = null, allTags = [] }) {
+export default function PostEditorForm({ initialPost = null, allTags = [], groups = [] }) {
   const router = useRouter()
   const [post, setPost] = useState(initialPost ? { ...EMPTY, ...initialPost } : EMPTY)
   const [slugTouched, setSlugTouched] = useState(Boolean(initialPost))
@@ -268,17 +267,17 @@ export default function PostEditorForm({ initialPost = null, allTags = [] }) {
         {allTags.length === 0 ? (
           <p className="text-sm text-ink-soft">
             Nenhuma tag cadastrada.{' '}
-            <Link href="/admin/blog/tags" className="font-semibold underline hover:text-orange">
+            <Link href="/admin/tags/blog" className="font-semibold underline hover:text-orange">
               Gerenciar tags →
             </Link>
           </p>
         ) : (
           <div className="flex flex-col gap-3 rounded-[2px] border-[1.5px] border-line bg-paper px-3.5 py-3">
-            {TAG_GROUPS.map((group) => {
-              const groupTags = allTags.filter((tag) => tag.group === group.id)
+            {groups.map((group) => {
+              const groupTags = allTags.filter((tag) => tag.group === group.slug)
               if (groupTags.length === 0) return null
               return (
-                <div key={group.id} className="flex flex-wrap items-center gap-1.5">
+                <div key={group.slug} className="flex flex-wrap items-center gap-1.5">
                   <span className="mr-1 text-[11px] font-bold uppercase tracking-[0.1em] text-ink-soft">
                     {group.label}
                   </span>

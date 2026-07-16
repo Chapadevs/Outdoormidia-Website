@@ -20,7 +20,7 @@ export default function AdminDashboardPage() {
           administrativo.
         </h1>
         <p className="mt-6 max-w-[46ch] text-lg text-ink-soft">
-          Gerencie os conteúdos do site. Leads, cases e demais áreas chegam em breve.
+          Gerencie os conteúdos e as taxonomias do site. Leads e demais áreas chegam em breve.
         </p>
         <div className="mt-9 flex flex-wrap items-center gap-3">
           <Link href="/admin/blog" className="btn btn-fill">
@@ -31,6 +31,12 @@ export default function AdminDashboardPage() {
             className="btn border-ink text-ink hover:border-orange hover:text-orange"
           >
             Gerenciar cobertura
+          </Link>
+          <Link
+            href="/admin/tags"
+            className="btn border-ink text-ink hover:border-orange hover:text-orange"
+          >
+            Gerenciar tags
           </Link>
         </div>
       </div>
