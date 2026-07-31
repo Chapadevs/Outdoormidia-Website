@@ -185,6 +185,79 @@
     background-repeat: no-repeat;
     background-position: right 14px center;
   }
+
+  /* barra de nota 0–10 — preenchimento via --fill */
+  .range-nota {
+    --fill: 0%;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 26px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .range-nota::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 2px;
+    background: linear-gradient(
+      to right,
+      var(--color-orange) var(--fill),
+      var(--color-line) var(--fill)
+    );
+  }
+  .range-nota::-moz-range-track {
+    height: 6px;
+    border-radius: 2px;
+    background: linear-gradient(
+      to right,
+      var(--color-orange) var(--fill),
+      var(--color-line) var(--fill)
+    );
+  }
+  .range-nota::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    margin-top: -7px;
+    border: 2px solid var(--color-orange);
+    border-radius: 999px;
+    background: var(--color-paper);
+    transition: 0.15s;
+  }
+  .range-nota::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-orange);
+    border-radius: 999px;
+    background: var(--color-paper);
+    transition: 0.15s;
+  }
+  .range-nota:hover::-webkit-slider-thumb,
+  .range-nota:active::-webkit-slider-thumb {
+    background: var(--color-orange);
+  }
+  .range-nota:hover::-moz-range-thumb,
+  .range-nota:active::-moz-range-thumb {
+    background: var(--color-orange);
+  }
+  .range-nota:focus-visible {
+    outline: none;
+  }
+  .range-nota:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 2px;
+  }
+  .range-nota:focus-visible::-moz-range-thumb {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 2px;
+  }
+  .range-nota[data-respondida='true']::-webkit-slider-thumb {
+    background: var(--color-orange);
+  }
+  .range-nota[data-respondida='true']::-moz-range-thumb {
+    background: var(--color-orange);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -34,13 +34,13 @@ export default function Header() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-[60] border-b border-line bg-paper/85 backdrop-blur-[10px]">
+    <header className="sticky top-0 z-[60] border-b border-ink/15 bg-orange/95 backdrop-blur-[10px]">
       <div className="wrap flex h-[74px] items-center gap-[30px] max-mob:h-16 max-mob:gap-4">
         <Logo />
         <nav
           className={`ml-[18px] flex gap-[26px] text-sm font-semibold ${
             menuOpen
-              ? 'max-tab:absolute max-tab:inset-x-0 max-tab:top-[74px] max-tab:flex-col max-tab:gap-4 max-tab:border-b max-tab:border-line max-tab:bg-paper max-tab:px-8 max-tab:pb-[26px] max-tab:pt-[22px] max-tab:shadow-[0_24px_32px_-24px_rgba(22,17,13,.3)] max-mob:top-16'
+              ? 'max-tab:absolute max-tab:inset-x-0 max-tab:top-[74px] max-tab:flex-col max-tab:gap-4 max-tab:border-b max-tab:border-ink/15 max-tab:bg-orange max-tab:px-8 max-tab:pb-[26px] max-tab:pt-[22px] max-tab:shadow-[0_24px_32px_-24px_rgba(22,17,13,.3)] max-mob:top-16'
               : 'max-tab:hidden'
           }`}
         >
@@ -48,7 +48,7 @@ export default function Header() {
             <a
               key={label}
               href={href}
-              className="text-ink-soft transition-colors duration-150 hover:text-orange"
+              className="text-white/85 transition-colors duration-150 hover:text-white"
               onClick={() => setMenuOpen(false)}
             >
               {label}
@@ -57,7 +57,7 @@ export default function Header() {
           {isAdmin && (
             <Link
               href="/admin"
-              className="hidden text-ink-soft transition-colors duration-150 hover:text-orange max-tab:inline"
+              className="hidden text-white/85 transition-colors duration-150 hover:text-white max-tab:inline"
               onClick={() => setMenuOpen(false)}
             >
               Painel Admin
@@ -65,7 +65,7 @@ export default function Header() {
           )}
           <a
             href={WHATSAPP_URL}
-            className="btn btn-fill mt-1.5 hidden justify-center max-tab:inline-flex"
+            className="btn btn-on-orange mt-1.5 hidden justify-center max-tab:inline-flex"
             onClick={() => setMenuOpen(false)}
           >
             Falar agora
@@ -77,7 +77,7 @@ export default function Header() {
               <button
                 key={l}
                 className={`cursor-pointer transition-colors duration-150 ${
-                  l === lang ? 'text-ink' : 'text-line-2'
+                  l === lang ? 'text-white' : 'text-white/55'
                 }`}
                 onClick={() => setLang(l)}
               >
@@ -89,12 +89,12 @@ export default function Header() {
             <Link
               href="/admin"
               title="Painel administrativo"
-              className="text-xs font-bold tracking-[0.04em] text-ink-soft transition-colors duration-150 hover:text-orange max-tab:hidden"
+              className="text-xs font-bold tracking-[0.04em] text-white/85 transition-colors duration-150 hover:text-white max-tab:hidden"
             >
               Admin
             </Link>
           )}
-          <a href={WHATSAPP_URL} className="btn btn-fill max-mob:hidden">
+          <a href={WHATSAPP_URL} className="btn btn-on-orange max-mob:hidden">
             Falar agora
           </a>
           <button
@@ -102,9 +102,9 @@ export default function Header() {
             aria-label="Menu"
             onClick={() => setMenuOpen((o) => !o)}
           >
-            <span className="h-0.5 w-[22px] bg-ink"></span>
-            <span className="h-0.5 w-[22px] bg-ink"></span>
-            <span className="h-0.5 w-[22px] bg-ink"></span>
+            <span className="h-0.5 w-[22px] bg-white"></span>
+            <span className="h-0.5 w-[22px] bg-white"></span>
+            <span className="h-0.5 w-[22px] bg-white"></span>
           </button>
         </div>
       </div>
