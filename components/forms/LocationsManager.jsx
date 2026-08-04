@@ -5,8 +5,8 @@ import CoverageMap from '@/components/ui/CoverageMap'
 
 const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
 const INPUT =
-  'w-full rounded-[2px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
-const ERROR = 'rounded-[2px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink'
+  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
+const ERROR = 'rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink'
 
 async function request(url, method, body) {
   const res = await fetch(url, {
@@ -196,7 +196,7 @@ export default function LocationsManager({ locations }) {
 
   return (
     <div className="grid grid-cols-[1.2fr_1fr] items-start gap-[50px] max-tab:grid-cols-1 max-tab:gap-[34px]">
-      <div className="ticks bg-bone p-[38px] max-mob:p-6">
+      <div className="ticks rounded-[16px] bg-bone p-[38px] max-mob:p-6">
         <p className="mb-5 text-sm text-ink-soft">
           {movingLocation
             ? `Clique no mapa para reposicionar “${movingLocation.name}”.`
@@ -208,7 +208,7 @@ export default function LocationsManager({ locations }) {
       <div className="flex flex-col gap-8">
         {draft && (
           <form
-            className="ticks flex flex-col gap-5 border border-line bg-white p-[38px] max-mob:p-7"
+            className="ticks flex flex-col gap-5 rounded-[16px] border border-line bg-white p-[38px] max-mob:p-7"
             onSubmit={handleCreate}
           >
             <div className="eyebrow">

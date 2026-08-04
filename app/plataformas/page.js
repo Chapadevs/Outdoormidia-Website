@@ -47,12 +47,12 @@ export default function PlataformasPage() {
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
               {PLATFORMS.map((p) => (
                 <Link
-                  className="group reveal flex scroll-mt-24 flex-col border border-line bg-white p-6 transition-colors duration-200 hover:border-orange max-mob:p-5"
+                  className="group reveal flex scroll-mt-24 flex-col rounded-[16px] border border-line bg-white p-6 transition-colors duration-200 hover:border-orange max-mob:p-5"
                   href={`/plataformas/${p.slug}`}
                   key={p.slug}
                   id={p.slug}
                 >
-                  <div className="ticks flex aspect-[16/10] items-center justify-center border border-line bg-bone">
+                  <div className="ticks flex aspect-[16/10] items-center justify-center rounded-[16px] border border-line bg-bone">
                     <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-line-2">
                       {p.name}
                     </span>

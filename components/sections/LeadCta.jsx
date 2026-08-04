@@ -31,7 +31,7 @@ export default function LeadCta() {
               </Link>
             </div>
           </div>
-          <div className="ticks reveal border border-white/30 bg-white/[.12] p-[30px] [--tick-color:#fff] max-mob:p-6">
+          <div className="ticks reveal rounded-[16px] border border-white/30 bg-white/[.12] p-[30px] [--tick-color:#fff] max-mob:p-6">
             <ol className="m-0 mb-6 flex list-none flex-col gap-4 p-0">
               {PERGUNTAS.map((q, i) => (
                 <li key={q} className="flex items-start gap-3.5 text-[15px] font-semibold">

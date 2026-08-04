@@ -2,7 +2,7 @@ import TagBadge from '@/components/blog/TagBadge'
 
 export default function CaseCard({ caseItem, tags = [] }) {
   return (
-    <article className="flex flex-1 flex-col overflow-hidden rounded-[2px] border border-line bg-white">
+    <article className="flex flex-1 flex-col overflow-hidden rounded-[16px] border border-line bg-white">
       {caseItem.coverImage ? (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img

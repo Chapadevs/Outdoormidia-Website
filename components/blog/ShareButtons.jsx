@@ -78,7 +78,7 @@ const NETWORKS = [
 ]
 
 const BTN =
-  'flex h-10 w-10 items-center justify-center rounded-[2px] border border-line text-ink-soft transition duration-150 hover:border-orange hover:bg-white hover:text-orange'
+  'flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink-soft transition duration-150 hover:border-orange hover:bg-white hover:text-orange'
 
 export default function ShareButtons({ url, title }) {
   const [copied, setCopied] = useState(false)

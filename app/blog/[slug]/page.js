@@ -86,7 +86,7 @@ export default async function BlogPostPage({ params }) {
                 <img
                   src={post.coverImage}
                   alt={post.coverAlt || post.title}
-                  className="w-full rounded-[2px] border border-line object-cover"
+                  className="w-full rounded-[16px] border border-line object-cover"
                 />
               </div>
             )}

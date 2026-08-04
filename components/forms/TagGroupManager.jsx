@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
 const INPUT =
-  'w-full rounded-[2px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
+  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
 
 async function request(url, method, body) {
   const res = await fetch(url, {
@@ -106,7 +106,7 @@ function GroupRow({ group, scope }) {
         </div>
       )}
       {error && (
-        <p className="rounded-[2px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink">
+        <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink">
           {error}
         </p>
       )}
@@ -138,7 +138,7 @@ export default function TagGroupManager({ scope, groups }) {
   return (
     <div className="flex flex-col gap-6">
       <form
-        className="ticks flex flex-col gap-5 border border-line bg-white p-[38px] max-mob:p-7"
+        className="ticks flex flex-col gap-5 rounded-[16px] border border-line bg-white p-[38px] max-mob:p-7"
         onSubmit={handleCreate}
       >
         <div className="grid grid-cols-[1fr_auto] items-end gap-5 max-mob:grid-cols-1">
@@ -165,7 +165,7 @@ export default function TagGroupManager({ scope, groups }) {
           </button>
         </div>
         {error && (
-          <p className="rounded-[2px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
+          <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
             {error}
           </p>
         )}

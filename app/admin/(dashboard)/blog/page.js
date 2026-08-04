@@ -63,11 +63,11 @@ export default async function AdminBlogPage() {
                     </td>
                     <td className="py-4 pr-4">
                       {post.status === 'published' ? (
-                        <span className="rounded-[2px] bg-orange px-2 py-1 text-xs font-bold uppercase tracking-[0.1em] text-white">
+                        <span className="rounded-full bg-orange px-2 py-1 text-xs font-bold uppercase tracking-[0.1em] text-white">
                           Publicado
                         </span>
                       ) : (
-                        <span className="rounded-[2px] border border-line-2 px-2 py-1 text-xs font-bold uppercase tracking-[0.1em] text-ink-soft">
+                        <span className="rounded-full border border-line-2 px-2 py-1 text-xs font-bold uppercase tracking-[0.1em] text-ink-soft">
                           Rascunho
                         </span>
                       )}

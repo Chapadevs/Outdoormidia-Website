@@ -27,11 +27,11 @@ export default function FormatSpecCard({ formats }) {
     <div className="grid grid-cols-4 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
       {formats.map((f) => (
         <div
-          className="flex flex-col gap-[18px] border border-line bg-white p-6 max-mob:p-5"
+          className="flex flex-col gap-[18px] rounded-[16px] border border-line bg-white p-6 max-mob:p-5"
           key={f.title}
         >
           <div
-            className="relative mb-[26px] mr-3.5 mt-[18px] w-[78%] self-start border-[1.5px] border-ink bg-bone"
+            className="relative mb-[26px] mr-3.5 mt-[18px] w-[78%] self-start rounded-[10px] border-[1.5px] border-ink bg-bone"
             style={{ aspectRatio: f.aspect }}
           >
             <DimTop>{f.top}</DimTop>

@@ -156,7 +156,7 @@ export default function CoverageMap({ locations, editable = false, onMapClick, d
                 y={-PIN / 2}
                 width={PIN}
                 height={PIN}
-                rx="2"
+                rx="8"
                 fill={on ? 'var(--color-paper)' : 'var(--color-ink)'}
                 stroke={on ? 'var(--color-ink)' : 'var(--color-paper)'}
                 strokeWidth="2.5"
@@ -166,6 +166,7 @@ export default function CoverageMap({ locations, editable = false, onMapClick, d
                 y={-PIN_CORE / 2}
                 width={PIN_CORE}
                 height={PIN_CORE}
+                rx="3"
                 fill={on ? 'var(--color-ink)' : 'var(--color-paper)'}
               />
             </g>
@@ -179,7 +180,7 @@ export default function CoverageMap({ locations, editable = false, onMapClick, d
               y={-PIN / 2}
               width={PIN}
               height={PIN}
-              rx="2"
+              rx="8"
               fill="var(--color-orange-2)"
               stroke="var(--color-ink)"
               strokeWidth="2.5"
@@ -208,7 +209,7 @@ export default function CoverageMap({ locations, editable = false, onMapClick, d
                 : 'translate(-50%, calc(-100% - 26px))',
           }}
         >
-          <div className="border-[1.5px] border-ink bg-paper px-4 py-3 shadow-[6px_6px_0_rgba(22,17,13,.18)]">
+          <div className="rounded-[10px] border-[1.5px] border-ink bg-paper px-4 py-3 shadow-[6px_6px_0_rgba(22,17,13,.18)]">
             <span className="block text-[15px] font-extrabold leading-tight text-ink">
               {shown.name}
             </span>
@@ -230,7 +231,7 @@ export default function CoverageMap({ locations, editable = false, onMapClick, d
             transform: cursor.flip ? 'translate(calc(-100% - 18px), -50%)' : 'translate(18px, -50%)',
           }}
         >
-          <div className="border-[1.5px] border-ink bg-paper px-4 py-3 shadow-[6px_6px_0_rgba(22,17,13,.18)]">
+          <div className="rounded-[10px] border-[1.5px] border-ink bg-paper px-4 py-3 shadow-[6px_6px_0_rgba(22,17,13,.18)]">
             <span className="eyebrow block text-orange">{activeState.name}</span>
             {activeState.locations.length === 0 ? (
               <p className="mt-2 text-[13px] text-ink-soft">Nenhuma localidade cadastrada.</p>

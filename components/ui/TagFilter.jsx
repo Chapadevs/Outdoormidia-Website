@@ -1,7 +1,7 @@
 'use client'
 
 const CHIP =
-  'cursor-pointer rounded-[2px] border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] transition-colors duration-150'
+  'cursor-pointer rounded-full border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] transition-colors duration-150'
 const CHIP_ON = 'border-orange bg-orange text-white'
 const CHIP_OFF = 'border-line text-ink-soft hover:border-orange hover:text-orange'
 

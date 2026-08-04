@@ -33,9 +33,9 @@ export default function DiagnosticoQuiz() {
           <span className="eyebrow whitespace-nowrap">
             <b>{respondidas}</b> de {PERGUNTAS.length} respondidas
           </span>
-          <span className="h-1 flex-1 rounded-[2px] bg-line">
+          <span className="h-1 flex-1 rounded-full bg-line">
             <span
-              className="block h-full rounded-[2px] bg-orange transition-[width] duration-300"
+              className="block h-full rounded-full bg-orange transition-[width] duration-300"
               style={{ width: `${(respondidas / PERGUNTAS.length) * 100}%` }}
             />
           </span>
@@ -57,7 +57,7 @@ export default function DiagnosticoQuiz() {
               return (
                 <div
                   key={pergunta}
-                  className="ticks reveal flex items-center gap-8 rounded-[2px] border border-line bg-white px-6 py-4 max-tab:gap-5 max-mob:flex-col max-mob:items-stretch max-mob:gap-2.5 max-mob:px-4 max-mob:py-3.5"
+                  className="ticks reveal flex items-center gap-8 rounded-[16px] border border-line bg-white px-6 py-4 max-tab:gap-5 max-mob:flex-col max-mob:items-stretch max-mob:gap-2.5 max-mob:px-4 max-mob:py-3.5"
                 >
                   <label
                     htmlFor={`pergunta-${i}`}
@@ -106,7 +106,7 @@ export default function DiagnosticoQuiz() {
 
           {completo && (
             <div ref={resultadoRef} className="mt-14 scroll-mt-[110px] max-mob:mt-10">
-              <div className={`ticks border p-[38px] ${faixa.card} ${faixa.tick} max-mob:p-7`}>
+              <div className={`ticks rounded-[16px] border p-[38px] ${faixa.card} ${faixa.tick} max-mob:p-7`}>
                 <div className="grid grid-cols-[auto_1fr] items-start gap-9 max-mob:grid-cols-1 max-mob:gap-5">
                   <div>
                     <div className="text-xs font-bold uppercase tracking-[0.22em] opacity-70">
@@ -138,7 +138,7 @@ export default function DiagnosticoQuiz() {
                   return (
                     <div
                       key={f.key}
-                      className={`rounded-[2px] border p-5 ${
+                      className={`rounded-[16px] border p-5 ${
                         ativa
                           ? `ticks ${f.card} ${f.tick}`
                           : 'border-line bg-paper text-ink-soft opacity-55'
@@ -152,7 +152,7 @@ export default function DiagnosticoQuiz() {
                 })}
               </div>
 
-              <div className="ticks mt-4 border border-orange bg-orange p-[38px] text-white [--tick-color:#fff] max-mob:p-7">
+              <div className="ticks mt-4 rounded-[16px] border border-orange bg-orange p-[38px] text-white [--tick-color:#fff] max-mob:p-7">
                 <h3 className="m-0 font-display text-[clamp(28px,4.6vw,48px)] font-normal uppercase leading-[0.9]">
                   A sua marca está
                   <br />

@@ -58,10 +58,10 @@ Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, 
 
 ### Primitivos do design system (`@layer components` em `app/globals.css`)
 
-- **`.btn`** — botão outline (borda branca, fundo transparente)
+- **`.btn`** — botão outline em cápsula (`rounded-full`, borda branca, fundo transparente)
 - **`.btn-fill`** — botão laranja sólido
 - **`.btn-on-orange`** — botão branco sobre fundo laranja
-- **`.ticks`** — cantoneiras laranja via `::before/::after` (motivo de identidade visual); cor sobrescrevível com `[--tick-color:#fff]`
+- **`.ticks`** — cantoneiras laranja via `::before/::after`, com o canto interno curvo (motivo de identidade visual); cor sobrescrevível com `[--tick-color:#fff]`
 - **`.reveal`** — elemento com animação de entrada (adiciona `.in` via IntersectionObserver global)
 - **`.wrap`** — container centralizado com `max-width: 1280px` e `padding: 0 32px`
 - **`.select-caret`** — seta de `<select>` estilizado
@@ -71,10 +71,12 @@ Padding de seção: `py-[110px] max-mob:py-[72px]` direto no JSX. Todo o restant
 
 ### Regras Visuais
 
-- Bordas: `border-radius: 2px` em cards e formulários (quase quadrado é intencional)
-- Elementos arredondados apenas em: logo (círculo) e botão WhatsApp
+- Bordas arredondadas em toda a interface — nada de cantos quadrados/pontudos:
+  - `rounded-[16px]` em cards, painéis, imagens, vídeo e tabelas
+  - `rounded-[10px]` em inputs, selects, textareas e elementos pequenos (código inline, pins do mapa)
+  - `rounded-full` (cápsula/círculo) em botões (`.btn`), badges, tags e chips de filtro
 - Fundo padrão: `--paper`, não branco puro
-- Elementos icônicos: cantoneiras laranja (`.ticks`) nos cards e CTAs
+- Elementos icônicos: cantoneiras laranja (`.ticks`) nos cards e CTAs, com o canto interno também curvo
 
 ---
 
