@@ -12,7 +12,7 @@ import { getPlatformBySlug } from '@/lib/platforms'
 import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 export async function generateMetadata({ params }) {
   const { slug } = await params

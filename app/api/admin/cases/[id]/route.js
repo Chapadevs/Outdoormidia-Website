@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/api/adminGuard'
 import { deleteCase, isCaseSlugTaken, updateCase } from '@/lib/cases/cases'
 import { validateCaseBody } from '@/lib/cases/validate'
+import { revalidateCases } from '@/lib/revalidate'
 
 export const runtime = 'nodejs'
 
@@ -24,6 +25,7 @@ export async function PUT(request, { params }) {
   if (!result) {
     return NextResponse.json({ error: 'Case não encontrado.' }, { status: 404 })
   }
+  revalidateCases()
 
   return NextResponse.json({ id })
 }
@@ -37,6 +39,7 @@ export async function DELETE(_request, { params }) {
   if (!result) {
     return NextResponse.json({ error: 'Case não encontrado.' }, { status: 404 })
   }
+  revalidateCases()
 
   return NextResponse.json({ ok: true })
 }

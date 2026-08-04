@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/api/adminGuard'
 import { createCase, isCaseSlugTaken } from '@/lib/cases/cases'
 import { validateCaseBody } from '@/lib/cases/validate'
+import { revalidateCases } from '@/lib/revalidate'
 
 export const runtime = 'nodejs'
 
@@ -20,6 +21,7 @@ export async function POST(request) {
   }
 
   const id = await createCase(body)
+  revalidateCases()
 
   return NextResponse.json({ id }, { status: 201 })
 }

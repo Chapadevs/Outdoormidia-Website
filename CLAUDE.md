@@ -16,16 +16,18 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 - **Next.js 16** (App Router, Turbopack) + **React 19** — JavaScript puro (sem TypeScript)
 - **Tailwind CSS v4** — tokens da marca no `@theme` de `app/globals.css`; estilos via classes utilitárias no JSX. Primitivos do design system (`.wrap`, `.display`, `.eyebrow`, `.btn*`, `.ticks`, `.reveal`, `.select-caret`) em `@layer components`
 - **Fontes:** Anton + Archivo via `next/font/google` (vars `--font-anton` / `--font-archivo`, expostas como `font-display` / `font-sans`)
-- **Dev:** `npm run dev` → porta 3000
+- **Firebase** — Firestore (conteúdo), Auth (sessão do admin), Storage (capas). Acesso server-side via `firebase-admin` em `lib/firebase/admin.js`
+- **CMS próprio** — painel em `app/admin/`, protegido por cookie de sessão + claim `admin`. Não usamos CMS headless de terceiros
+- **Deploy:** Firebase App Hosting (Cloud Run) — ver [`DEPLOY.md`](DEPLOY.md)
+- **Dev:** `npm run dev` → porta 3000. Emuladores Firebase via `npm run emulators` (Docker)
 - **Build:** `npm run build` → `.next`
+- **Testes:** não há suíte de testes no repositório. Validação é manual — `npm run lint`, `npm run build` e conferência no browser
 
-### Planejada (ver roadmap de migração)
-- **Sanity** — CMS headless para Blog, Cases, Produtos, Avaliações
-- **next-intl** — internacionalização (PT / EN / ES / ZH)
-- **React Hook Form + Zod** — formulários com validação
-- **Resend** — envio de e-mails transacionais
-- **MapLibre GL JS** — mapa interativo de praças (tiles via Google Cloud Maps Platform)
-- **Vercel** — deploy e infraestrutura
+### Ainda não implementado
+- **next-intl** — os botões PT/EN/ES/中文 do `Header` hoje só trocam um `useState`; não há tradução por trás
+- **Resend** — envio de e-mails transacionais (formulários hoje só gravam/redirecionam)
+- **Validação com schema** — a validação é manual, em `lib/*/validate.js`. Sem Zod/React Hook Form
+- **Sitemap e robots.txt** — não existem no repositório
 
 ---
 
@@ -82,38 +84,42 @@ Padding de seção: `py-[110px] max-mob:py-[72px]` direto no JSX. Todo o restant
 
 ## Estrutura de Arquivos (atual)
 
+Visão por área — 41 componentes, 34 rotas/handlers, 21 módulos em `lib/`. Não é uma
+lista exaustiva; use `git ls-files` para o inventário completo.
+
 ```
 app/
-  layout.js            — fontes (next/font), metadata, WhatsAppButton + RevealObserver globais
-  page.js              — home (composição das seções)
-  globals.css          — Tailwind (@theme com tokens + @layer components com primitivos)
-  proposta/page.js     — página de briefing (rota /proposta)
+  layout.js               — fontes, metadata (metadataBase), WhatsAppButton + RevealObserver
+  page.js                 — home (revalidate 3600)
+  globals.css             — Tailwind (@theme com tokens + @layer components com primitivos)
+  blog/                   — listagem (ISR 300) + [slug] do artigo
+  cases/                  — listagem com filtro por tag (ISR 300)
+  plataformas/            — índice + [slug] de cada uma das 8 plataformas
+  diagnostico/            — quiz de diagnóstico de marca
+  proposta/               — briefing
+  trabalhe-conosco/       — banco de talentos
+  admin/(dashboard)/      — CMS: posts, cases, locations, tags. Protegido por proxy.js
+  api/admin/              — CRUD do CMS (guardado por lib/api/adminGuard.js)
+  api/auth/session/       — cria/valida/apaga o cookie de sessão do admin
 components/
-  layout/
-    Header.jsx         — nav sticky com hamburger mobile
-    Footer.jsx
-  sections/
-    Hero.jsx           — vídeo de fundo + headline principal
-    Ticker.jsx         — faixa animada de diferenciais
-    Formats.jsx        — cards de formatos OOH
-    Platforms.jsx      — lista de plataformas com hover laranja
-    Cases.jsx          — carrossel horizontal de cases
-    Impact.jsx         — números de impacto (estatísticas)
-    Coverage.jsx       — cobertura por praças (PR + SC)
-    LeadCta.jsx        — seção laranja com CTA
-  ui/
-    Logo.jsx
-    SectionHeading.jsx — cabeçalho de seção (número + título + linha)
-  widgets/
-    WhatsAppButton.jsx — botão flutuante fixo (z-[70])
-    RevealObserver.jsx — IntersectionObserver global (.reveal → .in)
-  forms/
-    ProposalForm.jsx   — formulário de briefing
+  layout/                 — Header (nav sticky), Footer
+  sections/               — Hero, Ticker, Platforms, Cases, Impact, Reviews,
+                            Coverage, Faq, Culture, LeadCta, PlatformFaq
+  blog/ cases/            — cards, explorers com filtro, markdown, share
+  forms/                  — 10 formulários (públicos + editores do admin)
+  ui/                     — Logo, SectionHeading, Breadcrumb, TagFilter,
+                            FormatSpecCard, CoverageMap (SVG de PR+SC, dados IBGE)
+  widgets/                — WhatsAppButton, RevealObserver, botões de deletar/logout
 lib/
-  constants.js         — constantes globais (WHATSAPP_URL)
-public/
-  cases/               — imagens de cases (case1.jpg–case4.jpg)
-  media/               — hero-video.mp4
+  constants.js            — WHATSAPP_URL, SITE_URL
+  revalidate.js           — invalidação de ISR após mutação no admin
+  firebase/               — admin (server), client, session, storage
+  blog/ cases/ tags/      — leitura, escrita e validação de cada coleção
+  platforms.js            — as 8 plataformas (dados estáticos, não vem do Firestore)
+  locations.js            — praças; mapShapes/mapProjection alimentam o CoverageMap
+public/media/             — hero-video-opt.mp4, hero-poster.webp, hero-billboard.webp,
+                            outdoor-cutout.webp
+scripts/                  — seed-admin, migrate-tags-scope, generate-map-paths
 ```
 
 ---
@@ -133,41 +139,42 @@ Padrão: **desktop-first** — base para desktop, overrides com as variants Tail
 
 ## Features e Status
 
-### Fase 1 — Urgente
+> Ao concluir uma feature, atualize esta tabela **na mesma alteração**. Ela é a
+> primeira coisa que uma sessão de IA lê para saber o que já existe.
 
-| Feature | Status |
+### Concluído
+
+| Feature | Onde |
 |---|---|
-| Layout base / identidade visual | ✅ Concluído |
-| Hero com vídeo de fundo | ✅ Concluído |
-| Seções: Ticker, Formats, Platforms, Cases, Impact, Coverage | ✅ Concluído |
-| Footer | ✅ Concluído |
-| WhatsApp flutuante | ✅ Concluído |
-| ProposalForm (briefing) | ✅ Concluído |
-| Responsividade | ✅ Concluído |
-| SEO técnico (meta tags, OG, sitemap, robots.txt) | ⬜ Pendente |
-| Produtos — página completa com os 8 produtos | ⬜ Pendente |
-| Praças — seção expandida com todas as cidades | ⬜ Pendente |
-| WhatsApp com pré-perguntas qualificadoras | ⬜ Pendente |
+| Layout base / identidade visual / responsividade | `app/globals.css`, componentes |
+| Hero com vídeo (carrega após o load, com poster) | `components/sections/Hero.jsx` |
+| Seções da home | `components/sections/` |
+| WhatsApp flutuante | `components/widgets/WhatsAppButton.jsx` |
+| ProposalForm (briefing) | `app/proposta/` |
+| Plataformas — índice + página das 8 | `app/plataformas/`, `lib/platforms.js` |
+| Cases com filtro por tag | `app/cases/`, `lib/cases/` |
+| Blog com CMS próprio | `app/blog/`, `app/admin/`, `lib/blog/` |
+| FAQ | `components/sections/Faq.jsx`, `PlatformFaq.jsx` |
+| Avaliações de clientes | `components/sections/Reviews.jsx` |
+| Banco de talentos | `app/trabalhe-conosco/`, `components/forms/TalentForm.jsx` |
+| Diagnóstico de marca (quiz) | `app/diagnostico/`, `lib/diagnostico.js` |
+| Mapa de praças (SVG, dados IBGE) | `components/ui/CoverageMap.jsx`, `lib/mapShapes.js` |
+| Painel admin (posts, cases, locations, tags) | `app/admin/`, `app/api/admin/` |
+| Breadcrumb em todas as páginas | `components/ui/Breadcrumb.jsx` |
+| Cache: ISR nas rotas de conteúdo + headers em `/media/` | `next.config.mjs`, `lib/revalidate.js` |
 
-### Fase 2
+### Pendente
 
-| Feature | Status |
+| Feature | Observação |
 |---|---|
-| Cases — grandes marcas com resultados | ⬜ Pendente |
-| Blog (CMS, SEO/GEO, 1 artigo/semana) | ⬜ Pendente |
-| FAQ | ⬜ Pendente |
-| Avaliações de clientes | ⬜ Pendente |
-| Banco de talentos (formulário de candidatura) | ⬜ Pendente |
-
-### Fase 3
-
-| Feature | Status |
-|---|---|
-| Idiomas (PT / EN / ES / ZH) | ⬜ Pendente |
-| Simulador de campanha (lead qualificado) | ⬜ Pendente |
-| Área de downloads | ⬜ Pendente |
-| Automação de marketing | ⬜ Pendente |
-| Mapa interativo básico de praças | ⬜ Pendente |
+| `sitemap.xml` e `robots.txt` | Não existem. Metadata e `metadataBase` já estão prontos |
+| WhatsApp com pré-perguntas qualificadoras | Hoje o botão vai direto para o `wa.me` |
+| Idiomas (PT / EN / ES / ZH) | Os botões do `Header` só trocam `useState` — não há i18n |
+| Envio de e-mail nos formulários | Falta integrar Resend |
+| Simulador de campanha | — |
+| Área de downloads | — |
+| Automação de marketing | — |
+| Testes automatizados | Nenhum. Regressão só aparece em conferência manual |
 
 ---
 
