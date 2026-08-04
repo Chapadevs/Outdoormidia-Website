@@ -1,8 +1,40 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const VIDEO_SRC = '/media/hero-video-opt.mp4'
+const POSTER_SRC = '/media/hero-poster.webp'
+
+// O vídeo é decorativo e pesa 3,1 MB. Só recebe o `src` depois do load da
+// página, o que o tira do carregamento inicial — até lá o poster cobre a área.
+function HeroVideo({ className }) {
+  const [loadVideo, setLoadVideo] = useState(false)
+
+  useEffect(() => {
+    // setTimeout em vez de requestAnimationFrame: rAF não dispara em aba de
+    // segundo plano, o que deixaria o hero sem vídeo até a aba ganhar foco.
+    if (document.readyState === 'complete') {
+      const timer = setTimeout(() => setLoadVideo(true), 0)
+      return () => clearTimeout(timer)
+    }
+    const onLoad = () => setLoadVideo(true)
+    window.addEventListener('load', onLoad)
+    return () => window.removeEventListener('load', onLoad)
+  }, [])
+
+  return (
+    <video
+      className={className}
+      src={loadVideo ? VIDEO_SRC : undefined}
+      poster={POSTER_SRC}
+      autoPlay
+      muted
+      loop
+      playsInline
+      aria-hidden="true"
+    />
+  )
+}
 
 function Chevron({ dir = 'right' }) {
   return (
@@ -41,18 +73,11 @@ export default function Hero() {
           <img
             src="/media/hero-billboard.webp"
             alt="Outdoor da Outdoormídia com a mensagem Toda hora, em todo lugar"
+            fetchPriority="high"
             className="pointer-events-none block h-full w-full select-none"
           />
           <div className="absolute left-[10.9%] right-[10.7%] top-[26.6%] bottom-[29.1%] overflow-hidden rounded-[16px]">
-            <video
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-              src={VIDEO_SRC}
-              autoPlay
-              muted
-              loop
-              playsInline
-              aria-hidden="true"
-            />
+            <HeroVideo className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
           </div>
         </div>
       )}
@@ -60,15 +85,7 @@ export default function Hero() {
       {/* ─── Versão 2: vídeo de fundo + outdoor estático (recorte) por cima ─── */}
       {view === 1 && (
         <>
-          <video
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-            src={VIDEO_SRC}
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden="true"
-          />
+          <HeroVideo className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
           <div className="pointer-events-none absolute inset-0 bg-ink/20" />
           <img
             src="/media/outdoor-cutout.webp"

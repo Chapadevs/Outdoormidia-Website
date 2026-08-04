@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/api/adminGuard'
 import { createPost, isSlugTaken } from '@/lib/blog/posts'
 import { validatePostBody } from '@/lib/blog/validate'
+import { revalidateBlog } from '@/lib/revalidate'
 
 export const runtime = 'nodejs'
 
@@ -20,6 +21,7 @@ export async function POST(request) {
   }
 
   const id = await createPost(body)
+  revalidateBlog(body.slug)
 
   return NextResponse.json({ id }, { status: 201 })
 }

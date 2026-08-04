@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/api/adminGuard'
 import { deletePost, isSlugTaken, updatePost } from '@/lib/blog/posts'
 import { validatePostBody } from '@/lib/blog/validate'
+import { revalidateBlog } from '@/lib/revalidate'
 
 export const runtime = 'nodejs'
 
@@ -24,6 +25,7 @@ export async function PUT(request, { params }) {
   if (!result) {
     return NextResponse.json({ error: 'Post não encontrado.' }, { status: 404 })
   }
+  revalidateBlog(body.slug, result.previousSlug)
 
   return NextResponse.json({ id })
 }
@@ -37,6 +39,7 @@ export async function DELETE(_request, { params }) {
   if (!result) {
     return NextResponse.json({ error: 'Post não encontrado.' }, { status: 404 })
   }
+  revalidateBlog(result.slug)
 
   return NextResponse.json({ ok: true })
 }

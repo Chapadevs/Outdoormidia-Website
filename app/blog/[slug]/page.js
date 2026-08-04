@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { headers } from 'next/headers'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -10,8 +10,9 @@ import ShareButtons from '@/components/blog/ShareButtons'
 import { getPublishedPostBySlug } from '@/lib/blog/posts'
 import { getTagsBySlugs } from '@/lib/tags/tags'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
+import { SITE_URL } from '@/lib/constants'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' })
 
@@ -44,10 +45,7 @@ export default async function BlogPostPage({ params }) {
 
   const tags = await getTagsBySlugs('blog', post.tags)
 
-  const headerList = await headers()
-  const host = headerList.get('host')
-  const proto = headerList.get('x-forwarded-proto') || 'http'
-  const shareUrl = `${proto}://${host}/blog/${post.slug}`
+  const shareUrl = `${SITE_URL}/blog/${post.slug}`
 
   return (
     <>
@@ -82,12 +80,16 @@ export default async function BlogPostPage({ params }) {
 
             {post.coverImage && (
               <div className="ticks mt-11">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={post.coverImage}
-                  alt={post.coverAlt || post.title}
-                  className="w-full rounded-[16px] border border-line object-cover"
-                />
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[16px] border border-line">
+                  <Image
+                    src={post.coverImage}
+                    alt={post.coverAlt || post.title}
+                    fill
+                    priority
+                    sizes="(max-width: 900px) 100vw, 860px"
+                    className="object-cover"
+                  />
+                </div>
               </div>
             )}
 

@@ -21,14 +21,20 @@ export const metadata = {
   },
 }
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
+
+// Sem credenciais do Firestore (ex.: build no CI), a página é gerada vazia — a
+// regeneração (ISR) preenche em runtime, onde as credenciais existem.
+async function fetchContent() {
+  try {
+    return await Promise.all([listPublishedPosts(), listTags('blog'), listTagGroups('blog')])
+  } catch {
+    return [[], [], []]
+  }
+}
 
 export default async function BlogPage() {
-  const [posts, tags, groups] = await Promise.all([
-    listPublishedPosts(),
-    listTags('blog'),
-    listTagGroups('blog'),
-  ])
+  const [posts, tags, groups] = await fetchContent()
 
   return (
     <>

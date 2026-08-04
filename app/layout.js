@@ -2,6 +2,7 @@ import { Anton, Archivo } from 'next/font/google'
 import './globals.css'
 import WhatsAppButton from '@/components/widgets/WhatsAppButton'
 import RevealObserver from '@/components/widgets/RevealObserver'
+import { SITE_URL } from '@/lib/constants'
 
 const anton = Anton({
   weight: '400',
@@ -17,6 +18,7 @@ const archivo = Archivo({
 })
 
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Outdoormídia — Out of Home no Sul do Brasil',
   description:
     'Líder em mídia exterior no Paraná e Santa Catarina há 66 anos. Outdoor digital, frontlight, rodovias, aeroporto, shoppings e muito mais.',

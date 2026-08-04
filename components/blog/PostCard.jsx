@@ -1,20 +1,22 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import TagBadge from '@/components/blog/TagBadge'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
 
 const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' })
+const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 400px'
 
 export default function PostCard({ post, tags = [] }) {
   return (
     <article className="ticks flex flex-col overflow-hidden rounded-[16px] border border-line bg-white">
       {post.coverImage && (
-        <Link href={`/blog/${post.slug}`} className="block">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+        <Link href={`/blog/${post.slug}`} className="relative block aspect-[16/9] w-full">
+          <Image
             src={post.coverImage}
             alt={post.coverAlt || post.title}
-            loading="lazy"
-            className="aspect-[16/9] w-full object-cover"
+            fill
+            sizes={CARD_SIZES}
+            className="object-cover"
           />
         </Link>
       )}

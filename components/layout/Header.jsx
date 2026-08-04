@@ -1,6 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
 import Logo from '@/components/ui/Logo'
 import { WHATSAPP_URL } from '@/lib/constants'
 
@@ -18,20 +17,6 @@ const LANGS = ['PT', 'EN', 'ES', '中文']
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [lang, setLang] = useState('PT')
-  const [isAdmin, setIsAdmin] = useState(false)
-
-  useEffect(() => {
-    let active = true
-    fetch('/api/auth/session')
-      .then((res) => res.json())
-      .then((data) => {
-        if (active) setIsAdmin(Boolean(data.isAdmin))
-      })
-      .catch(() => {})
-    return () => {
-      active = false
-    }
-  }, [])
 
   return (
     <header className="sticky top-0 z-[60] border-b border-ink/15 bg-orange/95 backdrop-blur-[10px]">
@@ -54,15 +39,6 @@ export default function Header() {
               {label}
             </a>
           ))}
-          {isAdmin && (
-            <Link
-              href="/admin"
-              className="hidden text-white/85 transition-colors duration-150 hover:text-white max-tab:inline"
-              onClick={() => setMenuOpen(false)}
-            >
-              Painel Admin
-            </Link>
-          )}
           <a
             href={WHATSAPP_URL}
             className="btn btn-on-orange mt-1.5 hidden justify-center max-tab:inline-flex"
@@ -85,15 +61,6 @@ export default function Header() {
               </button>
             ))}
           </div>
-          {isAdmin && (
-            <Link
-              href="/admin"
-              title="Painel administrativo"
-              className="text-xs font-bold tracking-[0.04em] text-white/85 transition-colors duration-150 hover:text-white max-tab:hidden"
-            >
-              Admin
-            </Link>
-          )}
           <a href={WHATSAPP_URL} className="btn btn-on-orange max-mob:hidden">
             Falar agora
           </a>

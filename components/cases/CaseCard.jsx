@@ -1,16 +1,21 @@
+import Image from 'next/image'
 import TagBadge from '@/components/blog/TagBadge'
+
+const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 400px'
 
 export default function CaseCard({ caseItem, tags = [] }) {
   return (
     <article className="flex flex-1 flex-col overflow-hidden rounded-[16px] border border-line bg-white">
       {caseItem.coverImage ? (
-        /* eslint-disable-next-line @next/next/no-img-element */
-        <img
-          src={caseItem.coverImage}
-          alt={caseItem.coverAlt || caseItem.title}
-          loading="lazy"
-          className="aspect-[16/10] w-full object-cover"
-        />
+        <div className="relative aspect-[16/10] w-full">
+          <Image
+            src={caseItem.coverImage}
+            alt={caseItem.coverAlt || caseItem.title}
+            fill
+            sizes={CARD_SIZES}
+            className="object-cover"
+          />
+        </div>
       ) : (
         <div className="ticks flex aspect-[16/10] items-center justify-center border-b border-line bg-bone">
           <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-line-2">
