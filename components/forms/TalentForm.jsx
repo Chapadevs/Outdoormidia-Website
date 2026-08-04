@@ -34,7 +34,7 @@ const MAILTO = `mailto:contato@outdoormidia.com.br?subject=${encodeURIComponent(
 
 const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
 const INPUT =
-  'w-full rounded-[2px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
+  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
 const SELECT = `${INPUT} select-caret cursor-pointer appearance-none pr-[38px]`
 
 export default function TalentForm() {
@@ -52,7 +52,7 @@ export default function TalentForm() {
         <SectionHeading num="02" title="Banco de talentos" className="reveal mb-[34px]" />
 
         {sent ? (
-          <div className="ticks max-w-[620px] border border-line bg-white p-[38px] max-tab:p-7">
+          <div className="ticks max-w-[620px] rounded-[16px] border border-line bg-white p-[38px] max-tab:p-7">
             <div className="eyebrow">
               <b>Recebido</b>
             </div>
@@ -90,7 +90,7 @@ export default function TalentForm() {
             </div>
 
             <form
-              className="ticks reveal flex flex-col gap-5 border border-line bg-white p-[38px] max-tab:p-7"
+              className="ticks reveal flex flex-col gap-5 rounded-[16px] border border-line bg-white p-[38px] max-tab:p-7"
               onSubmit={handleSubmit}
             >
               <div className="flex flex-col gap-2">

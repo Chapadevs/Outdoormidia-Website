@@ -7,7 +7,7 @@ import { slugify } from '@/lib/slugify'
 
 const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
 const INPUT =
-  'w-full rounded-[2px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
+  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
 
 const EMPTY = {
   title: '',
@@ -194,7 +194,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
 
   return (
     <form
-      className="ticks flex flex-col gap-5 border border-line bg-white p-[38px] max-mob:p-7"
+      className="ticks flex flex-col gap-5 rounded-[16px] border border-line bg-white p-[38px] max-mob:p-7"
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-2">
@@ -272,7 +272,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
             </Link>
           </p>
         ) : (
-          <div className="flex flex-col gap-3 rounded-[2px] border-[1.5px] border-line bg-paper px-3.5 py-3">
+          <div className="flex flex-col gap-3 rounded-[16px] border-[1.5px] border-line bg-paper px-3.5 py-3">
             {groups.map((group) => {
               const groupTags = allTags.filter((tag) => tag.group === group.slug)
               if (groupTags.length === 0) return null
@@ -289,7 +289,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
                         type="button"
                         aria-pressed={selected}
                         onClick={() => toggleTag(tag.slug)}
-                        className={`rounded-[2px] border px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.1em] transition duration-150 ${
+                        className={`rounded-full border px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.1em] transition duration-150 ${
                           selected
                             ? 'border-orange bg-orange text-white'
                             : 'border-line-2 text-ink-soft hover:border-orange hover:text-orange'
@@ -329,7 +329,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
             <img
               src={post.coverImage}
               alt={post.coverAlt || 'Capa do post'}
-              className="h-24 w-40 rounded-[2px] border border-line object-cover"
+              className="h-24 w-40 rounded-[10px] border border-line object-cover"
             />
           )}
           <div className="flex flex-col gap-2">
@@ -404,7 +404,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
           </div>
         </div>
         {preview ? (
-          <div className="post-body min-h-[320px] rounded-[2px] border-[1.5px] border-line bg-paper px-5 py-4">
+          <div className="post-body min-h-[320px] rounded-[16px] border-[1.5px] border-line bg-paper px-5 py-4">
             {post.content ? (
               <MarkdownContent>{post.content}</MarkdownContent>
             ) : (
@@ -413,7 +413,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
           </div>
         ) : (
           <>
-            <div className="flex flex-wrap items-center gap-1 rounded-[2px] border-[1.5px] border-b-0 border-line bg-bone px-2 py-1.5">
+            <div className="flex flex-wrap items-center gap-1 rounded-t-[10px] border-[1.5px] border-b-0 border-line bg-bone px-2 py-1.5">
               {TOOLBAR.map((action) =>
                 action.divider ? (
                   <span key={action.label} className="mx-1 h-5 w-px bg-line-2" />
@@ -423,7 +423,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
                     type="button"
                     title={action.title}
                     aria-label={action.title}
-                    className="min-w-[30px] rounded-[2px] px-2 py-1.5 text-[13px] font-bold text-ink-soft transition hover:bg-white hover:text-orange"
+                    className="min-w-[30px] rounded-full px-2 py-1.5 text-[13px] font-bold text-ink-soft transition hover:bg-white hover:text-orange"
                     onClick={() => applyToolbar(action)}
                   >
                     {action.icon}
@@ -452,7 +452,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
       </div>
 
       {error && (
-        <p className="rounded-[2px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
+        <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
           {error}
         </p>
       )}

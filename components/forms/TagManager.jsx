@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
 const INPUT =
-  'w-full rounded-[2px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
+  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
 
 async function request(url, method, body) {
   const res = await fetch(url, {
@@ -104,7 +104,7 @@ function TagRow({ tag, scope, groups }) {
         </div>
       ) : (
         <div className="flex flex-wrap items-center gap-4">
-          <span className="rounded-[2px] border border-orange/50 px-2 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-orange">
+          <span className="rounded-full border border-orange/50 px-2 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-orange">
             {tag.name}
           </span>
           <span className="text-sm text-ink-soft">{tag.slug}</span>
@@ -128,7 +128,7 @@ function TagRow({ tag, scope, groups }) {
         </div>
       )}
       {error && (
-        <p className="rounded-[2px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink">
+        <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink">
           {error}
         </p>
       )}
@@ -160,7 +160,7 @@ export default function TagManager({ scope, groups, tags }) {
 
   if (groups.length === 0) {
     return (
-      <p className="rounded-[2px] border-[1.5px] border-line bg-white px-3.5 py-3 text-sm text-ink-soft">
+      <p className="rounded-[10px] border-[1.5px] border-line bg-white px-3.5 py-3 text-sm text-ink-soft">
         Crie um grupo antes de cadastrar tags.
       </p>
     )
@@ -169,7 +169,7 @@ export default function TagManager({ scope, groups, tags }) {
   return (
     <div className="flex flex-col gap-10">
       <form
-        className="ticks flex flex-col gap-5 border border-line bg-white p-[38px] max-mob:p-7"
+        className="ticks flex flex-col gap-5 rounded-[16px] border border-line bg-white p-[38px] max-mob:p-7"
         onSubmit={handleCreate}
       >
         <div className="grid grid-cols-[1fr_auto_auto] items-end gap-5 max-mob:grid-cols-1">
@@ -213,7 +213,7 @@ export default function TagManager({ scope, groups, tags }) {
           </button>
         </div>
         {error && (
-          <p className="rounded-[2px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
+          <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
             {error}
           </p>
         )}

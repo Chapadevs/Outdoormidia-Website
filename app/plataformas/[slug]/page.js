@@ -63,7 +63,7 @@ export default async function PlatformPage({ params }) {
                 </h1>
                 <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">{platform.intro}</p>
               </div>
-              <div className="ticks reveal flex aspect-[16/10] items-center justify-center border border-line bg-bone">
+              <div className="ticks reveal flex aspect-[16/10] items-center justify-center rounded-[16px] border border-line bg-bone">
                 <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-line-2">
                   {platform.name}
                 </span>

@@ -114,7 +114,7 @@ export default async function AdminDashboardPage() {
               <Link
                 key={area.title}
                 href={area.href}
-                className="ticks group flex flex-col rounded-[2px] border border-line bg-white p-6 transition-colors duration-150 hover:border-orange"
+                className="ticks group flex flex-col rounded-[16px] border border-line bg-white p-6 transition-colors duration-150 hover:border-orange"
               >
                 <div className="flex items-center justify-between">
                   <h2 className="m-0 text-[17px] font-extrabold">{area.title}</h2>
@@ -145,11 +145,11 @@ export default async function AdminDashboardPage() {
             {UPCOMING.map((item) => (
               <div
                 key={item.title}
-                className="rounded-[2px] border border-dashed border-line-2 p-6"
+                className="rounded-[16px] border border-dashed border-line-2 p-6"
               >
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="m-0 text-[15px] font-extrabold text-ink-soft">{item.title}</h3>
-                  <span className="shrink-0 rounded-[2px] border border-line-2 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ink-soft">
+                  <span className="shrink-0 rounded-full border border-line-2 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ink-soft">
                     Em breve
                   </span>
                 </div>

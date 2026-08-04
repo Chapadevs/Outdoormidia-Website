@@ -69,7 +69,7 @@ export default function Platforms() {
                 >
                   <div className="overflow-hidden">
                     <div className="grid grid-cols-[1.4fr_1fr] items-center gap-8 px-2 pb-8 pt-1 max-tab:grid-cols-1 max-tab:gap-4 max-mob:px-1">
-                      <div className="ticks flex aspect-[16/7] items-center justify-center border border-line bg-bone max-mob:aspect-[16/9]">
+                      <div className="ticks flex aspect-[16/7] items-center justify-center rounded-[16px] border border-line bg-bone max-mob:aspect-[16/9]">
                         <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-line-2">
                           Case · {p.name}
                         </span>

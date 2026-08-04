@@ -52,7 +52,7 @@ export default function Culture() {
         <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
           {PILARES.map((p) => (
             <article
-              className="ticks reveal flex flex-col gap-4 border border-line bg-white p-7 max-mob:p-6"
+              className="ticks reveal flex flex-col gap-4 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
               key={p.title}
             >
               <h3 className="m-0 text-[19px] font-extrabold text-ink">{p.title}</h3>

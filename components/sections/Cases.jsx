@@ -46,7 +46,7 @@ export default async function Cases() {
                 style={c.coverImage ? { backgroundImage: `url(${c.coverImage})` } : undefined}
               >
                 {firstTag && (
-                  <span className="relative z-[2] self-start rounded-[2px] bg-white/18 px-[11px] py-[7px] text-[11px] font-bold uppercase tracking-[0.16em]">
+                  <span className="relative z-[2] self-start rounded-full bg-white/18 px-[11px] py-[7px] text-[11px] font-bold uppercase tracking-[0.16em]">
                     {firstTag.name}
                   </span>
                 )}

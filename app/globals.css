@@ -57,7 +57,7 @@
   }
 
   .btn {
-    @apply inline-flex cursor-pointer items-center gap-2.5 rounded-[2px] border-[1.5px] border-white bg-transparent px-[26px] py-[15px] text-sm font-bold tracking-[0.02em] text-white transition duration-[180ms] hover:bg-white hover:text-ink;
+    @apply inline-flex cursor-pointer items-center gap-2.5 rounded-full border-[1.5px] border-white bg-transparent px-[26px] py-[15px] text-sm font-bold tracking-[0.02em] text-white transition duration-[180ms] hover:bg-white hover:text-ink;
   }
   .btn-fill {
     @apply border-orange bg-orange text-white hover:border-ink hover:bg-ink hover:text-white;
@@ -84,12 +84,14 @@
     left: 0;
     border-top: 2px solid var(--tick-color);
     border-left: 2px solid var(--tick-color);
+    border-radius: 8px 0 0 0;
   }
   .ticks::after {
     bottom: 0;
     right: 0;
     border-bottom: 2px solid var(--tick-color);
     border-right: 2px solid var(--tick-color);
+    border-radius: 0 0 8px 0;
   }
 
   /* animação de entrada — RevealObserver adiciona .in */
@@ -155,22 +157,22 @@
     @apply my-7 border-l-2 border-orange pl-5 text-lg font-semibold text-ink-soft;
   }
   .post-body img {
-    @apply my-8 w-full rounded-[2px] border border-line;
+    @apply my-8 w-full rounded-[16px] border border-line;
   }
   .post-body hr {
     @apply my-10 border-line;
   }
   .post-body code {
-    @apply rounded-[2px] bg-bone px-1.5 py-0.5 text-[15px];
+    @apply rounded-[10px] bg-bone px-1.5 py-0.5 text-[15px];
   }
   .post-body pre {
-    @apply my-6 overflow-x-auto rounded-[2px] border border-line bg-bone p-5;
+    @apply my-6 overflow-x-auto rounded-[16px] border border-line bg-bone p-5;
   }
   .post-body pre code {
     @apply bg-transparent p-0;
   }
   .post-body table {
-    @apply my-7 w-full border-collapse overflow-hidden rounded-[2px] border border-line text-[15px];
+    @apply my-7 w-full border-collapse overflow-hidden rounded-[16px] border border-line text-[15px];
   }
   .post-body th,
   .post-body td {
@@ -198,7 +200,7 @@
   }
   .range-nota::-webkit-slider-runnable-track {
     height: 6px;
-    border-radius: 2px;
+    border-radius: 999px;
     background: linear-gradient(
       to right,
       var(--color-orange) var(--fill),
@@ -207,7 +209,7 @@
   }
   .range-nota::-moz-range-track {
     height: 6px;
-    border-radius: 2px;
+    border-radius: 999px;
     background: linear-gradient(
       to right,
       var(--color-orange) var(--fill),

@@ -50,7 +50,7 @@ export default function Reviews() {
         <div className="-mx-8 flex snap-x snap-mandatory gap-[18px] overflow-x-auto px-8 pb-6 pt-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {REVIEWS.map((r) => (
             <figure
-              className="ticks m-0 flex flex-[0_0_400px] snap-start flex-col gap-5 border border-line bg-white p-7 max-mob:flex-[0_0_82vw] max-mob:p-6"
+              className="ticks m-0 flex flex-[0_0_400px] snap-start flex-col gap-5 rounded-[16px] border border-line bg-white p-7 max-mob:flex-[0_0_82vw] max-mob:p-6"
               key={r.name}
             >
               <span className="display text-[52px] leading-[0.5] text-orange" aria-hidden="true">

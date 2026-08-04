@@ -43,7 +43,7 @@ export default function Hero() {
             alt="Outdoor da Outdoormídia com a mensagem Toda hora, em todo lugar"
             className="pointer-events-none block h-full w-full select-none"
           />
-          <div className="absolute left-[10.9%] right-[10.7%] top-[26.6%] bottom-[29.1%] overflow-hidden rounded-[2px]">
+          <div className="absolute left-[10.9%] right-[10.7%] top-[26.6%] bottom-[29.1%] overflow-hidden rounded-[16px]">
             <video
               className="pointer-events-none absolute inset-0 h-full w-full object-cover"
               src={VIDEO_SRC}
