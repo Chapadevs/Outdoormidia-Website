@@ -8,6 +8,13 @@ const INPUT =
   'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
 const ERROR = 'rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink'
 
+function parseFormats(value) {
+  return value
+    .split(',')
+    .map((format) => format.trim())
+    .filter(Boolean)
+}
+
 async function request(url, method, body) {
   const res = await fetch(url, {
     method,
@@ -24,6 +31,7 @@ function LocationRow({ location, moving, onMove, onCancelMove }) {
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(location.name)
   const [desc, setDesc] = useState(location.desc)
+  const [formats, setFormats] = useState(location.formats.join(', '))
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
 
@@ -34,6 +42,7 @@ function LocationRow({ location, moving, onMove, onCancelMove }) {
       await request(`/api/admin/locations/${location.id}`, 'PUT', {
         name,
         desc,
+        formats: parseFormats(formats),
         lat: location.lat,
         lng: location.lng,
       })
@@ -78,6 +87,14 @@ function LocationRow({ location, moving, onMove, onCancelMove }) {
             placeholder="Descrição (opcional)"
             aria-label="Descrição da localidade"
           />
+          <input
+            className={`${INPUT} py-2.5`}
+            type="text"
+            value={formats}
+            onChange={(e) => setFormats(e.target.value)}
+            placeholder="Plataformas separadas por vírgula (opcional)"
+            aria-label="Plataformas da localidade"
+          />
           <div className="flex items-center gap-4">
             <button
               type="button"
@@ -94,6 +111,7 @@ function LocationRow({ location, moving, onMove, onCancelMove }) {
                 setEditing(false)
                 setName(location.name)
                 setDesc(location.desc)
+                setFormats(location.formats.join(', '))
                 setError('')
               }}
             >
@@ -105,6 +123,11 @@ function LocationRow({ location, moving, onMove, onCancelMove }) {
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
           <span className="font-extrabold">{location.name}</span>
           {location.desc && <span className="text-sm text-ink-soft">{location.desc}</span>}
+          {location.formats.length > 0 && (
+            <span className="text-xs font-bold uppercase tracking-[0.1em] text-orange">
+              {location.formats.join(' · ')}
+            </span>
+          )}
           <div className="ml-auto flex items-center gap-4">
             <button
               type="button"
@@ -152,6 +175,7 @@ export default function LocationsManager({ locations }) {
   const [movingId, setMovingId] = useState(null)
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
+  const [formats, setFormats] = useState('')
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
 
@@ -164,6 +188,7 @@ export default function LocationsManager({ locations }) {
         await request(`/api/admin/locations/${movingLocation.id}`, 'PUT', {
           name: movingLocation.name,
           desc: movingLocation.desc,
+          formats: movingLocation.formats,
           lat,
           lng,
         })
@@ -182,10 +207,17 @@ export default function LocationsManager({ locations }) {
     setError('')
     setSaving(true)
     try {
-      await request('/api/admin/locations', 'POST', { name, desc, lat: draft.lat, lng: draft.lng })
+      await request('/api/admin/locations', 'POST', {
+        name,
+        desc,
+        formats: parseFormats(formats),
+        lat: draft.lat,
+        lng: draft.lng,
+      })
       setDraft(null)
       setName('')
       setDesc('')
+      setFormats('')
       router.refresh()
     } catch (err) {
       setError(err.message)
@@ -241,6 +273,22 @@ export default function LocationsManager({ locations }) {
                 onChange={(e) => setDesc(e.target.value)}
                 placeholder="Ex.: Outdoors e painéis digitais"
               />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className={LABEL} htmlFor="location-formats">
+                Plataformas
+              </label>
+              <input
+                className={INPUT}
+                id="location-formats"
+                type="text"
+                value={formats}
+                onChange={(e) => setFormats(e.target.value)}
+                placeholder="Ex.: Front Lights, Outdoors Digitais, MUB"
+              />
+              <span className="text-xs text-ink-soft">
+                Separe por vírgula — aparecem na faixa de praças da home.
+              </span>
             </div>
             <div className="flex items-center gap-4">
               <button
