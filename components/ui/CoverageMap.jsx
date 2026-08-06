@@ -8,7 +8,14 @@ const PIN = 26
 const PIN_CORE = 9
 const HIT = 64
 
-export default function CoverageMap({ locations, editable = false, onMapClick, draft = null }) {
+export default function CoverageMap({
+  locations,
+  editable = false,
+  onMapClick,
+  draft = null,
+  highlightId = null,
+  onHighlight,
+}) {
   const containerRef = useRef(null)
   const pathRefs = useRef({})
   const [activeId, setActiveId] = useState(null)
@@ -38,7 +45,7 @@ export default function CoverageMap({ locations, editable = false, onMapClick, d
     }
   }, [])
 
-  const shownId = hoverId || activeId
+  const shownId = hoverId || activeId || highlightId
   const shown = locations.find((l) => l.id === shownId)
   const shownPos = shown ? projectToMap(shown.lat, shown.lng) : null
   const draftPos = draft ? projectToMap(draft.lat, draft.lng) : null
@@ -78,6 +85,11 @@ export default function CoverageMap({ locations, editable = false, onMapClick, d
   function togglePin(id) {
     setActiveState(null)
     setActiveId((cur) => (cur === id ? null : id))
+  }
+
+  function hover(id) {
+    setHoverId(id)
+    onHighlight?.(id)
   }
 
   return (
@@ -132,13 +144,14 @@ export default function CoverageMap({ locations, editable = false, onMapClick, d
           return (
             <g
               key={loc.id}
-              transform={`translate(${x} ${y})${on ? ' scale(1.15)' : ''}`}
+              transform={`translate(${x} ${y})${on ? ' scale(1.35)' : ''}`}
               role="button"
               tabIndex={0}
               aria-label={`${loc.name}${loc.desc ? ` — ${loc.desc}` : ''}`}
               className="cursor-pointer outline-none"
-              onMouseEnter={() => setHoverId(loc.id)}
-              onMouseLeave={() => setHoverId(null)}
+              style={{ transition: 'transform 180ms ease' }}
+              onMouseEnter={() => hover(loc.id)}
+              onMouseLeave={() => hover(null)}
               onClick={(e) => {
                 e.stopPropagation()
                 togglePin(loc.id)

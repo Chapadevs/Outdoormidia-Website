@@ -1,10 +1,10 @@
-import { WHATSAPP_URL } from '@/lib/constants'
+import { WA_FLUTUANTE, waLink } from '@/lib/whatsapp'
 
 export default function WhatsAppButton() {
   return (
     <a
       className="fixed bottom-6 right-6 z-[70] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-[0_14px_32px_-10px_rgba(22,17,13,.45)] transition-transform duration-[180ms] hover:scale-[1.07] max-mob:bottom-4 max-mob:right-4 max-mob:h-13 max-mob:w-13"
-      href={WHATSAPP_URL}
+      href={waLink(WA_FLUTUANTE)}
       aria-label="WhatsApp"
     >
       <svg width="27" height="27" viewBox="0 0 24 24" fill="#fff">

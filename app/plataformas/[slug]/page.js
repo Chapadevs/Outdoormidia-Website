@@ -105,7 +105,7 @@ export default async function PlatformPage({ params }) {
 
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
-            <PlatformFaq faqs={platform.faqs} num={faqNum} />
+            <PlatformFaq faqs={platform.faqs} num={faqNum} platformName={platform.name} />
           </div>
         </section>
 
