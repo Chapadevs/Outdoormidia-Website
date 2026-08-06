@@ -1,7 +1,7 @@
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverageMap from '@/components/ui/CoverageMap'
 import { getLocations } from '@/lib/locations'
-import { WHATSAPP_URL } from '@/lib/constants'
+import { WA_COBERTURA, waLink } from '@/lib/whatsapp'
 
 export default async function Coverage() {
   const locations = await getLocations()
@@ -16,7 +16,7 @@ export default async function Coverage() {
               Do centro de Curitiba ao litoral, das rodovias a Santa Catarina — uma malha de mídia
               que acompanha o fluxo de pessoas em toda a região Sul.
             </p>
-            <a href={WHATSAPP_URL} className="btn mt-7">
+            <a href={waLink(WA_COBERTURA)} className="btn mt-7">
               Consultar disponibilidade
             </a>
           </div>

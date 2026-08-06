@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { WHATSAPP_URL } from '@/lib/constants'
+import { waBriefingPlataforma, waLink } from '@/lib/whatsapp'
 
 const CIDADES = [
   'Curitiba — PR',
@@ -22,18 +22,18 @@ const INPUT =
 const SELECT = `${INPUT} select-caret cursor-pointer appearance-none pr-[38px]`
 
 export default function PlatformProposalForm({ platformName, num = '' }) {
-  const [sent, setSent] = useState(false)
+  const [briefing, setBriefing] = useState(null)
 
   function handleSubmit(e) {
     e.preventDefault()
-    setSent(true)
+    setBriefing(Object.fromEntries(new FormData(e.currentTarget)))
   }
 
   return (
     <div>
       <SectionHeading num={num} title="Peça uma proposta" rule={false} className="mb-6" />
 
-      {sent ? (
+      {briefing ? (
         <div className="ticks max-w-[620px] rounded-[16px] border border-line bg-white p-[38px] max-tab:p-7">
           <div className="eyebrow">
             <b>Recebido</b>
@@ -47,7 +47,10 @@ export default function PlatformProposalForm({ platformName, num = '' }) {
             <b>{platformName}</b> e volta com uma sugestão sob medida em até <b>1 dia útil</b>.
           </p>
           <div className="flex flex-wrap gap-3">
-            <a href={WHATSAPP_URL} className="btn btn-fill">
+            <a
+              href={waLink(waBriefingPlataforma(platformName, briefing))}
+              className="btn btn-fill"
+            >
               Adiantar pelo WhatsApp
             </a>
             <Link href="/" className="btn">

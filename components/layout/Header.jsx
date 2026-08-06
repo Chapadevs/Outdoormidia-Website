@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Logo from '@/components/ui/Logo'
-import { WHATSAPP_URL } from '@/lib/constants'
+import { WA_HEADER, waLink } from '@/lib/whatsapp'
 
 const LINKS = [
   { label: 'Plataformas', href: '/plataformas' },
@@ -40,7 +40,7 @@ export default function Header() {
             </a>
           ))}
           <a
-            href={WHATSAPP_URL}
+            href={waLink(WA_HEADER)}
             className="btn btn-on-orange mt-1.5 hidden justify-center max-tab:inline-flex"
             onClick={() => setMenuOpen(false)}
           >
@@ -61,7 +61,7 @@ export default function Header() {
               </button>
             ))}
           </div>
-          <a href={WHATSAPP_URL} className="btn btn-on-orange max-mob:hidden">
+          <a href={waLink(WA_HEADER)} className="btn btn-on-orange max-mob:hidden">
             Falar agora
           </a>
           <button

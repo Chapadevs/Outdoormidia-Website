@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/ui/Logo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { WHATSAPP_URL } from '@/lib/constants'
+import { waBriefing, waLink } from '@/lib/whatsapp'
 
 const CIDADES = [
   'Curitiba — PR',
@@ -33,11 +33,11 @@ const INPUT =
 const SELECT = `${INPUT} select-caret cursor-pointer appearance-none pr-[38px]`
 
 export default function ProposalForm() {
-  const [sent, setSent] = useState(false)
+  const [briefing, setBriefing] = useState(null)
 
   function handleSubmit(e) {
     e.preventDefault()
-    setSent(true)
+    setBriefing(Object.fromEntries(new FormData(e.currentTarget)))
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -58,7 +58,7 @@ export default function ProposalForm() {
 
       <section className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
         <div className="wrap">
-          {sent ? (
+          {briefing ? (
             <div className="max-w-[620px] pt-12">
               <div className="eyebrow">
                 <b>Recebido</b>
@@ -72,7 +72,7 @@ export default function ProposalForm() {
                 uma sugestão sob medida em até <b>1 dia útil</b>.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href={WHATSAPP_URL} className="btn btn-fill">
+                <a href={waLink(waBriefing(briefing))} className="btn btn-fill">
                   Adiantar pelo WhatsApp
                 </a>
                 <Link href="/" className="btn">

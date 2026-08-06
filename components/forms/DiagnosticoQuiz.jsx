@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { FAIXAS, NOTA_MAXIMA, PERGUNTAS, faixaDoScore } from '@/lib/diagnostico'
-import { WHATSAPP_URL } from '@/lib/constants'
+import { waDiagnostico, waLink } from '@/lib/whatsapp'
 
 export default function DiagnosticoQuiz() {
   const [notas, setNotas] = useState({})
@@ -164,7 +164,10 @@ export default function DiagnosticoQuiz() {
                   formatos e frequência sob medida.
                 </p>
                 <div className="mt-[30px] flex flex-wrap gap-3">
-                  <a href={WHATSAPP_URL} className="btn btn-on-orange">
+                  <a
+                    href={waLink(waDiagnostico(score, NOTA_MAXIMA, faixa.titulo))}
+                    className="btn btn-on-orange"
+                  >
                     Falar com o time
                   </a>
                   <Link href="/proposta" className="btn">

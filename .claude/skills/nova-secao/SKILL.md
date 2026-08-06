@@ -110,7 +110,9 @@ adicionar em `@layer components` com nome `kebab-case`.
 - Sem bibliotecas de UI externas — Tailwind é a única camada de estilo.
 - Sem comentários desnecessários — código autoexplicativo.
 - Texto de usuário sempre em **PT-BR**.
-- WhatsApp: importar `WHATSAPP_URL` de `@/lib/constants`, não hardcode.
+- WhatsApp: usar `waLink(mensagem)` de `@/lib/whatsapp`, não hardcode nem
+  `WHATSAPP_URL` cru. Cada CTA tem sua própria mensagem pré-preenchida — ao
+  criar um CTA novo, adicionar a mensagem nesse módulo.
 - Links internos: `<Link>` de `next/link` (nunca `<a>` para rotas internas).
 
 ## 7. Antes de concluir

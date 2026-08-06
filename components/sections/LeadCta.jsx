@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { WHATSAPP_URL } from '@/lib/constants'
+import { WA_LEAD_CTA, waLink } from '@/lib/whatsapp'
 
 const PERGUNTAS = [
   'Primeira campanha ou já anunciou antes?',
@@ -23,7 +23,7 @@ export default function LeadCta() {
               sob medida.
             </p>
             <div className="mt-[30px] flex flex-wrap gap-3">
-              <a href={WHATSAPP_URL} className="btn btn-on-orange">
+              <a href={waLink(WA_LEAD_CTA)} className="btn btn-on-orange">
                 Iniciar pelo WhatsApp
               </a>
               <Link href="/diagnostico" className="btn">

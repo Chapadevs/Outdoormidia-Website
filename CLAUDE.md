@@ -112,6 +112,7 @@ components/
   widgets/                — WhatsAppButton, RevealObserver, botões de deletar/logout
 lib/
   constants.js            — WHATSAPP_URL, SITE_URL
+  whatsapp.js             — waLink() + a mensagem pré-preenchida de cada CTA
   revalidate.js           — invalidação de ISR após mutação no admin
   firebase/               — admin (server), client, session, storage
   blog/ cases/ tags/      — leitura, escrita e validação de cada coleção
@@ -150,6 +151,7 @@ Padrão: **desktop-first** — base para desktop, overrides com as variants Tail
 | Hero com vídeo (carrega após o load, com poster) | `components/sections/Hero.jsx` |
 | Seções da home | `components/sections/` |
 | WhatsApp flutuante | `components/widgets/WhatsAppButton.jsx` |
+| WhatsApp com mensagem pré-preenchida por CTA (pré-qualificação) | `lib/whatsapp.js` |
 | ProposalForm (briefing) | `app/proposta/` |
 | Plataformas — índice + página das 8 | `app/plataformas/`, `lib/platforms.js` |
 | Cases com filtro por tag | `app/cases/`, `lib/cases/` |
@@ -168,7 +170,6 @@ Padrão: **desktop-first** — base para desktop, overrides com as variants Tail
 | Feature | Observação |
 |---|---|
 | `sitemap.xml` e `robots.txt` | Não existem. Metadata e `metadataBase` já estão prontos |
-| WhatsApp com pré-perguntas qualificadoras | Hoje o botão vai direto para o `wa.me` |
 | Idiomas (PT / EN / ES / ZH) | Os botões do `Header` só trocam `useState` — não há i18n |
 | Envio de e-mail nos formulários | Falta integrar Resend |
 | Simulador de campanha | — |
@@ -244,14 +245,26 @@ Padrão: **desktop-first** — base para desktop, overrides com as variants Tail
 
 ## WhatsApp — Pré-qualificação de Leads
 
-Antes de redirecionar ao WhatsApp, o usuário responde:
-1. É sua primeira campanha em OOH ou já anunciou antes?
-2. CNPJ da empresa (se possuir)
-3. Cidade onde quer aparecer
-4. E-mail de contato
-5. WhatsApp para retorno
+A pré-qualificação acontece **na própria mensagem**, não em um modal antes do
+redirect. Cada CTA de WhatsApp do site abre a conversa com um `?text=` próprio,
+escrito na voz do visitante e adaptado ao momento do clique. Tudo vive em
+[`lib/whatsapp.js`](lib/whatsapp.js) — nunca montar a URL na mão.
 
-Implementar como modal ou página de mini-formulário antes do redirect.
+```js
+import { waLink, WA_HEADER } from '@/lib/whatsapp'
+<a href={waLink(WA_HEADER)}>Falar agora</a>
+```
+
+- Mensagens fixas (constantes): flutuante, Header, Cobertura e LeadCta. As duas
+  últimas trazem campos a preencher (praça, período, primeira campanha, CNPJ) —
+  são os CTAs de maior intenção.
+- Mensagens dinâmicas (funções): FAQ da home e da plataforma levam a pergunta
+  aberta; o diagnóstico leva a nota e a faixa; os dois formulários de proposta
+  levam o briefing recém-enviado.
+
+Ao criar um CTA novo, adicionar a mensagem em `lib/whatsapp.js` em vez de
+reaproveitar uma existente — o texto é o que diz ao comercial de onde o lead
+veio.
 
 ---
 

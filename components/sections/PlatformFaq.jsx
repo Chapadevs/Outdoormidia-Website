@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { WHATSAPP_URL } from '@/lib/constants'
+import { waFaqPlataforma, waLink } from '@/lib/whatsapp'
 
-export default function PlatformFaq({ faqs, num = '' }) {
+export default function PlatformFaq({ faqs, num = '', platformName }) {
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
@@ -52,7 +52,10 @@ export default function PlatformFaq({ faqs, num = '' }) {
       </div>
       <p className="mt-9 max-w-[820px] text-[15px] text-ink-soft">
         Não encontrou sua dúvida?{' '}
-        <a href={WHATSAPP_URL} className="font-bold text-orange hover:underline">
+        <a
+          href={waLink(waFaqPlataforma(platformName, faqs[openIndex]?.q))}
+          className="font-bold text-orange hover:underline"
+        >
           Fale com o nosso time no WhatsApp.
         </a>
       </p>
