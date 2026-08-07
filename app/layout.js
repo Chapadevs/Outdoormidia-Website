@@ -1,19 +1,13 @@
-import { Anton, Archivo } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import WhatsAppButton from '@/components/widgets/WhatsAppButton'
 import RevealObserver from '@/components/widgets/RevealObserver'
 import { SITE_URL } from '@/lib/constants'
 
-const anton = Anton({
-  weight: '400',
+const poppins = Poppins({
+  weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
-  variable: '--font-anton',
-  display: 'swap',
-})
-
-const archivo = Archivo({
-  subsets: ['latin'],
-  variable: '--font-archivo',
+  variable: '--font-poppins',
   display: 'swap',
 })
 
@@ -32,7 +26,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" className={`${anton.variable} ${archivo.variable}`}>
+    <html lang="pt-BR" className={poppins.variable}>
       <body>
         {children}
         <WhatsAppButton />
