@@ -16,7 +16,7 @@ export default async function AdminLayout({ children }) {
     <div className="min-h-screen bg-paper">
       <header className="sticky top-0 z-[60] border-b border-line bg-paper/85 backdrop-blur-[10px]">
         <div className="wrap flex h-[74px] items-center gap-[30px] max-mob:h-16 max-mob:gap-4">
-          <Logo />
+          <Logo className="bg-ink" />
           <span className="eyebrow max-mob:hidden">
             Painel <b>Admin</b>
           </span>

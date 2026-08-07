@@ -66,13 +66,13 @@ renderizados com `.map()`. Nunca repetir markup manualmente.
 Tokens de cor (usar como utilitários Tailwind): `bg-paper`, `bg-bone`, `text-ink`,
 `text-ink-soft`, `text-orange`, `border-line`, `border-line-2`, `bg-orange`.
 
-Fontes: `font-sans` (Archivo, padrão) e `font-display` (Anton, para números e
+Fontes: `font-sans` (Poppins, padrão) e `font-display` (Poppins, para números e
 headlines grandes).
 
 Primitivos em `@layer components` (`app/globals.css`):
 
 - **`.wrap`** — container centralizado, `max-width: 1280px`, `padding: 0 32px`
-- **`.display`** — Anton, uppercase, branco, `line-height: .86`
+- **`.display`** — Poppins, uppercase, branco, `line-height: .86`
 - **`.eyebrow`** — rótulo pequeno, uppercase, `letter-spacing: .22em`
 - **`.btn`** (outline) · **`.btn-fill`** (laranja sólido) · **`.btn-on-orange`**
   (branco sobre laranja)

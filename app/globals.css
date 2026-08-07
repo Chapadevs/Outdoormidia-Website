@@ -27,8 +27,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-archivo), system-ui, sans-serif;
-  --font-display: var(--font-anton), sans-serif;
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+  --font-display: var(--font-poppins), sans-serif;
 }
 
 @layer base {
@@ -182,15 +182,24 @@
     @apply bg-bone font-extrabold;
   }
 
+  /* wordmark da marca — PNG branco recolorido por mask; a cor vem do bg-* */
+  .logo-mark {
+    display: block;
+    aspect-ratio: 920 / 103;
+    -webkit-mask: url("/media/logo.png") no-repeat left center / contain;
+    mask: url("/media/logo.png") no-repeat left center / contain;
+  }
+
   .select-caret {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A3F35' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 14px center;
   }
 
-  /* barra de nota 0–10 — preenchimento via --fill */
+  /* barra de nota 0–10 — preenchimento via --fill, com marcações de 10 em 10 */
   .range-nota {
     --fill: 0%;
+    --thumb-line: var(--color-line-2);
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
@@ -198,23 +207,24 @@
     background: transparent;
     cursor: pointer;
   }
+  .range-nota[data-respondida='true'] {
+    --thumb-line: var(--color-orange);
+  }
   .range-nota::-webkit-slider-runnable-track {
     height: 6px;
     border-radius: 999px;
-    background: linear-gradient(
-      to right,
-      var(--color-orange) var(--fill),
-      var(--color-line) var(--fill)
-    );
+    background-color: var(--color-line);
+    background-image:
+      linear-gradient(to right, var(--color-orange) var(--fill), transparent var(--fill)),
+      repeating-linear-gradient(to right, var(--color-line-2) 0 1px, transparent 1px 10%);
   }
   .range-nota::-moz-range-track {
     height: 6px;
     border-radius: 999px;
-    background: linear-gradient(
-      to right,
-      var(--color-orange) var(--fill),
-      var(--color-line) var(--fill)
-    );
+    background-color: var(--color-line);
+    background-image:
+      linear-gradient(to right, var(--color-orange) var(--fill), transparent var(--fill)),
+      repeating-linear-gradient(to right, var(--color-line-2) 0 1px, transparent 1px 10%);
   }
   .range-nota::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -222,25 +232,29 @@
     width: 20px;
     height: 20px;
     margin-top: -7px;
-    border: 2px solid var(--color-orange);
+    border: 2px solid var(--thumb-line);
     border-radius: 999px;
-    background: var(--color-paper);
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(22, 17, 13, 0.18);
     transition: 0.15s;
   }
   .range-nota::-moz-range-thumb {
     width: 20px;
     height: 20px;
-    border: 2px solid var(--color-orange);
+    border: 2px solid var(--thumb-line);
     border-radius: 999px;
-    background: var(--color-paper);
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(22, 17, 13, 0.18);
     transition: 0.15s;
   }
   .range-nota:hover::-webkit-slider-thumb,
   .range-nota:active::-webkit-slider-thumb {
+    border-color: var(--color-orange);
     background: var(--color-orange);
   }
   .range-nota:hover::-moz-range-thumb,
   .range-nota:active::-moz-range-thumb {
+    border-color: var(--color-orange);
     background: var(--color-orange);
   }
   .range-nota:focus-visible {
@@ -253,12 +267,6 @@
   .range-nota:focus-visible::-moz-range-thumb {
     outline: 2px solid var(--color-orange);
     outline-offset: 2px;
-  }
-  .range-nota[data-respondida='true']::-webkit-slider-thumb {
-    background: var(--color-orange);
-  }
-  .range-nota[data-respondida='true']::-moz-range-thumb {
-    background: var(--color-orange);
   }
 }
 

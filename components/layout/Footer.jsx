@@ -28,7 +28,7 @@ export default function Footer() {
       <div className="wrap">
         <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 max-tab:grid-cols-2 max-tab:gap-x-10 max-tab:gap-y-8 max-mob:gap-x-6 max-mob:gap-y-[30px] max-xs:grid-cols-1">
           <div className="max-tab:col-span-full max-xs:col-span-1">
-            <Logo />
+            <Logo className="bg-ink" />
             <p className="mt-[18px] max-w-[32ch] text-[14.5px]">
               Out of Home no Sul do Brasil há 66 anos. Sua marca onde as pessoas estão.
             </p>

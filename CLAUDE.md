@@ -15,7 +15,7 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 ### Atual
 - **Next.js 16** (App Router, Turbopack) + **React 19** — JavaScript puro (sem TypeScript)
 - **Tailwind CSS v4** — tokens da marca no `@theme` de `app/globals.css`; estilos via classes utilitárias no JSX. Primitivos do design system (`.wrap`, `.display`, `.eyebrow`, `.btn*`, `.ticks`, `.reveal`, `.select-caret`) em `@layer components`
-- **Fontes:** Anton + Archivo via `next/font/google` (vars `--font-anton` / `--font-archivo`, expostas como `font-display` / `font-sans`)
+- **Fontes:** Poppins via `next/font/google` (pesos 400–900, var `--font-poppins`, exposta em `font-sans` e `font-display`)
 - **Firebase** — Firestore (conteúdo), Auth (sessão do admin), Storage (capas). Acesso server-side via `firebase-admin` em `lib/firebase/admin.js`
 - **CMS próprio** — painel em `app/admin/`, protegido por cookie de sessão + claim `admin`. Não usamos CMS headless de terceiros
 - **Deploy:** Firebase App Hosting (Cloud Run) — ver [`DEPLOY.md`](DEPLOY.md)
@@ -54,9 +54,9 @@ Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, 
 
 | Classe/uso | Fonte | Peso | Observação |
 |---|---|---|---|
-| `.display` | Anton | 400 | Uppercase, branco, `line-height:.86` |
-| `.eyebrow` | Archivo | 700 | 12px, uppercase, `letter-spacing:.22em` |
-| Corpo | Archivo | 400–900 | 17px base |
+| `.display` | Poppins | 400 | Uppercase, branco, `line-height:.86` |
+| `.eyebrow` | Poppins | 700 | 12px, uppercase, `letter-spacing:.22em` |
+| Corpo | Poppins | 400–900 | 17px base |
 
 ### Primitivos do design system (`@layer components` em `app/globals.css`)
 
@@ -103,8 +103,8 @@ app/
   api/auth/session/       — cria/valida/apaga o cookie de sessão do admin
 components/
   layout/                 — Header (nav sticky), Footer
-  sections/               — Hero, Ticker, Platforms, Cases, Impact, Reviews,
-                            Coverage, Faq, Culture, LeadCta, PlatformFaq
+  sections/               — Hero, Ticker, Institutional, Platforms, Cases, Impact,
+                            Reviews, Coverage, Faq, Culture, LeadCta, PlatformFaq
   blog/ cases/            — cards, explorers com filtro, markdown, share
   forms/                  — 10 formulários (públicos + editores do admin)
   ui/                     — Logo, SectionHeading, Breadcrumb, TagFilter,
@@ -118,8 +118,8 @@ lib/
   blog/ cases/ tags/      — leitura, escrita e validação de cada coleção
   platforms.js            — as 8 plataformas (dados estáticos, não vem do Firestore)
   locations.js            — praças; mapShapes/mapProjection alimentam o CoverageMap
-public/media/             — hero-video-opt.mp4, hero-poster.webp, hero-billboard.webp,
-                            outdoor-cutout.webp
+public/media/             — video-hero.mp4 (fundo do Hero), logo.png (wordmark branco,
+                            recolorido por mask no primitivo .logo-mark)
 scripts/                  — seed-admin, migrate-tags-scope, generate-map-paths
 ```
 
@@ -148,8 +148,9 @@ Padrão: **desktop-first** — base para desktop, overrides com as variants Tail
 | Feature | Onde |
 |---|---|
 | Layout base / identidade visual / responsividade | `app/globals.css`, componentes |
-| Hero com vídeo (carrega após o load, com poster) | `components/sections/Hero.jsx` |
+| Hero com vídeo de fundo (carrega após o load da página) | `components/sections/Hero.jsx` |
 | Seções da home | `components/sections/` |
+| Bloco institucional (texto + foto) entre o ticker e as plataformas | `components/sections/Institutional.jsx` |
 | WhatsApp flutuante | `components/widgets/WhatsAppButton.jsx` |
 | WhatsApp com mensagem pré-preenchida por CTA (pré-qualificação) | `lib/whatsapp.js` |
 | ProposalForm (briefing) | `app/proposta/` |

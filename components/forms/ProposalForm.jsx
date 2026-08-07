@@ -45,7 +45,7 @@ export default function ProposalForm() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-[60] border-b border-line bg-paper/85 backdrop-blur-[10px]">
         <div className="wrap flex h-[74px] items-center gap-[30px] max-mob:h-16 max-mob:gap-4">
-          <Logo />
+          <Logo className="bg-ink" />
           <div className="ml-auto flex items-center">
             <Link href="/" className="btn">
               ← Voltar ao site

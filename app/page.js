@@ -1,6 +1,7 @@
 import Header from '@/components/layout/Header'
 import Hero from '@/components/sections/Hero'
 import Ticker from '@/components/sections/Ticker'
+import Institutional from '@/components/sections/Institutional'
 import Platforms from '@/components/sections/Platforms'
 import Cases from '@/components/sections/Cases'
 import Impact from '@/components/sections/Impact'
@@ -18,6 +19,7 @@ export default function Home() {
       <Header />
       <Hero />
       <Ticker />
+      <Institutional />
       <Platforms />
       <Cases />
       <Impact />
