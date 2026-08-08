@@ -13,7 +13,7 @@ export default function Institutional() {
               Referência ontem. <span className="text-orange">Inovação hoje.</span>
             </h2>
             <p className="reveal mt-6 max-w-[46ch] text-lg leading-relaxed text-ink-soft max-mob:text-base">
-              São 67 anos colocando marcas onde a cidade passa, seja Curitiba ao Litoral, das
+              São 66 anos colocando marcas onde a cidade passa, seja Curitiba ao Litoral, das
               rodovias a Santa Catarina. Enquanto o mercado descobre a mídia OOH, a Outdoormídia
               já é parte do out of home e DOOH há mais de seis décadas. Da capital à estrada:
               onde sua marca merece estar.

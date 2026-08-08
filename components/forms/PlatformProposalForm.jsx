@@ -53,7 +53,7 @@ export default function PlatformProposalForm({ platformName, num = '' }) {
             >
               Adiantar pelo WhatsApp
             </a>
-            <Link href="/" className="btn">
+            <Link href="/" className="btn btn-ghost">
               Voltar ao início
             </Link>
           </div>

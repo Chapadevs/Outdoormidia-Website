@@ -47,7 +47,7 @@ export default function Reviews() {
         </p>
       </div>
       <div className="wrap">
-        <div className="-mx-8 flex snap-x snap-mandatory gap-[18px] overflow-x-auto px-8 pb-6 pt-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="rail">
           {REVIEWS.map((r) => (
             <figure
               className="ticks m-0 flex flex-[0_0_400px] snap-start flex-col gap-5 rounded-[16px] border border-line bg-white p-7 max-mob:flex-[0_0_82vw] max-mob:p-6"

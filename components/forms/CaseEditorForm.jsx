@@ -336,7 +336,7 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
           <div className="flex flex-col gap-2">
             <button
               type="button"
-              className="btn border-ink text-ink hover:border-orange hover:text-orange"
+              className="btn btn-ghost"
               disabled={uploading}
               onClick={() => coverInputRef.current?.click()}
             >

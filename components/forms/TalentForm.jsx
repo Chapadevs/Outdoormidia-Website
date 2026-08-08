@@ -69,7 +69,7 @@ export default function TalentForm() {
               <a href={MAILTO} className="btn btn-fill">
                 Enviar currículo por e-mail
               </a>
-              <Link href="/" className="btn">
+              <Link href="/" className="btn btn-ghost">
                 Voltar ao início
               </Link>
             </div>

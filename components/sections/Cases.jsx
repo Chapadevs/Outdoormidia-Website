@@ -34,12 +34,12 @@ export default async function Cases() {
         </div>
       </div>
       <div className="wrap">
-        <div className="-mx-8 flex snap-x snap-mandatory gap-[18px] overflow-x-auto px-8 pb-6 pt-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="rail">
           {featured.map((c) => {
             const firstTag = c.tags.map((slug) => tagMap.get(slug)).find(Boolean)
             return (
               <div
-                className={`relative flex aspect-[3/4] flex-[0_0_360px] snap-start flex-col justify-between overflow-hidden bg-cover bg-center p-6 text-white after:absolute after:inset-0 after:bg-[linear-gradient(to_top,rgba(22,17,13,.42),transparent_60%)] after:content-[''] max-mob:flex-[0_0_78vw] ${
+                className={`relative flex aspect-[3/4] flex-[0_0_360px] snap-start flex-col justify-between overflow-hidden rounded-[16px] bg-cover bg-center p-6 text-white after:absolute after:inset-0 after:bg-[linear-gradient(to_top,rgba(22,17,13,.42),transparent_60%)] after:content-[''] max-mob:flex-[0_0_78vw] ${
                   c.coverImage ? '' : 'bg-ink-soft'
                 }`}
                 key={c.id}
