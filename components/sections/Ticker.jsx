@@ -14,7 +14,7 @@ const ITEMS = [
 function Track({ ariaHidden }) {
   return (
     <span
-      className="flex items-center gap-9 whitespace-nowrap text-[13px] font-bold uppercase tracking-[0.16em]"
+      className="flex items-center gap-9 whitespace-nowrap pr-9 text-[13px] font-bold uppercase tracking-[0.16em]"
       aria-hidden={ariaHidden || undefined}
     >
       {ITEMS.map((item) => (
@@ -22,7 +22,6 @@ function Track({ ariaHidden }) {
           {item} <i className="not-italic text-orange">/</i>
         </span>
       ))}
-      &nbsp;
     </span>
   )
 }
@@ -30,7 +29,7 @@ function Track({ ariaHidden }) {
 export default function Ticker() {
   return (
     <div className="overflow-hidden bg-paper py-[13px] text-ink">
-      <div className="flex w-max animate-ticker gap-9 motion-reduce:animate-none">
+      <div className="flex w-max animate-ticker motion-reduce:animate-none">
         <Track />
         <Track ariaHidden />
       </div>

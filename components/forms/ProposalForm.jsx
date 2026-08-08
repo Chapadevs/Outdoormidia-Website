@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
-import Logo from '@/components/ui/Logo'
+import HeaderShell from '@/components/layout/HeaderShell'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import { waBriefing, waLink } from '@/lib/whatsapp'
 
@@ -43,16 +43,11 @@ export default function ProposalForm() {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-[60] border-b border-line bg-paper/85 backdrop-blur-[10px]">
-        <div className="wrap flex h-[74px] items-center gap-[30px] max-mob:h-16 max-mob:gap-4">
-          <Logo className="bg-ink" />
-          <div className="ml-auto flex items-center">
-            <Link href="/" className="btn">
-              ← Voltar ao site
-            </Link>
-          </div>
-        </div>
-      </header>
+      <HeaderShell>
+        <Link href="/" className="btn btn-ghost ml-auto">
+          ← Voltar ao site
+        </Link>
+      </HeaderShell>
 
       <Breadcrumb items={[{ label: 'Solicitar Proposta' }]} />
 
@@ -75,7 +70,7 @@ export default function ProposalForm() {
                 <a href={waLink(waBriefing(briefing))} className="btn btn-fill">
                   Adiantar pelo WhatsApp
                 </a>
-                <Link href="/" className="btn">
+                <Link href="/" className="btn btn-ghost">
                   Voltar ao início
                 </Link>
               </div>

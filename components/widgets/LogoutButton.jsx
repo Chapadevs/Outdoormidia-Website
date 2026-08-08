@@ -18,7 +18,7 @@ export default function LogoutButton() {
       type="button"
       onClick={handleLogout}
       disabled={loading}
-      className="btn border-line text-ink hover:bg-ink hover:text-white disabled:opacity-60"
+      className="btn btn-ghost disabled:opacity-60"
     >
       {loading ? 'Saindo…' : 'Sair'}
     </button>

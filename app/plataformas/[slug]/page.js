@@ -14,6 +14,16 @@ import { listTags } from '@/lib/tags/tags'
 
 export const revalidate = 300
 
+// Sem credenciais do Firestore (ex.: build no CI), a página sai sem os cases —
+// a regeneração (ISR) preenche em runtime, onde as credenciais existem.
+async function fetchCases(slug) {
+  try {
+    return await Promise.all([getPublishedCasesByPlatform(slug), listTags('cases')])
+  } catch {
+    return [[], []]
+  }
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const platform = getPlatformBySlug(slug)
@@ -37,10 +47,7 @@ export default async function PlatformPage({ params }) {
   const platform = getPlatformBySlug(slug)
   if (!platform) notFound()
 
-  const [cases, tags] = await Promise.all([
-    getPublishedCasesByPlatform(platform.slug),
-    listTags('cases'),
-  ])
+  const [cases, tags] = await fetchCases(platform.slug)
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
   const faqNum = cases.length > 0 ? '03' : '02'
   const formNum = cases.length > 0 ? '04' : '03'

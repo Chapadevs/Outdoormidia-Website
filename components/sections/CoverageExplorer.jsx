@@ -95,7 +95,7 @@ export default function CoverageExplorer({ locations }) {
         <span className="display text-[clamp(22px,2.7vw,34px)] leading-[0.9]">
           13 milhões de impactos por mês só em Curitiba
         </span>
-        <a href={waLink(WA_COBERTURA_CURITIBA)} className="btn btn-on-orange whitespace-nowrap">
+        <a href={waLink(WA_COBERTURA_CURITIBA)} className="btn btn-on-orange">
           Consultar disponibilidade
         </a>
       </div>

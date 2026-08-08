@@ -41,7 +41,7 @@ export default async function BlogPage() {
       <Header />
       <main>
         <Breadcrumb items={[{ label: 'Blog' }]} />
-        <section className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
+        <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
               Conteúdo <b>Out of Home</b>
@@ -49,21 +49,23 @@ export default async function BlogPage() {
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               Blog.
             </h1>
-            <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               Ideias, dados e estratégias de mídia exterior para colocar a sua marca nas ruas
               do Paraná e de Santa Catarina.
             </p>
+          </div>
+        </section>
 
-            <div className="mt-[70px] max-mob:mt-12">
-              <SectionHeading num="01" title="Últimos artigos" className="reveal mb-[34px]" />
-              {posts.length === 0 ? (
-                <p className="reveal text-lg text-ink-soft">
-                  Ainda não há artigos publicados. Volte em breve.
-                </p>
-              ) : (
-                <PostsExplorer posts={posts} tags={tags} groups={groups} />
-              )}
-            </div>
+        <section className="pb-[110px] max-mob:pb-[72px]">
+          <div className="wrap">
+            <SectionHeading num="01" title="Últimos artigos" className="reveal mb-[34px]" />
+            {posts.length === 0 ? (
+              <p className="reveal text-lg text-ink-soft">
+                Ainda não há artigos publicados. Volte em breve.
+              </p>
+            ) : (
+              <PostsExplorer posts={posts} tags={tags} groups={groups} />
+            )}
           </div>
         </section>
       </main>

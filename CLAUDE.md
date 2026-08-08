@@ -60,14 +60,19 @@ Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, 
 
 ### Primitivos do design system (`@layer components` em `app/globals.css`)
 
-- **`.btn`** — botão outline em cápsula (`rounded-full`, borda branca, fundo transparente)
+- **`.btn`** — botão outline em cápsula (`rounded-full`, borda branca, fundo transparente). **Só sobre fundo escuro ou laranja** — sobre `--paper`/branco ele fica invisível; nesse caso use `.btn-ghost`
 - **`.btn-fill`** — botão laranja sólido
 - **`.btn-on-orange`** — botão branco sobre fundo laranja
+- **`.btn-ghost`** — contraparte do `.btn` para fundos claros (borda e texto `--ink`, preenche de `--ink` no hover)
+- **`.rail`** — carrossel horizontal com snap que sangra até a borda do `.wrap`. Já traz o `scroll-padding` que impede o snap de encostar o primeiro card na borda da tela. Usar em vez de repetir `-mx-8 … px-8`
 - **`.ticks`** — cantoneiras laranja via `::before/::after`, com o canto interno curvo (motivo de identidade visual); cor sobrescrevível com `[--tick-color:#fff]`
 - **`.reveal`** — elemento com animação de entrada (adiciona `.in` via IntersectionObserver global)
 - **`.wrap`** — container centralizado com `max-width: 1280px` e `padding: 0 32px`
 - **`.select-caret`** — seta de `<select>` estilizado
 - **`SectionHeading`** (`components/ui/SectionHeading.jsx`) — cabeçalho de seção (número laranja + h2 + linha)
+- **`StatGrid`** (`components/ui/StatGrid.jsx`) — faixa de números da marca (`size="lg"` na home, `"md"` em Culture)
+- **`Accordion`** (`components/ui/Accordion.jsx`) — acordeão controlado do FAQ; o pai guarda o `openIndex` porque precisa da pergunta aberta para montar o link de WhatsApp
+- **`HeaderShell`** (`components/layout/HeaderShell.jsx`) — barra clara de proposta/login/painel (o `Header` laranja é só do site institucional)
 
 Padding de seção: `py-[110px] max-mob:py-[72px]` direto no JSX. Todo o restante do estilo é utilitário Tailwind no componente.
 
@@ -129,12 +134,17 @@ scripts/                  — seed-admin, migrate-tags-scope, generate-map-paths
 
 | Breakpoint | Layout |
 |---|---|
-| `> 980px` | Desktop — grids cheios, nav completa |
+| `> 1080px` | Desktop — grids cheios, nav com espaçamento pleno |
+| `≤ 1080px` | Laptop — nav do header com gaps reduzidos (ainda completa) |
 | `≤ 980px` | Tablet — grids 2 colunas, nav com hamburger |
 | `≤ 560px` | Mobile — grid 1 coluna, padding reduzido |
-| `≤ 380px` | Mobile pequeno — impact grid 1 coluna |
+| `≤ 380px` | Mobile pequeno — StatGrid em 1 coluna |
 
-Padrão: **desktop-first** — base para desktop, overrides com as variants Tailwind `max-tab:` (≤980px), `max-mob:` (≤560px) e `max-xs:` (≤380px), definidas como breakpoints no `@theme`.
+Padrão: **desktop-first** — base para desktop, overrides com as variants Tailwind `max-lap:` (≤1080px), `max-tab:` (≤980px), `max-mob:` (≤560px) e `max-xs:` (≤380px), definidas como breakpoints no `@theme`.
+
+O padding lateral do `.wrap` muda no `max-mob` (32px → 20px). Qualquer elemento que
+sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medidas —
+é o que o `.rail` faz.
 
 ---
 

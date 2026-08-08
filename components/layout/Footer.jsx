@@ -1,25 +1,29 @@
+import Link from 'next/link'
 import Logo from '@/components/ui/Logo'
+import { PLATFORMS } from '@/lib/platforms'
 
 const COLUNAS = [
   {
     title: 'Plataformas',
     links: [
-      { label: 'Outdoor Digital', href: '#' },
-      { label: 'Front Light', href: '#' },
-      { label: 'Rodovias', href: '#' },
-      { label: 'Aeroporto', href: '#' },
-      { label: 'Malls', href: '#' },
+      ...PLATFORMS.slice(0, 4).map((p) => ({ label: p.name, href: `/plataformas/${p.slug}` })),
+      { label: 'Ver todas', href: '/plataformas' },
     ],
   },
   {
     title: 'Empresa',
     links: [
-      { label: 'A Outdoormídia', href: '#' },
-      { label: 'Responsabilidade Social', href: '#' },
+      { label: 'A Outdoormídia', href: '/#institucional' },
+      { label: 'Cases', href: '/cases' },
       { label: 'Blog', href: '/blog' },
       { label: 'Trabalhe Conosco', href: '/trabalhe-conosco' },
     ],
   },
+]
+
+const SOCIAIS = [
+  { label: 'Instagram', href: 'https://www.instagram.com/outdoormidia/' },
+  { label: 'LinkedIn', href: 'https://br.linkedin.com/company/outdoormidia' },
 ]
 
 export default function Footer() {
@@ -39,13 +43,13 @@ export default function Footer() {
                 {col.title}
               </h4>
               {col.links.map((l) => (
-                <a
+                <Link
                   key={l.label}
                   href={l.href}
-                  className="mb-[11px] block text-[14.5px] text-ink-soft hover:text-ink"
+                  className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
                 >
                   {l.label}
-                </a>
+                </Link>
               ))}
             </div>
           ))}
@@ -53,25 +57,29 @@ export default function Footer() {
             <h4 className="m-0 mb-[18px] text-xs font-bold uppercase tracking-[0.14em] text-ink">
               Contato
             </h4>
-            <p className="mb-[11px] block text-[14.5px]">+55 41 3207.6400</p>
+            <a
+              href="tel:+554132076400"
+              className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
+            >
+              +55 41 3207.6400
+            </a>
             <a
               href="mailto:contato@outdoormidia.com.br"
-              className="mb-[11px] block text-[14.5px] text-ink-soft hover:text-ink"
+              className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
             >
               contato@outdoormidia.com.br
             </a>
-            <a
-              href="https://www.instagram.com/outdoormidia/"
-              className="mb-[11px] block text-[14.5px] text-ink-soft hover:text-ink"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://br.linkedin.com/company/outdoormidia"
-              className="mb-[11px] block text-[14.5px] text-ink-soft hover:text-ink"
-            >
-              LinkedIn
-            </a>
+            {SOCIAIS.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
+              >
+                {s.label}
+              </a>
+            ))}
           </div>
         </div>
         <div className="mt-[54px] flex flex-wrap justify-between gap-3 border-t border-line pt-6 text-xs uppercase tracking-[0.06em]">

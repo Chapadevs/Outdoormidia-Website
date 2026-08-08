@@ -20,12 +20,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-[60] border-b border-ink/15 bg-orange/95 backdrop-blur-[10px]">
-      <div className="wrap flex h-[74px] items-center gap-[30px] max-mob:h-16 max-mob:gap-4">
+      <div className="wrap flex h-[74px] items-center gap-[30px] max-lap:gap-4 max-mob:h-16">
         <Logo />
         <nav
-          className={`ml-[18px] flex gap-[26px] text-sm font-semibold ${
+          className={`ml-[18px] flex gap-[26px] text-sm font-semibold max-lap:ml-0 max-lap:gap-[18px] ${
             menuOpen
-              ? 'max-tab:absolute max-tab:inset-x-0 max-tab:top-[74px] max-tab:flex-col max-tab:gap-4 max-tab:border-b max-tab:border-ink/15 max-tab:bg-orange max-tab:px-8 max-tab:pb-[26px] max-tab:pt-[22px] max-tab:shadow-[0_24px_32px_-24px_rgba(22,17,13,.3)] max-mob:top-16'
+              ? 'max-tab:absolute max-tab:inset-x-0 max-tab:top-[74px] max-tab:flex-col max-tab:gap-4 max-tab:border-b max-tab:border-ink/15 max-tab:bg-orange max-tab:px-8 max-tab:pb-[26px] max-tab:pt-[22px] max-tab:shadow-[0_24px_32px_-24px_rgba(22,17,13,.3)] max-mob:top-16 max-mob:px-5'
               : 'max-tab:hidden'
           }`}
         >
@@ -47,7 +47,7 @@ export default function Header() {
             Falar agora
           </a>
         </nav>
-        <div className="ml-auto flex items-center gap-[18px] max-mob:gap-0">
+        <div className="ml-auto flex items-center gap-[18px] max-lap:gap-3 max-mob:gap-0">
           <div className="flex gap-2.5 text-xs font-bold tracking-[0.04em] max-tab:hidden">
             {LANGS.map((l) => (
               <button

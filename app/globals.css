@@ -10,6 +10,7 @@
   --color-line: rgba(22, 17, 13, 0.16);
   --color-line-2: rgba(22, 17, 13, 0.3);
 
+  --breakpoint-lap: 1080px;
   --breakpoint-tab: 980px;
   --breakpoint-mob: 560px;
   --breakpoint-xs: 380px;
@@ -57,13 +58,29 @@
   }
 
   .btn {
-    @apply inline-flex cursor-pointer items-center gap-2.5 rounded-full border-[1.5px] border-white bg-transparent px-[26px] py-[15px] text-sm font-bold tracking-[0.02em] text-white transition duration-[180ms] hover:bg-white hover:text-ink;
+    @apply inline-flex shrink-0 cursor-pointer items-center gap-2.5 whitespace-nowrap rounded-full border-[1.5px] border-white bg-transparent px-[26px] py-[15px] text-sm font-bold tracking-[0.02em] text-white transition duration-[180ms] hover:bg-white hover:text-ink;
   }
   .btn-fill {
     @apply border-orange bg-orange text-white hover:border-ink hover:bg-ink hover:text-white;
   }
   .btn-on-orange {
     @apply border-white bg-white text-ink hover:border-ink hover:bg-ink hover:text-white;
+  }
+  /* contraparte do .btn para fundos claros — o .btn puro é branco sobre branco */
+  .btn-ghost {
+    @apply border-ink text-ink hover:border-ink hover:bg-ink hover:text-white;
+  }
+
+  /* carrossel horizontal que sangra até a borda do .wrap — o padding negativo
+     acompanha o do .wrap para os cards alinharem com o título da seção. O
+     scroll-padding é o que impede o snap de comer esse padding e encostar o
+     primeiro card na borda da tela. */
+  .rail {
+    @apply -mx-8 flex snap-x snap-mandatory scroll-pl-8 gap-[18px] overflow-x-auto px-8 pb-6 pt-1.5 max-mob:-mx-5 max-mob:scroll-pl-5 max-mob:px-5;
+    scrollbar-width: none;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
   }
 
   /* cantoneiras laranja — motivo de identidade */

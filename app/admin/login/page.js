@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Logo from '@/components/ui/Logo'
+import HeaderShell from '@/components/layout/HeaderShell'
 import AdminLoginForm from '@/components/forms/AdminLoginForm'
 
 export const metadata = {
@@ -10,16 +10,11 @@ export const metadata = {
 export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-paper">
-      <header className="sticky top-0 z-[60] border-b border-line bg-paper/85 backdrop-blur-[10px]">
-        <div className="wrap flex h-[74px] items-center gap-[30px] max-mob:h-16 max-mob:gap-4">
-          <Logo className="bg-ink" />
-          <div className="ml-auto flex items-center">
-            <Link href="/" className="btn">
-              ← Voltar ao site
-            </Link>
-          </div>
-        </div>
-      </header>
+      <HeaderShell>
+        <Link href="/" className="btn btn-ghost ml-auto">
+          ← Voltar ao site
+        </Link>
+      </HeaderShell>
 
       <section className="py-[110px] max-mob:py-[72px]">
         <div className="wrap flex justify-center">

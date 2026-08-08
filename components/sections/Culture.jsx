@@ -1,4 +1,5 @@
 import SectionHeading from '@/components/ui/SectionHeading'
+import StatGrid from '@/components/ui/StatGrid'
 
 const NUMEROS = [
   { n: '66', label: 'Anos de história' },
@@ -33,21 +34,7 @@ export default function Culture() {
           cidade inteira vê.
         </p>
 
-        <div className="reveal mb-[54px] grid grid-cols-4 border-l border-ink/15 max-tab:grid-cols-2 max-xs:grid-cols-1">
-          {NUMEROS.map((item) => (
-            <div
-              className="border-r border-ink/15 px-7 py-[38px] max-mob:px-[22px] max-mob:py-[26px] max-xs:border-b max-xs:border-r-0"
-              key={item.label}
-            >
-              <div className="display text-[clamp(38px,5vw,64px)] leading-[0.9] text-orange">
-                {item.n}
-              </div>
-              <div className="mt-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-soft">
-                {item.label}
-              </div>
-            </div>
-          ))}
-        </div>
+        <StatGrid stats={NUMEROS} size="md" className="reveal mb-[54px]" />
 
         <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
           {PILARES.map((p) => (

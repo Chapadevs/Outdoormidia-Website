@@ -34,7 +34,7 @@ export default function DiagnosticoPage() {
               <br />
               presença de marca.
             </h1>
-            <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               Descubra como sua marca está sendo vista e lembrada no mercado. São 7 perguntas, nota
               de 0 a 10 em cada uma, e um resultado na hora.
             </p>

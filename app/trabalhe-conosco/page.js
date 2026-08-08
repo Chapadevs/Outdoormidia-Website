@@ -33,7 +33,7 @@ export default function TrabalheConoscoPage() {
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               Trabalhe conosco.
             </h1>
-            <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               Há 66 anos colocamos marcas nas ruas do Paraná e de Santa Catarina. Se você quer
               trabalhar com mídia que a cidade inteira vê, seu lugar pode ser aqui.
             </p>
