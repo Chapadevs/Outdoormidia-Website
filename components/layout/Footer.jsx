@@ -1,25 +1,20 @@
 import Link from 'next/link'
 import Logo from '@/components/ui/Logo'
-import { PLATFORMS } from '@/lib/platforms'
+import { NAV } from '@/lib/nav'
 
-const COLUNAS = [
-  {
-    title: 'Plataformas',
-    links: [
-      ...PLATFORMS.slice(0, 4).map((p) => ({ label: p.name, href: `/plataformas/${p.slug}` })),
-      { label: 'Ver todas', href: '/plataformas' },
-    ],
-  },
-  {
-    title: 'Empresa',
-    links: [
-      { label: 'A Outdoormídia', href: '/#institucional' },
-      { label: 'Cases', href: '/cases' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Trabalhe Conosco', href: '/trabalhe-conosco' },
-    ],
-  },
-]
+// Uma coluna por hub, com as filhas do menu; item de nível 1 sem filhas fecha a
+// primeira coluna em vez de virar coluna própria.
+const HUBS = NAV.filter((item) => item.children)
+const SOLTOS = NAV.filter((item) => !item.children)
+
+const COLUNAS = HUBS.map((hub, i) => ({
+  title: hub.label,
+  links: [
+    { label: 'Visão geral', href: hub.href },
+    ...hub.children,
+    ...(i === 0 ? SOLTOS : []),
+  ],
+}))
 
 const SOCIAIS = [
   { label: 'Instagram', href: 'https://www.instagram.com/outdoormidia/' },
@@ -30,7 +25,7 @@ export default function Footer() {
   return (
     <footer className="bg-paper pb-[38px] pt-[70px] text-ink-soft max-mob:pb-8 max-mob:pt-14">
       <div className="wrap">
-        <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 max-tab:grid-cols-2 max-tab:gap-x-10 max-tab:gap-y-8 max-mob:gap-x-6 max-mob:gap-y-[30px] max-xs:grid-cols-1">
+        <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_1fr_1fr] gap-8 max-lap:gap-5 max-tab:grid-cols-3 max-tab:gap-x-10 max-tab:gap-y-8 max-mob:grid-cols-2 max-mob:gap-x-6 max-mob:gap-y-[30px] max-xs:grid-cols-1">
           <div className="max-tab:col-span-full max-xs:col-span-1">
             <Logo className="bg-ink" />
             <p className="mt-[18px] max-w-[32ch] text-[14.5px]">

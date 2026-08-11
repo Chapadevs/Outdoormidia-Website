@@ -1,0 +1,87 @@
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
+import Breadcrumb from '@/components/ui/Breadcrumb'
+import SectionHeading from '@/components/ui/SectionHeading'
+import StatGrid from '@/components/ui/StatGrid'
+import LeadCta from '@/components/sections/LeadCta'
+import { DIFERENCIAIS } from '@/lib/diferenciais'
+
+const DESCRIPTION =
+  'Face única, audiência mensurada, câmeras ao vivo 24×7 e circuitos MUB segmentados: o que separa uma campanha que a cidade vê de uma que passa despercebida.'
+
+const PROVA = [
+  { n: '380M', label: 'Impactos por mês' },
+  { n: '138', label: 'Telas digitais' },
+  { n: '24×7', label: 'Câmeras ao vivo' },
+  { n: '6', label: 'Circuitos MUB' },
+]
+
+export const metadata = {
+  title: 'Diferenciais — Outdoormídia',
+  description: DESCRIPTION,
+  alternates: { canonical: '/solucoes/diferenciais' },
+  openGraph: {
+    title: 'Diferenciais — Outdoormídia',
+    description: DESCRIPTION,
+    locale: 'pt_BR',
+    type: 'website',
+  },
+}
+
+export default function DiferenciaisPage() {
+  return (
+    <>
+      <Header />
+      <main>
+        <Breadcrumb items={[{ label: 'Soluções', href: '/solucoes' }, { label: 'Diferenciais' }]} />
+
+        <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
+          <div className="wrap">
+            <div className="eyebrow reveal">Soluções · 6 diferenciais</div>
+            <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
+              Diferenciais.
+            </h1>
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
+              Mídia exterior todo mundo vende. O que muda é a exclusividade do ponto, a medição
+              do público e quem responde quando a campanha entra no ar.
+            </p>
+          </div>
+        </section>
+
+        <section className="pb-[110px] max-mob:pb-[72px]">
+          <div className="wrap">
+            <SectionHeading num="01" title="Os seis" className="reveal mb-[34px]" />
+            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
+              {DIFERENCIAIS.map((d) => (
+                <article
+                  className="ticks reveal flex flex-col gap-4 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
+                  key={d.slug}
+                >
+                  <span className="display text-[30px] leading-none text-orange">{d.num}</span>
+                  <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
+                    {d.title}
+                  </h2>
+                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{d.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-[110px] max-mob:pb-[72px]">
+          <div className="wrap">
+            <SectionHeading num="02" title="A prova" className="reveal mb-[34px]" />
+            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
+              Nenhum dos números acima depende de confiança: todos são medidos e podem ser
+              conferidos com o nosso time.
+            </p>
+            <StatGrid stats={PROVA} size="md" className="reveal" />
+          </div>
+        </section>
+
+        <LeadCta />
+      </main>
+      <Footer />
+    </>
+  )
+}

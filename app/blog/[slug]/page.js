@@ -51,10 +51,16 @@ export default async function BlogPostPage({ params }) {
     <>
       <Header />
       <main>
-        <Breadcrumb items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]} />
+        <Breadcrumb
+          items={[
+            { label: 'Blog', href: '/blog' },
+            { label: 'Artigos', href: '/blog/artigos' },
+            { label: post.title },
+          ]}
+        />
         <article className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
           <div className="wrap max-w-[860px]">
-            <Link href="/blog" className="eyebrow hover:text-orange">
+            <Link href="/blog/artigos" className="eyebrow hover:text-orange">
               ← Todos os artigos
             </Link>
             {post.publishedAt && (
@@ -119,7 +125,7 @@ export default async function BlogPostPage({ params }) {
                   Pedir uma proposta
                 </Link>
                 <Link
-                  href="/blog"
+                  href="/blog/artigos"
                   className="btn border-ink text-ink hover:border-orange hover:bg-transparent hover:text-orange"
                 >
                   Ver mais artigos

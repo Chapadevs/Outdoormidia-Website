@@ -4,13 +4,13 @@ import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { PLATFORMS } from '@/lib/platforms'
 
-export default function Platforms() {
+export default function Platforms({ num = '02' }) {
   const [openSlug, setOpenSlug] = useState(null)
 
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="plataformas">
       <div className="wrap">
-        <SectionHeading num="01" title="Plataformas" className="reveal mb-[34px]" />
+        <SectionHeading num={num} title="Plataformas" className="reveal mb-[34px]" />
         <div className="reveal border-t border-ink">
           {PLATFORMS.map((p) => {
             const isOpen = openSlug === p.slug
