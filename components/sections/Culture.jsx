@@ -23,11 +23,11 @@ const PILARES = [
   },
 ]
 
-export default function Culture() {
+export default function Culture({ num = '01' }) {
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="cultura">
       <div className="wrap">
-        <SectionHeading num="01" title="Por que a Outdoormídia" className="reveal mb-[34px]" />
+        <SectionHeading num={num} title="Por que a Outdoormídia" className="reveal mb-[34px]" />
         <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
           Somos a empresa que coloca marcas nas ruas do Paraná e de Santa Catarina desde 1959.
           Do outdoor impresso ao painel de LED, quem entra no time trabalha com mídia que a

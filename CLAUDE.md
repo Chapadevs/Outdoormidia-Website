@@ -97,9 +97,12 @@ app/
   layout.js               — fontes, metadata (metadataBase), WhatsAppButton + RevealObserver
   page.js                 — home (revalidate 3600)
   globals.css             — Tailwind (@theme com tokens + @layer components com primitivos)
-  blog/                   — listagem (ISR 300) + [slug] do artigo
+  sobre/                  — hub Sobre nós (linha do tempo, cultura, trabalhe conosco)
+  solucoes/               — hub + diferenciais/ e regioes/ (mapa + lista por praça)
+  anunciante/             — hub + midia-kit/, simulador/ e faq/
+  blog/                   — hub (portas Cases e Artigos + destaque), artigos/ e [slug]
   cases/                  — listagem com filtro por tag (ISR 300)
-  plataformas/            — índice + [slug] de cada uma das 8 plataformas
+  plataformas/            — índice + [slug] de cada uma das 9 plataformas
   diagnostico/            — quiz de diagnóstico de marca
   proposta/               — briefing
   trabalhe-conosco/       — banco de talentos
@@ -107,9 +110,10 @@ app/
   api/admin/              — CRUD do CMS (guardado por lib/api/adminGuard.js)
   api/auth/session/       — cria/valida/apaga o cookie de sessão do admin
 components/
-  layout/                 — Header (nav sticky), Footer
-  sections/               — Hero, Ticker, Institutional, Platforms, Cases, Impact,
-                            Reviews, Coverage, Faq, Culture, LeadCta, PlatformFaq
+  layout/                 — Header (sticky, menu colapsável sobre lib/nav.js), Footer
+  sections/               — Hero, Ticker, Institutional, Diferenciais, Platforms, Cases,
+                            Impact, Reviews, BlogTeaser, Coverage, Faq, FaqCategorias,
+                            Culture, Qualifier, Process, LeadCta, PlatformFaq
   blog/ cases/            — cards, explorers com filtro, markdown, share
   forms/                  — 10 formulários (públicos + editores do admin)
   ui/                     — Logo, SectionHeading, Breadcrumb, TagFilter,
@@ -117,11 +121,15 @@ components/
   widgets/                — WhatsAppButton, RevealObserver, botões de deletar/logout
 lib/
   constants.js            — WHATSAPP_URL, SITE_URL
+  nav.js                  — árvore de navegação (hubs + nível 2); Header e Footer leem daqui
   whatsapp.js             — waLink() + a mensagem pré-preenchida de cada CTA
   revalidate.js           — invalidação de ISR após mutação no admin
   firebase/               — admin (server), client, session, storage
   blog/ cases/ tags/      — leitura, escrita e validação de cada coleção
-  platforms.js            — as 8 plataformas (dados estáticos, não vem do Firestore)
+  platforms.js            — as 9 plataformas (dados estáticos, não vem do Firestore)
+  diferenciais.js         — os 6 diferenciais; faq.js — perguntas com categoria
+  sobre.js                — marcos da linha do tempo; midiakit.js — materiais para download
+  simulador.js            — parâmetros da estimativa de campanha (impactos, CPM)
   locations.js            — praças; mapShapes/mapProjection alimentam o CoverageMap
 public/media/             — video-hero.mp4 (fundo do Hero), logo.png (wordmark branco,
                             recolorido por mask no primitivo .logo-mark)
@@ -164,10 +172,17 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | WhatsApp flutuante | `components/widgets/WhatsAppButton.jsx` |
 | WhatsApp com mensagem pré-preenchida por CTA (pré-qualificação) | `lib/whatsapp.js` |
 | ProposalForm (briefing) | `app/proposta/` |
-| Plataformas — índice + página das 8 | `app/plataformas/`, `lib/platforms.js` |
+| Plataformas — índice + página das 9 | `app/plataformas/`, `lib/platforms.js` |
 | Cases com filtro por tag | `app/cases/`, `lib/cases/` |
-| Blog com CMS próprio | `app/blog/`, `app/admin/`, `lib/blog/` |
-| FAQ | `components/sections/Faq.jsx`, `PlatformFaq.jsx` |
+| Blog com CMS próprio | `app/blog/artigos/`, `app/admin/`, `lib/blog/` |
+| Hub do Blog (portas Cases e Artigos + destaque) | `app/blog/page.js` |
+| Menu colapsável com os hubs e o nível 2 | `components/layout/Header.jsx`, `lib/nav.js` |
+| Hub Sobre nós (linha do tempo + cultura) | `app/sobre/`, `lib/sobre.js` |
+| Hub Soluções + Diferenciais + Regiões | `app/solucoes/`, `lib/diferenciais.js` |
+| Área do anunciante (hub + 4 ferramentas) | `app/anunciante/` |
+| Simulador de campanha (estimativa de impactos e CPM) | `app/anunciante/simulador/`, `lib/simulador.js` |
+| Mídia Kit / materiais de apoio | `app/anunciante/midia-kit/`, `lib/midiakit.js` |
+| FAQ | `components/sections/Faq.jsx`, `FaqCategorias.jsx`, `PlatformFaq.jsx`, `lib/faq.js` |
 | Avaliações de clientes | `components/sections/Reviews.jsx` |
 | Banco de talentos | `app/trabalhe-conosco/`, `components/forms/TalentForm.jsx` |
 | Diagnóstico de marca (quiz) | `app/diagnostico/`, `lib/diagnostico.js` |
@@ -181,10 +196,14 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Feature | Observação |
 |---|---|
 | `sitemap.xml` e `robots.txt` | Não existem. Metadata e `metadataBase` já estão prontos |
-| Idiomas (PT / EN / ES / ZH) | Os botões do `Header` só trocam `useState` — não há i18n |
+| Idiomas (PT / EN / ES / ZH) | Os botões de idioma (agora dentro do menu) só trocam `useState` — não há i18n |
 | Envio de e-mail nos formulários | Falta integrar Resend |
-| Simulador de campanha | — |
-| Área de downloads | — |
+| Arquivos do Mídia Kit | As páginas existem; falta o cliente entregar PDFs e assets (`lib/midiakit.js`) |
+| Números oficiais do simulador | `lib/simulador.js` usa ordem de grandeza estimada — falta CPM e alcance por plataforma |
+| Filhas de Sobre nós (Ambiental, Social, Governança) | Ramo 02 do fluxo; dependem de dado auditável |
+| Podcasts (3ª porta do Blog) | Fora por ora — depende de episódios gravados. Cases seguem em `/cases`, não em `/blog/cases` |
+| Retaxonomia das plataformas (22 produtos sob 9 formatos) | Icônicos agregando Elegancy/Green/Regenerativo, + Rodovias e Digital Signage |
+| Páginas de sistema (`/obrigado`, `/privacidade`, `/termos`, 404) | Ramo 06 do fluxo |
 | Automação de marketing | — |
 | Testes automatizados | Nenhum. Regressão só aparece em conferência manual |
 
