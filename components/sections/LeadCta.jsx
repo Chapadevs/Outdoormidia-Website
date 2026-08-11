@@ -1,51 +1,31 @@
 import Link from 'next/link'
-import { WA_LEAD_CTA, waLink } from '@/lib/whatsapp'
-
-const PERGUNTAS = [
-  'Primeira campanha ou já anunciou antes?',
-  'Em qual cidade você quer aparecer?',
-  'CNPJ, e-mail e WhatsApp para contato.',
-]
+import QualifierForm from '@/components/forms/QualifierForm'
+import { WA_ANUNCIAR_JA, waLinkMercadoOoh } from '@/lib/whatsapp'
 
 export default function LeadCta() {
   return (
-    <section className="relative bg-orange text-white">
+    <section className="relative bg-orange text-white" id="formulario">
       <div className="wrap">
-        <div className="grid grid-cols-[1.1fr_0.9fr] items-center gap-12 py-[90px] max-tab:grid-cols-1 max-tab:gap-[34px] max-tab:py-[60px] max-mob:py-[52px]">
+        <div className="grid grid-cols-[1fr_1.05fr] items-center gap-12 py-[90px] max-tab:grid-cols-1 max-tab:gap-[34px] max-tab:py-[60px] max-mob:py-[52px]">
           <div className="reveal">
             <h2 className="m-0 font-display text-[clamp(36px,6vw,76px)] font-normal uppercase leading-[0.9]">
-              Conte sua
+              Sua campanha
               <br />
-              campanha.
+              em poucos passos.
             </h2>
             <p className="mt-5 max-w-[40ch] text-white/[.92]">
-              Responda 3 perguntas rápidas e nosso time comercial volta com uma sugestão de ativos
-              sob medida.
+              Você entende do seu negócio. A gente entende de colocar sua marca nos lugares certos.
             </p>
             <div className="mt-[30px] flex flex-wrap gap-3">
-              <a href={waLink(WA_LEAD_CTA)} className="btn btn-on-orange">
-                Iniciar pelo WhatsApp
+              <a href={waLinkMercadoOoh(WA_ANUNCIAR_JA)} className="btn btn-on-orange">
+                Anunciar já
               </a>
               <Link href="/diagnostico" className="btn">
-                Faça um diagnóstico
+                Diagnóstico de Presença
               </Link>
             </div>
           </div>
-          <div className="ticks reveal rounded-[16px] border border-white/30 bg-white/[.12] p-[30px] [--tick-color:#fff] max-mob:p-6">
-            <ol className="m-0 mb-6 flex list-none flex-col gap-4 p-0">
-              {PERGUNTAS.map((q, i) => (
-                <li key={q} className="flex items-start gap-3.5 text-[15px] font-semibold">
-                  <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full border-[1.5px] border-white font-display text-[15px]">
-                    {i + 1}
-                  </span>
-                  {q}
-                </li>
-              ))}
-            </ol>
-            <a href="/proposta" className="btn btn-on-orange w-full justify-center">
-              Quero uma proposta
-            </a>
-          </div>
+          <QualifierForm />
         </div>
       </div>
     </section>

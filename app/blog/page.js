@@ -8,6 +8,7 @@ import LeadCta from '@/components/sections/LeadCta'
 import { listPublishedPosts } from '@/lib/blog/posts'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
+import { PODCAST, EPISODIOS } from '@/lib/podcast'
 
 const DESCRIPTION =
   'Conteúdo Out of Home da Outdoormídia: cases de campanhas reais no Paraná e em Santa Catarina e artigos sobre mídia exterior, audiência e formatos.'
@@ -59,8 +60,8 @@ export default async function BlogPage() {
               Blog.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Duas leituras diferentes da mesma rua: o que já aconteceu nela, nos cases, e o que
-              você precisa saber antes de ocupá-la, nos artigos.
+              Três leituras da mesma rua: o que já aconteceu nela, nos cases; o que você precisa
+              saber antes de ocupá-la, nos artigos; e quem decide onde a marca aparece, no podcast.
             </p>
           </div>
         </section>
@@ -124,7 +125,7 @@ export default async function BlogPage() {
               title="Por onde começar"
               className="reveal mb-[34px]"
             />
-            <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
+            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
               <Link
                 href="/cases"
                 className={`reveal group relative flex min-h-[340px] flex-col justify-between overflow-hidden rounded-[16px] bg-ink bg-cover bg-center p-10 text-white after:absolute after:inset-0 after:bg-[linear-gradient(to_top,rgba(22,17,13,.78),rgba(22,17,13,.25))] after:content-[''] max-mob:min-h-[260px] max-mob:p-7`}
@@ -184,6 +185,37 @@ export default async function BlogPage() {
                   )}
                   <span className="mt-5 flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
                     Ver artigos
+                    <span
+                      aria-hidden
+                      className="text-base transition-transform duration-200 group-hover:translate-x-1"
+                    >
+                      →
+                    </span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                href="/blog/podcast"
+                className="ticks reveal group flex min-h-[340px] flex-col justify-between rounded-[16px] border border-line bg-bone p-10 transition-colors duration-200 hover:border-orange max-mob:min-h-[260px] max-mob:p-7"
+              >
+                <span className="eyebrow">Ouvir</span>
+                <div>
+                  <h3 className="m-0 font-display text-[clamp(34px,5vw,54px)] uppercase leading-[0.9] text-ink transition-colors duration-200 group-hover:text-orange">
+                    Podcast
+                  </h3>
+                  <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-ink-soft">
+                    {PODCAST.tagline} Conversas com quem decide onde uma marca aparece.
+                  </p>
+                  <ul className="m-0 mt-6 flex list-none flex-col gap-2 border-t border-line p-0 pt-5">
+                    {EPISODIOS.slice(0, 3).map((ep) => (
+                      <li className="truncate text-[14px] font-semibold text-ink-soft" key={ep.slug}>
+                        — {ep.title}
+                      </li>
+                    ))}
+                  </ul>
+                  <span className="mt-5 flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
+                    Ver episódios
                     <span
                       aria-hidden
                       className="text-base transition-transform duration-200 group-hover:translate-x-1"

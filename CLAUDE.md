@@ -113,7 +113,7 @@ components/
   layout/                 — Header (sticky, menu colapsável sobre lib/nav.js), Footer
   sections/               — Hero, Ticker, Institutional, Diferenciais, Platforms, Cases,
                             Impact, Reviews, BlogTeaser, Coverage, Faq, FaqCategorias,
-                            Culture, Qualifier, Process, LeadCta, PlatformFaq
+                            Culture, Process, LeadCta (bloco laranja + QualifierForm), PlatformFaq
   blog/ cases/            — cards, explorers com filtro, markdown, share
   forms/                  — 10 formulários (públicos + editores do admin)
   ui/                     — Logo, SectionHeading, Breadcrumb, TagFilter,
@@ -175,9 +175,11 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Plataformas — índice + página das 9 | `app/plataformas/`, `lib/platforms.js` |
 | Cases com filtro por tag | `app/cases/`, `lib/cases/` |
 | Blog com CMS próprio | `app/blog/artigos/`, `app/admin/`, `lib/blog/` |
-| Hub do Blog (portas Cases e Artigos + destaque) | `app/blog/page.js` |
+| Hub do Blog (portas Cases, Artigos e Podcast + destaque) | `app/blog/page.js` |
+| Podcast — 3ª porta do Blog (estrutura pronta; episódios em `TODO(cliente)`) | `app/blog/podcast/`, `lib/podcast.js` |
 | Menu colapsável com os hubs e o nível 2 | `components/layout/Header.jsx`, `lib/nav.js` |
 | Hub Sobre nós (linha do tempo + cultura) | `app/sobre/`, `lib/sobre.js` |
+| Filhas de Sobre nós — Ambiental, Social, Governança (estrutura pronta; conteúdo em `TODO(cliente)`) | `app/sobre/{ambiental,social,governanca}/`, `lib/esg.js` |
 | Hub Soluções + Diferenciais + Regiões | `app/solucoes/`, `lib/diferenciais.js` |
 | Área do anunciante (hub + 4 ferramentas) | `app/anunciante/` |
 | Simulador de campanha (estimativa de impactos e CPM) | `app/anunciante/simulador/`, `lib/simulador.js` |
@@ -200,8 +202,8 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Envio de e-mail nos formulários | Falta integrar Resend |
 | Arquivos do Mídia Kit | As páginas existem; falta o cliente entregar PDFs e assets (`lib/midiakit.js`) |
 | Números oficiais do simulador | `lib/simulador.js` usa ordem de grandeza estimada — falta CPM e alcance por plataforma |
-| Filhas de Sobre nós (Ambiental, Social, Governança) | Ramo 02 do fluxo; dependem de dado auditável |
-| Podcasts (3ª porta do Blog) | Fora por ora — depende de episódios gravados. Cases seguem em `/cases`, não em `/blog/cases` |
+| Conteúdo de Ambiental / Social / Governança | Páginas no ar, dados em `lib/esg.js` sob `TODO(cliente)`. Falta o lastro: números com prazo, certificações, projetos e PDFs. `/sobre/ambiental` está com `robots: noindex` até lá |
+| Conteúdo do Podcast | Estrutura no ar em `/blog/podcast` com episódios de exemplo em `lib/podcast.js` sob `TODO(cliente)`. Falta gravar os episódios e preencher o campo `audio`; a página está com `robots: noindex` até lá |
 | Retaxonomia das plataformas (22 produtos sob 9 formatos) | Icônicos agregando Elegancy/Green/Regenerativo, + Rodovias e Digital Signage |
 | Páginas de sistema (`/obrigado`, `/privacidade`, `/termos`, 404) | Ramo 06 do fluxo |
 | Automação de marketing | — |
@@ -285,9 +287,12 @@ import { waLink, WA_HEADER } from '@/lib/whatsapp'
 <a href={waLink(WA_HEADER)}>Falar agora</a>
 ```
 
-- Mensagens fixas (constantes): flutuante, Header, Cobertura e LeadCta. As duas
-  últimas trazem campos a preencher (praça, período, primeira campanha, CNPJ) —
+- Mensagens fixas (constantes): flutuante, Header, Cobertura e o "Anunciar já" do
+  LeadCta. As duas últimas trazem campos a preencher (praça, período, empresa) —
   são os CTAs de maior intenção.
+- O "Anunciar já" é o único CTA que **não** vai para o comercial da Outdoormídia:
+  usa `waLinkMercadoOoh()`, que aponta para o número da MercadoOOH
+  (`MERCADOOH_WHATSAPP_URL` em `lib/constants.js`).
 - Mensagens dinâmicas (funções): FAQ da home e da plataforma levam a pergunta
   aberta; o diagnóstico leva a nota e a faixa; os dois formulários de proposta
   levam o briefing recém-enviado.

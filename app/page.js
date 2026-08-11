@@ -10,7 +10,6 @@ import Process from '@/components/sections/Process'
 import Reviews from '@/components/sections/Reviews'
 import BlogTeaser from '@/components/sections/BlogTeaser'
 import Coverage from '@/components/sections/Coverage'
-import Qualifier from '@/components/sections/Qualifier'
 import LeadCta from '@/components/sections/LeadCta'
 import Faq from '@/components/sections/Faq'
 import Footer from '@/components/layout/Footer'
@@ -32,7 +31,6 @@ export default function Home() {
       <Reviews />
       <BlogTeaser />
       <Coverage />
-      <Qualifier />
       <LeadCta />
       <Faq />
       <Footer />
