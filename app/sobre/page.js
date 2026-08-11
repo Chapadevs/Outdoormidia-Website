@@ -9,6 +9,30 @@ import Culture from '@/components/sections/Culture'
 import LeadCta from '@/components/sections/LeadCta'
 import { MARCOS } from '@/lib/sobre'
 
+const COMPROMISSO = [
+  {
+    href: '/sobre/ambiental',
+    eyebrow: 'Compromisso · Ambiental',
+    title: 'Ambiental',
+    text: 'Destinação da lona, iluminação LED, origem da energia dos painéis e contrapartida em mobiliário urbano.',
+    cta: 'Ver compromissos',
+  },
+  {
+    href: '/sobre/social',
+    eyebrow: 'Compromisso · Social',
+    title: 'Social',
+    text: 'Campanhas de utilidade pública, instituições apoiadas e a rede à disposição quando a cidade precisa avisar.',
+    cta: 'Ver projetos',
+  },
+  {
+    href: '/sobre/governanca',
+    eyebrow: 'Compromisso · Governança',
+    title: 'Governança',
+    text: 'Pontos licenciados, exclusividade em contrato e os documentos que o seu jurídico vai pedir.',
+    cta: 'Ver documentos',
+  },
+]
+
 const DESCRIPTION =
   'A Outdoormídia coloca marcas nas ruas do Paraná e de Santa Catarina desde 1959: 66 anos de operação própria em mídia exterior, do outdoor impresso ao painel de LED.'
 
@@ -71,6 +95,40 @@ export default function SobrePage() {
         </section>
 
         <Culture num="02" />
+
+        <section className="pb-[110px] max-mob:pb-[72px]" id="compromisso">
+          <div className="wrap">
+            <SectionHeading num="03" title="Nosso compromisso" className="reveal mb-[34px]" />
+            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
+              Ocupar a rua por 66 anos cria obrigação com ela. O que fazemos com os resíduos, o
+              que devolvemos para a cidade e o que assinamos em contrato.
+            </p>
+            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
+              {COMPROMISSO.map((c) => (
+                <Link
+                  className="ticks reveal group flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
+                  href={c.href}
+                  key={c.href}
+                >
+                  <span className="eyebrow">{c.eyebrow}</span>
+                  <h3 className="m-0 text-[25px] font-extrabold leading-tight text-ink transition-colors duration-200 group-hover:text-orange">
+                    {c.title}
+                  </h3>
+                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{c.text}</p>
+                  <span className="mt-auto flex items-center gap-2 pt-5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
+                    {c.cta}
+                    <span
+                      aria-hidden
+                      className="text-base transition-transform duration-200 group-hover:translate-x-1"
+                    >
+                      →
+                    </span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">

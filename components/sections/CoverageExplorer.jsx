@@ -91,9 +91,10 @@ export default function CoverageExplorer({ locations, num = '04' }) {
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-8 bg-orange px-16 py-[34px] max-tab:px-10 max-mob:flex-col max-mob:items-start max-mob:gap-5 max-mob:px-6 max-mob:py-7">
-        <span className="display text-[clamp(22px,2.7vw,34px)] leading-[0.9]">
-          13 milhões de impactos por mês só em Curitiba
+      <div className="flex items-center justify-between gap-8 bg-orange px-16 py-[34px] max-tab:flex-col max-tab:items-start max-tab:gap-5 max-tab:px-10 max-mob:px-6 max-mob:py-7">
+        <span className="display max-w-[34ch] text-[clamp(22px,2.7vw,34px)] leading-[0.9]">
+          Temos a maior network de DOOH regional do Sul do Brasil, com 159 telas digitais e +22
+          milhões de impactos semanais em praças estratégicas.
         </span>
         <a href={waLink(WA_COBERTURA_CURITIBA)} className="btn btn-on-orange">
           Consultar disponibilidade

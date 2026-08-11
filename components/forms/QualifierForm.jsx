@@ -134,7 +134,7 @@ export default function QualifierForm() {
             <p className="mt-4 text-[14px] text-ink-soft">
               Sem clareza do objetivo?{' '}
               <Link href="/diagnostico" className="font-bold text-orange hover:underline">
-                Faça o diagnóstico de marca.
+                Faça o Diagnóstico de Presença.
               </Link>
             </p>
           </fieldset>
