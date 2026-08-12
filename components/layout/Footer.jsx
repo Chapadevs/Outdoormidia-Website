@@ -29,7 +29,7 @@ export default function Footer() {
           <div className="max-tab:col-span-full max-xs:col-span-1">
             <Logo className="bg-ink" />
             <p className="mt-[18px] max-w-[32ch] text-[14.5px]">
-              Out of Home no Sul do Brasil há 66 anos. Sua marca onde as pessoas estão.
+              Out of Home no Sul do Brasil há 67 anos. Sua marca onde as pessoas estão.
             </p>
           </div>
           {COLUNAS.map((col) => (

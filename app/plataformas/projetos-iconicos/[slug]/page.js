@@ -6,7 +6,6 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import FormatSpecCard from '@/components/ui/FormatSpecCard'
 import PlatformFaq from '@/components/sections/PlatformFaq'
-import PlatformProposalForm from '@/components/forms/PlatformProposalForm'
 import LeadCta from '@/components/sections/LeadCta'
 import CaseCard from '@/components/cases/CaseCard'
 import { ICONICOS, getIconicoBySlug, getOutrosIconicos } from '@/lib/iconicos'
@@ -65,7 +64,6 @@ export default async function IconicoPage({ params }) {
   const numFormatos = proximo()
   const numCases = cases.length > 0 ? proximo() : null
   const numFaq = proximo()
-  const numForm = proximo()
   const numOutros = proximo()
 
   return (
@@ -196,12 +194,6 @@ export default async function IconicoPage({ params }) {
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
             <PlatformFaq faqs={iconico.faqs} num={numFaq} platformName={iconico.name} />
-          </div>
-        </section>
-
-        <section className="border-t border-line py-[90px] max-mob:py-[60px]">
-          <div className="wrap">
-            <PlatformProposalForm platformName={iconico.name} num={numForm} />
           </div>
         </section>
 

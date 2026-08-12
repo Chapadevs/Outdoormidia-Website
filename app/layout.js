@@ -15,7 +15,7 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: 'Outdoormídia — Out of Home no Sul do Brasil',
   description:
-    'Líder em mídia exterior no Paraná e Santa Catarina há 66 anos. Outdoor digital, frontlight, rodovias, aeroporto, shoppings e muito mais.',
+    'Líder em mídia exterior no Paraná e Santa Catarina há 67 anos. Outdoor digital, frontlight, rodovias, aeroporto, shoppings e muito mais.',
   openGraph: {
     title: 'Outdoormídia — Out of Home no Sul do Brasil',
     description: 'Líder em mídia exterior no Paraná e Santa Catarina.',

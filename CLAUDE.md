@@ -2,7 +2,7 @@
 
 ## Visão do Projeto
 
-Refatoração do site da Outdoormídia (líder em OOH no Sul do Brasil, 66 anos de mercado). Objetivo: transformar de site institucional para **plataforma comercial de mídia Out of Home**, posicionada no nível de referências internacionais como OUTFRONT e Ocean Outdoor.
+Refatoração do site da Outdoormídia (líder em OOH no Sul do Brasil, 67 anos de mercado). Objetivo: transformar de site institucional para **plataforma comercial de mídia Out of Home**, posicionada no nível de referências internacionais como OUTFRONT e Ocean Outdoor.
 
 O site deve ser **simples, porém 100% bem executado** — rápido, acessível e que transmita credibilidade tanto para o pequeno empresário quanto para gestores de marketing de grandes empresas e agências.
 
@@ -23,6 +23,11 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 - **Build:** `npm run build` → `.next`
 - **Testes:** não há suíte de testes no repositório. Validação é manual — `npm run lint`, `npm run build` e conferência no browser
 
+> **Quem roda o servidor é o usuário.** Nunca executar `npm run dev`, `npm run build`
+> nem abrir preview por conta própria — já existe um dev server ativo na pasta e
+> subir outro quebra a porta e o `.next`. A IA edita, roda no máximo `npm run lint`
+> e avisa que está pronto para o usuário testar.
+
 ### Ainda não implementado
 - **next-intl** — os botões PT/EN/ES/中文 do `Header` hoje só trocam um `useState`; não há tradução por trás
 - **Resend** — envio de e-mails transacionais (formulários hoje só gravam/redirecionam)
@@ -40,8 +45,8 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 --color-bone:     #ECE5D9   /* fundo secundário */
 --color-ink:      #16110D   /* texto principal */
 --color-ink-soft: #4A3F35   /* texto secundário */
---color-orange:   #FF4D00   /* cor primária da marca */
---color-orange-2: #FF7A33   /* laranja claro */
+--color-orange:   #FF6900   /* cor primária da marca */
+--color-orange-2: #FF6900   /* laranja claro — mesma cor, sem variação até novo tom vir do cliente */
 --color-line:     rgba(22,17,13,.16)
 --color-line-2:   rgba(22,17,13,.30)
 ```

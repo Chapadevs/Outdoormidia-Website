@@ -8,14 +8,14 @@ export default function Institutional() {
       <div className="wrap">
         <div className="grid grid-cols-[1fr_1.15fr] items-center gap-[64px] max-tab:grid-cols-1 max-tab:gap-9">
           <div>
-            <p className="eyebrow reveal mb-5">Desde 1959 · PR + SC</p>
+            <p className="eyebrow reveal mb-5 text-sm">Desde 1959 · PR + SC</p>
             <h2 className="reveal m-0 text-[clamp(30px,4.4vw,54px)] font-extrabold leading-[1.04] tracking-[-0.02em] text-ink">
               Referência ontem. <span className="text-orange">Inovação hoje.</span>
             </h2>
             <p className="reveal mt-6 max-w-[46ch] text-lg leading-relaxed text-ink-soft max-mob:text-base">
-              São 66 anos colocando marcas onde a cidade passa, seja Curitiba ao Litoral, das
-              rodovias a Santa Catarina. Enquanto o mercado descobre a mídia OOH, a Outdoormídia
-              já é parte do out of home e DOOH há mais de seis décadas. Da capital à estrada:
+              São <strong className="font-bold text-orange">67 anos</strong> colocando marcas onde a cidade passa, seja Curitiba ao Litoral, das
+              rodovias a Santa Catarina. Enquanto o mercado descobre a <strong className="font-bold">mídia OOH</strong>, a Outdoormídia
+              já é parte do out of home e <strong className="font-bold">DOOH</strong> há mais de seis décadas. Da capital à estrada:
               onde sua marca merece estar.
             </p>
           </div>

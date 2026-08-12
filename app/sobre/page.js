@@ -34,7 +34,7 @@ const COMPROMISSO = [
 ]
 
 const DESCRIPTION =
-  'A Outdoormídia coloca marcas nas ruas do Paraná e de Santa Catarina desde 1959: 66 anos de operação própria em mídia exterior, do outdoor impresso ao painel de LED.'
+  'A Outdoormídia coloca marcas nas ruas do Paraná e de Santa Catarina desde 1959: 67 anos de operação própria em mídia exterior, do outdoor impresso ao painel de LED.'
 
 export const metadata = {
   title: 'Sobre nós — Outdoormídia',
@@ -62,9 +62,69 @@ export default function SobrePage() {
               Sobre nós.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Seis décadas e meia colocando marcas onde a cidade passa. Da negociação à
+              67 anos colocando marcas onde a cidade passa. Da negociação à
               instalação, a operação é nossa — e é isso que sustenta o que prometemos na rua.
             </p>
+
+            <div className="reveal mt-[54px] grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
+              <div className="eyebrow text-orange">Sobre a OM</div>
+              <div className="flex max-w-[68ch] flex-col gap-5 text-[15.5px] leading-relaxed text-ink-soft">
+                <p className="m-0">
+                  Tudo começou em 1959, nas margens das estradas do Paraná, com um balde de
+                  cola, papel e uma ideia na cabeça. O Sr. Euclides Aristides Farias não vendia
+                  mídia. Ele colava sonhos em painéis de papel, conectando mensagens ao
+                  movimento das pessoas que cruzavam as rodovias.
+                </p>
+                <p className="m-0">
+                  Ao lado de seu genro, Hamilton Pontarola, transformou talento em visão e essa
+                  visão em negócio. Assim nasceu a Outdoormídia.
+                </p>
+                <p className="m-0">
+                  De uma pequena empresa familiar em Curitiba, viramos referência em Out of
+                  Home. Crescemos acompanhando o movimento das ruas, das cidades, da tecnologia
+                  e principalmente, das pessoas.
+                </p>
+                <p className="m-0">
+                  Hoje, mais de seis décadas depois, ainda carregamos o mesmo espírito: o de
+                  marcar presença de forma inesquecível. Hoje, somos a empresa que lidera a
+                  inovação em OOH no Sul do país, com soluções que unem estratégia, tecnologia e
+                  inteligência de audiência.
+                </p>
+                <p className="m-0">
+                  Mas essa transformação não aconteceu sozinha. Ela foi construída com cada
+                  cliente que acreditou que dava pra fazer diferente e com um time que faz isso
+                  acontecer todos os dias, com paixão, técnica e visão de futuro.
+                </p>
+              </div>
+            </div>
+
+            <div className="reveal mt-[54px] grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
+              <div className="eyebrow text-orange">Presença</div>
+              <div className="flex max-w-[68ch] flex-col gap-5">
+                <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
+                  Estamos presentes em Curitiba, Região Metropolitana, Litoral do Paraná,
+                  Joinville, Itajaí e Balneário Camboriú — sempre nos pontos de maior fluxo,
+                  visibilidade e impacto real.
+                </p>
+                <ul className="m-0 flex flex-wrap gap-2 p-0">
+                  {[
+                    'Curitiba',
+                    'Região Metropolitana',
+                    'Litoral do Paraná',
+                    'Joinville',
+                    'Itajaí',
+                    'Balneário Camboriú',
+                  ].map((praca) => (
+                    <li
+                      className="rounded-full border border-line px-4 py-1.5 text-[13.5px] font-bold text-ink-soft"
+                      key={praca}
+                    >
+                      {praca}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -100,7 +160,7 @@ export default function SobrePage() {
           <div className="wrap">
             <SectionHeading num="03" title="Nosso compromisso" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              Ocupar a rua por 66 anos cria obrigação com ela. O que fazemos com os resíduos, o
+              Ocupar a rua por 67 anos cria obrigação com ela. O que fazemos com os resíduos, o
               que devolvemos para a cidade e o que assinamos em contrato.
             </p>
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">

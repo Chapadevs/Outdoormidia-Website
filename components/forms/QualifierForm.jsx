@@ -22,21 +22,36 @@ const PRACAS = [
   'Ainda não sei',
 ]
 
+const PERIODOS = ['Quinzenal', '1 mês', '3 meses', '6 meses ou mais', 'Ainda não sei']
+
 const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
 const INPUT =
   'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
 const CHIP =
   'cursor-pointer rounded-full border px-4 py-2 text-[13px] font-bold transition-colors duration-150 border-line text-ink-soft hover:border-orange hover:text-orange'
 
-const CHAVES = ['intencao', 'objetivo', 'praca']
+const CHAVES = ['intencao', 'objetivo', 'praca', 'periodo']
 
 export default function QualifierForm() {
-  const [respostas, setRespostas] = useState({ intencao: '', objetivo: '', praca: '' })
+  const [respostas, setRespostas] = useState({
+    intencao: '',
+    objetivo: '',
+    praca: '',
+    periodo: '',
+  })
   const [dados, setDados] = useState({ nome: '', empresa: '' })
   const passoRef = useRef(null)
 
   // Passo derivado do estado — impossível dessincronizar.
-  const passo = !respostas.intencao ? 0 : !respostas.objetivo ? 1 : !respostas.praca ? 2 : 3
+  const passo = !respostas.intencao
+    ? 0
+    : !respostas.objetivo
+      ? 1
+      : !respostas.praca
+        ? 2
+        : !respostas.periodo
+          ? 3
+          : 4
 
   useEffect(() => {
     if (passo === 0) return
@@ -63,18 +78,19 @@ export default function QualifierForm() {
     { rotulo: 'Momento', valor: respostas.intencao },
     { rotulo: 'Objetivo', valor: respostas.objetivo },
     { rotulo: 'Praça', valor: respostas.praca },
+    { rotulo: 'Período', valor: respostas.periodo },
   ]
 
   return (
     <div className="ticks reveal mx-auto max-w-[820px] rounded-[16px] border border-line bg-white p-[38px] max-mob:p-7">
       <div className="mb-8 flex items-center gap-5 max-mob:gap-3.5">
         <span className="eyebrow whitespace-nowrap">
-          <b>{respondidas}</b> de 4
+          <b>{respondidas}</b> de 5
         </span>
         <span className="h-1 flex-1 rounded-full bg-line">
           <span
             className="block h-full rounded-full bg-orange transition-[width] duration-300"
-            style={{ width: `${(respondidas / 4) * 100}%` }}
+            style={{ width: `${(respondidas / 5) * 100}%` }}
           />
         </span>
       </div>
@@ -156,6 +172,21 @@ export default function QualifierForm() {
         )}
 
         {passo === 3 && (
+          <fieldset className="m-0 border-0 p-0">
+            <legend className="mb-4 text-[17px] font-extrabold text-ink">
+              Por quanto tempo a campanha fica no ar?
+            </legend>
+            <div className="flex flex-wrap gap-2.5">
+              {PERIODOS.map((op) => (
+                <button key={op} type="button" className={CHIP} onClick={() => responder('periodo', op)}>
+                  {op}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        )}
+
+        {passo === 4 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-4 text-[17px] font-extrabold text-ink">
               Por último: quem é você?
