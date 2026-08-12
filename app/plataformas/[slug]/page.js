@@ -6,7 +6,6 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import FormatSpecCard from '@/components/ui/FormatSpecCard'
 import PlatformFaq from '@/components/sections/PlatformFaq'
-import PlatformProposalForm from '@/components/forms/PlatformProposalForm'
 import LeadCta from '@/components/sections/LeadCta'
 import CaseCard from '@/components/cases/CaseCard'
 import { getPlatformBySlug } from '@/lib/platforms'
@@ -51,7 +50,6 @@ export default async function PlatformPage({ params }) {
   const [cases, tags] = await fetchCases(platform.slug)
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
   const faqNum = cases.length > 0 ? '03' : '02'
-  const formNum = cases.length > 0 ? '04' : '03'
 
   return (
     <>
@@ -114,12 +112,6 @@ export default async function PlatformPage({ params }) {
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
             <PlatformFaq faqs={platform.faqs} num={faqNum} platformName={platform.name} />
-          </div>
-        </section>
-
-        <section className="border-t border-line py-[90px] max-mob:py-[60px]">
-          <div className="wrap">
-            <PlatformProposalForm platformName={platform.name} num={formNum} />
           </div>
         </section>
 

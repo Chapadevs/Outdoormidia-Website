@@ -2,7 +2,7 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
 
 const NUMEROS = [
-  { n: '66', label: 'Anos de história' },
+  { n: '67', label: 'Anos de história' },
   { n: '380M', label: 'Impactos por mês' },
   { n: '82', label: 'Equipamentos digitais' },
   { n: '2', label: 'Estados · PR + SC' },
@@ -14,7 +14,7 @@ const PILARES = [
     text: 'Nossa mídia não vive numa aba do navegador. Está no caminho de casa, na rodovia, no aeroporto. Quem trabalha aqui vê o resultado do próprio trabalho dirigindo pela cidade.',
   },
   {
-    title: '66 anos, mercado em movimento',
+    title: '67 anos, mercado em movimento',
     text: 'A empresa é de 1959 e se digitalizou: 82 equipamentos digitais, dados de audiência por campanha e câmeras ao vivo 24×7. Estabilidade de quem atravessou seis décadas, com a tecnologia de quem não parou.',
   },
   {

@@ -10,7 +10,7 @@ description: >
 
 # Copy por persona — Outdoormídia
 
-Empresa líder em **Out of Home (OOH)** no Sul do Brasil, 66 anos, cobrindo
+Empresa líder em **Out of Home (OOH)** no Sul do Brasil, 67 anos, cobrindo
 PR + SC. O site precisa falar com o pequeno empresário e com gestores de
 marketing de grandes marcas ao mesmo tempo — a copy muda conforme quem lê.
 
@@ -44,7 +44,7 @@ Marcelo; seções de dados/cases falam com Mariana/Rafael.
 
 ## Vocabulário e fatos da empresa (usar para dar concretude)
 
-- Fundação **1959** · 66 anos · cobertura **PR + SC**.
+- Fundação **1959** · 67 anos · cobertura **PR + SC**.
 - **380 milhões de impactos/mês**, **82 equipamentos digitais**, **138 telas**.
 - **Face Única** — cada ponto exclusivo para um anunciante (sem dividir espaço
   com concorrente). Diferencial forte para Fernanda.

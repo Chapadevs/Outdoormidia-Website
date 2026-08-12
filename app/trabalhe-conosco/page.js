@@ -34,7 +34,7 @@ export default function TrabalheConoscoPage() {
               Trabalhe conosco.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Há 66 anos colocamos marcas nas ruas do Paraná e de Santa Catarina. Se você quer
+              Há 67 anos colocamos marcas nas ruas do Paraná e de Santa Catarina. Se você quer
               trabalhar com mídia que a cidade inteira vê, seu lugar pode ser aqui.
             </p>
           </div>

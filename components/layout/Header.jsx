@@ -72,34 +72,34 @@ export default function Header() {
       className="sticky top-0 z-[60] border-b border-ink/15 bg-orange/95 backdrop-blur-[10px]"
     >
       <div className="wrap flex h-[74px] items-center gap-[30px] max-lap:gap-4 max-mob:h-16">
+        <button
+          className="flex h-9 w-9 cursor-pointer flex-col items-center justify-center gap-[5px]"
+          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={menuOpen}
+          aria-controls={MENU_ID}
+          onClick={() => setMenuOpen((o) => !o)}
+        >
+          <span
+            className={`h-0.5 w-[22px] bg-white transition-transform duration-300 ${EASE} motion-reduce:transition-none ${
+              menuOpen ? 'translate-y-[7px] rotate-45' : ''
+            }`}
+          ></span>
+          <span
+            className={`h-0.5 w-[22px] bg-white transition-all duration-200 motion-reduce:transition-none ${
+              menuOpen ? 'scale-x-0 opacity-0' : ''
+            }`}
+          ></span>
+          <span
+            className={`h-0.5 w-[22px] bg-white transition-transform duration-300 ${EASE} motion-reduce:transition-none ${
+              menuOpen ? '-translate-y-[7px] -rotate-45' : ''
+            }`}
+          ></span>
+        </button>
         <Logo />
         <div className="ml-auto flex items-center gap-[18px] max-lap:gap-3 max-mob:gap-2">
           <a href={waLink(WA_HEADER)} className="btn btn-on-orange">
             Falar agora
           </a>
-          <button
-            className="flex h-9 w-9 cursor-pointer flex-col items-center justify-center gap-[5px]"
-            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-            aria-expanded={menuOpen}
-            aria-controls={MENU_ID}
-            onClick={() => setMenuOpen((o) => !o)}
-          >
-            <span
-              className={`h-0.5 w-[22px] bg-white transition-transform duration-300 ${EASE} motion-reduce:transition-none ${
-                menuOpen ? 'translate-y-[7px] rotate-45' : ''
-              }`}
-            ></span>
-            <span
-              className={`h-0.5 w-[22px] bg-white transition-all duration-200 motion-reduce:transition-none ${
-                menuOpen ? 'scale-x-0 opacity-0' : ''
-              }`}
-            ></span>
-            <span
-              className={`h-0.5 w-[22px] bg-white transition-transform duration-300 ${EASE} motion-reduce:transition-none ${
-                menuOpen ? '-translate-y-[7px] -rotate-45' : ''
-              }`}
-            ></span>
-          </button>
         </div>
       </div>
 
