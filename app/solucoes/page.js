@@ -9,7 +9,7 @@ import LeadCta from '@/components/sections/LeadCta'
 import { getLocations } from '@/lib/locations'
 
 const DESCRIPTION =
-  'Tudo o que a Outdoormídia coloca na rua: os diferenciais que sustentam a operação, as praças de PR e SC e as 9 plataformas de mídia exterior.'
+  'Tudo o que a Outdoormídia coloca na rua: os diferenciais que sustentam a operação, as praças de PR e SC, as 7 plataformas de mídia exterior e os projetos icônicos.'
 
 export const metadata = {
   title: 'Soluções — Outdoormídia',

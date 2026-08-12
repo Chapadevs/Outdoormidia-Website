@@ -92,7 +92,7 @@ export default function CoverageExplorer({ locations, num = '04' }) {
       </div>
 
       <div className="flex items-center justify-between gap-8 bg-orange px-16 py-[34px] max-tab:flex-col max-tab:items-start max-tab:gap-5 max-tab:px-10 max-mob:px-6 max-mob:py-7">
-        <span className="display max-w-[34ch] text-[clamp(22px,2.7vw,34px)] leading-[0.9]">
+        <span className="display flex-1 text-[clamp(16px,1.8vw,22px)] leading-[1.2]">
           Temos a maior network de DOOH regional do Sul do Brasil, com 159 telas digitais e +22
           milhões de impactos semanais em praças estratégicas.
         </span>

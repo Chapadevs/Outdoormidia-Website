@@ -4,6 +4,10 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { slugify } from '@/lib/slugify'
 import { PLATFORMS } from '@/lib/platforms'
+import { ICONICOS } from '@/lib/iconicos'
+
+// Um case pode apontar tanto para o catálogo quanto para um projeto icônico.
+const DESTINOS = [...PLATFORMS, ...ICONICOS]
 
 const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
 const INPUT =
@@ -258,7 +262,7 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       <div className="flex flex-col gap-2">
         <span className={LABEL}>Plataformas usadas</span>
         <div className="flex flex-wrap gap-1.5 rounded-[16px] border-[1.5px] border-line bg-paper px-3.5 py-3">
-          {PLATFORMS.map((platform) => {
+          {DESTINOS.map((platform) => {
             const selected = caseItem.platforms.includes(platform.slug)
             return (
               <button

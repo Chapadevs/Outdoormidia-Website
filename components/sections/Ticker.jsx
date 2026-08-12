@@ -7,7 +7,7 @@ const ITEMS = [
   'Joinville',
   'Balneário Camboriú',
   'Aeroporto',
-  'Shoppings',
+  'Mídia Indoor',
   'Mídia Móvel',
 ]
 

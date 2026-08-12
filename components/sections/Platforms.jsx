@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { PLATFORMS } from '@/lib/platforms'
+import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
 export default function Platforms({ num = '02' }) {
   const [openSlug, setOpenSlug] = useState(null)
@@ -10,12 +10,12 @@ export default function Platforms({ num = '02' }) {
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="plataformas">
       <div className="wrap">
-        <SectionHeading num={num} title="Plataformas" className="reveal mb-[34px]" />
+        <SectionHeading num={num} title="Plataformas" href="/plataformas" className="reveal mb-[34px]" />
         <div className="reveal border-t border-ink">
-          {PLATFORMS.map((p) => {
+          {PLATFORMS_LISTAGEM.map((p) => {
             const isOpen = openSlug === p.slug
             return (
-              <div className="border-b border-line" key={p.num}>
+              <div className="border-b border-line" key={p.slug}>
                 <button
                   type="button"
                   className="group block w-full cursor-pointer text-left"
@@ -75,11 +75,16 @@ export default function Platforms({ num = '02' }) {
                         </span>
                       </div>
                       <div>
+                        {p.marcador && (
+                          <span className="mb-3 inline-flex rounded-full border border-orange px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-orange">
+                            {p.marcador}
+                          </span>
+                        )}
                         <p className="m-0 max-w-[38ch] text-[14.5px] leading-relaxed text-ink-soft">
                           {p.intro}
                         </p>
                         <Link
-                          href={`/plataformas#${p.slug}`}
+                          href={p.homeHref}
                           className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-orange transition-colors duration-150 hover:text-ink"
                         >
                           Ver detalhes →

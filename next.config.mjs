@@ -24,6 +24,17 @@ const nextConfig = {
   // cada visitante novo. 7 dias em vez de `immutable` porque esses nomes não
   // têm hash: se o conteúdo mudar mantendo o nome, a versão velha some em uma
   // semana em vez de ficar presa por um ano.
+  // Green e Projetos Icônicos saíram do catálogo e viraram projetos icônicos —
+  // as URLs antigas já estão indexadas.
+  async redirects() {
+    return [
+      {
+        source: '/plataformas/green',
+        destination: '/plataformas/projetos-iconicos/green',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {

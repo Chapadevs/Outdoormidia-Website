@@ -7,6 +7,7 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import FormatSpecCard from '@/components/ui/FormatSpecCard'
 import PlatformFaq from '@/components/sections/PlatformFaq'
 import PlatformProposalForm from '@/components/forms/PlatformProposalForm'
+import LeadCta from '@/components/sections/LeadCta'
 import CaseCard from '@/components/cases/CaseCard'
 import { getPlatformBySlug } from '@/lib/platforms'
 import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
@@ -121,6 +122,8 @@ export default async function PlatformPage({ params }) {
             <PlatformProposalForm platformName={platform.name} num={formNum} />
           </div>
         </section>
+
+        <LeadCta />
       </main>
       <Footer />
     </>

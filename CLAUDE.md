@@ -102,7 +102,7 @@ app/
   anunciante/             — hub + midia-kit/, simulador/ e faq/
   blog/                   — hub (portas Cases e Artigos + destaque), artigos/ e [slug]
   cases/                  — listagem com filtro por tag (ISR 300)
-  plataformas/            — índice + [slug] de cada uma das 9 plataformas
+  plataformas/            — índice + [slug] das 7 plataformas; projetos-iconicos/ (hub + [slug])
   diagnostico/            — quiz de diagnóstico de marca
   proposta/               — briefing
   trabalhe-conosco/       — banco de talentos
@@ -126,9 +126,11 @@ lib/
   revalidate.js           — invalidação de ISR após mutação no admin
   firebase/               — admin (server), client, session, storage
   blog/ cases/ tags/      — leitura, escrita e validação de cada coleção
-  platforms.js            — as 9 plataformas (dados estáticos, não vem do Firestore)
-  diferenciais.js         — os 6 diferenciais; faq.js — perguntas com categoria
+  platforms.js            — as 7 plataformas do catálogo (dados estáticos, não vem do Firestore)
+  iconicos.js             — os 3 projetos icônicos (fora do catálogo): carrossel + página dedicada
+  faq.js                  — perguntas com categoria
   sobre.js                — marcos da linha do tempo; midiakit.js — materiais para download
+  diferenciais.js         — os 6 diferenciais: resumo dos cards + conteúdo da página dedicada
   simulador.js            — parâmetros da estimativa de campanha (impactos, CPM)
   locations.js            — praças; mapShapes/mapProjection alimentam o CoverageMap
 public/media/             — video-hero.mp4 (fundo do Hero), logo.png (wordmark branco,
@@ -172,7 +174,9 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | WhatsApp flutuante | `components/widgets/WhatsAppButton.jsx` |
 | WhatsApp com mensagem pré-preenchida por CTA (pré-qualificação) | `lib/whatsapp.js` |
 | ProposalForm (briefing) | `app/proposta/` |
-| Plataformas — índice + página das 9 | `app/plataformas/`, `lib/platforms.js` |
+| Plataformas — índice + página das 7 | `app/plataformas/`, `lib/platforms.js` |
+| Projetos Icônicos — faixa própria na home (carrossel de peek full-bleed dos 3: Elegancy, Green, Regenerativo, com setas e dots) | `components/sections/Iconicos.jsx`, `lib/iconicos.js` |
+| Projetos Icônicos — hub + página dos 3 (ISR 300 + `generateStaticParams`). Elegancy traz Urbanity e Urbanity Light como seções ancoradas (`#urbanity`, `#urbanity-light`) | `app/plataformas/projetos-iconicos/`, `lib/iconicos.js` |
 | Cases com filtro por tag | `app/cases/`, `lib/cases/` |
 | Blog com CMS próprio | `app/blog/artigos/`, `app/admin/`, `lib/blog/` |
 | Hub do Blog (portas Cases, Artigos e Podcast + destaque) | `app/blog/page.js` |
@@ -181,6 +185,7 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Hub Sobre nós (linha do tempo + cultura) | `app/sobre/`, `lib/sobre.js` |
 | Filhas de Sobre nós — Ambiental, Social, Governança (estrutura pronta; conteúdo em `TODO(cliente)`) | `app/sobre/{ambiental,social,governanca}/`, `lib/esg.js` |
 | Hub Soluções + Diferenciais + Regiões | `app/solucoes/`, `lib/diferenciais.js` |
+| Páginas dos 6 diferenciais (SSG) — mesma estrutura, conteúdo por slug | `app/solucoes/diferenciais/[slug]/`, `lib/diferenciais.js` |
 | Área do anunciante (hub + 4 ferramentas) | `app/anunciante/` |
 | Simulador de campanha (estimativa de impactos e CPM) | `app/anunciante/simulador/`, `lib/simulador.js` |
 | Mídia Kit / materiais de apoio | `app/anunciante/midia-kit/`, `lib/midiakit.js` |
@@ -204,7 +209,8 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Números oficiais do simulador | `lib/simulador.js` usa ordem de grandeza estimada — falta CPM e alcance por plataforma |
 | Conteúdo de Ambiental / Social / Governança | Páginas no ar, dados em `lib/esg.js` sob `TODO(cliente)`. Falta o lastro: números com prazo, certificações, projetos e PDFs. `/sobre/ambiental` está com `robots: noindex` até lá |
 | Conteúdo do Podcast | Estrutura no ar em `/blog/podcast` com episódios de exemplo em `lib/podcast.js` sob `TODO(cliente)`. Falta gravar os episódios e preencher o campo `audio`; a página está com `robots: noindex` até lá |
-| Retaxonomia das plataformas (22 produtos sob 9 formatos) | Icônicos agregando Elegancy/Green/Regenerativo, + Rodovias e Digital Signage |
+| Retaxonomia das plataformas (22 produtos sob 9 formatos) | Catálogo em 7 na ordem final, com Rodovias criado, Shoppings renomeado para Mídia Indoor e Gentileza Urbana removido; Icônicos entram na listagem como entrada única. Falta acrescentar Digital Signage e desdobrar os 22 produtos sob os formatos. Rodovias está com o descritivo mínimo sob `TODO(cliente)` |
+| Conteúdo dos Projetos Icônicos | `lib/iconicos.js` está sob `TODO(cliente)`: falta o descritivo oficial de Elegancy/Urbanity/Urbanity Light, as medidas de cada estrutura (os cards de formato hoje descrevem sem cravar dimensão), as praças instaladas e a foto de cada card (`image`, 16/9, ≥1600px) — sem ela o card cai num painel escuro com o nome |
 | Páginas de sistema (`/obrigado`, `/privacidade`, `/termos`, 404) | Ramo 06 do fluxo |
 | Automação de marketing | — |
 | Testes automatizados | Nenhum. Regressão só aparece em conferência manual |
@@ -221,16 +227,37 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 - **Números:** 380 milhões de impactos/mês, 82 equipamentos digitais, 138 telas
 - **WhatsApp comercial:** `https://wa.me/5541998350210`
 
-### Produtos (8 plataformas)
+### Produtos
 
-1. **Frontlight** — outdoor 18m² (6×3m horizontal / 3,5×5m vertical), maior volume
-2. **Rodovias** — 100 ativos, 12×4m e passarelas 10×3m
-3. **Aeroporto** — operação privada (sem licitação), empena digital 6×18m (maior do Sul)
-4. **Outdoor Digital / LED** — 82 equipamentos, sem produção de lona
-5. **Icônico** — Superposters, Jardins verticais, Praças Pets, Híbridos, Batel Square 3D
-6. **Malls** — Mueller, São José, Park Shopping Boulevard (100% digital, totens e painéis)
-7. **MUB** — 77 locais, 6 circuitos segmentados, 13M impactos/mês
-8. **Mídia Móvel** — ativações em praias, parques, calçadões (onde OOH fixo não chega)
+**Catálogo — 7 plataformas** (`lib/platforms.js`), na ordem em que aparecem na listagem:
+
+1. **Outdoors Digitais** — 82 equipamentos, 138 telas LED, sem produção de lona
+2. **Front Lights** — outdoor 18m² (6×3m horizontal / 3,5×5m vertical), maior volume
+3. **Mídia Indoor** (slug `shoppings`) — Mueller, São José, Park Shopping Boulevard (100% digital, totens e painéis)
+4. **Aeroporto** — operação privada (sem licitação), empena digital 6×18m (maior do Sul)
+5. **Mídia Móvel** — ativações em praias, parques, calçadões (onde OOH fixo não chega)
+6. **MUB** — 77 locais, 6 circuitos segmentados, 13M impactos/mês
+7. **Rodovias** — 100 ativos, 12×4m e passarelas 10×3m
+
+O nome exibido e o slug divergem em **Mídia Indoor**: a rota segue
+`/plataformas/shoppings` de propósito, para não quebrar links nem os cases já
+gravados com esse slug. **Gentileza Urbana** saiu do catálogo — a rota 404 e a
+menção em `lib/esg.js` passou a apontar para o MUB.
+
+Na listagem (home e `/plataformas`) os **Icônicos** entram como uma 8ª entrada,
+entre Front Lights e Mídia Indoor, levando ao hub dos 3 projetos. Quem monta
+essa lista é `PLATFORMS_LISTAGEM` em `lib/platforms.js`; `PLATFORMS` continua
+sendo só o catálogo, porque é dele que o simulador, o `lib/cases/validate.js` e
+o admin dependem.
+
+**Fora do catálogo — 3 projetos icônicos** (`lib/iconicos.js`)
+
+Projetos de assinatura, sob medida, com fluxo comercial próprio (briefing →
+viabilidade → estrutura). Não entram no simulador — não têm CPM de tabela.
+
+1. **Elegancy** — mobiliário de assinatura; linhas **Urbanity** (plena) e **Urbanity Light** (reduzida)
+2. **Green** — jardins verticais e estruturas vegetadas, manutenção por nossa conta
+3. **Regenerativo** — requalificação de praças e canteiros como contrapartida da veiculação
 
 ### Praças
 
