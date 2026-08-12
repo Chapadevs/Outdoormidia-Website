@@ -3,6 +3,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import DeleteCaseButton from '@/components/widgets/DeleteCaseButton'
 import { listAllCases } from '@/lib/cases/cases'
 import { PLATFORMS } from '@/lib/platforms'
+import { ICONICOS } from '@/lib/iconicos'
 
 export const metadata = {
   title: 'Cases — Painel Admin — Outdoormídia',
@@ -12,7 +13,7 @@ export const metadata = {
 export const dynamic = 'force-dynamic'
 
 const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
-const PLATFORM_NAMES = new Map(PLATFORMS.map((p) => [p.slug, p.name]))
+const PLATFORM_NAMES = new Map([...PLATFORMS, ...ICONICOS].map((p) => [p.slug, p.name]))
 
 export default async function AdminCasesPage() {
   const cases = await listAllCases()

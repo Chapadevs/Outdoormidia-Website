@@ -89,12 +89,15 @@ export default function AmbientalPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="produtos-verdes">
           <div className="wrap">
-            <SectionHeading num="02" title="Plataformas Green" className="reveal mb-[34px]" />
+            <SectionHeading
+              num="02"
+              title="Projetos de menor impacto"
+              className="reveal mb-[34px]"
+            />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              As plataformas em que o posicionamento ambiental da marca aparece na própria
-              estrutura de mídia.
+              Onde o posicionamento ambiental da marca aparece na própria estrutura de mídia.
             </p>
-            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
+            <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
               {AMBIENTAL_PRODUTOS.map((p) => (
                 <Link
                   className="ticks reveal group flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"

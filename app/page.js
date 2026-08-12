@@ -4,6 +4,7 @@ import Ticker from '@/components/sections/Ticker'
 import Institutional from '@/components/sections/Institutional'
 import Diferenciais from '@/components/sections/Diferenciais'
 import Impact from '@/components/sections/Impact'
+import Iconicos from '@/components/sections/Iconicos'
 import Platforms from '@/components/sections/Platforms'
 import Cases from '@/components/sections/Cases'
 import Process from '@/components/sections/Process'
@@ -25,6 +26,7 @@ export default function Home() {
       <Institutional />
       <Diferenciais />
       <Impact />
+      <Iconicos />
       <Platforms />
       <Cases />
       <Process />
