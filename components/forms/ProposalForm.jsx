@@ -5,35 +5,16 @@ import HeaderShell from '@/components/layout/HeaderShell'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import { waBriefing, waLink } from '@/lib/whatsapp'
 
-const CIDADES = [
-  'Curitiba — PR',
-  'Londrina — PR',
-  'Maringá — PR',
-  'Cascavel — PR',
-  'Florianópolis — SC',
-  'Joinville — SC',
-  'Blumenau — SC',
-  'Outra praça',
-]
-
-const FORMATOS = [
-  'Outdoor impresso (12 × 4 m)',
-  'Painel Digital / LED',
-  'Passarela (10 × 3 m)',
-  'Aeroporto',
-  'Shopping',
-  'Ainda não sei',
-]
-
 const PERIODOS = ['2 semanas (bi-semana)', '1 mês', '3 meses', '6 meses ou mais']
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const INPUT =
-  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
-const SELECT = `${INPUT} select-caret cursor-pointer appearance-none pr-[38px]`
-
-export default function ProposalForm() {
+// Praças e formatos vêm da página (Firestore + catálogo). Não repetir a lista
+// aqui: já houve divergência com o inventário real, oferecendo praça que a
+// empresa não atende e escondendo praça que ela atende.
+export default function ProposalForm({ pracas = [], formatos = [] }) {
   const [briefing, setBriefing] = useState(null)
+
+  const opcoesPraca = [...pracas.map((p) => p.name), 'Outra praça']
+  const opcoesFormato = [...formatos.map((f) => f.name), 'Ainda não sei']
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -100,11 +81,11 @@ export default function ProposalForm() {
                 onSubmit={handleSubmit}
               >
                 <div className="flex flex-col gap-2">
-                  <label className={LABEL} htmlFor="nome">
+                  <label className="field-label" htmlFor="nome">
                     Nome
                   </label>
                   <input
-                    className={INPUT}
+                    className="field-input"
                     id="nome"
                     name="nome"
                     type="text"
@@ -115,11 +96,11 @@ export default function ProposalForm() {
 
                 <div className="grid grid-cols-2 gap-5 max-mob:grid-cols-1">
                   <div className="flex flex-col gap-2">
-                    <label className={LABEL} htmlFor="empresa">
+                    <label className="field-label" htmlFor="empresa">
                       Empresa
                     </label>
                     <input
-                      className={INPUT}
+                      className="field-input"
                       id="empresa"
                       name="empresa"
                       type="text"
@@ -127,11 +108,11 @@ export default function ProposalForm() {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className={LABEL} htmlFor="whatsapp">
+                    <label className="field-label" htmlFor="whatsapp">
                       WhatsApp
                     </label>
                     <input
-                      className={INPUT}
+                      className="field-input"
                       id="whatsapp"
                       name="whatsapp"
                       type="tel"
@@ -142,11 +123,11 @@ export default function ProposalForm() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className={LABEL} htmlFor="email">
+                  <label className="field-label" htmlFor="email">
                     E-mail
                   </label>
                   <input
-                    className={INPUT}
+                    className="field-input"
                     id="email"
                     name="email"
                     type="email"
@@ -157,14 +138,14 @@ export default function ProposalForm() {
 
                 <div className="grid grid-cols-2 gap-5 max-mob:grid-cols-1">
                   <div className="flex flex-col gap-2">
-                    <label className={LABEL} htmlFor="cidade">
+                    <label className="field-label" htmlFor="cidade">
                       Onde quer aparecer?
                     </label>
-                    <select className={SELECT} id="cidade" name="cidade" required defaultValue="">
+                    <select className="field-input field-select select-caret" id="cidade" name="cidade" required defaultValue="">
                       <option value="" disabled>
                         Selecione a praça
                       </option>
-                      {CIDADES.map((c) => (
+                      {opcoesPraca.map((c) => (
                         <option key={c} value={c}>
                           {c}
                         </option>
@@ -172,14 +153,14 @@ export default function ProposalForm() {
                     </select>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className={LABEL} htmlFor="formato">
+                    <label className="field-label" htmlFor="formato">
                       Formato de interesse
                     </label>
-                    <select className={SELECT} id="formato" name="formato" required defaultValue="">
+                    <select className="field-input field-select select-caret" id="formato" name="formato" required defaultValue="">
                       <option value="" disabled>
                         Selecione o formato
                       </option>
-                      {FORMATOS.map((f) => (
+                      {opcoesFormato.map((f) => (
                         <option key={f} value={f}>
                           {f}
                         </option>
@@ -189,10 +170,10 @@ export default function ProposalForm() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className={LABEL} htmlFor="periodo">
+                  <label className="field-label" htmlFor="periodo">
                     Período da campanha
                   </label>
-                  <select className={SELECT} id="periodo" name="periodo" required defaultValue="">
+                  <select className="field-input field-select select-caret" id="periodo" name="periodo" required defaultValue="">
                     <option value="" disabled>
                       Selecione a duração
                     </option>
@@ -205,11 +186,11 @@ export default function ProposalForm() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className={LABEL} htmlFor="objetivo">
+                  <label className="field-label" htmlFor="objetivo">
                     Objetivo da campanha <span className="font-semibold text-line-2">(opcional)</span>
                   </label>
                   <textarea
-                    className={`${INPUT} min-h-24 resize-y`}
+                    className="field-input min-h-24 resize-y"
                     id="objetivo"
                     name="objetivo"
                     rows={4}

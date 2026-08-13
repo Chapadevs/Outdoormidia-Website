@@ -18,7 +18,7 @@ export const metadata = {
     locale: 'pt_BR',
     type: 'website',
   },
-  robots: { index: false },
+  robots: { index: false, follow: true },
 }
 
 export default function PodcastPage() {

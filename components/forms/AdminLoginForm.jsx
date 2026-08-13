@@ -4,10 +4,6 @@ import { useRouter } from 'next/navigation'
 import { signInWithEmailAndPassword, getIdToken } from 'firebase/auth'
 import { auth } from '@/lib/firebase/client'
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const INPUT =
-  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
-
 export default function AdminLoginForm() {
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -49,11 +45,11 @@ export default function AdminLoginForm() {
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-2">
-        <label className={LABEL} htmlFor="email">
+        <label className="field-label" htmlFor="email">
           E-mail
         </label>
         <input
-          className={INPUT}
+          className="field-input"
           id="email"
           name="email"
           type="email"
@@ -66,11 +62,11 @@ export default function AdminLoginForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className={LABEL} htmlFor="password">
+        <label className="field-label" htmlFor="password">
           Senha
         </label>
         <input
-          className={INPUT}
+          className="field-input"
           id="password"
           name="password"
           type="password"
@@ -83,7 +79,7 @@ export default function AdminLoginForm() {
       </div>
 
       {error && (
-        <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
+        <p className="field-error">
           {error}
         </p>
       )}

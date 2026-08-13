@@ -74,12 +74,28 @@ Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, 
 - **`.reveal`** — elemento com animação de entrada (adiciona `.in` via IntersectionObserver global)
 - **`.wrap`** — container centralizado com `max-width: 1280px` e `padding: 0 32px`
 - **`.select-caret`** — seta de `<select>` estilizado
+- **`.field-label` / `.field-input` / `.field-select` / `.field-error`** — campos de formulário. Valem para os formulários públicos e para os editores do admin; nunca redeclarar essas classes como constante local. `.field-select` é modificador, usado junto: `className="field-input field-select select-caret"`
 - **`SectionHeading`** (`components/ui/SectionHeading.jsx`) — cabeçalho de seção (número laranja + h2 + linha)
-- **`StatGrid`** (`components/ui/StatGrid.jsx`) — faixa de números da marca (`size="lg"` na home, `"md"` em Culture)
+- **`StatGrid`** (`components/ui/StatGrid.jsx`) — faixa de números da marca (`size="lg"` em `Impact`, `"md"` em Culture, diferenciais e ESG). Não é usado na home: os números institucionais saíram de lá
 - **`Accordion`** (`components/ui/Accordion.jsx`) — acordeão controlado do FAQ; o pai guarda o `openIndex` porque precisa da pergunta aberta para montar o link de WhatsApp
+- **`CoverMedia`** (`components/ui/CoverMedia.jsx`) — capa com fallback: renderiza a imagem se houver `src`, senão o painel bege com o rótulo. `ticks={false}` quando o card que envolve a capa já traz as cantoneiras. Proporções em mapa estático (classe interpolada não é vista pelo scanner do Tailwind)
+- **`DeleteButton`** (`components/widgets/DeleteButton.jsx`) — exclusão no admin, parametrizada por `resource` (segmento de `/api/admin/…`) e `label`
 - **`HeaderShell`** (`components/layout/HeaderShell.jsx`) — barra clara de proposta/login/painel (o `Header` laranja é só do site institucional)
 
 Padding de seção: `py-[110px] max-mob:py-[72px]` direto no JSX. Todo o restante do estilo é utilitário Tailwind no componente.
+
+### `ui/` vs `widgets/` — qual pasta
+
+O critério não é client vs server (`CoverageMap` é client e está em `ui/`; `WhatsAppButton` é
+server e está em `widgets/`):
+
+- **`ui/`** — peças de composição. Recebem props e devolvem markup; quem monta o layout é a
+  página ou a seção. Mesmo as interativas são controladas pelo pai (`Accordion`).
+- **`widgets/`** — unidades autônomas. Disparam ação com efeito colateral (`DeleteButton`,
+  `LogoutButton`), falam com API, ou se auto-instalam uma vez no `app/layout.js`
+  (`RevealObserver`, `WhatsAppButton`).
+
+Na dúvida: recebe props e não sabe o que acontece depois → `ui/`. Age sozinho → `widgets/`.
 
 ### Regras Visuais
 
@@ -116,20 +132,22 @@ app/
   api/auth/session/       — cria/valida/apaga o cookie de sessão do admin
 components/
   layout/                 — Header (sticky, menu colapsável sobre lib/nav.js), Footer
-  sections/               — Hero, Ticker, Institutional, Diferenciais, Platforms, Cases,
-                            Impact, Reviews, BlogTeaser, Coverage, Faq, FaqCategorias,
-                            Culture, Process, LeadCta (bloco laranja + QualifierForm), PlatformFaq
+  sections/               — Hero, Ticker, Institutional, Diferenciais, Platforms (acordeão,
+                            só em /solucoes), PlatformsCarousel (carrossel da home), Cases,
+                            Impact (só em /sobre), Reviews, BlogTeaser, Coverage, Faq, FaqCategorias,
+                            Culture, LeadCta (bloco laranja + QualifierForm), PlatformFaq
   blog/ cases/            — cards, explorers com filtro, markdown, share
-  forms/                  — 10 formulários (públicos + editores do admin)
-  ui/                     — Logo, SectionHeading, Breadcrumb, TagFilter,
+  forms/                  — 11 formulários (públicos + editores do admin)
+  ui/                     — Logo, SectionHeading, Breadcrumb, TagFilter, CoverMedia,
                             FormatSpecCard, CoverageMap (SVG de PR+SC, dados IBGE)
-  widgets/                — WhatsAppButton, RevealObserver, botões de deletar/logout
+  widgets/                — WhatsAppButton, RevealObserver, DeleteButton, LogoutButton
 lib/
   constants.js            — WHATSAPP_URL, SITE_URL
+  format.js               — DATA_LONGA (público) e DATA_CURTA (admin)
   nav.js                  — árvore de navegação (hubs + nível 2); Header e Footer leem daqui
   whatsapp.js             — waLink() + a mensagem pré-preenchida de cada CTA
   revalidate.js           — invalidação de ISR após mutação no admin
-  firebase/               — admin (server), client, session, storage
+  firebase/               — admin (server), client, session, storage, serialize (toIso)
   blog/ cases/ tags/      — leitura, escrita e validação de cada coleção
   platforms.js            — as 7 plataformas do catálogo (dados estáticos, não vem do Firestore)
   iconicos.js             — os 3 projetos icônicos (fora do catálogo): carrossel + página dedicada
@@ -180,7 +198,7 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | WhatsApp com mensagem pré-preenchida por CTA (pré-qualificação) | `lib/whatsapp.js` |
 | ProposalForm (briefing) | `app/proposta/` |
 | Plataformas — índice + página das 7 | `app/plataformas/`, `lib/platforms.js` |
-| Projetos Icônicos — faixa própria na home (carrossel de peek full-bleed dos 3: Elegancy, Green, Regenerativo, com setas e dots) | `components/sections/Iconicos.jsx`, `lib/iconicos.js` |
+| Plataformas na home — carrossel de peek full-bleed das 8 entradas de `PLATFORMS_LISTAGEM` (as 7 do catálogo + Icônicos), com setas e dots. Substituiu o acordeão e o carrossel dos 3 icônicos; o acordeão `Platforms` segue vivo só em `/solucoes` | `components/sections/PlatformsCarousel.jsx`, `lib/platforms.js` |
 | Projetos Icônicos — hub + página dos 3 (ISR 300 + `generateStaticParams`). Elegancy traz Urbanity e Urbanity Light como seções ancoradas (`#urbanity`, `#urbanity-light`) | `app/plataformas/projetos-iconicos/`, `lib/iconicos.js` |
 | Cases com filtro por tag | `app/cases/`, `lib/cases/` |
 | Blog com CMS próprio | `app/blog/artigos/`, `app/admin/`, `lib/blog/` |
@@ -209,13 +227,15 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 |---|---|
 | `sitemap.xml` e `robots.txt` | Não existem. Metadata e `metadataBase` já estão prontos |
 | Idiomas (PT / EN / ES / ZH) | Os botões de idioma (agora dentro do menu) só trocam `useState` — não há i18n |
-| Envio de e-mail nos formulários | Falta integrar Resend |
+| Envio de e-mail nos formulários | Falta integrar Resend. O `TalentForm` é o caso mais grave: não envia nada e mesmo assim diz "Guardamos seu perfil" — a copy precisa mudar junto com a integração |
+| Página de case individual (`/cases/[slug]`) | Não existe; só a listagem. `isCaseSlugTaken` mantém o slug único de propósito, para a página poder ser criada depois sem colisão |
 | Arquivos do Mídia Kit | As páginas existem; falta o cliente entregar PDFs e assets (`lib/midiakit.js`) |
 | Números oficiais do simulador | `lib/simulador.js` usa ordem de grandeza estimada — falta CPM e alcance por plataforma |
 | Conteúdo de Ambiental / Social / Governança | Páginas no ar, dados em `lib/esg.js` sob `TODO(cliente)`. Falta o lastro: números com prazo, certificações, projetos e PDFs. `/sobre/ambiental` está com `robots: noindex` até lá |
 | Conteúdo do Podcast | Estrutura no ar em `/blog/podcast` com episódios de exemplo em `lib/podcast.js` sob `TODO(cliente)`. Falta gravar os episódios e preencher o campo `audio`; a página está com `robots: noindex` até lá |
 | Retaxonomia das plataformas (22 produtos sob 9 formatos) | Catálogo em 7 na ordem final, com Rodovias criado, Shoppings renomeado para Mídia Indoor e Gentileza Urbana removido; Icônicos entram na listagem como entrada única. Falta acrescentar Digital Signage e desdobrar os 22 produtos sob os formatos. Rodovias está com o descritivo mínimo sob `TODO(cliente)` |
 | Conteúdo dos Projetos Icônicos | `lib/iconicos.js` está sob `TODO(cliente)`: falta o descritivo oficial de Elegancy/Urbanity/Urbanity Light, as medidas de cada estrutura (os cards de formato hoje descrevem sem cravar dimensão), as praças instaladas e a foto de cada card (`image`, 16/9, ≥1600px) — sem ela o card cai num painel escuro com o nome |
+| Foto das plataformas no carrossel da home | `PLATFORMS_LISTAGEM` já carrega o campo `image` (16/9, ≥1600px), mas nenhuma das 8 entradas tem foto — todos os cards caem no painel bege com o nome. É o que falta para a seção ficar apresentável |
 | Páginas de sistema (`/obrigado`, `/privacidade`, `/termos`, 404) | Ramo 06 do fluxo |
 | Automação de marketing | — |
 | Testes automatizados | Nenhum. Regressão só aparece em conferência manual |

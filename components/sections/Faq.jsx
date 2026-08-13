@@ -11,7 +11,7 @@ export default function Faq() {
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="faq">
       <div className="wrap">
-        <SectionHeading num="07" title="Perguntas frequentes" className="reveal mb-[34px]" />
+        <SectionHeading num="06" title="Perguntas frequentes" className="reveal mb-[34px]" />
         <Accordion
           items={FAQS}
           idPrefix="faq-home"

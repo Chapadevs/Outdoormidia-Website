@@ -8,10 +8,6 @@ import {
 } from '@/lib/simulador'
 import { waLink, waSimulador } from '@/lib/whatsapp'
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const SELECT =
-  'select-caret w-full cursor-pointer rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 focus:border-orange focus:bg-white focus:outline-none'
-
 const FACES = [1, 2, 4, 8]
 
 export default function SimuladorForm({ locations, platforms }) {
@@ -35,9 +31,9 @@ export default function SimuladorForm({ locations, platforms }) {
     <div className="ticks reveal mx-auto max-w-[900px] rounded-[16px] border border-line bg-white p-[38px] max-mob:p-7">
       <div className="grid grid-cols-2 gap-4 max-mob:grid-cols-1">
         <label className="flex flex-col gap-2">
-          <span className={LABEL}>Praça</span>
+          <span className="field-label">Praça</span>
           <select
-            className={SELECT}
+            className="field-input field-select select-caret"
             value={escolha.pracaId}
             onChange={(e) => alterar('pracaId', e.target.value)}
           >
@@ -51,9 +47,9 @@ export default function SimuladorForm({ locations, platforms }) {
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className={LABEL}>Plataforma</span>
+          <span className="field-label">Plataforma</span>
           <select
-            className={SELECT}
+            className="field-input field-select select-caret"
             value={escolha.plataformaSlug}
             onChange={(e) => alterar('plataformaSlug', e.target.value)}
           >
@@ -67,9 +63,9 @@ export default function SimuladorForm({ locations, platforms }) {
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className={LABEL}>Período</span>
+          <span className="field-label">Período</span>
           <select
-            className={SELECT}
+            className="field-input field-select select-caret"
             value={escolha.periodoSlug}
             onChange={(e) => alterar('periodoSlug', e.target.value)}
           >
@@ -83,9 +79,9 @@ export default function SimuladorForm({ locations, platforms }) {
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className={LABEL}>Faces</span>
+          <span className="field-label">Faces</span>
           <select
-            className={SELECT}
+            className="field-input field-select select-caret"
             value={escolha.faces}
             onChange={(e) => alterar('faces', Number(e.target.value))}
           >
@@ -102,7 +98,7 @@ export default function SimuladorForm({ locations, platforms }) {
         <div className="mt-9 border-t border-line pt-8">
           <div className="grid grid-cols-2 gap-8 max-mob:grid-cols-1 max-mob:gap-6">
             <div>
-              <span className={LABEL}>Impactos estimados</span>
+              <span className="field-label">Impactos estimados</span>
               <div className="display mt-2.5 text-[clamp(34px,5vw,56px)] leading-none text-ink">
                 {formatarImpactos(estimativa.impactos)}
               </div>
@@ -111,7 +107,7 @@ export default function SimuladorForm({ locations, platforms }) {
               </p>
             </div>
             <div>
-              <span className={LABEL}>Investimento estimado</span>
+              <span className="field-label">Investimento estimado</span>
               <div className="mt-2.5 text-[clamp(24px,3.4vw,34px)] font-extrabold leading-tight text-ink">
                 {formatarMoeda(estimativa.investimentoMin)} a{' '}
                 {formatarMoeda(estimativa.investimentoMax)}

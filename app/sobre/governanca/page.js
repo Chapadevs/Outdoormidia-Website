@@ -12,6 +12,10 @@ const DESCRIPTION =
 export const metadata = {
   title: 'Governança — Outdoormídia',
   description: DESCRIPTION,
+  // TODO(cliente): remover o `robots` quando as certificações e os PDFs de
+  // GOV_CERTIFICACOES/GOV_DOCUMENTOS existirem em lib/esg.js. Mesma régua da
+  // página Ambiental.
+  robots: { index: false, follow: true },
   alternates: { canonical: '/sobre/governanca' },
   openGraph: {
     title: 'Governança — Outdoormídia',

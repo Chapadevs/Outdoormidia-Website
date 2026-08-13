@@ -3,9 +3,12 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
+import CoverMedia from '@/components/ui/CoverMedia'
 import LeadCta from '@/components/sections/LeadCta'
 import { ICONICOS } from '@/lib/iconicos'
 import { WA_ICONICOS, waLink } from '@/lib/whatsapp'
+
+const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 400px'
 
 const DESCRIPTION =
   'Elegancy, Green e Regenerativo: os projetos icônicos da Outdoormídia — estruturas de assinatura desenhadas ponto a ponto, fora do catálogo de plataformas.'
@@ -69,11 +72,12 @@ export default function ProjetosIconicosPage() {
                   className="group reveal flex flex-col rounded-[16px] border border-line bg-white p-6 transition-colors duration-200 hover:border-orange max-mob:p-5"
                   key={iconico.slug}
                 >
-                  <div className="ticks flex aspect-[16/10] items-center justify-center rounded-[16px] border border-line bg-bone">
-                    <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-line-2">
-                      {iconico.name}
-                    </span>
-                  </div>
+                  <CoverMedia
+                    src={iconico.image}
+                    alt={iconico.name}
+                    label={iconico.name}
+                    sizes={CARD_SIZES}
+                  />
                   <div className="mt-6 flex items-baseline gap-3">
                     <span className="font-display text-[15px] text-orange">{iconico.num}</span>
                     <h3 className="m-0 text-[21px] font-extrabold leading-none tracking-[-0.01em] transition-colors duration-200 group-hover:text-orange">

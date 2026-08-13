@@ -5,10 +5,6 @@ import Link from 'next/link'
 import MarkdownContent from '@/components/blog/MarkdownContent'
 import { slugify } from '@/lib/slugify'
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const INPUT =
-  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
-
 const EMPTY = {
   title: '',
   slug: '',
@@ -198,11 +194,11 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-2">
-        <label className={LABEL} htmlFor="title">
+        <label className="field-label" htmlFor="title">
           Título
         </label>
         <input
-          className={INPUT}
+          className="field-input"
           id="title"
           type="text"
           required
@@ -214,11 +210,11 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
 
       <div className="grid grid-cols-2 gap-5 max-mob:grid-cols-1">
         <div className="flex flex-col gap-2">
-          <label className={LABEL} htmlFor="slug">
+          <label className="field-label" htmlFor="slug">
             Slug (URL)
           </label>
           <input
-            className={INPUT}
+            className="field-input"
             id="slug"
             type="text"
             required
@@ -232,11 +228,11 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className={LABEL} htmlFor="status">
+          <label className="field-label" htmlFor="status">
             Status
           </label>
           <select
-            className={`${INPUT} select-caret appearance-none`}
+            className="field-input field-select select-caret"
             id="status"
             value={post.status}
             onChange={(e) => set('status', e.target.value)}
@@ -248,11 +244,11 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className={LABEL} htmlFor="author">
+        <label className="field-label" htmlFor="author">
           Autor
         </label>
         <input
-          className={INPUT}
+          className="field-input"
           id="author"
           type="text"
           maxLength={120}
@@ -263,7 +259,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className={LABEL}>Tags</span>
+        <span className="field-label">Tags</span>
         {allTags.length === 0 ? (
           <p className="text-sm text-ink-soft">
             Nenhuma tag cadastrada.{' '}
@@ -307,11 +303,11 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className={LABEL} htmlFor="excerpt">
+        <label className="field-label" htmlFor="excerpt">
           Resumo
         </label>
         <textarea
-          className={`${INPUT} min-h-[72px] resize-y`}
+          className="field-input min-h-[72px] resize-y"
           id="excerpt"
           required
           maxLength={220}
@@ -322,7 +318,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className={LABEL}>Imagem de capa</span>
+        <span className="field-label">Imagem de capa</span>
         <div className="flex items-center gap-4 max-mob:flex-col max-mob:items-start">
           {post.coverImage && (
             /* eslint-disable-next-line @next/next/no-img-element */
@@ -363,11 +359,11 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
 
       {post.coverImage && (
         <div className="flex flex-col gap-2">
-          <label className={LABEL} htmlFor="coverAlt">
+          <label className="field-label" htmlFor="coverAlt">
             Texto alternativo da capa
           </label>
           <input
-            className={INPUT}
+            className="field-input"
             id="coverAlt"
             type="text"
             value={post.coverAlt}
@@ -379,7 +375,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
 
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-3">
-          <label className={LABEL} htmlFor="content">
+          <label className="field-label" htmlFor="content">
             Conteúdo (Markdown)
           </label>
           <div className="flex items-center gap-2">
@@ -433,7 +429,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
             </div>
             <textarea
               ref={contentRef}
-              className={`${INPUT} min-h-[320px] resize-y rounded-t-none border-t-0 font-mono text-[15px]`}
+              className="field-input min-h-[320px] resize-y rounded-t-none border-t-0 font-mono text-[15px]"
               id="content"
               required
               value={post.content}
@@ -452,7 +448,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
       </div>
 
       {error && (
-        <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
+        <p className="field-error">
           {error}
         </p>
       )}

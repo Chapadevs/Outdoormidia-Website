@@ -3,11 +3,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import CoverageMap from '@/components/ui/CoverageMap'
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const INPUT =
-  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
-const ERROR = 'rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink'
-
 function parseFormats(value) {
   return value
     .split(',')
@@ -73,14 +68,14 @@ function LocationRow({ location, moving, onMove, onCancelMove }) {
       {editing ? (
         <div className="flex flex-col gap-3">
           <input
-            className={`${INPUT} py-2.5`}
+            className="field-input py-2.5"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             aria-label="Nome da localidade"
           />
           <input
-            className={`${INPUT} py-2.5`}
+            className="field-input py-2.5"
             type="text"
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
@@ -88,7 +83,7 @@ function LocationRow({ location, moving, onMove, onCancelMove }) {
             aria-label="Descrição da localidade"
           />
           <input
-            className={`${INPUT} py-2.5`}
+            className="field-input py-2.5"
             type="text"
             value={formats}
             onChange={(e) => setFormats(e.target.value)}
@@ -164,7 +159,7 @@ function LocationRow({ location, moving, onMove, onCancelMove }) {
           </div>
         </div>
       )}
-      {error && <p className={ERROR}>{error}</p>}
+      {error && <p className="field-error">{error}</p>}
     </li>
   )
 }
@@ -247,11 +242,11 @@ export default function LocationsManager({ locations }) {
               Nova <b>localidade</b>
             </div>
             <div className="flex flex-col gap-2">
-              <label className={LABEL} htmlFor="location-name">
+              <label className="field-label" htmlFor="location-name">
                 Nome
               </label>
               <input
-                className={INPUT}
+                className="field-input"
                 id="location-name"
                 type="text"
                 required
@@ -262,11 +257,11 @@ export default function LocationsManager({ locations }) {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className={LABEL} htmlFor="location-desc">
+              <label className="field-label" htmlFor="location-desc">
                 Descrição
               </label>
               <input
-                className={INPUT}
+                className="field-input"
                 id="location-desc"
                 type="text"
                 value={desc}
@@ -275,11 +270,11 @@ export default function LocationsManager({ locations }) {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className={LABEL} htmlFor="location-formats">
+              <label className="field-label" htmlFor="location-formats">
                 Plataformas
               </label>
               <input
-                className={INPUT}
+                className="field-input"
                 id="location-formats"
                 type="text"
                 value={formats}
@@ -314,7 +309,7 @@ export default function LocationsManager({ locations }) {
           </form>
         )}
 
-        {error && <p className={ERROR}>{error}</p>}
+        {error && <p className="field-error">{error}</p>}
 
         <section>
           <div className="eyebrow border-b border-line-2 pb-3">

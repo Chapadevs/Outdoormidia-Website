@@ -15,6 +15,10 @@ const impacto = SOCIAL_IMPACTO.filter((i) => i.n)
 export const metadata = {
   title: 'Social — Outdoormídia',
   description: DESCRIPTION,
+  // TODO(cliente): remover o `robots` quando os números de SOCIAL_IMPACTO e as
+  // instituições estiverem preenchidos em lib/esg.js. Página de ESG sem lastro
+  // é lida por quem avalia a empresa em licitação — melhor fora do índice.
+  robots: { index: false, follow: true },
   alternates: { canonical: '/sobre/social' },
   openGraph: {
     title: 'Social — Outdoormídia',

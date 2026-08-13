@@ -3,11 +3,8 @@ import Hero from '@/components/sections/Hero'
 import Ticker from '@/components/sections/Ticker'
 import Institutional from '@/components/sections/Institutional'
 import Diferenciais from '@/components/sections/Diferenciais'
-import Impact from '@/components/sections/Impact'
-import Iconicos from '@/components/sections/Iconicos'
-import Platforms from '@/components/sections/Platforms'
+import PlatformsCarousel from '@/components/sections/PlatformsCarousel'
 import Cases from '@/components/sections/Cases'
-import Process from '@/components/sections/Process'
 import Reviews from '@/components/sections/Reviews'
 import BlogTeaser from '@/components/sections/BlogTeaser'
 import Coverage from '@/components/sections/Coverage'
@@ -25,11 +22,8 @@ export default function Home() {
       <Ticker />
       <Institutional />
       <Diferenciais />
-      <Impact />
-      <Iconicos />
-      <Platforms />
+      <PlatformsCarousel />
       <Cases />
-      <Process />
       <Reviews />
       <BlogTeaser />
       <Coverage />

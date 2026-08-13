@@ -2,8 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import TagBadge from '@/components/blog/TagBadge'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
+import { DATA_LONGA } from '@/lib/format'
 
-const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' })
 const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 400px'
 
 export default function PostCard({ post, tags = [] }) {
@@ -23,7 +23,7 @@ export default function PostCard({ post, tags = [] }) {
       <div className="flex flex-1 flex-col gap-3 p-6">
         {post.publishedAt && (
           <span className="eyebrow">
-            {DATE_FMT.format(new Date(post.publishedAt))} · {readingTimeLabel(post.content)}
+            {DATA_LONGA.format(new Date(post.publishedAt))} · {readingTimeLabel(post.content)}
           </span>
         )}
         <h3 className="m-0 text-[21px] font-extrabold leading-[1.15]">

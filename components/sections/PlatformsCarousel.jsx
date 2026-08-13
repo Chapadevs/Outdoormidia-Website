@@ -3,9 +3,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useRef, useState } from 'react'
-import { ICONICOS } from '@/lib/iconicos'
+import SectionHeading from '@/components/ui/SectionHeading'
+import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
-export default function Iconicos() {
+export default function PlatformsCarousel({ num = '02' }) {
   const railRef = useRef(null)
   const timerRef = useRef(null)
   const [active, setActive] = useState(0)
@@ -44,21 +45,13 @@ export default function Iconicos() {
   }, [])
 
   return (
-    <section className="bg-bone py-[110px] text-ink max-mob:py-[72px]" id="iconicos">
+    <section className="bg-bone py-[110px] text-ink max-mob:py-[72px]" id="plataformas">
       <div className="wrap">
-        <div className="reveal flex items-end justify-between gap-6">
-          <div>
-            <div className="eyebrow text-orange">Projetos icônicos · Assinatura</div>
-            <h2 className="m-0 mt-4 text-pretty text-[clamp(30px,3.4vw,52px)] font-extrabold leading-[1.02] tracking-[-0.02em]">
-              Nem toda mídia cabe num catálogo.
-            </h2>
-            <p className="m-0 mt-3.5 max-w-[46ch] text-base leading-relaxed text-ink-soft">
-              Três linhas de projetos sob medida — desenhadas ponto a ponto.
-            </p>
-          </div>
-          <div className="flex shrink-0 gap-2.5 pb-1.5 max-tab:hidden">
+        <div className="reveal flex items-center gap-6">
+          <SectionHeading className="flex-1" href="/plataformas" num={num} title="Plataformas" />
+          <div className="flex shrink-0 gap-2.5 max-tab:hidden">
             <button
-              aria-label="Projeto anterior"
+              aria-label="Plataforma anterior"
               className="grid size-[46px] cursor-pointer place-items-center rounded-full border-[1.5px] border-line-2 text-[17px] text-ink transition duration-200 hover:border-orange hover:bg-orange hover:text-white disabled:cursor-default disabled:opacity-30 disabled:hover:border-line-2 disabled:hover:bg-transparent disabled:hover:text-ink"
               disabled={active === 0}
               onClick={() => goTo(active - 1)}
@@ -67,9 +60,9 @@ export default function Iconicos() {
               ←
             </button>
             <button
-              aria-label="Próximo projeto"
+              aria-label="Próxima plataforma"
               className="grid size-[46px] cursor-pointer place-items-center rounded-full border-[1.5px] border-line-2 text-[17px] text-ink transition duration-200 hover:border-orange hover:bg-orange hover:text-white disabled:cursor-default disabled:opacity-30 disabled:hover:border-line-2 disabled:hover:bg-transparent disabled:hover:text-ink"
-              disabled={active === ICONICOS.length - 1}
+              disabled={active === PLATFORMS_LISTAGEM.length - 1}
               onClick={() => goTo(active + 1)}
               type="button"
             >
@@ -87,40 +80,45 @@ export default function Iconicos() {
         onScroll={onScroll}
         ref={railRef}
       >
-        {ICONICOS.map((i, index) => (
+        {PLATFORMS_LISTAGEM.map((p, index) => (
           <article
             className="ticks relative aspect-[16/9] flex-[0_0_min(1000px,86%)] snap-center overflow-hidden rounded-[18px] border border-line bg-paper [&::after]:z-[3] [&::before]:z-[3] max-mob:aspect-[4/5] max-mob:flex-[0_0_100%]"
-            key={i.slug}
+            key={p.slug}
           >
-            {i.image ? (
+            {p.image ? (
               <Image
-                alt={i.name}
+                alt={p.name}
                 className="object-cover"
                 fill
                 sizes="(max-width: 560px) 100vw, 1000px"
-                src={i.image}
+                src={p.image}
               />
             ) : (
               <div className="absolute inset-0 grid place-items-center bg-ink/[.06] text-[11px] font-bold uppercase tracking-[0.16em] text-ink/30">
-                {i.name}
+                {p.name}
               </div>
             )}
             {/* scrim claro — segura a leitura do texto em ink sobre a foto */}
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(246,242,236,.94)_0%,rgba(246,242,236,.62)_42%,rgba(246,242,236,0)_74%)]" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-7 p-11 max-mob:flex-col max-mob:items-start max-mob:gap-6 max-mob:p-7">
               <div>
+                {p.marcador && (
+                  <span className="mb-3 inline-flex rounded-full border border-orange px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-orange">
+                    {p.marcador}
+                  </span>
+                )}
                 <div className="eyebrow text-orange">
-                  {i.num} · {i.tagline}
+                  {p.num} · {p.desc}
                 </div>
                 <h3 className="m-0 mt-3 text-[clamp(30px,3vw,46px)] font-extrabold leading-none tracking-[-0.02em] text-ink">
-                  {i.name}
+                  {p.name}
                 </h3>
                 <p className="m-0 mt-3.5 max-w-[40ch] text-base leading-normal text-ink-soft">
-                  {i.short}
+                  {p.short}
                 </p>
               </div>
-              <Link className="btn btn-fill pointer-events-auto shrink-0" href={i.href}>
-                Ver projeto →
+              <Link className="btn btn-fill pointer-events-auto shrink-0" href={p.href}>
+                {p.cta} →
               </Link>
             </div>
             <div
@@ -133,13 +131,13 @@ export default function Iconicos() {
       </div>
 
       <div className="mt-8 flex items-center justify-center gap-2.5">
-        {ICONICOS.map((i, index) => (
+        {PLATFORMS_LISTAGEM.map((p, index) => (
           <button
-            aria-label={`Ir para ${i.name}`}
+            aria-label={`Ir para ${p.name}`}
             className={`h-2 cursor-pointer rounded-full border-none p-0 transition-[width,background-color] duration-[400ms] ease-[cubic-bezier(.2,.7,.2,1)] ${
               index === active ? 'w-[30px] bg-orange' : 'w-2 bg-ink/25'
             }`}
-            key={i.slug}
+            key={p.slug}
             onClick={() => goTo(index)}
             type="button"
           />
