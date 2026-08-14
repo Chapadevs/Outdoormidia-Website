@@ -2,10 +2,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const INPUT =
-  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
-
 async function request(url, method, body) {
   const res = await fetch(url, {
     method,
@@ -56,7 +52,7 @@ function GroupRow({ group, scope }) {
       {editing ? (
         <div className="flex flex-wrap items-center gap-3">
           <input
-            className={`${INPUT} max-w-[260px] py-2.5`}
+            className="field-input max-w-[260px] py-2.5"
             type="text"
             value={label}
             onChange={(e) => setLabel(e.target.value)}
@@ -106,7 +102,7 @@ function GroupRow({ group, scope }) {
         </div>
       )}
       {error && (
-        <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-2 text-sm text-ink">
+        <p className="field-error">
           {error}
         </p>
       )}
@@ -143,11 +139,11 @@ export default function TagGroupManager({ scope, groups }) {
       >
         <div className="grid grid-cols-[1fr_auto] items-end gap-5 max-mob:grid-cols-1">
           <div className="flex flex-col gap-2">
-            <label className={LABEL} htmlFor="group-label">
+            <label className="field-label" htmlFor="group-label">
               Novo grupo
             </label>
             <input
-              className={INPUT}
+              className="field-input"
               id="group-label"
               type="text"
               required
@@ -165,7 +161,7 @@ export default function TagGroupManager({ scope, groups }) {
           </button>
         </div>
         {error && (
-          <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
+          <p className="field-error">
             {error}
           </p>
         )}

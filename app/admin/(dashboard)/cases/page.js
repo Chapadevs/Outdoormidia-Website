@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import DeleteCaseButton from '@/components/widgets/DeleteCaseButton'
+import DeleteButton from '@/components/widgets/DeleteButton'
 import { listAllCases } from '@/lib/cases/cases'
 import { PLATFORMS } from '@/lib/platforms'
 import { ICONICOS } from '@/lib/iconicos'
+import { DATA_CURTA } from '@/lib/format'
 
 export const metadata = {
   title: 'Cases — Painel Admin — Outdoormídia',
@@ -12,7 +13,6 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic'
 
-const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
 const PLATFORM_NAMES = new Map([...PLATFORMS, ...ICONICOS].map((p) => [p.slug, p.name]))
 
 export default async function AdminCasesPage() {
@@ -84,7 +84,7 @@ export default async function AdminCasesPage() {
                       )}
                     </td>
                     <td className="py-4 pr-4 text-sm text-ink-soft">
-                      {caseItem.updatedAt ? DATE_FMT.format(new Date(caseItem.updatedAt)) : '—'}
+                      {caseItem.updatedAt ? DATA_CURTA.format(new Date(caseItem.updatedAt)) : '—'}
                     </td>
                     <td className="py-4">
                       <div className="flex items-center gap-4">
@@ -102,7 +102,7 @@ export default async function AdminCasesPage() {
                             Ver
                           </Link>
                         )}
-                        <DeleteCaseButton id={caseItem.id} title={caseItem.title} />
+                        <DeleteButton id={caseItem.id} title={caseItem.title} resource="cases" label="case" />
                       </div>
                     </td>
                   </tr>

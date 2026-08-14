@@ -213,6 +213,22 @@
     background-position: right 14px center;
   }
 
+  /* campos de formulário — usados pelos formulários públicos e pelos editores
+     do admin. .field-select é modificador: vai junto com .field-input e
+     .select-caret, e precisa vir depois para o pr-[38px] ganhar do px-3.5. */
+  .field-label {
+    @apply text-xs font-bold uppercase tracking-[0.1em] text-ink-soft;
+  }
+  .field-input {
+    @apply w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none;
+  }
+  .field-select {
+    @apply cursor-pointer appearance-none pr-[38px];
+  }
+  .field-error {
+    @apply rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink;
+  }
+
   /* barra de nota 0–10 — preenchimento via --fill, com marcações de 10 em 10 */
   .range-nota {
     --fill: 0%;

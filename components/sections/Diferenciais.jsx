@@ -78,16 +78,6 @@ export default function Diferenciais({ num = '01', moreHref }) {
                 </span>
               </div>
             ))}
-            <div className="flex flex-wrap gap-x-8 gap-y-3.5 pt-[22px]">
-              {d.prova.stats.map((stat) => (
-                <div className="flex flex-col gap-0.5" key={stat.label}>
-                  <span className="text-[clamp(22px,2.2vw,28px)] font-extrabold leading-none tracking-[-0.02em] text-ink">
-                    {stat.n}
-                  </span>
-                  <span className="text-xs text-ink-soft">{stat.label}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>

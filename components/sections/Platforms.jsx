@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
+import CoverMedia from '@/components/ui/CoverMedia'
 import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
 export default function Platforms({ num = '02' }) {
@@ -69,11 +70,11 @@ export default function Platforms({ num = '02' }) {
                 >
                   <div className="overflow-hidden">
                     <div className="grid grid-cols-[1.4fr_1fr] items-center gap-8 px-2 pb-8 pt-1 max-tab:grid-cols-1 max-tab:gap-4 max-mob:px-1">
-                      <div className="ticks flex aspect-[16/7] items-center justify-center rounded-[16px] border border-line bg-bone max-mob:aspect-[16/9]">
-                        <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-line-2">
-                          Case · {p.name}
-                        </span>
-                      </div>
+                      <CoverMedia
+                        label={`Case · ${p.name}`}
+                        ratio="16/7"
+                        className="max-mob:aspect-[16/9]"
+                      />
                       <div>
                         {p.marcador && (
                           <span className="mb-3 inline-flex rounded-full border border-orange px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-orange">
@@ -84,7 +85,7 @@ export default function Platforms({ num = '02' }) {
                           {p.intro}
                         </p>
                         <Link
-                          href={p.homeHref}
+                          href={p.href}
                           className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-orange transition-colors duration-150 hover:text-ink"
                         >
                           Ver detalhes →

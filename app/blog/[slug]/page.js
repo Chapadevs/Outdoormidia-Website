@@ -10,11 +10,10 @@ import ShareButtons from '@/components/blog/ShareButtons'
 import { getPublishedPostBySlug } from '@/lib/blog/posts'
 import { getTagsBySlugs } from '@/lib/tags/tags'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
+import { DATA_LONGA } from '@/lib/format'
 import { SITE_URL } from '@/lib/constants'
 
 export const revalidate = 300
-
-const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' })
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
@@ -65,7 +64,7 @@ export default async function BlogPostPage({ params }) {
             </Link>
             {post.publishedAt && (
               <p className="eyebrow mt-9">
-                <b>{DATE_FMT.format(new Date(post.publishedAt))}</b>
+                <b>{DATA_LONGA.format(new Date(post.publishedAt))}</b>
                 {post.author && <> · Por {post.author}</>} · {readingTimeLabel(post.content)}
               </p>
             )}

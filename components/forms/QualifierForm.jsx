@@ -24,9 +24,6 @@ const PRACAS = [
 
 const PERIODOS = ['Quinzenal', '1 mês', '3 meses', '6 meses ou mais', 'Ainda não sei']
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const INPUT =
-  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
 const CHIP =
   'cursor-pointer rounded-full border px-4 py-2 text-[13px] font-bold transition-colors duration-150 border-line text-ink-soft hover:border-orange hover:text-orange'
 
@@ -193,17 +190,17 @@ export default function QualifierForm() {
             </legend>
             <div className="grid grid-cols-2 gap-4 max-mob:grid-cols-1">
               <label className="flex flex-col gap-2">
-                <span className={LABEL}>Nome</span>
+                <span className="field-label">Nome</span>
                 <input
-                  className={INPUT}
+                  className="field-input"
                   value={dados.nome}
                   onChange={(e) => setDados({ ...dados, nome: e.target.value })}
                 />
               </label>
               <label className="flex flex-col gap-2">
-                <span className={LABEL}>Empresa</span>
+                <span className="field-label">Empresa</span>
                 <input
-                  className={INPUT}
+                  className="field-input"
                   value={dados.empresa}
                   onChange={(e) => setDados({ ...dados, empresa: e.target.value })}
                 />

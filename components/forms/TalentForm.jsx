@@ -32,11 +32,6 @@ const MAILTO = `mailto:contato@outdoormidia.com.br?subject=${encodeURIComponent(
   'Candidatura — Banco de Talentos'
 )}`
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const INPUT =
-  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
-const SELECT = `${INPUT} select-caret cursor-pointer appearance-none pr-[38px]`
-
 export default function TalentForm() {
   const [sent, setSent] = useState(false)
 
@@ -94,11 +89,11 @@ export default function TalentForm() {
               onSubmit={handleSubmit}
             >
               <div className="flex flex-col gap-2">
-                <label className={LABEL} htmlFor="nome">
+                <label className="field-label" htmlFor="nome">
                   Nome
                 </label>
                 <input
-                  className={INPUT}
+                  className="field-input"
                   id="nome"
                   name="nome"
                   type="text"
@@ -109,11 +104,11 @@ export default function TalentForm() {
 
               <div className="grid grid-cols-2 gap-5 max-mob:grid-cols-1">
                 <div className="flex flex-col gap-2">
-                  <label className={LABEL} htmlFor="email">
+                  <label className="field-label" htmlFor="email">
                     E-mail
                   </label>
                   <input
-                    className={INPUT}
+                    className="field-input"
                     id="email"
                     name="email"
                     type="email"
@@ -122,11 +117,11 @@ export default function TalentForm() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className={LABEL} htmlFor="whatsapp">
+                  <label className="field-label" htmlFor="whatsapp">
                     WhatsApp
                   </label>
                   <input
-                    className={INPUT}
+                    className="field-input"
                     id="whatsapp"
                     name="whatsapp"
                     type="tel"
@@ -138,10 +133,10 @@ export default function TalentForm() {
 
               <div className="grid grid-cols-2 gap-5 max-mob:grid-cols-1">
                 <div className="flex flex-col gap-2">
-                  <label className={LABEL} htmlFor="cidade">
+                  <label className="field-label" htmlFor="cidade">
                     Onde você mora?
                   </label>
-                  <select className={SELECT} id="cidade" name="cidade" required defaultValue="">
+                  <select className="field-input field-select select-caret" id="cidade" name="cidade" required defaultValue="">
                     <option value="" disabled>
                       Selecione a cidade
                     </option>
@@ -153,10 +148,10 @@ export default function TalentForm() {
                   </select>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className={LABEL} htmlFor="area">
+                  <label className="field-label" htmlFor="area">
                     Área de interesse
                   </label>
-                  <select className={SELECT} id="area" name="area" required defaultValue="">
+                  <select className="field-input field-select select-caret" id="area" name="area" required defaultValue="">
                     <option value="" disabled>
                       Selecione a área
                     </option>
@@ -170,11 +165,11 @@ export default function TalentForm() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className={LABEL} htmlFor="linkedin">
+                <label className="field-label" htmlFor="linkedin">
                   LinkedIn ou portfólio
                 </label>
                 <input
-                  className={INPUT}
+                  className="field-input"
                   id="linkedin"
                   name="linkedin"
                   type="url"
@@ -184,11 +179,11 @@ export default function TalentForm() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className={LABEL} htmlFor="mensagem">
+                <label className="field-label" htmlFor="mensagem">
                   Por que a Outdoormídia? <span className="font-semibold text-line-2">(opcional)</span>
                 </label>
                 <textarea
-                  className={`${INPUT} min-h-24 resize-y`}
+                  className="field-input min-h-24 resize-y"
                   id="mensagem"
                   name="mensagem"
                   rows={4}

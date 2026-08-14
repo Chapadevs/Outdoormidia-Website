@@ -2,19 +2,21 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function DeleteCaseButton({ id, title }) {
+// `resource` é o segmento da rota (/api/admin/<resource>/<id>); `label` é como
+// o item é chamado na confirmação e no erro ("post", "case").
+export default function DeleteButton({ id, title, resource, label }) {
   const router = useRouter()
   const [deleting, setDeleting] = useState(false)
 
   async function handleDelete() {
-    if (!window.confirm(`Excluir o case "${title}"? Essa ação não pode ser desfeita.`)) return
+    if (!window.confirm(`Excluir o ${label} "${title}"? Essa ação não pode ser desfeita.`)) return
     setDeleting(true)
-    const res = await fetch(`/api/admin/cases/${id}`, { method: 'DELETE' })
+    const res = await fetch(`/api/admin/${resource}/${id}`, { method: 'DELETE' })
     if (res.ok) {
       router.refresh()
     } else {
       setDeleting(false)
-      window.alert('Erro ao excluir o case. Tente novamente.')
+      window.alert(`Erro ao excluir o ${label}. Tente novamente.`)
     }
   }
 

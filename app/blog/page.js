@@ -1,13 +1,14 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
+import CoverMedia from '@/components/ui/CoverMedia'
 import LeadCta from '@/components/sections/LeadCta'
 import { listPublishedPosts } from '@/lib/blog/posts'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
+import { DATA_LONGA } from '@/lib/format'
 import { PODCAST, EPISODIOS } from '@/lib/podcast'
 
 const DESCRIPTION =
@@ -27,7 +28,6 @@ export const metadata = {
 
 export const revalidate = 300
 
-const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' })
 const DESTAQUE_SIZES = '(max-width: 980px) 100vw, 620px'
 
 // Sem credenciais do Firestore (ex.: build no CI), o hub é gerado sem conteúdo —
@@ -74,27 +74,19 @@ export default async function BlogPage() {
                 href={`/blog/${destaque.slug}`}
                 className="ticks reveal group grid grid-cols-[1.1fr_1fr] items-stretch overflow-hidden rounded-[16px] border border-line bg-white transition-colors duration-200 hover:border-orange max-tab:grid-cols-1"
               >
-                {destaque.coverImage ? (
-                  <div className="relative aspect-[16/10] w-full">
-                    <Image
-                      src={destaque.coverImage}
-                      alt={destaque.coverAlt || destaque.title}
-                      fill
-                      sizes={DESTAQUE_SIZES}
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="flex aspect-[16/10] items-center justify-center bg-bone">
-                    <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-line-2">
-                      Artigo
-                    </span>
-                  </div>
-                )}
+                {/* o card já traz .ticks — a capa não repete as cantoneiras */}
+                <CoverMedia
+                  src={destaque.coverImage}
+                  alt={destaque.coverAlt || destaque.title}
+                  label="Artigo"
+                  sizes={DESTAQUE_SIZES}
+                  ticks={false}
+                  className="rounded-none border-0"
+                />
                 <div className="flex flex-col justify-center gap-4 p-11 max-mob:p-7">
                   <span className="eyebrow">
                     Artigo
-                    {destaque.publishedAt && ` · ${DATE_FMT.format(new Date(destaque.publishedAt))}`}
+                    {destaque.publishedAt && ` · ${DATA_LONGA.format(new Date(destaque.publishedAt))}`}
                     {` · ${readingTimeLabel(destaque.content)}`}
                   </span>
                   <h2 className="m-0 text-[clamp(26px,3.4vw,38px)] font-extrabold leading-[1.1] text-ink transition-colors duration-200 group-hover:text-orange">

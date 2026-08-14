@@ -9,9 +9,6 @@ import { ICONICOS } from '@/lib/iconicos'
 // Um case pode apontar tanto para o catálogo quanto para um projeto icônico.
 const DESTINOS = [...PLATFORMS, ...ICONICOS]
 
-const LABEL = 'text-xs font-bold uppercase tracking-[0.1em] text-ink-soft'
-const INPUT =
-  'w-full rounded-[10px] border-[1.5px] border-line bg-paper px-3.5 py-[13px] text-base text-ink transition duration-150 placeholder:text-line-2 focus:border-orange focus:bg-white focus:outline-none'
 const CHIP_ON = 'border-orange bg-orange text-white'
 const CHIP_OFF = 'border-line-2 text-ink-soft hover:border-orange hover:text-orange'
 
@@ -138,11 +135,11 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-2">
-        <label className={LABEL} htmlFor="title">
+        <label className="field-label" htmlFor="title">
           Título
         </label>
         <input
-          className={INPUT}
+          className="field-input"
           id="title"
           type="text"
           required
@@ -154,11 +151,11 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
 
       <div className="grid grid-cols-2 gap-5 max-mob:grid-cols-1">
         <div className="flex flex-col gap-2">
-          <label className={LABEL} htmlFor="slug">
+          <label className="field-label" htmlFor="slug">
             Slug (URL)
           </label>
           <input
-            className={INPUT}
+            className="field-input"
             id="slug"
             type="text"
             required
@@ -172,11 +169,11 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className={LABEL} htmlFor="status">
+          <label className="field-label" htmlFor="status">
             Status
           </label>
           <select
-            className={`${INPUT} select-caret appearance-none`}
+            className="field-input field-select select-caret"
             id="status"
             value={caseItem.status}
             onChange={(e) => set('status', e.target.value)}
@@ -188,11 +185,11 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className={LABEL} htmlFor="desc">
+        <label className="field-label" htmlFor="desc">
           Descrição
         </label>
         <textarea
-          className={`${INPUT} min-h-[96px] resize-y`}
+          className="field-input min-h-[96px] resize-y"
           id="desc"
           required
           maxLength={320}
@@ -203,11 +200,11 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className={LABEL} htmlFor="meta">
+        <label className="field-label" htmlFor="meta">
           Linha de contexto
         </label>
         <input
-          className={INPUT}
+          className="field-input"
           id="meta"
           type="text"
           maxLength={160}
@@ -218,7 +215,7 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className={LABEL}>Tags</span>
+        <span className="field-label">Tags</span>
         {allTags.length === 0 ? (
           <p className="text-sm text-ink-soft">
             Nenhuma tag de cases cadastrada.{' '}
@@ -260,7 +257,7 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className={LABEL}>Plataformas usadas</span>
+        <span className="field-label">Plataformas usadas</span>
         <div className="flex flex-wrap gap-1.5 rounded-[16px] border-[1.5px] border-line bg-paper px-3.5 py-3">
           {DESTINOS.map((platform) => {
             const selected = caseItem.platforms.includes(platform.slug)
@@ -285,11 +282,11 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className={LABEL}>Resultados</span>
+        <span className="field-label">Resultados</span>
         {caseItem.results.map((result, index) => (
           <div key={index} className="flex items-center gap-3 max-mob:flex-col max-mob:items-stretch">
             <input
-              className={`${INPUT} max-w-[160px] max-mob:max-w-none`}
+              className="field-input max-w-[160px] max-mob:max-w-none"
               type="text"
               maxLength={20}
               value={result.value}
@@ -298,7 +295,7 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
               aria-label={`Valor do resultado ${index + 1}`}
             />
             <input
-              className={INPUT}
+              className="field-input"
               type="text"
               maxLength={60}
               value={result.label}
@@ -327,7 +324,7 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className={LABEL}>Imagem do case</span>
+        <span className="field-label">Imagem do case</span>
         <div className="flex items-center gap-4 max-mob:flex-col max-mob:items-start">
           {caseItem.coverImage && (
             /* eslint-disable-next-line @next/next/no-img-element */
@@ -368,11 +365,11 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
 
       {caseItem.coverImage && (
         <div className="flex flex-col gap-2">
-          <label className={LABEL} htmlFor="coverAlt">
+          <label className="field-label" htmlFor="coverAlt">
             Texto alternativo da imagem
           </label>
           <input
-            className={INPUT}
+            className="field-input"
             id="coverAlt"
             type="text"
             maxLength={220}
@@ -384,7 +381,7 @@ export default function CaseEditorForm({ initialCase = null, allTags = [], group
       )}
 
       {error && (
-        <p className="rounded-[10px] border-[1.5px] border-orange bg-orange/5 px-3.5 py-3 text-sm text-ink">
+        <p className="field-error">
           {error}
         </p>
       )}

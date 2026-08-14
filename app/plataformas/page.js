@@ -3,6 +3,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
+import CoverMedia from '@/components/ui/CoverMedia'
 import LeadCta from '@/components/sections/LeadCta'
 import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
@@ -54,11 +55,7 @@ export default function PlataformasPage() {
                   key={p.slug}
                   id={p.slug}
                 >
-                  <div className="ticks flex aspect-[16/10] items-center justify-center rounded-[16px] border border-line bg-bone">
-                    <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-line-2">
-                      {p.name}
-                    </span>
-                  </div>
+                  <CoverMedia label={p.name} />
                   <div className="mt-6 flex items-baseline gap-3">
                     <span className="font-display text-[15px] text-orange">{p.num}</span>
                     <h2 className="m-0 text-[21px] font-extrabold leading-none tracking-[-0.01em] transition-colors duration-200 group-hover:text-orange">

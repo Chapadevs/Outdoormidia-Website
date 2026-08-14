@@ -22,9 +22,20 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="relative h-[100svh] min-h-[560px] w-full overflow-hidden bg-ink">
+    // Até 560px o vídeo sai do fundo e vira um bloco 16/9 no fluxo, com o título
+    // acima dele — em retrato o corte do full-bleed comia dois terços do quadro.
+    // Acima disso a altura segue a proporção do vídeo (16/9 → 56.25vw), limitada
+    // pela viewport, para ele escalar com a tela em vez de ficar num zoom fixo.
+    <section className="relative h-[min(100svh,56.25vw)] min-h-[560px] w-full overflow-hidden bg-ink max-mob:flex max-mob:h-auto max-mob:min-h-0 max-mob:flex-col max-mob:gap-5 max-mob:bg-paper max-mob:pb-[40px] max-mob:pt-[32px]">
+      <div className="wrap absolute inset-x-0 top-0 z-10 pt-[48px] max-mob:static max-mob:pt-0">
+        <h1 className="display text-center text-[clamp(30px,5vw,78px)] [text-shadow:0_2px_18px_rgba(22,17,13,0.45)] max-mob:text-ink max-mob:[text-shadow:none]">
+          Toda <span className="text-orange">Hora</span> em Todo{' '}
+          <span className="text-orange">Lugar.</span>
+        </h1>
+      </div>
+
       <video
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover max-mob:static max-mob:mx-5 max-mob:aspect-video max-mob:h-auto max-mob:w-auto max-mob:rounded-[16px]"
         src={loadVideo ? VIDEO_SRC : undefined}
         autoPlay
         muted
@@ -34,17 +45,7 @@ export default function Hero() {
       />
 
       {/* Escurecimento sutil no topo para legibilidade do título */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[42%] bg-gradient-to-b from-ink/55 to-transparent" />
-
-      <div className="wrap absolute inset-x-0 top-0 z-10 pt-[48px] max-mob:pt-[36px]">
-        <h1
-          className="display text-center text-[clamp(30px,5vw,78px)]"
-          style={{ textShadow: '0 2px 18px rgba(22,17,13,0.45)' }}
-        >
-          Toda <span className="text-orange">Hora</span> em Todo{' '}
-          <span className="text-orange">Lugar.</span>
-        </h1>
-      </div>
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[42%] bg-gradient-to-b from-ink/55 to-transparent max-mob:hidden" />
     </section>
   )
 }

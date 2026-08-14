@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import DeletePostButton from '@/components/widgets/DeletePostButton'
+import DeleteButton from '@/components/widgets/DeleteButton'
 import { listAllPosts } from '@/lib/blog/posts'
+import { DATA_CURTA } from '@/lib/format'
 
 export const metadata = {
   title: 'Blog — Painel Admin — Outdoormídia',
@@ -9,8 +10,6 @@ export const metadata = {
 }
 
 export const dynamic = 'force-dynamic'
-
-const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
 
 export default async function AdminBlogPage() {
   const posts = await listAllPosts()
@@ -73,7 +72,7 @@ export default async function AdminBlogPage() {
                       )}
                     </td>
                     <td className="py-4 pr-4 text-sm text-ink-soft">
-                      {post.updatedAt ? DATE_FMT.format(new Date(post.updatedAt)) : '—'}
+                      {post.updatedAt ? DATA_CURTA.format(new Date(post.updatedAt)) : '—'}
                     </td>
                     <td className="py-4">
                       <div className="flex items-center gap-4">
@@ -91,7 +90,7 @@ export default async function AdminBlogPage() {
                             Ver
                           </Link>
                         )}
-                        <DeletePostButton id={post.id} title={post.title} />
+                        <DeleteButton id={post.id} title={post.title} resource="posts" label="post" />
                       </div>
                     </td>
                   </tr>
