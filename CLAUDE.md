@@ -199,6 +199,7 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | ProposalForm (briefing) | `app/proposta/` |
 | Plataformas — índice + página das 7 | `app/plataformas/`, `lib/platforms.js` |
 | Plataformas na home — carrossel de peek full-bleed das 8 entradas de `PLATFORMS_LISTAGEM` (as 7 do catálogo + Icônicos), com setas e dots. Substituiu o acordeão e o carrossel dos 3 icônicos; o acordeão `Platforms` segue vivo só em `/solucoes` | `components/sections/PlatformsCarousel.jsx`, `lib/platforms.js` |
+| Icônicos na home — faixa laranja logo abaixo das Plataformas: número gigante de fundo, projeto em destaque (`.display`) e abas dos 3 projetos. Lê `lib/iconicos.js` | `components/sections/Iconicos.jsx` |
 | Projetos Icônicos — hub + página dos 3 (ISR 300 + `generateStaticParams`). Elegancy traz Urbanity e Urbanity Light como seções ancoradas (`#urbanity`, `#urbanity-light`) | `app/plataformas/projetos-iconicos/`, `lib/iconicos.js` |
 | Cases com filtro por tag | `app/cases/`, `lib/cases/` |
 | Blog com CMS próprio | `app/blog/artigos/`, `app/admin/`, `lib/blog/` |

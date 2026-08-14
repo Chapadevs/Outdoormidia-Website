@@ -41,7 +41,7 @@ export default function Process() {
   return (
     <section className="bg-bone py-[110px] max-mob:py-[72px]" id="processo">
       <div className="wrap">
-        <SectionHeading num="04" title="Como funciona" className="reveal mb-[18px]" />
+        <SectionHeading num="08" title="Como funciona" className="reveal mb-[18px]" />
         <p className="reveal mb-5 max-w-[520px] text-lg text-ink-soft">
           Do briefing à rua, sem complicar.
         </p>

@@ -21,10 +21,10 @@ export default async function Cases() {
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
 
   return (
-    <section className="pb-[110px] max-mob:pb-[72px]" id="cases">
+    <section className="py-[110px] max-mob:py-[72px]" id="cases">
       <div className="wrap">
         <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-          <SectionHeading num="03" title="Cases" className="flex-1" />
+          <SectionHeading num="06" title="Cases" className="flex-1" />
           <Link
             className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
             href="/cases"

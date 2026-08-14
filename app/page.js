@@ -4,6 +4,7 @@ import Ticker from '@/components/sections/Ticker'
 import Institutional from '@/components/sections/Institutional'
 import Diferenciais from '@/components/sections/Diferenciais'
 import PlatformsCarousel from '@/components/sections/PlatformsCarousel'
+import Iconicos from '@/components/sections/Iconicos'
 import Cases from '@/components/sections/Cases'
 import Process from '@/components/sections/Process'
 import Reviews from '@/components/sections/Reviews'
@@ -24,11 +25,12 @@ export default function Home() {
       <Institutional />
       <Diferenciais />
       <PlatformsCarousel />
-      <Cases />
-      <Process />
+      <Iconicos />
       <Reviews />
-      <BlogTeaser />
       <Coverage />
+      <Cases />
+      <BlogTeaser />
+      <Process />
       <LeadCta />
       <Faq />
       <Footer />
