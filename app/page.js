@@ -5,6 +5,7 @@ import Institutional from '@/components/sections/Institutional'
 import Diferenciais from '@/components/sections/Diferenciais'
 import PlatformsCarousel from '@/components/sections/PlatformsCarousel'
 import Cases from '@/components/sections/Cases'
+import Process from '@/components/sections/Process'
 import Reviews from '@/components/sections/Reviews'
 import BlogTeaser from '@/components/sections/BlogTeaser'
 import Coverage from '@/components/sections/Coverage'
@@ -24,6 +25,7 @@ export default function Home() {
       <Diferenciais />
       <PlatformsCarousel />
       <Cases />
+      <Process />
       <Reviews />
       <BlogTeaser />
       <Coverage />

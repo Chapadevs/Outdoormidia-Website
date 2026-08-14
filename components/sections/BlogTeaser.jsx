@@ -23,7 +23,7 @@ export default async function BlogTeaser() {
     <section className="py-[110px] max-mob:py-[72px]" id="blog">
       <div className="wrap">
         <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-          <SectionHeading num="05" title="Conteúdo" className="flex-1" />
+          <SectionHeading num="06" title="Conteúdo" className="flex-1" />
           <Link
             className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
             href="/blog/artigos"
