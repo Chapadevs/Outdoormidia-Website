@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { waQualificador, waLink } from '@/lib/whatsapp'
+import { waQualificador, waLinkPorPraca } from '@/lib/whatsapp'
 
 const INTENCOES = ['É minha primeira campanha', 'Já anunciei em OOH antes', 'Sou agência ou planejamento']
 
@@ -24,10 +24,19 @@ const PRACAS = [
 
 const PERIODOS = ['Quinzenal', '1 mês', '3 meses', '6 meses ou mais', 'Ainda não sei']
 
+const SEGMENTOS = [
+  'Serviços',
+  'Agências de marketing',
+  'Varejo',
+  'Restaurantes',
+  'Imobiliário / Construção Civil',
+]
+
 const CHIP =
   'cursor-pointer rounded-full border px-4 py-2 text-[13px] font-bold transition-colors duration-150 border-line text-ink-soft hover:border-orange hover:text-orange'
 
-const CHAVES = ['intencao', 'objetivo', 'praca', 'periodo']
+const CHAVES = ['intencao', 'objetivo', 'praca', 'periodo', 'segmento']
+const TOTAL = CHAVES.length + 1
 
 export default function QualifierForm() {
   const [respostas, setRespostas] = useState({
@@ -35,20 +44,14 @@ export default function QualifierForm() {
     objetivo: '',
     praca: '',
     periodo: '',
+    segmento: '',
   })
   const [dados, setDados] = useState({ nome: '', empresa: '' })
   const passoRef = useRef(null)
 
   // Passo derivado do estado — impossível dessincronizar.
-  const passo = !respostas.intencao
-    ? 0
-    : !respostas.objetivo
-      ? 1
-      : !respostas.praca
-        ? 2
-        : !respostas.periodo
-          ? 3
-          : 4
+  const pendente = CHAVES.findIndex((c) => !respostas[c])
+  const passo = pendente === -1 ? CHAVES.length : pendente
 
   useEffect(() => {
     if (passo === 0) return
@@ -76,18 +79,30 @@ export default function QualifierForm() {
     { rotulo: 'Objetivo', valor: respostas.objetivo },
     { rotulo: 'Praça', valor: respostas.praca },
     { rotulo: 'Período', valor: respostas.periodo },
+    { rotulo: 'Segmento', valor: respostas.segmento },
   ]
 
   return (
     <div className="ticks reveal mx-auto max-w-[820px] rounded-[16px] border border-line bg-white p-[38px] max-mob:p-7">
+      {/* Atalho para quem ainda não sabe o objetivo. Some no último passo: ali o
+          visitante já respondeu tudo e mandar para outro fluxo só atrapalha. */}
+      {passo < CHAVES.length && (
+        <p className="m-0 mb-6 text-[14px] text-ink-soft">
+          Sem clareza do objetivo?{' '}
+          <Link href="/diagnostico" className="font-bold text-orange hover:underline">
+            Faça o Diagnóstico de Presença.
+          </Link>
+        </p>
+      )}
+
       <div className="mb-8 flex items-center gap-5 max-mob:gap-3.5">
         <span className="eyebrow whitespace-nowrap">
-          <b>{respondidas}</b> de 5
+          <b>{respondidas}</b> de {TOTAL}
         </span>
         <span className="h-1 flex-1 rounded-full bg-line">
           <span
             className="block h-full rounded-full bg-orange transition-[width] duration-300"
-            style={{ width: `${(respondidas / 5) * 100}%` }}
+            style={{ width: `${(respondidas / TOTAL) * 100}%` }}
           />
         </span>
       </div>
@@ -135,7 +150,7 @@ export default function QualifierForm() {
         {passo === 1 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-4 text-[17px] font-extrabold text-ink">
-              O que a campanha precisa resolver?
+              Qual o objetivo da campanha?
             </legend>
             <div className="flex flex-wrap gap-2.5">
               {OBJETIVOS.map((op) => (
@@ -144,12 +159,6 @@ export default function QualifierForm() {
                 </button>
               ))}
             </div>
-            <p className="mt-4 text-[14px] text-ink-soft">
-              Sem clareza do objetivo?{' '}
-              <Link href="/diagnostico" className="font-bold text-orange hover:underline">
-                Faça o Diagnóstico de Presença.
-              </Link>
-            </p>
           </fieldset>
         )}
 
@@ -186,7 +195,22 @@ export default function QualifierForm() {
         {passo === 4 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-4 text-[17px] font-extrabold text-ink">
-              Por último: quem é você?
+              Qual seu segmento de indústria?
+            </legend>
+            <div className="flex flex-wrap gap-2.5">
+              {SEGMENTOS.map((op) => (
+                <button key={op} type="button" className={CHIP} onClick={() => responder('segmento', op)}>
+                  {op}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        )}
+
+        {passo === 5 && (
+          <fieldset className="m-0 border-0 p-0">
+            <legend className="mb-4 text-[17px] font-extrabold text-ink">
+              Com quem estamos falando?
             </legend>
             <div className="grid grid-cols-2 gap-4 max-mob:grid-cols-1">
               <label className="flex flex-col gap-2">
@@ -208,7 +232,7 @@ export default function QualifierForm() {
             </div>
 
             <a
-              href={waLink(waQualificador({ ...respostas, ...dados }))}
+              href={waLinkPorPraca(respostas.praca, waQualificador({ ...respostas, ...dados }))}
               className="btn btn-fill mt-6"
             >
               Enviar pelo WhatsApp

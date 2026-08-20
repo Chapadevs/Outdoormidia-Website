@@ -3,6 +3,7 @@ import './globals.css'
 import WhatsAppButton from '@/components/widgets/WhatsAppButton'
 import RevealObserver from '@/components/widgets/RevealObserver'
 import JsonLd from '@/components/widgets/JsonLd'
+import CookieNotice from '@/components/widgets/CookieNotice'
 import { SITE_URL } from '@/lib/constants'
 
 const poppins = Poppins({
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
         {children}
         <WhatsAppButton />
         <RevealObserver />
+        <CookieNotice />
       </body>
     </html>
   )
