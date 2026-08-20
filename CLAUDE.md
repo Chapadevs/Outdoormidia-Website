@@ -32,7 +32,6 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 - **next-intl** — os botões PT/EN/ES/中文 do `Header` hoje só trocam um `useState`; não há tradução por trás
 - **Resend** — envio de e-mails transacionais (formulários hoje só gravam/redirecionam)
 - **Validação com schema** — a validação é manual, em `lib/*/validate.js`. Sem Zod/React Hook Form
-- **Sitemap e robots.txt** — não existem no repositório
 
 ---
 
@@ -221,12 +220,18 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Painel admin (posts, cases, locations, tags) | `app/admin/`, `app/api/admin/` |
 | Breadcrumb em todas as páginas | `components/ui/Breadcrumb.jsx` |
 | Cache: ISR nas rotas de conteúdo + headers em `/media/` | `next.config.mjs`, `lib/revalidate.js` |
+| `robots.txt` — libera busca e rastreadores de IA (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended); bloqueia `/admin` e `/api` | `app/robots.js` |
+| `sitemap.xml` — estáticas de `lib/seo.js` + plataformas, icônicos, diferenciais e posts do Firestore | `app/sitemap.js`, `lib/seo.js` |
+| `llms.txt` — índice do site em markdown para motores generativos, gerado das mesmas fontes do sitemap | `app/llms.txt/route.js` |
+| JSON-LD de `LocalBusiness` + `WebSite` no `<head>`, com NAP, `areaServed` e `sameAs` | `components/widgets/JsonLd.jsx`, `lib/empresa.js` |
+| Canonical, title e description em todas as rotas públicas (home e `/proposta` incluídas) | `app/**/page.js` |
 
 ### Pendente
 
 | Feature | Observação |
 |---|---|
-| `sitemap.xml` e `robots.txt` | Não existem. Metadata e `metadataBase` já estão prontos |
+| Endereço e horário no JSON-LD | `lib/empresa.js` está com `endereco.logradouro`, `endereco.cep` e `horarios` vazios sob `TODO(cliente)`. Campo vazio é omitido do schema — dado errado em structured data vira endereço errado no Google. Falta o cliente informar |
+| Imagem de Open Graph | Nenhuma rota declara `openGraph.images` fora do blog e não há asset de OG em `public/`. Link compartilhado sai sem card. `logo.png` e `om.png` são brancos (viram máscara CSS), não servem como `logo` de schema |
 | Idiomas (PT / EN / ES / ZH) | Os botões de idioma (agora dentro do menu) só trocam `useState` — não há i18n |
 | Envio de e-mail nos formulários | Falta integrar Resend. O `TalentForm` é o caso mais grave: não envia nada e mesmo assim diz "Guardamos seu perfil" — a copy precisa mudar junto com a integração |
 | Página de case individual (`/cases/[slug]`) | Não existe; só a listagem. `isCaseSlugTaken` mantém o slug único de propósito, para a página poder ser criada depois sem colisão |

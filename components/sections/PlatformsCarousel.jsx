@@ -87,7 +87,7 @@ export default function PlatformsCarousel({ num = '02' }) {
           >
             {p.image ? (
               <Image
-                alt={p.name}
+                alt={p.imageAlt || `${p.name}: ${p.short}`}
                 className="object-cover"
                 fill
                 sizes="(max-width: 560px) 100vw, 1000px"

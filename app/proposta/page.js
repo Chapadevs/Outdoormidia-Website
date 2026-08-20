@@ -2,9 +2,19 @@ import ProposalForm from '@/components/forms/ProposalForm'
 import { getLocations } from '@/lib/locations'
 import { PLATFORMS } from '@/lib/platforms'
 
+const DESCRIPTION =
+  'Preencha o briefing e receba uma proposta de mídia exterior sob medida em até 1 dia útil.'
+
 export const metadata = {
   title: 'Solicitar Proposta — Outdoormídia',
-  description: 'Preencha o briefing e receba uma proposta de mídia exterior sob medida em até 1 dia útil.',
+  description: DESCRIPTION,
+  alternates: { canonical: '/proposta' },
+  openGraph: {
+    title: 'Solicitar Proposta — Outdoormídia',
+    description: DESCRIPTION,
+    locale: 'pt_BR',
+    type: 'website',
+  },
 }
 
 export const revalidate = 3600

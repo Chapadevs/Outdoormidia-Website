@@ -24,10 +24,14 @@ export default function CoverMedia({
 }) {
   const base = `${ticks ? 'ticks ' : ''}relative w-full overflow-hidden rounded-[16px] border border-line ${RATIOS[ratio]}`
 
+  // Havendo imagem, o alt é obrigatório: cai no rótulo do card e, na falta dele,
+  // na marca. Nunca em string vazia — isso marcaria a capa como decorativa e a
+  // tiraria da leitura de quem usa leitor de tela e dos rastreadores.
   if (src) {
+    const textoAlt = alt || label || 'Outdoormídia — mídia Out of Home'
     return (
       <div className={`${base} ${className}`}>
-        <Image src={src} alt={alt || label || ''} fill sizes={sizes} className="object-cover" />
+        <Image src={src} alt={textoAlt} fill sizes={sizes} className="object-cover" />
       </div>
     )
   }
