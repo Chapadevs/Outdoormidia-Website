@@ -74,7 +74,7 @@ export default function ProjetosIconicosPage() {
                 >
                   <CoverMedia
                     src={iconico.image}
-                    alt={iconico.name}
+                    alt={iconico.imageAlt || `${iconico.name}: ${iconico.short}`}
                     label={iconico.name}
                     sizes={CARD_SIZES}
                   />

@@ -56,18 +56,23 @@ export default function Iconicos({ num = '03' }) {
           </div>
         </div>
 
-        <div className="reveal py-20 max-mob:py-12">
-          <div className="eyebrow text-white">{item.tagline}</div>
-          <h3 className="display m-0 mt-[26px] text-[clamp(52px,7.4vw,116px)]">{item.name}</h3>
-          <div className="mt-10 flex flex-wrap items-end justify-between gap-12 max-mob:gap-8">
-            <p className="m-0 max-w-[34ch] text-[clamp(18px,1.5vw,23px)] leading-[1.45] text-white/90">
-              {item.short}
-            </p>
-            <Link className="btn btn-on-orange px-[34px] py-[19px] text-[15px]" href={item.href}>
-              {item.ctaLabel} →
-            </Link>
+        {/* Os três painéis saem no HTML; a aba só troca qual fica visível. Render
+            condicional deixaria o texto de dois dos projetos fora do documento —
+            invisível para o Google e para os rastreadores de IA. */}
+        {ICONICOS.map((i, index) => (
+          <div className="reveal py-20 max-mob:py-12" hidden={index !== active} key={i.slug}>
+            <div className="eyebrow text-white">{i.tagline}</div>
+            <h3 className="display m-0 mt-[26px] text-[clamp(52px,7.4vw,116px)]">{i.name}</h3>
+            <div className="mt-10 flex flex-wrap items-end justify-between gap-12 max-mob:gap-8">
+              <p className="m-0 max-w-[34ch] text-[clamp(18px,1.5vw,23px)] leading-[1.45] text-white/90">
+                {i.short}
+              </p>
+              <Link className="btn btn-on-orange px-[34px] py-[19px] text-[15px]" href={i.href}>
+                {i.ctaLabel} →
+              </Link>
+            </div>
           </div>
-        </div>
+        ))}
 
         <div className="grid grid-cols-3 border-t border-white/40 max-mob:grid-cols-1">
           {ICONICOS.map((i, index) => (

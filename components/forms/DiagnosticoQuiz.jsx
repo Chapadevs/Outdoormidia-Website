@@ -20,7 +20,10 @@ export default function DiagnosticoQuiz() {
   const [notas, setNotas] = useState(SEM_NOTAS)
   const [concluido, setConcluido] = useState(false)
   const barrasRef = useRef([])
+  const cardsRef = useRef([])
+  const botaoRef = useRef(null)
   const resultadoRef = useRef(null)
+  const inedita = useRef(false)
 
   const respondidas = notas.filter((n) => n !== null).length
   const faltam = PERGUNTAS.length - respondidas
@@ -46,14 +49,41 @@ export default function DiagnosticoQuiz() {
     })
   }
 
+  function abrirPergunta(i, valor) {
+    inedita.current = notas[i] === null
+    definirNota(i, valor)
+  }
+
+  function fecharPergunta(i) {
+    if (!inedita.current) return
+    inedita.current = false
+    avancar(i)
+  }
+
+  function proximaPendente(i) {
+    const adiante = notas.findIndex((n, idx) => idx > i && n === null)
+    if (adiante !== -1) return adiante
+    return notas.findIndex((n, idx) => idx < i && n === null)
+  }
+
+  function irPara(indice) {
+    const alvo = indice === -1 ? botaoRef.current : cardsRef.current[indice]
+    const foco = indice === -1 ? botaoRef.current : barrasRef.current[indice]
+    alvo?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    foco?.focus({ preventScroll: true })
+  }
+
+  function avancar(i) {
+    const proxima = proximaPendente(i)
+    window.setTimeout(() => irPara(proxima), 160)
+  }
+
   function verResultado() {
     if (completo) {
       setConcluido(true)
       return
     }
-    const barra = barrasRef.current[notas.indexOf(null)]
-    barra?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    barra?.focus({ preventScroll: true })
+    irPara(notas.indexOf(null))
   }
 
   function refazer() {
@@ -63,10 +93,10 @@ export default function DiagnosticoQuiz() {
   }
 
   return (
-    <section className="pb-[110px] max-mob:pb-[72px]">
+    <section className="pb-[110px] max-mob:pb-[168px]">
       <div className="wrap">
-        <div className="flex items-center gap-5 border-t border-line py-4 max-mob:gap-3.5">
-          <span className="eyebrow whitespace-nowrap">
+        <div className="flex items-center gap-5 border-t border-line py-4 max-mob:gap-3 max-mob:py-3.5">
+          <span className="eyebrow whitespace-nowrap max-mob:text-[10px] max-mob:tracking-[0.16em]">
             <b>{respondidas}</b> de {PERGUNTAS.length} respondidas
           </span>
           <span className="h-1 flex-1 rounded-full bg-line">
@@ -77,19 +107,19 @@ export default function DiagnosticoQuiz() {
           </span>
         </div>
 
-        <div className="reveal mb-9 flex flex-wrap items-center gap-7 rounded-[16px] border border-line bg-white px-6 py-5 max-mob:gap-5 max-mob:px-5">
-          <p className="min-w-[280px] flex-1 text-sm leading-relaxed text-ink-soft max-mob:min-w-0">
+        <div className="reveal mb-9 flex flex-wrap items-center gap-7 rounded-[16px] border border-line bg-white px-6 py-5 max-mob:mb-6 max-mob:flex-col max-mob:items-stretch max-mob:gap-4 max-mob:px-5 max-mob:py-4">
+          <p className="min-w-[280px] flex-1 text-sm leading-relaxed text-ink-soft max-mob:min-w-0 max-mob:flex-none max-mob:text-[13.5px]">
             Arraste ou clique na barra e dê uma nota de <b className="text-ink">0 a 10</b> em cada
             pergunta. Leve menos de um minuto e responda com sinceridade: o resultado só serve se for
             honesto.
           </p>
-          <ul className="flex gap-[22px] max-mob:gap-4">
+          <ul className="flex gap-[22px] max-mob:justify-between max-mob:gap-3 max-mob:border-t max-mob:border-line max-mob:pt-4">
             {ESCALA.map(({ faixa: intervalo, rotulo }) => (
               <li key={intervalo} className="flex flex-col gap-1.5">
                 <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink">
                   {intervalo}
                 </span>
-                <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink-soft/70">
+                <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink-soft/70 max-mob:text-[10px] max-mob:tracking-[0.08em]">
                   {rotulo}
                 </span>
               </li>
@@ -98,9 +128,11 @@ export default function DiagnosticoQuiz() {
         </div>
 
         {GRUPOS.map((grupo) => (
-          <div key={grupo.titulo} className="reveal mb-9">
-            <div className="mb-3.5 flex items-baseline gap-3.5">
-              <span className="eyebrow text-ink">{grupo.titulo}</span>
+          <div key={grupo.titulo} className="reveal mb-9 max-mob:mb-7">
+            <div className="mb-3.5 flex items-baseline gap-3.5 max-mob:mb-3 max-mob:gap-3">
+              <span className="eyebrow text-ink max-mob:text-[10px] max-mob:tracking-[0.16em]">
+                {grupo.titulo}
+              </span>
               <span className="h-px flex-1 bg-line" />
               <span className="eyebrow whitespace-nowrap max-mob:hidden">{grupo.meta}</span>
             </div>
@@ -112,7 +144,10 @@ export default function DiagnosticoQuiz() {
                 return (
                   <div
                     key={pergunta}
-                    className="relative grid grid-cols-[minmax(260px,1fr)_minmax(300px,400px)_74px] items-center gap-[26px] overflow-hidden rounded-[16px] border border-line bg-white py-5 pl-7 pr-6 max-tab:grid-cols-[1fr_minmax(220px,300px)_58px] max-tab:gap-5 max-mob:grid-cols-[1fr_54px] max-mob:gap-x-4 max-mob:gap-y-3.5 max-mob:pl-5 max-mob:pr-4"
+                    ref={(el) => {
+                      cardsRef.current[i] = el
+                    }}
+                    className="relative grid scroll-mt-[100px] grid-cols-[minmax(260px,1fr)_minmax(300px,400px)_74px] items-center gap-[26px] overflow-hidden rounded-[16px] border border-line bg-white py-5 pl-7 pr-6 max-tab:grid-cols-[1fr_minmax(220px,300px)_58px] max-tab:gap-5 max-mob:grid-cols-[1fr_46px] max-mob:gap-x-3 max-mob:gap-y-3 max-mob:py-4 max-mob:pl-4 max-mob:pr-4"
                   >
                     <span
                       aria-hidden="true"
@@ -124,20 +159,20 @@ export default function DiagnosticoQuiz() {
                     <div className="max-mob:col-span-2">
                       <label
                         htmlFor={`pergunta-${i}`}
-                        className="flex items-baseline gap-3 text-[15px] font-extrabold leading-[1.35] text-ink"
+                        className="flex items-baseline gap-3 text-[15px] font-extrabold leading-[1.35] text-ink max-mob:gap-2 max-mob:text-[14.5px]"
                       >
                         <span className="font-display text-sm font-normal tracking-[0.04em] text-orange">
                           {String(i + 1).padStart(2, '0')}
                         </span>
                         {pergunta}
                       </label>
-                      <p className="ml-[26px] mt-1.5 max-w-[44ch] text-[12.5px] leading-[1.5] text-ink-soft/70 max-mob:ml-0">
+                      <p className="ml-[26px] mt-1.5 max-w-[44ch] text-[12.5px] leading-[1.5] text-ink-soft/70 max-mob:ml-0 max-mob:mt-1 max-mob:text-[12px]">
                         {ajuda}
                       </p>
                     </div>
 
-                    <div>
-                      <div className="mb-2 flex justify-between gap-3 text-[10px] font-bold uppercase leading-tight tracking-[0.14em] text-ink-soft/60">
+                    <div className="min-w-0">
+                      <div className="mb-2 flex justify-between gap-3 text-[10px] font-bold uppercase leading-tight tracking-[0.14em] text-ink-soft/60 max-mob:mb-1.5 max-mob:gap-2 max-mob:tracking-[0.08em]">
                         <span>{minimo}</span>
                         <span className="text-right">{maximo}</span>
                       </div>
@@ -154,15 +189,21 @@ export default function DiagnosticoQuiz() {
                         data-respondida={respondida}
                         style={{ '--fill': `${valor * 10}%` }}
                         onChange={(e) => definirNota(i, Number(e.target.value))}
-                        onPointerDown={() => definirNota(i, valor)}
-                        onKeyDown={() => definirNota(i, valor)}
+                        onPointerDown={() => abrirPergunta(i, valor)}
+                        onPointerUp={() => fecharPergunta(i)}
+                        onPointerCancel={() => fecharPergunta(i)}
+                        onKeyDown={() => abrirPergunta(i, valor)}
+                        onKeyUp={(e) => {
+                          if (e.key === 'Enter') fecharPergunta(i)
+                        }}
+                        onBlur={() => fecharPergunta(i)}
                         className="range-nota"
                       />
-                      <div className="mt-2 flex min-h-4 justify-between gap-3">
-                        <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-orange">
+                      <div className="mt-2 flex min-h-4 justify-between gap-3 max-mob:mt-1.5 max-mob:gap-2">
+                        <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-orange max-mob:tracking-[0.08em]">
                           {rotuloDaNota(notas[i])}
                         </span>
-                        <span className="text-[11px] uppercase tracking-[0.14em] text-ink-soft/45">
+                        <span className="text-[11px] uppercase tracking-[0.14em] text-ink-soft/45 max-mob:hidden">
                           0 — 10
                         </span>
                       </div>
@@ -171,7 +212,7 @@ export default function DiagnosticoQuiz() {
                     <div className="text-right max-mob:self-center">
                       <div
                         aria-hidden="true"
-                        className={`font-display text-[34px] leading-none max-tab:text-[28px] ${
+                        className={`font-display text-[34px] leading-none max-tab:text-[28px] max-mob:text-[26px] ${
                           respondida ? 'text-ink' : 'text-line-2'
                         }`}
                       >
@@ -188,17 +229,19 @@ export default function DiagnosticoQuiz() {
           </div>
         ))}
 
-        <div className="sticky bottom-[18px] z-30 flex flex-wrap items-center gap-6 rounded-[16px] bg-ink px-6 py-[18px] text-paper shadow-[0_14px_34px_rgba(22,17,13,.22)] max-mob:bottom-[84px] max-mob:gap-x-4 max-mob:gap-y-2.5 max-mob:px-5 max-mob:py-3.5">
+        <div className="sticky bottom-[18px] z-30 flex flex-wrap items-center gap-6 rounded-[16px] bg-ink px-6 py-[18px] text-paper shadow-[0_14px_34px_rgba(22,17,13,.22)] max-mob:bottom-[84px] max-mob:gap-x-3 max-mob:gap-y-2 max-mob:px-4 max-mob:py-3">
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-paper/55 max-mob:hidden">
             Parcial
           </span>
           <span className="flex items-baseline gap-1">
-            <span className="font-display text-[34px] leading-none max-mob:text-[28px]">{score}</span>
-            <span className="font-display text-base text-paper/45">/{NOTA_MAXIMA}</span>
+            <span className="font-display text-[34px] leading-none max-mob:text-[26px]">{score}</span>
+            <span className="font-display text-base text-paper/45 max-mob:text-sm">
+              /{NOTA_MAXIMA}
+            </span>
           </span>
           <p
             aria-live="polite"
-            className="min-w-[180px] flex-1 text-[13px] leading-[1.5] text-paper/70 max-mob:order-last max-mob:min-w-0 max-mob:basis-full max-mob:text-xs"
+            className="min-w-[180px] flex-1 text-[13px] leading-[1.5] text-paper/70 max-mob:order-last max-mob:min-w-0 max-mob:basis-full max-mob:text-[11.5px] max-mob:leading-[1.45]"
           >
             {respondidas === 0
               ? 'Comece pela primeira pergunta — o resultado aparece quando as 7 estiverem respondidas.'
@@ -209,9 +252,10 @@ export default function DiagnosticoQuiz() {
                   : 'Tudo respondido — veja o que a sua nota significa.'}
           </p>
           <button
+            ref={botaoRef}
             type="button"
             onClick={mostrarResultado ? refazer : verResultado}
-            className={`cursor-pointer rounded-full px-[22px] py-[13px] text-[13px] font-bold tracking-[0.06em] transition duration-[180ms] max-mob:ml-auto max-mob:px-5 max-mob:py-3 ${
+            className={`cursor-pointer scroll-mt-[100px] rounded-full px-[22px] py-[13px] text-[13px] font-bold tracking-[0.06em] transition duration-[180ms] max-mob:ml-auto max-mob:px-4 max-mob:py-2.5 max-mob:text-xs ${
               completo
                 ? 'bg-orange text-white hover:bg-white hover:text-ink'
                 : 'bg-white/10 text-paper/50 hover:bg-white/[.18]'
@@ -222,11 +266,13 @@ export default function DiagnosticoQuiz() {
         </div>
 
         {mostrarResultado && (
-          <div ref={resultadoRef} className="mt-9 scroll-mt-[110px]">
-            <div className={`ticks rounded-[16px] border p-[38px] ${faixa.card} ${faixa.tick} max-mob:p-7`}>
-              <div className="grid grid-cols-[170px_1fr] items-start gap-8 max-mob:grid-cols-1 max-mob:gap-5">
+          <div ref={resultadoRef} className="mt-9 scroll-mt-[110px] max-mob:mt-6">
+            <div
+              className={`ticks rounded-[16px] border p-[38px] ${faixa.card} ${faixa.tick} max-mob:p-6`}
+            >
+              <div className="grid grid-cols-[170px_1fr] items-start gap-8 max-mob:grid-cols-1 max-mob:gap-4">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-[0.22em] opacity-70">
+                  <div className="text-xs font-bold uppercase tracking-[0.22em] opacity-70 max-mob:text-[10px] max-mob:tracking-[0.16em]">
                     Resultado final
                   </div>
                   <div className="mt-2 font-display text-[clamp(56px,10vw,88px)] leading-[0.9]">
@@ -256,7 +302,7 @@ export default function DiagnosticoQuiz() {
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-3 gap-4 max-mob:grid-cols-1">
+            <div className="mt-4 grid grid-cols-3 gap-4 max-mob:grid-cols-1 max-mob:gap-3">
               {FAIXAS.map((f) => {
                 const ativa = f.key === faixa.key
                 return (
@@ -274,7 +320,7 @@ export default function DiagnosticoQuiz() {
               })}
             </div>
 
-            <div className="ticks mt-4 rounded-[16px] border border-orange bg-orange p-[38px] text-white [--tick-color:#fff] max-mob:p-7">
+            <div className="ticks mt-4 rounded-[16px] border border-orange bg-orange p-[38px] text-white [--tick-color:#fff] max-mob:p-6">
               <h3 className="m-0 font-display text-[clamp(28px,4.6vw,48px)] font-normal uppercase leading-[0.9]">
                 A sua marca está
                 <br />
@@ -285,7 +331,7 @@ export default function DiagnosticoQuiz() {
                 comercial monta um plano de mídia exterior a partir da sua nota — praças, formatos e
                 frequência sob medida.
               </p>
-              <div className="mt-[30px] flex flex-wrap gap-3">
+              <div className="mt-[30px] flex flex-wrap gap-3 max-mob:mt-6">
                 <a
                   href={waLink(waDiagnostico(score, NOTA_MAXIMA, faixa.titulo))}
                   className="btn btn-on-orange"

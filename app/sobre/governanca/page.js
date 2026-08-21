@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -123,7 +124,7 @@ export default function GovernancaPage() {
             </p>
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
               {GOV_DOCUMENTOS.map((d) => {
-                const disponivel = Boolean(d.file)
+                const disponivel = Boolean(d.file || d.href)
                 const conteudo = (
                   <>
                     <span className="eyebrow">{d.meta}</span>
@@ -136,18 +137,24 @@ export default function GovernancaPage() {
                         disponivel ? 'text-orange' : 'text-line-2'
                       }`}
                     >
-                      {disponivel ? 'Baixar →' : 'Em breve'}
+                      {d.href ? 'Ler →' : disponivel ? 'Baixar →' : 'Em breve'}
                     </span>
                   </>
                 )
 
+                const classeCard =
+                  'ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6'
+
+                if (d.href) {
+                  return (
+                    <Link className={classeCard} href={d.href} key={d.slug}>
+                      {conteudo}
+                    </Link>
+                  )
+                }
+
                 return disponivel ? (
-                  <a
-                    className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
-                    download
-                    href={d.file}
-                    key={d.slug}
-                  >
+                  <a className={classeCard} download href={d.file} key={d.slug}>
                     {conteudo}
                   </a>
                 ) : (
