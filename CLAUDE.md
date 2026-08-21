@@ -219,6 +219,9 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Mapa de praças (SVG, dados IBGE) | `components/ui/CoverageMap.jsx`, `lib/mapShapes.js` |
 | Painel admin (posts, cases, locations, tags) | `app/admin/`, `app/api/admin/` |
 | Breadcrumb em todas as páginas | `components/ui/Breadcrumb.jsx` |
+| Páginas de sistema — `/obrigado` (noindex), `/privacidade`, `/termos` e 404 | `app/obrigado/`, `app/privacidade/`, `app/termos/`, `app/not-found.js` |
+| Textos legais data-driven (LGPD + Termos) num renderizador só | `lib/legal.js`, `components/ui/LegalDoc.jsx` |
+| Formulários levam a `/obrigado` — URL de conversão, briefing pelo `sessionStorage` | `ProposalForm`, `TalentForm`, `components/widgets/ObrigadoCta.jsx` |
 | Cache: ISR nas rotas de conteúdo + headers em `/media/` | `next.config.mjs`, `lib/revalidate.js` |
 | `robots.txt` — libera busca e rastreadores de IA (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended); bloqueia `/admin` e `/api` | `app/robots.js` |
 | `sitemap.xml` — estáticas de `lib/seo.js` + plataformas, icônicos, diferenciais e posts do Firestore | `app/sitemap.js`, `lib/seo.js` |
@@ -231,9 +234,12 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Feature | Observação |
 |---|---|
 | Endereço e horário no JSON-LD | `lib/empresa.js` está com `endereco.logradouro`, `endereco.cep` e `horarios` vazios sob `TODO(cliente)`. Campo vazio é omitido do schema — dado errado em structured data vira endereço errado no Google. Falta o cliente informar |
+| Razão social, CNPJ e encarregado de dados | `lib/empresa.js` tem `razaoSocial`, `cnpj` e `encarregado` vazios sob `TODO(cliente)`. A Política de Privacidade nomeia o controlador com o que existir e omite o resto — enquanto não vier, ela identifica só "Outdoormídia / Curitiba — PR" e usa o e-mail geral como canal do titular |
+| Revisão jurídica de `/privacidade` e `/termos` | Os textos de `lib/legal.js` são minuta redigida a partir do que o site de fato coleta, alinhada à Lei 13.709/2018. Precisam passar pelo jurídico do cliente antes de valerem como peça legal |
+| Evento de conversão em `/obrigado` | A página existe e é o destino dos dois formulários, mas não há GA4/GTM no projeto. Instalar Analytics torna falsa a frase "sem rastreamento" do `CookieNotice` e exige decidir opt-in — os dois andam juntos |
 | Imagem de Open Graph | Nenhuma rota declara `openGraph.images` fora do blog e não há asset de OG em `public/`. Link compartilhado sai sem card. `logo.png` e `om.png` são brancos (viram máscara CSS), não servem como `logo` de schema |
 | Idiomas (PT / EN / ES / ZH) | Os botões de idioma (agora dentro do menu) só trocam `useState` — não há i18n |
-| Envio de e-mail nos formulários | Falta integrar Resend. O `TalentForm` é o caso mais grave: não envia nada e mesmo assim diz "Guardamos seu perfil" — a copy precisa mudar junto com a integração |
+| Envio de e-mail nos formulários | Falta integrar Resend. Nem `ProposalForm` nem `TalentForm` enviam nada: os dados morrem no browser. A copy de `/obrigado` já não promete guarda — a de `talentos` manda o candidato para o e-mail do RH —, mas o lead comercial de `/proposta` depende do visitante clicar no WhatsApp para chegar a alguém |
 | Página de case individual (`/cases/[slug]`) | Não existe; só a listagem. `isCaseSlugTaken` mantém o slug único de propósito, para a página poder ser criada depois sem colisão |
 | Arquivos do Mídia Kit | As páginas existem; falta o cliente entregar PDFs e assets (`lib/midiakit.js`) |
 | Números oficiais do simulador | `lib/simulador.js` usa ordem de grandeza estimada — falta CPM e alcance por plataforma |
@@ -242,7 +248,6 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Retaxonomia das plataformas (22 produtos sob 9 formatos) | Catálogo em 7 na ordem final, com Rodovias criado, Shoppings renomeado para Mídia Indoor e Gentileza Urbana removido; Icônicos entram na listagem como entrada única. Falta acrescentar Digital Signage e desdobrar os 22 produtos sob os formatos. Rodovias está com o descritivo mínimo sob `TODO(cliente)` |
 | Conteúdo dos Projetos Icônicos | `lib/iconicos.js` está sob `TODO(cliente)`: falta o descritivo oficial de Elegancy/Urbanity/Urbanity Light, as medidas de cada estrutura (os cards de formato hoje descrevem sem cravar dimensão), as praças instaladas e a foto de cada card (`image`, 16/9, ≥1600px) — sem ela o card cai num painel escuro com o nome |
 | Foto das plataformas no carrossel da home | `PLATFORMS_LISTAGEM` já carrega o campo `image` (16/9, ≥1600px), mas nenhuma das 8 entradas tem foto — todos os cards caem no painel bege com o nome. É o que falta para a seção ficar apresentável |
-| Páginas de sistema (`/obrigado`, `/privacidade`, `/termos`, 404) | Ramo 06 do fluxo |
 | Automação de marketing | — |
 | Testes automatizados | Nenhum. Regressão só aparece em conferência manual |
 

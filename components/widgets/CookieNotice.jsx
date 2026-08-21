@@ -1,5 +1,6 @@
 'use client'
 import { useSyncExternalStore } from 'react'
+import Link from 'next/link'
 
 const STORAGE_KEY = 'om-aviso-cookies'
 
@@ -47,7 +48,11 @@ export default function CookieNotice() {
           <p className="mt-2 max-w-[70ch] text-[15px] leading-[1.5] text-ink-soft">
             Este site usa apenas cookies necessários para funcionar — sem
             rastreamento e sem publicidade. Ao continuar navegando, você concorda
-            com o uso deles.
+            com o uso deles. Detalhes na{' '}
+            <Link href="/privacidade" className="font-bold text-orange hover:underline">
+              Política de privacidade
+            </Link>
+            .
           </p>
         </div>
         <button type="button" onClick={fechar} className="btn btn-ghost shrink-0">

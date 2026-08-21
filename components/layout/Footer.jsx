@@ -16,6 +16,11 @@ const COLUNAS = HUBS.map((hub, i) => ({
   ],
 }))
 
+const LEGAIS = [
+  { label: 'Privacidade', href: '/privacidade' },
+  { label: 'Termos de uso', href: '/termos' },
+]
+
 // TODO(cliente): confirmar os perfis de X e Facebook — os dois foram montados a
 // partir do handle do Instagram e ainda não foram verificados.
 const SOCIAIS = [
@@ -111,6 +116,19 @@ export default function Footer() {
         </div>
         <div className="mt-[54px] flex flex-wrap justify-between gap-3 border-t border-line pt-6 text-xs uppercase tracking-[0.06em]">
           <span>© 2026 Outdoormídia</span>
+          {/* Fora da NAV de propósito: lib/nav.js alimenta o menu do Header, e
+              página legal não é item de navegação principal. */}
+          <span className="flex flex-wrap gap-5">
+            {LEGAIS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="transition-colors duration-150 hover:text-ink"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </span>
           <span>PT · EN · ES · 中文</span>
         </div>
       </div>
