@@ -11,7 +11,7 @@ const DESCRIPTION =
   'Licenças dos pontos, exclusividade em contrato, tratamento de dados de audiência e documentos para cadastro de fornecedor: como a Outdoormídia opera e o que entrega por escrito.'
 
 export const metadata = {
-  title: 'Governança — Outdoormídia',
+  title: 'Governança | Outdoormídia',
   description: DESCRIPTION,
   // TODO(cliente): remover o `robots` quando as certificações e os PDFs de
   // GOV_CERTIFICACOES/GOV_DOCUMENTOS existirem em lib/esg.js. Mesma régua da
@@ -19,7 +19,7 @@ export const metadata = {
   robots: { index: false, follow: true },
   alternates: { canonical: '/sobre/governanca' },
   openGraph: {
-    title: 'Governança — Outdoormídia',
+    title: 'Governança | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -41,7 +41,7 @@ export default function GovernancaPage() {
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               Somos uma empresa de capital fechado: não há estrutura de acionistas para
-              apresentar. O que existe é o que sustenta um contrato — ponto licenciado,
+              apresentar. O que existe é o que sustenta um contrato: ponto licenciado,
               exclusividade por escrito e documento na mão de quem precisa aprovar a compra.
             </p>
           </div>
@@ -70,7 +70,7 @@ export default function GovernancaPage() {
           <div className="wrap">
             <SectionHeading num="02" title="Certificações" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              O que é atestado por terceiro — mensuração auditada, filiação setorial e
+              O que é atestado por terceiro: mensuração auditada, filiação setorial e
               regularidade fiscal.
             </p>
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
@@ -179,7 +179,7 @@ export default function GovernancaPage() {
                 </h2>
                 <p className="mt-3 max-w-[52ch] text-[15.5px] leading-relaxed text-ink-soft">
                   Certidão para cadastro de fornecedor, minuta de contrato ou dado cadastral
-                  para licitação — diga o que o seu processo exige e enviamos.
+                  para licitação. Diga o que o seu processo exige e enviamos.
                 </p>
               </div>
               <a href={waLink(WA_GOVERNANCA)} className="btn btn-fill whitespace-nowrap">

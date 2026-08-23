@@ -8,11 +8,11 @@ const DESCRIPTION =
   'Faça parte da empresa que ocupa as ruas do Sul do Brasil desde 1959. Cadastre-se no banco de talentos da Outdoormídia e seja avisado quando abrir uma vaga na sua área.'
 
 export const metadata = {
-  title: 'Trabalhe Conosco — Outdoormídia',
+  title: 'Trabalhe Conosco | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/trabalhe-conosco' },
   openGraph: {
-    title: 'Trabalhe Conosco — Outdoormídia',
+    title: 'Trabalhe Conosco | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

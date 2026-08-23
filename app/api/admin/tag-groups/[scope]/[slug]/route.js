@@ -25,6 +25,12 @@ export async function PUT(request, { params }) {
   if (!result) {
     return NextResponse.json({ error: 'Grupo não encontrado.' }, { status: 404 })
   }
+  if (result.error === 'obrigatorio') {
+    return NextResponse.json(
+      { error: 'Este grupo é obrigatório e não pode ser renomeado.' },
+      { status: 409 }
+    )
+  }
 
   return NextResponse.json({ slug })
 }
@@ -41,6 +47,12 @@ export async function DELETE(_request, { params }) {
   const result = await deleteTagGroup(scope, slug)
   if (!result) {
     return NextResponse.json({ error: 'Grupo não encontrado.' }, { status: 404 })
+  }
+  if (result.error === 'obrigatorio') {
+    return NextResponse.json(
+      { error: 'Este grupo é obrigatório e não pode ser excluído.' },
+      { status: 409 }
+    )
   }
   if (result.error === 'has-tags') {
     return NextResponse.json(

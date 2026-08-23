@@ -7,28 +7,28 @@ const REVIEWS = [
     quote:
       'Nunca tinha anunciado fora das redes. Me explicaram tudo sem enrolação, escolheram o ponto certo pra minha região e ajustaram a arte. Em duas semanas o movimento na loja subiu.',
     name: 'Marcelo Antunes',
-    role: 'Dono — Rede de Materiais de Construção',
+    role: 'Dono de rede de materiais de construção',
     city: 'Campo Largo, PR',
   },
   {
     quote:
       'Precisava justificar o budget de OOH pra diretoria. Com os dados de CPM, frequência e perfil de público por painel, consegui mostrar o alcance real da campanha. Mídia mensurável muda a conversa.',
     name: 'Mariana Costa',
-    role: 'Gerente de Marketing — Indústria de Alimentos',
+    role: 'Gerente de Marketing em indústria de alimentos',
     city: 'Curitiba, PR',
   },
   {
     quote:
       'Atendo várias contas e preciso de agilidade. A cobertura em PR e SC num só fornecedor, com rodízio entre pontos, resolveu o planejamento de duas praças ao mesmo tempo sem dor de cabeça.',
     name: 'Rafael Menezes',
-    role: 'Planejamento de Mídia — Agência',
+    role: 'Planejamento de Mídia em agência',
     city: 'Joinville, SC',
   },
   {
     quote:
       'Para a marca, exclusividade é inegociável. Saber que cada ponto é Face Única, sem dividir espaço com concorrente, e com impacto visual de verdade na cidade, foi o que fechou a decisão.',
     name: 'Fernanda Reis',
-    role: 'Head de Marca — Varejo Premium',
+    role: 'Head de Marca em varejo premium',
     city: 'Balneário Camboriú, SC',
   },
 ]
@@ -42,7 +42,7 @@ export default function Reviews() {
           <span className="eyebrow self-end whitespace-nowrap max-mob:hidden">Arraste →</span>
         </div>
         <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">
-          De quem anuncia pela primeira vez a quem gerencia grandes marcas — a experiência de
+          De quem anuncia pela primeira vez a quem gerencia grandes marcas, a experiência de
           quem já colocou sua mensagem nas ruas do Sul do Brasil.
         </p>
       </div>

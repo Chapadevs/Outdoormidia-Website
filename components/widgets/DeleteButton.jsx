@@ -3,8 +3,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 // `resource` é o segmento da rota (/api/admin/<resource>/<id>); `label` é como
-// o item é chamado na confirmação e no erro ("post", "case").
-export default function DeleteButton({ id, title, resource, label }) {
+// o item é chamado na confirmação e no erro ("post", "case"). `redirectTo` é
+// para quando o botão vive na página do próprio item: refresh ali só levaria a
+// um 404 do que acabou de ser excluído.
+export default function DeleteButton({ id, title, resource, label, redirectTo }) {
   const router = useRouter()
   const [deleting, setDeleting] = useState(false)
 
@@ -13,7 +15,8 @@ export default function DeleteButton({ id, title, resource, label }) {
     setDeleting(true)
     const res = await fetch(`/api/admin/${resource}/${id}`, { method: 'DELETE' })
     if (res.ok) {
-      router.refresh()
+      if (redirectTo) router.push(redirectTo)
+      else router.refresh()
     } else {
       setDeleting(false)
       window.alert(`Erro ao excluir o ${label}. Tente novamente.`)

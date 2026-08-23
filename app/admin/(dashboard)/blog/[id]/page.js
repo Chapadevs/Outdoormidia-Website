@@ -6,7 +6,7 @@ import { listTags } from '@/lib/tags/tags'
 import { listTagGroups } from '@/lib/tags/groups'
 
 export const metadata = {
-  title: 'Editar post — Painel Admin — Outdoormídia',
+  title: 'Editar post | Painel Admin | Outdoormídia',
   robots: { index: false, follow: false },
 }
 

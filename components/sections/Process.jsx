@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
+import ScrollToButton from '@/components/widgets/ScrollToButton'
 
 const ETAPAS = [
   {
@@ -18,10 +18,9 @@ const ETAPAS = [
     title: 'Produção',
     dark: true,
     bullets: [
-      'Especificação técnica por formato.',
+      'Especificações por formato.',
       'Adequação do criativo ao ponto.',
-      'Preparação dos materiais estáticos.',
-      'Preparação dos criativos digitais.',
+      'Preparação dos materiais estáticos ou digitais.',
     ],
   },
   {
@@ -32,7 +31,7 @@ const ETAPAS = [
       'Instalação ou upload do criativo.',
       'Conferência e monitoramento.',
       'Registro da campanha.',
-      'Informações de audiência do período.',
+      'Entrega das informações de audiência do período.',
     ],
   },
 ]
@@ -43,10 +42,10 @@ export default function Process() {
       <div className="wrap">
         <SectionHeading num="08" title="Como funciona" className="reveal mb-[18px]" />
         <p className="reveal mb-5 max-w-[520px] text-lg text-ink-soft">
-          Do briefing à rua, sem complicar.
+          Do objetivo à notoriedade.
         </p>
         <p className="reveal mb-16 max-w-[60ch] text-ink-soft max-mob:mb-10">
-          Você diz onde quer aparecer, para quem e com qual objetivo. A Outdoormídia cruza praça,
+          Você diz qual objetivo, para quem e onde precisa aparecer. A Outdoormídia cruza praça,
           fluxo, formato, audiência e investimento para montar o caminho da campanha.
         </p>
 
@@ -84,7 +83,7 @@ export default function Process() {
                         aria-hidden="true"
                         className={`flex-none font-extrabold leading-normal ${etapa.dark ? 'text-ink' : 'text-orange'}`}
                       >
-                        —
+                        •
                       </span>
                       <span
                         className={`text-[15.5px] leading-normal ${etapa.dark ? 'text-ink/80' : 'text-ink-soft'}`}
@@ -100,9 +99,9 @@ export default function Process() {
         </div>
 
         <div className="reveal mt-12 max-mob:mt-9">
-          <Link className="btn btn-ghost" href="#formulario">
+          <ScrollToButton className="btn btn-ghost" targetId="formulario">
             Quero planejar uma campanha de OOH
-          </Link>
+          </ScrollToButton>
         </div>
       </div>
     </section>

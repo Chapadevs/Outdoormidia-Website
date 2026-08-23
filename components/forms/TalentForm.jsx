@@ -9,12 +9,12 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import { MAILTO_RH } from '@/lib/constants'
 
 const CIDADES = [
-  'Curitiba — PR',
-  'Região Metropolitana de Curitiba — PR',
-  'Litoral do Paraná — PR',
-  'Joinville — SC',
-  'Itajaí — SC',
-  'Balneário Camboriú — SC',
+  'Curitiba (PR)',
+  'Região Metropolitana de Curitiba (PR)',
+  'Litoral do Paraná (PR)',
+  'Joinville (SC)',
+  'Itajaí (SC)',
+  'Balneário Camboriú (SC)',
   'Outra praça',
 ]
 

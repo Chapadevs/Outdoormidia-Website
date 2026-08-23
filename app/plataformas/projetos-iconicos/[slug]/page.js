@@ -34,9 +34,9 @@ async function fetchCases(slug) {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const iconico = getIconicoBySlug(slug)
-  if (!iconico) return { title: 'Projeto não encontrado — Outdoormídia' }
+  if (!iconico) return { title: 'Projeto não encontrado | Outdoormídia' }
 
-  const title = `${iconico.name} — Projetos Icônicos — Outdoormídia`
+  const title = `${iconico.name} | Projetos Icônicos | Outdoormídia`
   return {
     title,
     description: iconico.intro,
@@ -161,7 +161,7 @@ export default async function IconicoPage({ params }) {
             />
             <FormatSpecCard formats={iconico.formats} />
             <p className="mt-3.5 text-[13px] text-ink-soft">
-              As dimensões finais saem do estudo de viabilidade de cada endereço — confirme com o
+              As dimensões finais saem do estudo de viabilidade de cada endereço; confirme com o
               time comercial antes de fechar a arte.
             </p>
           </div>

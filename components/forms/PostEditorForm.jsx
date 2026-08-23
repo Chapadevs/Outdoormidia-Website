@@ -1,9 +1,12 @@
 'use client'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import MarkdownContent from '@/components/blog/MarkdownContent'
 import { slugify } from '@/lib/slugify'
+import { gruposFaltantes } from '@/lib/tags/obrigatorios'
+import { DATA_CURTA } from '@/lib/format'
+import { useUndoableState, handleUndoShortcut } from '@/lib/useUndoableState'
 
 const EMPTY = {
   title: '',
@@ -39,23 +42,96 @@ const TOOLBAR = [
     block:
       '\n| Coluna 1 | Coluna 2 |\n| --- | --- |\n| Célula | Célula |\n',
   },
-  { label: 'Linha', title: 'Linha divisória', icon: '—', block: '\n---\n' },
+  { label: 'Linha', title: 'Linha divisória', icon: '─', block: '\n---\n' },
 ]
+
+// Rascunho local: fica só no navegador de quem escreve, para o texto não se
+// perder se a aba fechar antes de salvar no Firestore. Uma chave por post — o
+// post novo tem a sua, e cada edição a dela.
+const DRAFT_PREFIX = 'outdoormidia:post-draft:'
+
+// localStorage é um store externo: o evento `storage` só avisa outras abas, então
+// as gravações desta aba avisam os inscritos na mão.
+const draftListeners = new Set()
+
+function subscribeDraft(onChange) {
+  draftListeners.add(onChange)
+  window.addEventListener('storage', onChange)
+  return () => {
+    draftListeners.delete(onChange)
+    window.removeEventListener('storage', onChange)
+  }
+}
+
+function emitDraftChange() {
+  draftListeners.forEach((onChange) => onChange())
+}
 
 export default function PostEditorForm({ initialPost = null, allTags = [], groups = [] }) {
   const router = useRouter()
-  const [post, setPost] = useState(initialPost ? { ...EMPTY, ...initialPost } : EMPTY)
+  const [post, setPost, historia] = useUndoableState(
+    initialPost ? { ...EMPTY, ...initialPost } : EMPTY
+  )
   const [slugTouched, setSlugTouched] = useState(Boolean(initialPost))
   const [preview, setPreview] = useState(false)
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [draftDismissed, setDraftDismissed] = useState(false)
   const contentRef = useRef(null)
   const coverInputRef = useRef(null)
   const inlineInputRef = useRef(null)
 
+  const draftKey = `${DRAFT_PREFIX}${initialPost?.id ?? 'novo'}`
+  const faltantes = gruposFaltantes('blog', post.tags, allTags)
+
+  const storedDraft = useSyncExternalStore(
+    subscribeDraft,
+    () => window.localStorage.getItem(draftKey),
+    () => null
+  )
+  const localDraft = useMemo(() => {
+    if (!storedDraft) return null
+    try {
+      return JSON.parse(storedDraft)
+    } catch {
+      return null
+    }
+  }, [storedDraft])
+
+  function saveLocalDraft() {
+    try {
+      window.localStorage.setItem(
+        draftKey,
+        JSON.stringify({ savedAt: new Date().toISOString(), post })
+      )
+      setDraftDismissed(true)
+      emitDraftChange()
+    } catch {
+      setError('Não foi possível salvar o rascunho neste navegador.')
+    }
+  }
+
+  function discardLocalDraft() {
+    window.localStorage.removeItem(draftKey)
+    setDraftDismissed(false)
+    emitDraftChange()
+  }
+
+  function restoreLocalDraft() {
+    historia.reset({ ...EMPTY, ...localDraft.post })
+    setSlugTouched(true)
+    setDraftDismissed(true)
+  }
+
   function set(field, value) {
     setPost((p) => ({ ...p, [field]: value }))
+  }
+
+  // Digitação entra no histórico em rajada — o Ctrl+Z volta o trecho escrito,
+  // não a última letra.
+  function setTexto(field, value) {
+    setPost((p) => ({ ...p, [field]: value }), { coalesce: true })
   }
 
   function toggleTag(slug) {
@@ -66,11 +142,14 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
   }
 
   function handleTitle(value) {
-    setPost((p) => ({
-      ...p,
-      title: value,
-      slug: slugTouched ? p.slug : slugify(value),
-    }))
+    setPost(
+      (p) => ({
+        ...p,
+        title: value,
+        slug: slugTouched ? p.slug : slugify(value),
+      }),
+      { coalesce: true }
+    )
   }
 
   async function upload(file) {
@@ -160,6 +239,16 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+
+    if (post.status === 'published' && faltantes.length > 0) {
+      setError(
+        `Para publicar, selecione ao menos uma tag de: ${faltantes
+          .map((group) => group.label)
+          .join(', ')}.`
+      )
+      return
+    }
+
     setSaving(true)
     try {
       const isEdit = Boolean(initialPost?.id)
@@ -180,6 +269,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data.error || 'Erro ao salvar o post.')
+      window.localStorage.removeItem(draftKey)
       router.push('/admin/blog')
       router.refresh()
     } catch (err) {
@@ -192,7 +282,33 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
     <form
       className="ticks flex flex-col gap-5 rounded-[16px] border border-line bg-white p-[38px] max-mob:p-7"
       onSubmit={handleSubmit}
+      onKeyDown={(e) => handleUndoShortcut(e, historia)}
     >
+      {localDraft && !draftDismissed && (
+        <div className="flex flex-wrap items-center gap-4 rounded-[16px] border-[1.5px] border-orange bg-paper px-5 py-4">
+          <p className="m-0 text-sm text-ink-soft">
+            Há um rascunho salvo neste navegador em{' '}
+            <strong className="text-ink">{DATA_CURTA.format(new Date(localDraft.savedAt))}</strong>.
+          </p>
+          <div className="ml-auto flex items-center gap-4">
+            <button
+              type="button"
+              className="text-sm font-semibold text-orange underline hover:text-ink"
+              onClick={restoreLocalDraft}
+            >
+              Restaurar
+            </button>
+            <button
+              type="button"
+              className="text-sm font-semibold text-ink-soft underline hover:text-orange"
+              onClick={discardLocalDraft}
+            >
+              Descartar
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col gap-2">
         <label className="field-label" htmlFor="title">
           Título
@@ -221,7 +337,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
             value={post.slug}
             onChange={(e) => {
               setSlugTouched(true)
-              set('slug', e.target.value)
+              setTexto('slug', e.target.value)
             }}
             onBlur={(e) => set('slug', slugify(e.target.value))}
             placeholder="titulo-do-post"
@@ -253,7 +369,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
           type="text"
           maxLength={120}
           value={post.author}
-          onChange={(e) => set('author', e.target.value)}
+          onChange={(e) => setTexto('author', e.target.value)}
           placeholder="Nome de quem assina o post (opcional)"
         />
       </div>
@@ -271,12 +387,21 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
           <div className="flex flex-col gap-3 rounded-[16px] border-[1.5px] border-line bg-paper px-3.5 py-3">
             {groups.map((group) => {
               const groupTags = allTags.filter((tag) => tag.group === group.slug)
-              if (groupTags.length === 0) return null
+              if (groupTags.length === 0 && !group.obrigatorio) return null
               return (
                 <div key={group.slug} className="flex flex-wrap items-center gap-1.5">
                   <span className="mr-1 text-[11px] font-bold uppercase tracking-[0.1em] text-ink-soft">
                     {group.label}
+                    {group.obrigatorio && <span className="text-orange"> *</span>}
                   </span>
+                  {groupTags.length === 0 && (
+                    <Link
+                      href="/admin/tags/blog"
+                      className="text-sm font-semibold text-ink-soft underline hover:text-orange"
+                    >
+                      Nenhuma tag neste grupo. Cadastrar →
+                    </Link>
+                  )}
                   {groupTags.map((tag) => {
                     const selected = post.tags.includes(tag.slug)
                     return (
@@ -300,6 +425,20 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
             })}
           </div>
         )}
+        <p className="text-sm text-ink-soft">
+          {faltantes.length > 0 ? (
+            <>
+              Falta classificar em:{' '}
+              <strong className="text-ink">
+                {faltantes.map((group) => group.label).join(', ')}
+              </strong>
+              . Grupos marcados com <span className="text-orange">*</span> são obrigatórios para
+              publicar.
+            </>
+          ) : (
+            'Classificação completa: plataforma, cobertura e indústrias.'
+          )}
+        </p>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -312,7 +451,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
           required
           maxLength={220}
           value={post.excerpt}
-          onChange={(e) => set('excerpt', e.target.value)}
+          onChange={(e) => setTexto('excerpt', e.target.value)}
           placeholder="Resumo curto exibido na listagem e nos resultados de busca (máx. 220 caracteres)"
         />
       </div>
@@ -367,7 +506,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
             id="coverAlt"
             type="text"
             value={post.coverAlt}
-            onChange={(e) => set('coverAlt', e.target.value)}
+            onChange={(e) => setTexto('coverAlt', e.target.value)}
             placeholder="Descrição da imagem para acessibilidade e SEO"
           />
         </div>
@@ -410,6 +549,27 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
         ) : (
           <>
             <div className="flex flex-wrap items-center gap-1 rounded-t-[10px] border-[1.5px] border-b-0 border-line bg-bone px-2 py-1.5">
+              <button
+                type="button"
+                title="Voltar ação (Ctrl+Z)"
+                aria-label="Voltar ação"
+                disabled={!historia.canUndo}
+                className="min-w-[30px] rounded-full px-2 py-1.5 text-[13px] font-bold text-ink-soft transition hover:bg-white hover:text-orange disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-ink-soft"
+                onClick={historia.undo}
+              >
+                ↶
+              </button>
+              <button
+                type="button"
+                title="Refazer ação (Ctrl+Shift+Z)"
+                aria-label="Refazer ação"
+                disabled={!historia.canRedo}
+                className="min-w-[30px] rounded-full px-2 py-1.5 text-[13px] font-bold text-ink-soft transition hover:bg-white hover:text-orange disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-ink-soft"
+                onClick={historia.redo}
+              >
+                ↷
+              </button>
+              <span className="mx-1 h-5 w-px bg-line-2" />
               {TOOLBAR.map((action) =>
                 action.divider ? (
                   <span key={action.label} className="mx-1 h-5 w-px bg-line-2" />
@@ -433,7 +593,7 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
               id="content"
               required
               value={post.content}
-              onChange={(e) => set('content', e.target.value)}
+              onChange={(e) => setTexto('content', e.target.value)}
               placeholder={'## Subtítulo\n\nEscreva o conteúdo em Markdown…'}
             />
           </>
@@ -453,13 +613,41 @@ export default function PostEditorForm({ initialPost = null, allTags = [], group
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={saving || uploading}
-        className="btn btn-fill mt-1.5 justify-center py-[17px] text-[15px] disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {saving ? 'Salvando…' : initialPost?.id ? 'Salvar alterações' : 'Criar post'}
-      </button>
+      <div className="mt-1.5 flex flex-col gap-3">
+        <div className="grid grid-cols-[1fr_auto] gap-4 max-mob:grid-cols-1">
+          <button
+            type="submit"
+            disabled={saving || uploading}
+            className="btn btn-fill justify-center py-[17px] text-[15px] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {saving ? 'Salvando…' : initialPost?.id ? 'Salvar alterações' : 'Criar post'}
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost justify-center py-[17px] text-[15px]"
+            onClick={saveLocalDraft}
+          >
+            Salvar rascunho no navegador
+          </button>
+        </div>
+        <p className="text-sm text-ink-soft">
+          {localDraft
+            ? `Rascunho salvo neste navegador em ${DATA_CURTA.format(new Date(localDraft.savedAt))}. Ele não vai para o site e some ao salvar o post.`
+            : 'O rascunho local fica só neste navegador e serve para não perder o texto antes de salvar no painel.'}
+          {localDraft && (
+            <>
+              {' '}
+              <button
+                type="button"
+                className="font-semibold underline hover:text-orange"
+                onClick={discardLocalDraft}
+              >
+                Descartar rascunho local
+              </button>
+            </>
+          )}
+        </p>
+      </div>
     </form>
   )
 }

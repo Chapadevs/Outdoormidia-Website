@@ -8,11 +8,11 @@ const DESCRIPTION =
   'As regras de uso do site da Outdoormídia: propriedade do conteúdo, materiais para download, caráter estimativo do simulador e do diagnóstico, e limites de responsabilidade.'
 
 export const metadata = {
-  title: 'Termos de Uso — Outdoormídia',
+  title: 'Termos de Uso | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/termos' },
   openGraph: {
-    title: 'Termos de Uso — Outdoormídia',
+    title: 'Termos de Uso | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

@@ -46,7 +46,7 @@ export default function CookieNotice() {
         <div className="flex-1">
           <p className="eyebrow text-orange">Cookies</p>
           <p className="mt-2 max-w-[70ch] text-[15px] leading-[1.5] text-ink-soft">
-            Este site usa apenas cookies necessários para funcionar — sem
+            Este site usa apenas cookies necessários para funcionar, sem
             rastreamento e sem publicidade. Ao continuar navegando, você concorda
             com o uso deles. Detalhes na{' '}
             <Link href="/privacidade" className="font-bold text-orange hover:underline">

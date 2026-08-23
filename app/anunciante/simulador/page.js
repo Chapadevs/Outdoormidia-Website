@@ -10,11 +10,11 @@ const DESCRIPTION =
   'Escolha praça, plataforma e período e veja quantos impactos a sua campanha de mídia exterior pode gerar no Paraná e em Santa Catarina.'
 
 export const metadata = {
-  title: 'Simulador OOH — Outdoormídia',
+  title: 'Simulador OOH | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/anunciante/simulador' },
   openGraph: {
-    title: 'Simulador OOH — Outdoormídia',
+    title: 'Simulador OOH | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -43,7 +43,7 @@ export default async function SimuladorPage() {
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               Quatro escolhas e você tem a ordem de grandeza da campanha antes de falar com
-              qualquer vendedor — quantas pessoas ela alcança e quanto costuma custar.
+              qualquer vendedor: quantas pessoas ela alcança e quanto costuma custar.
             </p>
           </div>
         </section>

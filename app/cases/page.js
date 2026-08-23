@@ -11,11 +11,11 @@ const DESCRIPTION =
   'Cases de mídia Out of Home da Outdoormídia: campanhas em outdoor, LED, MUB, aeroporto e projetos icônicos no Paraná e em Santa Catarina.'
 
 export const metadata = {
-  title: 'Cases — Outdoormídia',
+  title: 'Cases | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/cases' },
   openGraph: {
-    title: 'Cases — Outdoormídia',
+    title: 'Cases | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -50,7 +50,7 @@ export default async function CasesPage() {
               Cases.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Campanhas reais nas ruas do Paraná e de Santa Catarina — do lançamento que ocupou
+              Campanhas reais nas ruas do Paraná e de Santa Catarina, do lançamento que ocupou
               Curitiba ao circuito segmentado que falou com o público certo. Filtre por segmento e
               veja o que o Out of Home entrega.
             </p>

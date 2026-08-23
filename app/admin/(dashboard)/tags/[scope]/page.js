@@ -9,7 +9,7 @@ import { listTags } from '@/lib/tags/tags'
 import { listTagGroups } from '@/lib/tags/groups'
 
 export const metadata = {
-  title: 'Tags — Painel Admin — Outdoormídia',
+  title: 'Tags | Painel Admin | Outdoormídia',
   robots: { index: false, follow: false },
 }
 

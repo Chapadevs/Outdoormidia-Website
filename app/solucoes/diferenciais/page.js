@@ -18,11 +18,11 @@ const PROVA = [
 ]
 
 export const metadata = {
-  title: 'Diferenciais — Outdoormídia',
+  title: 'Diferenciais | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/solucoes/diferenciais' },
   openGraph: {
-    title: 'Diferenciais — Outdoormídia',
+    title: 'Diferenciais | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

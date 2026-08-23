@@ -3,7 +3,7 @@ import HeaderShell from '@/components/layout/HeaderShell'
 import AdminLoginForm from '@/components/forms/AdminLoginForm'
 
 export const metadata = {
-  title: 'Entrar — Painel Outdoormídia',
+  title: 'Entrar | Painel Outdoormídia',
   robots: { index: false, follow: false },
 }
 

@@ -18,10 +18,10 @@ export const revalidate = 300
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const post = await getPublishedPostBySlug(slug)
-  if (!post) return { title: 'Post não encontrado — Outdoormídia' }
+  if (!post) return { title: 'Post não encontrado | Outdoormídia' }
 
   return {
-    title: `${post.title} — Outdoormídia`,
+    title: `${post.title} | Outdoormídia`,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
@@ -117,7 +117,7 @@ export default async function BlogPostPage({ params }) {
 
             <div className="mt-14 border-t border-line pt-9">
               <p className="eyebrow">
-                Quer sua marca <b>nas ruas</b>?
+                Quer trazer <b>visibilidade</b> à sua marca?
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <Link href="/proposta" className="btn btn-fill">

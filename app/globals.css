@@ -25,6 +25,50 @@
       transform: translateX(-50%);
     }
   }
+
+  --animate-sobe-suave: sobe-suave 0.62s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes sobe-suave {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  --animate-aurora-a: aurora-a 19s ease-in-out infinite alternate;
+  --animate-aurora-b: aurora-b 23s ease-in-out infinite alternate;
+  --animate-aurora-c: aurora-c 15s ease-in-out infinite alternate;
+
+  @keyframes aurora-a {
+    from {
+      transform: translate3d(-8%, -6%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(10%, 8%, 0) scale(1.25);
+    }
+  }
+
+  @keyframes aurora-b {
+    from {
+      transform: translate3d(12%, 8%, 0) scale(1.15);
+    }
+    to {
+      transform: translate3d(-10%, -4%, 0) scale(0.95);
+    }
+  }
+
+  @keyframes aurora-c {
+    from {
+      transform: translate3d(4%, 10%, 0) scale(0.9);
+    }
+    to {
+      transform: translate3d(-6%, -8%, 0) scale(1.2);
+    }
+  }
 }
 
 @theme inline {
@@ -83,32 +127,11 @@
     display: none;
   }
 
-  /* cantoneiras laranja — motivo de identidade */
+  /* as cantoneiras laranja saíram do site a pedido do cliente. A classe segue
+     viva só como contexto de posicionamento — os cards que a usam posicionam
+     filhos absolutos a partir dela. */
   .ticks {
     position: relative;
-    --tick-color: var(--color-orange);
-  }
-  .ticks::before,
-  .ticks::after {
-    content: "";
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    pointer-events: none;
-  }
-  .ticks::before {
-    top: 0;
-    left: 0;
-    border-top: 2px solid var(--tick-color);
-    border-left: 2px solid var(--tick-color);
-    border-radius: 8px 0 0 0;
-  }
-  .ticks::after {
-    bottom: 0;
-    right: 0;
-    border-bottom: 2px solid var(--tick-color);
-    border-right: 2px solid var(--tick-color);
-    border-radius: 0 0 8px 0;
   }
 
   /* animação de entrada — RevealObserver adiciona .in */

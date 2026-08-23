@@ -8,11 +8,11 @@ const DESCRIPTION =
   'Dúvidas sobre anunciar em mídia exterior no Paraná e em Santa Catarina: praças, formatos, medição de resultados, exclusividade do ponto e como pedir uma proposta.'
 
 export const metadata = {
-  title: 'FAQ — Outdoormídia',
+  title: 'FAQ | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/anunciante/faq' },
   openGraph: {
-    title: 'FAQ — Outdoormídia',
+    title: 'FAQ | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

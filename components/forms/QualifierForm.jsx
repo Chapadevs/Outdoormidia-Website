@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { waQualificador, waLinkPorPraca } from '@/lib/whatsapp'
+import { enviarLead } from '@/lib/leads/enviarLead'
 
 const INTENCOES = ['É minha primeira campanha', 'Já anunciei em OOH antes', 'Sou agência ou planejamento']
 
@@ -47,6 +48,7 @@ export default function QualifierForm() {
     segmento: '',
   })
   const [dados, setDados] = useState({ nome: '', empresa: '' })
+  const [enviando, setEnviando] = useState(false)
   const passoRef = useRef(null)
 
   // Passo derivado do estado — impossível dessincronizar.
@@ -71,6 +73,21 @@ export default function QualifierForm() {
       })
       return proximo
     })
+  }
+
+  // Grava o lead e segue para o WhatsApp. O link é montado antes do await:
+  // navegar depois de um await só funciona na mesma aba — window.open seria
+  // barrado como popup. Falha de rede não impede a conversa de abrir.
+  async function enviar() {
+    const destino = waLinkPorPraca(respostas.praca, waQualificador({ ...respostas, ...dados }))
+    setEnviando(true)
+    await enviarLead({
+      origem: 'qualificador',
+      nome: dados.nome,
+      empresa: dados.empresa,
+      dados: respostas,
+    })
+    window.location.href = destino
   }
 
   const respondidas = CHAVES.filter((c) => respostas[c]).length
@@ -231,14 +248,18 @@ export default function QualifierForm() {
               </label>
             </div>
 
-            <a
-              href={waLinkPorPraca(respostas.praca, waQualificador({ ...respostas, ...dados }))}
-              className="btn btn-fill mt-6"
+            <button
+              type="button"
+              onClick={enviar}
+              disabled={!dados.nome.trim() || enviando}
+              className="btn btn-fill mt-6 disabled:opacity-50"
             >
-              Enviar pelo WhatsApp
-            </a>
+              {enviando ? 'Enviando…' : 'Enviar pelo WhatsApp'}
+            </button>
             <p className="mt-3 text-[13.5px] text-ink-soft">
-              Suas respostas vão junto na mensagem. Nada de reescrever tudo lá.
+              {dados.nome.trim()
+                ? 'Suas respostas vão junto na mensagem. Nada de reescrever tudo lá.'
+                : 'Só falta o seu nome. As respostas vão junto na mensagem.'}
             </p>
           </fieldset>
         )}

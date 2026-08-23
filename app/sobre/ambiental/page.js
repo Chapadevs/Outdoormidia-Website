@@ -18,14 +18,14 @@ const DESCRIPTION =
 const indicadores = AMBIENTAL_INDICADORES.filter((i) => i.n)
 
 export const metadata = {
-  title: 'Ambiental — Outdoormídia',
+  title: 'Ambiental | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/sobre/ambiental' },
   // TODO(cliente): remover o `robots` quando os números e as certificações
   // forem preenchidos em lib/esg.js — até lá a página não deve ser indexada.
   robots: { index: false, follow: true },
   openGraph: {
-    title: 'Ambiental — Outdoormídia',
+    title: 'Ambiental | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -46,7 +46,7 @@ export default function AmbientalPage() {
               Ambiental.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Mídia exterior ocupa a cidade — e isso vem com conta. Aqui só entra compromisso
+              Mídia exterior ocupa a cidade, e isso vem com conta. Aqui só entra compromisso
               com número e com prazo: o que a operação faz com a lona que sai da face, com a
               energia que acende o painel e com o espaço que ocupa na rua.
             </p>
@@ -58,7 +58,7 @@ export default function AmbientalPage() {
             <SectionHeading num="01" title="Compromissos" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               Quatro frentes que dependem da nossa operação, não de intenção. Cada uma com meta
-              e data — quando o número está fechado, ele aparece aqui.
+              e data. Quando o número está fechado, ele aparece aqui.
             </p>
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
               {AMBIENTAL_COMPROMISSOS.map((c) => (

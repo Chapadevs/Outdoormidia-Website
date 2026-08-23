@@ -4,7 +4,7 @@ import { WA_ANUNCIAR_JA, waLinkMercadoOoh } from '@/lib/whatsapp'
 
 export default function LeadCta() {
   return (
-    <section className="relative bg-orange text-white" id="formulario">
+    <section className="relative scroll-mt-24 bg-orange text-white" id="formulario">
       <div className="wrap">
         <div className="grid grid-cols-[1fr_1.05fr] items-center gap-12 py-[90px] max-tab:grid-cols-1 max-tab:gap-[34px] max-tab:py-[60px] max-mob:py-[52px]">
           <div className="reveal">

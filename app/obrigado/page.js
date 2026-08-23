@@ -10,14 +10,14 @@ const DESCRIPTION =
   'Recebemos a sua solicitação. Nosso time comercial retorna em até 1 dia útil com praças, formatos e valores.'
 
 export const metadata = {
-  title: 'Obrigado — Outdoormídia',
+  title: 'Obrigado | Outdoormídia',
   description: DESCRIPTION,
   // Tela de confirmação não vai ao índice: só faz sentido para quem acabou de
   // enviar um formulário. Por isso também fica fora de lib/seo.js.
   robots: { index: false, follow: true },
   alternates: { canonical: '/obrigado' },
   openGraph: {
-    title: 'Obrigado — Outdoormídia',
+    title: 'Obrigado | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

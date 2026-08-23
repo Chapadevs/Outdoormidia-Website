@@ -35,7 +35,7 @@ const FORMATOS = [
   { name: 'Mega Banner (Shoppings)', tech: 'Digital' },
   { name: 'Topo de Prédio', tech: 'Digital / Estático' },
   { name: 'Billboard', tech: 'Estático / Digital' },
-  { name: 'Bike Mídia', tech: 'Mídia Móvel — trio bikes sequenciais / estático' },
+  { name: 'Bike Mídia', tech: 'Mídia Móvel: trio bikes sequenciais / estático' },
   { name: 'Bus Mídia', tech: 'Estático' },
 ]
 
@@ -43,11 +43,11 @@ const DESCRIPTION =
   'Tudo o que a Outdoormídia coloca na rua: os diferenciais que sustentam a operação, as praças de PR e SC, as 7 plataformas de mídia exterior e os projetos icônicos.'
 
 export const metadata = {
-  title: 'Soluções — Outdoormídia',
+  title: 'Soluções | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/solucoes' },
   openGraph: {
-    title: 'Soluções — Outdoormídia',
+    title: 'Soluções | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -92,14 +92,14 @@ export default async function SolucoesPage() {
               </Link>
             </div>
             <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">
-              Uma malha contínua nos dois estados onde o Sul se movimenta. Escolha a praça — a
+              Uma malha contínua nos dois estados onde o Sul se movimenta. Escolha a praça e a
               gente mostra o que existe nela.
             </p>
             <div className="reveal mb-10 grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-3">
               <div className="eyebrow text-orange">Presença</div>
               <p className="m-0 max-w-[68ch] text-[15.5px] leading-relaxed text-ink-soft">
                 Estamos presentes em Curitiba, Região Metropolitana, Litoral do Paraná,
-                Joinville, Itajaí e Balneário Camboriú — sempre nos pontos de maior fluxo,
+                Joinville, Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo,
                 visibilidade e impacto real.
               </p>
             </div>

@@ -82,22 +82,35 @@ function GroupRow({ group, scope }) {
         <div className="flex flex-wrap items-center gap-4">
           <span className="text-base font-bold text-ink">{group.label}</span>
           <span className="text-sm text-ink-soft">{group.slug}</span>
+          {group.obrigatorio && (
+            <span className="rounded-full border border-orange px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-orange">
+              Obrigatório
+            </span>
+          )}
           <div className="ml-auto flex items-center gap-4">
-            <button
-              type="button"
-              className="text-sm font-semibold text-ink underline hover:text-orange"
-              onClick={() => setEditing(true)}
-            >
-              Editar
-            </button>
-            <button
-              type="button"
-              className="text-sm font-semibold text-ink-soft underline hover:text-orange disabled:opacity-60"
-              disabled={busy}
-              onClick={handleDelete}
-            >
-              {busy ? 'Excluindo…' : 'Excluir'}
-            </button>
+            {group.obrigatorio ? (
+              <span className="text-sm text-ink-soft">
+                Grupo fixo: todo post publicado precisa de uma tag daqui.
+              </span>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="text-sm font-semibold text-ink underline hover:text-orange"
+                  onClick={() => setEditing(true)}
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  className="text-sm font-semibold text-ink-soft underline hover:text-orange disabled:opacity-60"
+                  disabled={busy}
+                  onClick={handleDelete}
+                >
+                  {busy ? 'Excluindo…' : 'Excluir'}
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
