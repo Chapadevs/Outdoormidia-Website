@@ -10,11 +10,11 @@ const DESCRIPTION =
   'Onde a Outdoormídia coloca sua marca: Curitiba e região metropolitana, litoral do Paraná, rodovias de PR e SC, Joinville, Itajaí e Balneário Camboriú.'
 
 export const metadata = {
-  title: 'Regiões e Cobertura — Outdoormídia',
+  title: 'Regiões e Cobertura | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/solucoes/regioes' },
   openGraph: {
-    title: 'Regiões e Cobertura — Outdoormídia',
+    title: 'Regiões e Cobertura | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -44,7 +44,7 @@ export default async function RegioesPage() {
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               Do Batel ao litoral, das rodovias às praias de Santa Catarina. Passe o mouse pelo
-              mapa para ver o que existe em cada praça — ou consulte a lista completa abaixo.
+              mapa para ver o que existe em cada praça, ou consulte a lista completa abaixo.
             </p>
           </div>
         </section>
@@ -60,7 +60,7 @@ export default async function RegioesPage() {
             <SectionHeading num="02" title="Praças atendidas" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               Cada praça com as plataformas disponíveis nela. Não achou a sua cidade? Fale com o
-              time — a malha cresce por demanda.
+              time. A malha cresce por demanda.
             </p>
             <div className="reveal border-t border-ink">
               {locations.map((loc) => (

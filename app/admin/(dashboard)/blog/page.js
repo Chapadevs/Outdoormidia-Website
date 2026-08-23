@@ -5,7 +5,7 @@ import { listAllPosts } from '@/lib/blog/posts'
 import { DATA_CURTA } from '@/lib/format'
 
 export const metadata = {
-  title: 'Blog — Painel Admin — Outdoormídia',
+  title: 'Blog | Painel Admin | Outdoormídia',
   robots: { index: false, follow: false },
 }
 
@@ -72,7 +72,7 @@ export default async function AdminBlogPage() {
                       )}
                     </td>
                     <td className="py-4 pr-4 text-sm text-ink-soft">
-                      {post.updatedAt ? DATA_CURTA.format(new Date(post.updatedAt)) : '—'}
+                      {post.updatedAt ? DATA_CURTA.format(new Date(post.updatedAt)) : 'sem data'}
                     </td>
                     <td className="py-4">
                       <div className="flex items-center gap-4">

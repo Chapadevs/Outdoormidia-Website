@@ -2,9 +2,6 @@ import Image from 'next/image'
 
 // Capa com fallback. Sem `src`, cai no painel bege com o rótulo.
 //
-// `ticks={false}` para quando o card que envolve a capa já tem as cantoneiras —
-// duas vezes o mesmo motivo na mesma peça polui em vez de marcar.
-//
 // As proporções são um mapa estático de propósito: classe montada por
 // interpolação não é vista pelo scanner do Tailwind e o CSS não sai no bundle.
 const RATIOS = {
@@ -19,16 +16,15 @@ export default function CoverMedia({
   label,
   ratio = '16/10',
   sizes,
-  ticks = true,
   className = '',
 }) {
-  const base = `${ticks ? 'ticks ' : ''}relative w-full overflow-hidden rounded-[16px] border border-line ${RATIOS[ratio]}`
+  const base = `relative w-full overflow-hidden rounded-[16px] border border-line ${RATIOS[ratio]}`
 
   // Havendo imagem, o alt é obrigatório: cai no rótulo do card e, na falta dele,
   // na marca. Nunca em string vazia — isso marcaria a capa como decorativa e a
   // tiraria da leitura de quem usa leitor de tela e dos rastreadores.
   if (src) {
-    const textoAlt = alt || label || 'Outdoormídia — mídia Out of Home'
+    const textoAlt = alt || label || 'Outdoormídia, mídia Out of Home'
     return (
       <div className={`${base} ${className}`}>
         <Image src={src} alt={textoAlt} fill sizes={sizes} className="object-cover" />

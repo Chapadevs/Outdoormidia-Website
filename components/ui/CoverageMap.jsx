@@ -98,7 +98,7 @@ export default function CoverageMap({
         viewBox={`0 0 ${MAP_W} ${MAP_H}`}
         className="block h-auto w-full"
         role="img"
-        aria-label="Mapa de cobertura — Paraná e Santa Catarina"
+        aria-label="Mapa de cobertura do Paraná e de Santa Catarina"
       >
         {STATES.map((s) => (
           <path
@@ -147,7 +147,7 @@ export default function CoverageMap({
               transform={`translate(${x} ${y})${on ? ' scale(1.35)' : ''}`}
               role="button"
               tabIndex={0}
-              aria-label={`${loc.name}${loc.desc ? ` — ${loc.desc}` : ''}`}
+              aria-label={`${loc.name}${loc.desc ? `: ${loc.desc}` : ''}`}
               className="cursor-pointer outline-none"
               style={{ transition: 'transform 180ms ease' }}
               onMouseEnter={() => hover(loc.id)}

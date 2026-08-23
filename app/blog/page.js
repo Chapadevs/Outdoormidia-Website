@@ -15,11 +15,11 @@ const DESCRIPTION =
   'Conteúdo Out of Home da Outdoormídia: cases de campanhas reais no Paraná e em Santa Catarina e artigos sobre mídia exterior, audiência e formatos.'
 
 export const metadata = {
-  title: 'Blog — Outdoormídia',
+  title: 'Blog | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Blog — Outdoormídia',
+    title: 'Blog | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -74,13 +74,11 @@ export default async function BlogPage() {
                 href={`/blog/${destaque.slug}`}
                 className="ticks reveal group grid grid-cols-[1.1fr_1fr] items-stretch overflow-hidden rounded-[16px] border border-line bg-white transition-colors duration-200 hover:border-orange max-tab:grid-cols-1"
               >
-                {/* o card já traz .ticks — a capa não repete as cantoneiras */}
                 <CoverMedia
                   src={destaque.coverImage}
                   alt={destaque.coverAlt || destaque.title}
                   label="Artigo"
                   sizes={DESTAQUE_SIZES}
-                  ticks={false}
                   className="rounded-none border-0"
                 />
                 <div className="flex flex-col justify-center gap-4 p-11 max-mob:p-7">
@@ -135,7 +133,7 @@ export default async function BlogPage() {
                     Cases
                   </h3>
                   <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-white/85">
-                    Campanhas que já ocuparam a rua — marca, praça e resultado. Filtre por
+                    Campanhas que já ocuparam a rua: marca, praça e resultado. Filtre por
                     segmento e veja o que o Out of Home entrega.
                   </p>
                   <span className="mt-5 flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em]">
@@ -170,7 +168,7 @@ export default async function BlogPage() {
                           className="truncate text-[14px] font-semibold text-ink-soft"
                           key={p.id}
                         >
-                          — {p.title}
+                          • {p.title}
                         </li>
                       ))}
                     </ul>
@@ -202,7 +200,7 @@ export default async function BlogPage() {
                   <ul className="m-0 mt-6 flex list-none flex-col gap-2 border-t border-line p-0 pt-5">
                     {EPISODIOS.slice(0, 3).map((ep) => (
                       <li className="truncate text-[14px] font-semibold text-ink-soft" key={ep.slug}>
-                        — {ep.title}
+                        • {ep.title}
                       </li>
                     ))}
                   </ul>

@@ -34,7 +34,7 @@ export default function CoverageExplorer({ locations, num = '04' }) {
             </h2>
             <p className="mt-7 max-w-[40ch] text-lg text-ink-soft">
               Do Batel ao litoral, das rodovias às praias de Santa Catarina: uma malha contínua de
-              mídia exterior nos dois estados onde o Sul se movimenta. Escolha a praça — a gente
+              mídia exterior nos dois estados onde o Sul se movimenta. Escolha a praça e a gente
               mostra o que existe nela.
             </p>
           </div>
@@ -76,15 +76,6 @@ export default function CoverageExplorer({ locations, num = '04' }) {
               </div>
               {loc.desc && (
                 <p className="mt-2 text-[13.5px] leading-[1.45] text-ink-soft">{loc.desc}</p>
-              )}
-              {loc.formats?.length > 0 && (
-                <ul className="m-0 mt-3.5 flex list-none flex-col gap-1 p-0">
-                  {loc.formats.map((format) => (
-                    <li key={format} className="text-xs font-bold">
-                      — {format}
-                    </li>
-                  ))}
-                </ul>
               )}
             </div>
           ))}

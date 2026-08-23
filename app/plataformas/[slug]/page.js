@@ -28,14 +28,14 @@ async function fetchCases(slug) {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const platform = getPlatformBySlug(slug)
-  if (!platform) return { title: 'Plataforma não encontrada — Outdoormídia' }
+  if (!platform) return { title: 'Plataforma não encontrada | Outdoormídia' }
 
   return {
-    title: `${platform.name} — Outdoormídia`,
+    title: `${platform.name} | Outdoormídia`,
     description: platform.intro,
     alternates: { canonical: `/plataformas/${platform.slug}` },
     openGraph: {
-      title: `${platform.name} — Outdoormídia`,
+      title: `${platform.name} | Outdoormídia`,
       description: platform.intro,
       locale: 'pt_BR',
       type: 'website',

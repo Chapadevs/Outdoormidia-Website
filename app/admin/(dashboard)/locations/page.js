@@ -3,7 +3,7 @@ import LocationsManager from '@/components/forms/LocationsManager'
 import { listLocations } from '@/lib/locations'
 
 export const metadata = {
-  title: 'Cobertura — Painel Admin — Outdoormídia',
+  title: 'Cobertura | Painel Admin | Outdoormídia',
   robots: { index: false, follow: false },
 }
 

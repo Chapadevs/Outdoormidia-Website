@@ -13,7 +13,7 @@ const DESCRIPTION =
 const impacto = SOCIAL_IMPACTO.filter((i) => i.n)
 
 export const metadata = {
-  title: 'Social — Outdoormídia',
+  title: 'Social | Outdoormídia',
   description: DESCRIPTION,
   // TODO(cliente): remover o `robots` quando os números de SOCIAL_IMPACTO e as
   // instituições estiverem preenchidos em lib/esg.js. Página de ESG sem lastro
@@ -21,7 +21,7 @@ export const metadata = {
   robots: { index: false, follow: true },
   alternates: { canonical: '/sobre/social' },
   openGraph: {
-    title: 'Social — Outdoormídia',
+    title: 'Social | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -43,7 +43,7 @@ export default function SocialPage() {
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               A mesma face que vende também avisa, arrecada e chama voluntário. Quando a cidade
-              precisa falar com ela mesma, a rede está de pé — e é isso que a gente coloca à
+              precisa falar com ela mesma, a rede está de pé, e é isso que a gente coloca à
               disposição.
             </p>
           </div>
@@ -74,7 +74,7 @@ export default function SocialPage() {
             <SectionHeading num="02" title="Impacto na cidade" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               Curitiba, região metropolitana, litoral e o norte de Santa Catarina: onde a nossa
-              rede está, a causa também aparece — no mesmo ponto de maior fluxo que uma marca
+              rede está, a causa também aparece, no mesmo ponto de maior fluxo que uma marca
               disputaria.
             </p>
             {impacto.length === SOCIAL_IMPACTO.length && (

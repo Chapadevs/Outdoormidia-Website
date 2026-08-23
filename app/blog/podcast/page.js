@@ -9,11 +9,11 @@ const DESCRIPTION =
   'Rua Principal, o podcast da Outdoormídia: conversas sobre marcas, cidades e mídia Out of Home no Paraná e em Santa Catarina.'
 
 export const metadata = {
-  title: 'Podcast — Outdoormídia',
+  title: 'Podcast | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/blog/podcast' },
   openGraph: {
-    title: 'Podcast — Outdoormídia',
+    title: 'Podcast | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -86,7 +86,7 @@ export default function PodcastPage() {
             </ul>
 
             <p className="reveal mt-9 max-w-[62ch] text-[15px] leading-relaxed text-ink-soft">
-              {PODCAST.tagline} Os episódios entram aqui assim que forem gravados — e também
+              {PODCAST.tagline} Os episódios entram aqui assim que forem gravados, e também
               nas plataformas de áudio.
             </p>
           </div>

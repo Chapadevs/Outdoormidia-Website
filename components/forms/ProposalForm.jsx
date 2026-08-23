@@ -1,9 +1,11 @@
 'use client'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import HeaderShell from '@/components/layout/HeaderShell'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import { CHAVE_BRIEFING } from '@/lib/constants'
+import { enviarLead } from '@/lib/leads/enviarLead'
 
 const PERIODOS = ['2 semanas (bi-semana)', '1 mês', '3 meses', '6 meses ou mais']
 
@@ -12,18 +14,26 @@ const PERIODOS = ['2 semanas (bi-semana)', '1 mês', '3 meses', '6 meses ou mais
 // empresa não atende e escondendo praça que ela atende.
 export default function ProposalForm({ pracas = [], formatos = [] }) {
   const router = useRouter()
+  const [enviando, setEnviando] = useState(false)
 
   const opcoesPraca = [...pracas.map((p) => p.name), 'Outra praça']
   const opcoesFormato = [...formatos.map((f) => f.name), 'Ainda não sei']
 
-  // O briefing atravessa a navegação pelo sessionStorage — o porquê está em
-  // CHAVE_BRIEFING, em lib/constants.js. Quem consome é o ObrigadoCta.
-  function handleSubmit(e) {
+  // O briefing é gravado no Firestore e também atravessa a navegação pelo
+  // sessionStorage — o porquê do storage está em CHAVE_BRIEFING, em
+  // lib/constants.js; quem o consome é o ObrigadoCta. A gravação nunca lança:
+  // rede fora não pode impedir o visitante de chegar em /obrigado.
+  async function handleSubmit(e) {
     e.preventDefault()
     const briefing = Object.fromEntries(new FormData(e.currentTarget))
     try {
       sessionStorage.setItem(CHAVE_BRIEFING, JSON.stringify(briefing))
     } catch {}
+
+    setEnviando(true)
+    const { nome, empresa, email, whatsapp, website, ...dados } = briefing
+    await enviarLead({ origem: 'proposta', nome, empresa, email, whatsapp, website, dados })
+
     router.push('/obrigado?origem=proposta')
   }
 
@@ -180,11 +190,23 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
                 />
               </div>
 
+              {/* Honeypot: invisível para quem usa o site, irresistível para bot.
+                  A rota descarta em silêncio o envio que vier com ele preenchido. */}
+              <input
+                aria-hidden="true"
+                autoComplete="off"
+                className="hidden"
+                name="website"
+                tabIndex={-1}
+                type="text"
+              />
+
               <button
                 type="submit"
-                className="btn btn-fill mt-1.5 justify-center py-[17px] text-[15px]"
+                disabled={enviando}
+                className="btn btn-fill mt-1.5 justify-center py-[17px] text-[15px] disabled:opacity-60"
               >
-                Enviar briefing
+                {enviando ? 'Enviando…' : 'Enviar briefing'}
               </button>
             </form>
           </div>

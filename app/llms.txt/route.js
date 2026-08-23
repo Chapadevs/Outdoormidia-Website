@@ -32,7 +32,7 @@ function build() {
 
 > ${EMPRESA.descricao}
 
-${EMPRESA.nome} é uma empresa de ${EMPRESA.servico} fundada em ${EMPRESA.fundacao}, com operação própria no Paraná e em Santa Catarina. Vende espaço de mídia em outdoors digitais de LED, front lights impressos, painéis em shoppings e no Aeroporto Afonso Pena, mobiliário urbano (MUB), rodovias e mídia móvel — além de projetos de estrutura sob medida. A rede gera cerca de 380 milhões de impactos por mês e reúne 82 equipamentos digitais com 138 telas.
+${EMPRESA.nome} é uma empresa de ${EMPRESA.servico} fundada em ${EMPRESA.fundacao}, com operação própria no Paraná e em Santa Catarina. Vende espaço de mídia em outdoors digitais de LED, front lights impressos, painéis em shoppings e no Aeroporto Afonso Pena, mobiliário urbano (MUB), rodovias e mídia móvel, além de projetos de estrutura sob medida. A rede gera cerca de 380 milhões de impactos por mês e reúne 82 equipamentos digitais com 138 telas.
 
 ## Contato
 
@@ -52,7 +52,7 @@ ${PLATFORMS.map((p) => link(p.name, `/plataformas/${p.slug}`, p.short)).join('\n
 
 ## Projetos icônicos
 
-Estruturas de assinatura, fora do catálogo de tabela — cada uma desenhada para o endereço onde é instalada.
+Estruturas de assinatura, fora do catálogo de tabela: cada uma desenhada para o endereço onde é instalada.
 
 ${ICONICOS.map((i) => link(i.name, `/plataformas/projetos-iconicos/${i.slug}`, i.short)).join('\n')}
 

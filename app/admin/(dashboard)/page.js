@@ -2,22 +2,19 @@ import Link from 'next/link'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import { listAllPosts } from '@/lib/blog/posts'
 import { listAllCases } from '@/lib/cases/cases'
+import { listAllLeads } from '@/lib/leads/leads'
 import { listLocations } from '@/lib/locations'
 import { listTags } from '@/lib/tags/tags'
 import { TAG_SCOPES } from '@/lib/tags/scopes'
 
 export const metadata = {
-  title: 'Painel Admin — Outdoormídia',
+  title: 'Painel Admin | Outdoormídia',
   robots: { index: false, follow: false },
 }
 
 export const dynamic = 'force-dynamic'
 
 const UPCOMING = [
-  {
-    title: 'Leads',
-    desc: 'Briefings do formulário de proposta e pré-qualificação do WhatsApp em um só lugar.',
-  },
   {
     title: 'Avaliações',
     desc: 'Depoimentos de clientes exibidos nas páginas do site.',
@@ -41,10 +38,11 @@ function plural(count, singular, pluralForm) {
 }
 
 export default async function AdminDashboardPage() {
-  const [posts, cases, locations, tagLists] = await Promise.all([
+  const [posts, cases, locations, leads, tagLists] = await Promise.all([
     listAllPosts(),
     listAllCases(),
     listLocations(),
+    listAllLeads(),
     Promise.all(TAG_SCOPES.map((s) => listTags(s.id))),
   ])
 
@@ -53,8 +51,16 @@ export default async function AdminDashboardPage() {
   const casesPublished = cases.filter((c) => c.status === 'published').length
   const casesDrafts = cases.length - casesPublished
   const totalTags = tagLists.reduce((sum, tags) => sum + tags.length, 0)
+  const leadsNovos = leads.filter((l) => l.status === 'novo').length
 
   const AREAS = [
+    {
+      title: 'Leads',
+      href: '/admin/leads',
+      stat: leads.length,
+      statLabel: `${plural(leadsNovos, 'novo', 'novos')} · ${plural(leads.length - leadsNovos, 'tratado', 'tratados')}`,
+      desc: 'Briefings do formulário de proposta e pré-qualificação do WhatsApp em um só lugar.',
+    },
     {
       title: 'Blog',
       href: '/admin/blog',

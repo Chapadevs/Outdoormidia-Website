@@ -60,7 +60,7 @@ export default function NotFound() {
             </h1>
             <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">
               O endereço mudou ou nunca existiu. Nossos outros 380 milhões de impactos por mês
-              continuam de pé — escolha por onde seguir.
+              continuam de pé. Escolha por onde seguir.
             </p>
           </div>
         </section>
@@ -97,7 +97,7 @@ export default function NotFound() {
                   Procurava algo específico?
                 </h2>
                 <p className="mt-3 max-w-[52ch] text-[15.5px] leading-relaxed text-ink-soft">
-                  Diga o que você estava tentando encontrar e mandamos o link — ou a resposta
+                  Diga o que você estava tentando encontrar e mandamos o link, ou a resposta
                   direto.
                 </p>
               </div>

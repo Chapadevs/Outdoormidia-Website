@@ -19,7 +19,7 @@ const PILARES = [
   },
   {
     title: 'Time enxuto, dono do que faz',
-    text: 'Da negociação ao ponto instalado, quem faz assina. São poucas camadas entre a ideia e a rua — e isso vale tanto para o cliente quanto para quem trabalha aqui.',
+    text: 'Da negociação ao ponto instalado, quem faz assina. São poucas camadas entre a ideia e a rua, e isso vale tanto para o cliente quanto para quem trabalha aqui.',
   },
 ]
 

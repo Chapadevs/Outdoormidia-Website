@@ -69,7 +69,7 @@ Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, 
 - **`.btn-on-orange`** — botão branco sobre fundo laranja
 - **`.btn-ghost`** — contraparte do `.btn` para fundos claros (borda e texto `--ink`, preenche de `--ink` no hover)
 - **`.rail`** — carrossel horizontal com snap que sangra até a borda do `.wrap`. Já traz o `scroll-padding` que impede o snap de encostar o primeiro card na borda da tela. Usar em vez de repetir `-mx-8 … px-8`
-- **`.ticks`** — cantoneiras laranja via `::before/::after`, com o canto interno curvo (motivo de identidade visual); cor sobrescrevível com `[--tick-color:#fff]`
+- **`.ticks`** — só contexto de posicionamento (`position: relative`). As cantoneiras laranja que dava ao elemento foram removidas do site a pedido do cliente; a classe continua nos cards porque eles posicionam filhos absolutos a partir dela
 - **`.reveal`** — elemento com animação de entrada (adiciona `.in` via IntersectionObserver global)
 - **`.wrap`** — container centralizado com `max-width: 1280px` e `padding: 0 32px`
 - **`.select-caret`** — seta de `<select>` estilizado
@@ -77,7 +77,7 @@ Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, 
 - **`SectionHeading`** (`components/ui/SectionHeading.jsx`) — cabeçalho de seção (número laranja + h2 + linha)
 - **`StatGrid`** (`components/ui/StatGrid.jsx`) — faixa de números da marca (`size="lg"` em `Impact`, `"md"` em Culture, diferenciais e ESG). Não é usado na home: os números institucionais saíram de lá
 - **`Accordion`** (`components/ui/Accordion.jsx`) — acordeão controlado do FAQ; o pai guarda o `openIndex` porque precisa da pergunta aberta para montar o link de WhatsApp
-- **`CoverMedia`** (`components/ui/CoverMedia.jsx`) — capa com fallback: renderiza a imagem se houver `src`, senão o painel bege com o rótulo. `ticks={false}` quando o card que envolve a capa já traz as cantoneiras. Proporções em mapa estático (classe interpolada não é vista pelo scanner do Tailwind)
+- **`CoverMedia`** (`components/ui/CoverMedia.jsx`) — capa com fallback: renderiza a imagem se houver `src`, senão o painel bege com o rótulo. Proporções em mapa estático (classe interpolada não é vista pelo scanner do Tailwind)
 - **`DeleteButton`** (`components/widgets/DeleteButton.jsx`) — exclusão no admin, parametrizada por `resource` (segmento de `/api/admin/…`) e `label`
 - **`HeaderShell`** (`components/layout/HeaderShell.jsx`) — barra clara de proposta/login/painel (o `Header` laranja é só do site institucional)
 
@@ -103,7 +103,6 @@ Na dúvida: recebe props e não sabe o que acontece depois → `ui/`. Age sozinh
   - `rounded-[10px]` em inputs, selects, textareas e elementos pequenos (código inline, pins do mapa)
   - `rounded-full` (cápsula/círculo) em botões (`.btn`), badges, tags e chips de filtro
 - Fundo padrão: `--paper`, não branco puro
-- Elementos icônicos: cantoneiras laranja (`.ticks`) nos cards e CTAs, com o canto interno também curvo
 
 ---
 
@@ -202,6 +201,9 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Projetos Icônicos — hub + página dos 3 (ISR 300 + `generateStaticParams`). Elegancy traz Urbanity e Urbanity Light como seções ancoradas (`#urbanity`, `#urbanity-light`) | `app/plataformas/projetos-iconicos/`, `lib/iconicos.js` |
 | Cases com filtro por tag | `app/cases/`, `lib/cases/` |
 | Blog com CMS próprio | `app/blog/artigos/`, `app/admin/`, `lib/blog/` |
+| Classificação obrigatória do post — Plataforma, Cobertura e Indústrias são grupos fixos do escopo `blog`: existem sempre (sem doc no Firestore), o admin não renomeia nem exclui, e nenhum post é publicado sem ao menos uma tag de cada. Rascunho pode ficar incompleto | `lib/tags/obrigatorios.js`, `lib/blog/validate.js`, `app/api/admin/posts/` |
+| Rascunho local do post — botão "Salvar rascunho no navegador" grava em `localStorage` (uma chave por post) e oferece restaurar/descartar ao reabrir o editor; some ao salvar no painel | `components/forms/PostEditorForm.jsx` |
+| Voltar ação no editor de post — histórico de edição do formulário inteiro (Ctrl+Z / Ctrl+Shift+Z / Ctrl+Y + botões ↶ ↷ na barra). Digitação entra em rajada de 600ms; barra de formatação, tags e uploads abrem um passo cada. Substitui o desfazer nativo, que o textarea controlado perde | `lib/useUndoableState.js`, `components/forms/PostEditorForm.jsx` |
 | Hub do Blog (portas Cases, Artigos e Podcast + destaque) | `app/blog/page.js` |
 | Podcast — 3ª porta do Blog (estrutura pronta; episódios em `TODO(cliente)`) | `app/blog/podcast/`, `lib/podcast.js` |
 | Menu colapsável com os hubs e o nível 2 | `components/layout/Header.jsx`, `lib/nav.js` |
@@ -217,7 +219,9 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Banco de talentos | `app/trabalhe-conosco/`, `components/forms/TalentForm.jsx` |
 | Diagnóstico de marca (quiz) | `app/diagnostico/`, `lib/diagnostico.js` |
 | Mapa de praças (SVG, dados IBGE) | `components/ui/CoverageMap.jsx`, `lib/mapShapes.js` |
-| Painel admin (posts, cases, locations, tags) | `app/admin/`, `app/api/admin/` |
+| Painel admin (leads, posts, cases, locations, tags) | `app/admin/`, `app/api/admin/` |
+| Leads gravados no Firestore — `/proposta` e o qualificador do `LeadCta` gravam na coleção `leads`; o campo `origem` discrimina o fluxo. Única rota `POST` pública do site (honeypot + tetos de tamanho, sem `requireAdmin`) | `lib/leads/`, `app/api/leads/route.js` |
+| Área de Leads no admin — listagem com filtro por origem/status, tela de detalhe com tudo o que o cliente enviou e acompanhamento comercial (novo / contatado / descartado) | `app/admin/(dashboard)/leads/`, `components/widgets/LeadStatusSelect.jsx` |
 | Breadcrumb em todas as páginas | `components/ui/Breadcrumb.jsx` |
 | Páginas de sistema — `/obrigado` (noindex), `/privacidade`, `/termos` e 404 | `app/obrigado/`, `app/privacidade/`, `app/termos/`, `app/not-found.js` |
 | Textos legais data-driven (LGPD + Termos) num renderizador só | `lib/legal.js`, `components/ui/LegalDoc.jsx` |
@@ -233,13 +237,14 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 
 | Feature | Observação |
 |---|---|
-| Endereço e horário no JSON-LD | `lib/empresa.js` está com `endereco.logradouro`, `endereco.cep` e `horarios` vazios sob `TODO(cliente)`. Campo vazio é omitido do schema — dado errado em structured data vira endereço errado no Google. Falta o cliente informar |
-| Razão social, CNPJ e encarregado de dados | `lib/empresa.js` tem `razaoSocial`, `cnpj` e `encarregado` vazios sob `TODO(cliente)`. A Política de Privacidade nomeia o controlador com o que existir e omite o resto — enquanto não vier, ela identifica só "Outdoormídia / Curitiba — PR" e usa o e-mail geral como canal do titular |
+| Horário de atendimento no JSON-LD | Razão social, CNPJ e endereço já estão preenchidos em `lib/empresa.js` (e saem no rodapé, na Política de Privacidade, no JSON-LD e no llms.txt). Falta só `horarios`, ainda vazio sob `TODO(cliente)`: campo vazio é omitido do schema, porque dado errado em structured data vira horário errado no Google |
+| Encarregado de dados (LGPD) | `lib/empresa.js` ainda tem `encarregado` vazio sob `TODO(cliente)`. Enquanto não vier, a Política de Privacidade usa o e-mail geral como canal do titular |
 | Revisão jurídica de `/privacidade` e `/termos` | Os textos de `lib/legal.js` são minuta redigida a partir do que o site de fato coleta, alinhada à Lei 13.709/2018. Precisam passar pelo jurídico do cliente antes de valerem como peça legal |
 | Evento de conversão em `/obrigado` | A página existe e é o destino dos dois formulários, mas não há GA4/GTM no projeto. Instalar Analytics torna falsa a frase "sem rastreamento" do `CookieNotice` e exige decidir opt-in — os dois andam juntos |
 | Imagem de Open Graph | Nenhuma rota declara `openGraph.images` fora do blog e não há asset de OG em `public/`. Link compartilhado sai sem card. `logo.png` e `om.png` são brancos (viram máscara CSS), não servem como `logo` de schema |
 | Idiomas (PT / EN / ES / ZH) | Os botões de idioma (agora dentro do menu) só trocam `useState` — não há i18n |
-| Envio de e-mail nos formulários | Falta integrar Resend. Nem `ProposalForm` nem `TalentForm` enviam nada: os dados morrem no browser. A copy de `/obrigado` já não promete guarda — a de `talentos` manda o candidato para o e-mail do RH —, mas o lead comercial de `/proposta` depende do visitante clicar no WhatsApp para chegar a alguém |
+| Envio de e-mail nos formulários | Falta integrar Resend. `ProposalForm` e o qualificador já gravam em `leads` — o comercial vê tudo em `/admin/leads` —, mas ninguém é **avisado**: só descobre entrando no painel. `TalentForm` continua descartando os dados no browser. A copy de `/obrigado?origem=proposta` foi escrita quando nada era guardado e ainda não promete guarda; pode ser revista |
+| Leads do Diagnóstico e do Simulador | Os dois fluxos são anônimos hoje (o diagnóstico só tem 7 notas, o simulador só 4 selects) — gravar exige antes decidir um passo de contato. `lib/leads/origens.js` já nasceu preparado: basta uma entrada nova no mapa para a validação, a listagem e o detalhe passarem a aceitá-los |
 | Página de case individual (`/cases/[slug]`) | Não existe; só a listagem. `isCaseSlugTaken` mantém o slug único de propósito, para a página poder ser criada depois sem colisão |
 | Arquivos do Mídia Kit | As páginas existem; falta o cliente entregar PDFs e assets (`lib/midiakit.js`) |
 | Números oficiais do simulador | `lib/simulador.js` usa ordem de grandeza estimada — falta CPM e alcance por plataforma |

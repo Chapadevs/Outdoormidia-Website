@@ -7,7 +7,7 @@ import { ICONICOS } from '@/lib/iconicos'
 import { DATA_CURTA } from '@/lib/format'
 
 export const metadata = {
-  title: 'Cases — Painel Admin — Outdoormídia',
+  title: 'Cases | Painel Admin | Outdoormídia',
   robots: { index: false, follow: false },
 }
 
@@ -70,7 +70,7 @@ export default async function AdminCasesPage() {
                         ? caseItem.platforms
                             .map((slug) => PLATFORM_NAMES.get(slug) || slug)
                             .join(', ')
-                        : '—'}
+                        : 'sem plataforma'}
                     </td>
                     <td className="py-4 pr-4">
                       {caseItem.status === 'published' ? (
@@ -84,7 +84,7 @@ export default async function AdminCasesPage() {
                       )}
                     </td>
                     <td className="py-4 pr-4 text-sm text-ink-soft">
-                      {caseItem.updatedAt ? DATA_CURTA.format(new Date(caseItem.updatedAt)) : '—'}
+                      {caseItem.updatedAt ? DATA_CURTA.format(new Date(caseItem.updatedAt)) : 'sem data'}
                     </td>
                     <td className="py-4">
                       <div className="flex items-center gap-4">

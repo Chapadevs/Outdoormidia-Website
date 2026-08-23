@@ -11,11 +11,11 @@ const DESCRIPTION =
   'Conheça as plataformas de mídia exterior da Outdoormídia: do outdoor digital ao MUB, mais os Projetos Icônicos, cobrindo Paraná e Santa Catarina.'
 
 export const metadata = {
-  title: 'Plataformas — Outdoormídia',
+  title: 'Plataformas | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/plataformas' },
   openGraph: {
-    title: 'Plataformas — Outdoormídia',
+    title: 'Plataformas | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -37,7 +37,7 @@ export default function PlataformasPage() {
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               Nenhuma campanha se resolve com um formato só. São 7 plataformas que se combinam
-              conforme o público que você quer alcançar — do LED de alta circulação ao mobiliário
+              conforme o público que você quer alcançar, do LED de alta circulação ao mobiliário
               urbano de bairro, cobrindo Paraná e Santa Catarina. Fechando a lista, os Icônicos:
               projetos de assinatura desenhados ponto a ponto.
             </p>
@@ -92,7 +92,7 @@ export default function PlataformasPage() {
             <div className="reveal flex items-end justify-between gap-8 max-mob:flex-col max-mob:items-start max-mob:gap-5">
               <p className="m-0 max-w-[56ch] text-[15px] leading-relaxed text-ink-soft">
                 Quando o endereço pede uma estrutura que não existe em tabela, o caminho são os
-                Projetos Icônicos: Elegancy, Green e Regenerativo — desenhados ponto a ponto, do
+                Projetos Icônicos: Elegancy, Green e Regenerativo, desenhados ponto a ponto, do
                 briefing à instalação.
               </p>
               <Link className="btn btn-ghost shrink-0" href="/plataformas/projetos-iconicos">

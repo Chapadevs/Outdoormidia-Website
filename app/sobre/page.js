@@ -37,11 +37,11 @@ const DESCRIPTION =
   'A Outdoormídia coloca marcas nas ruas do Paraná e de Santa Catarina desde 1959: 67 anos de operação própria em mídia exterior, do outdoor impresso ao painel de LED.'
 
 export const metadata = {
-  title: 'Sobre nós — Outdoormídia',
+  title: 'Sobre nós | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/sobre' },
   openGraph: {
-    title: 'Sobre nós — Outdoormídia',
+    title: 'Sobre nós | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -63,7 +63,7 @@ export default function SobrePage() {
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               67 anos colocando marcas onde a cidade passa. Da negociação à
-              instalação, a operação é nossa — e é isso que sustenta o que prometemos na rua.
+              instalação, a operação é nossa, e é isso que sustenta o que prometemos na rua.
             </p>
 
             <div className="reveal mt-[54px] grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
@@ -103,7 +103,7 @@ export default function SobrePage() {
               <div className="flex max-w-[68ch] flex-col gap-5">
                 <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
                   Estamos presentes em Curitiba, Região Metropolitana, Litoral do Paraná,
-                  Joinville, Itajaí e Balneário Camboriú — sempre nos pontos de maior fluxo,
+                  Joinville, Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo,
                   visibilidade e impacto real.
                 </p>
                 <ul className="m-0 flex flex-wrap gap-2 p-0">
@@ -135,7 +135,7 @@ export default function SobrePage() {
           <div className="wrap">
             <SectionHeading num="01" title="Linha do tempo" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              O que mudou desde a primeira face na rua — e o que não mudou.
+              O que mudou desde a primeira face na rua, e o que não mudou.
             </p>
             <ol className="m-0 grid list-none grid-cols-5 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
               {MARCOS.map((m) => (

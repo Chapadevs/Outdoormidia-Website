@@ -4,14 +4,14 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import DiagnosticoQuiz from '@/components/forms/DiagnosticoQuiz'
 
 const DESCRIPTION =
-  'Responda 7 perguntas e descubra em menos de um minuto se a sua marca é invisível, conhecida ou presente no mercado — e o que fazer a partir disso.'
+  'Responda 7 perguntas e descubra em menos de um minuto se a sua marca é invisível, conhecida ou presente no mercado, e o que fazer a partir disso.'
 
 export const metadata = {
-  title: 'Diagnóstico de Presença de Marca — Outdoormídia',
+  title: 'Diagnóstico de Presença de Marca | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/diagnostico' },
   openGraph: {
-    title: 'Diagnóstico de Presença de Marca — Outdoormídia',
+    title: 'Diagnóstico de Presença de Marca | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

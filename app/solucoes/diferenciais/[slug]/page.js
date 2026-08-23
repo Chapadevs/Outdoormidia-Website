@@ -18,9 +18,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const diferencial = getDiferencialBySlug(slug)
-  if (!diferencial) return { title: 'Diferencial não encontrado — Outdoormídia' }
+  if (!diferencial) return { title: 'Diferencial não encontrado | Outdoormídia' }
 
-  const title = `${diferencial.title} — Outdoormídia`
+  const title = `${diferencial.title} | Outdoormídia`
   return {
     title,
     description: diferencial.intro,
@@ -124,7 +124,7 @@ export default async function DiferencialPage({ params }) {
                     {step.items.map((item) => (
                       <li className="flex gap-2.5 text-[15px] leading-relaxed text-ink-soft" key={item}>
                         <span aria-hidden className="text-orange">
-                          —
+                          •
                         </span>
                         {item}
                       </li>

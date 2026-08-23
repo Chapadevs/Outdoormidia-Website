@@ -4,7 +4,7 @@ import { listTags } from '@/lib/tags/tags'
 import { listTagGroups } from '@/lib/tags/groups'
 
 export const metadata = {
-  title: 'Novo case — Painel Admin — Outdoormídia',
+  title: 'Novo case | Painel Admin | Outdoormídia',
   robots: { index: false, follow: false },
 }
 

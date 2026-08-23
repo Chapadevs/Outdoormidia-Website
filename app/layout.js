@@ -15,14 +15,14 @@ const poppins = Poppins({
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Outdoormídia — Out of Home no Sul do Brasil',
+  title: 'Outdoormídia: Out of Home no Sul do Brasil',
   description:
     'Líder em mídia exterior no Paraná e Santa Catarina há 67 anos. Outdoor digital, frontlight, rodovias, aeroporto, shoppings e muito mais.',
   // Canonical da home. As demais rotas declaram a sua em `alternates` —
   // caminho relativo, resolvido contra o metadataBase.
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Outdoormídia — Out of Home no Sul do Brasil',
+    title: 'Outdoormídia: Out of Home no Sul do Brasil',
     description: 'Líder em mídia exterior no Paraná e Santa Catarina.',
     siteName: 'Outdoormídia',
     url: SITE_URL,

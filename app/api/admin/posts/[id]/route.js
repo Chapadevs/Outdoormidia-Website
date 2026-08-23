@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/api/adminGuard'
 import { deletePost, isSlugTaken, updatePost } from '@/lib/blog/posts'
-import { validatePostBody } from '@/lib/blog/validate'
+import { validatePostBody, validatePostTags } from '@/lib/blog/validate'
+import { listTags } from '@/lib/tags/tags'
 import { revalidateBlog } from '@/lib/revalidate'
 
 export const runtime = 'nodejs'
@@ -15,6 +16,11 @@ export async function PUT(request, { params }) {
   const invalid = validatePostBody(body)
   if (invalid) {
     return NextResponse.json({ error: invalid }, { status: 400 })
+  }
+
+  const invalidTags = validatePostTags(body, await listTags('blog'))
+  if (invalidTags) {
+    return NextResponse.json({ error: invalidTags }, { status: 400 })
   }
 
   if (await isSlugTaken(body.slug, id)) {

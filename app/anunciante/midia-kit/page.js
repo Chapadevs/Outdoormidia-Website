@@ -10,11 +10,11 @@ const DESCRIPTION =
   'Kit comercial, especificações técnicas por plataforma, tabela de praças e assets de marca da Outdoormídia para download.'
 
 export const metadata = {
-  title: 'Mídia Kit e materiais de apoio — Outdoormídia',
+  title: 'Mídia Kit e materiais de apoio | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/anunciante/midia-kit' },
   openGraph: {
-    title: 'Mídia Kit e materiais de apoio — Outdoormídia',
+    title: 'Mídia Kit e materiais de apoio | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -42,7 +42,7 @@ export default function MidiaKitPage() {
               <Link href="/plataformas" className="font-bold text-orange hover:underline">
                 Plataformas
               </Link>{' '}
-              — o PDF é a versão que vai para a reunião.
+              e o PDF é a versão que vai para a reunião.
             </p>
           </div>
         </section>
@@ -101,7 +101,7 @@ export default function MidiaKitPage() {
                 </h2>
                 <p className="mt-3 max-w-[52ch] text-[15.5px] leading-relaxed text-ink-soft">
                   Proposta por praça, mockup do seu criativo no ponto ou tabela sob medida para a
-                  sua apresentação — é só pedir.
+                  sua apresentação. É só pedir.
                 </p>
               </div>
               <a href={waLink(WA_MIDIA_KIT)} className="btn btn-fill whitespace-nowrap">

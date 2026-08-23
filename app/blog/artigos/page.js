@@ -11,11 +11,11 @@ const DESCRIPTION =
   'Artigos sobre mídia Out of Home no Sul do Brasil: outdoor, painéis de LED, MUB, aeroporto e estratégias para sua marca ocupar as ruas.'
 
 export const metadata = {
-  title: 'Artigos — Outdoormídia',
+  title: 'Artigos | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/blog/artigos' },
   openGraph: {
-    title: 'Artigos — Outdoormídia',
+    title: 'Artigos | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

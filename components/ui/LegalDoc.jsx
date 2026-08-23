@@ -28,8 +28,8 @@ export default function LegalDoc({ secoes, atualizadoEm, contato }) {
   const identificacao = [
     EMPRESA.razaoSocial || EMPRESA.nome,
     EMPRESA.cnpj && `CNPJ ${EMPRESA.cnpj}`,
-    [EMPRESA.endereco.logradouro, EMPRESA.endereco.cep].filter(Boolean).join(' — '),
-    `${EMPRESA.endereco.cidade} — ${EMPRESA.endereco.estado}`,
+    [EMPRESA.endereco.logradouro, EMPRESA.endereco.cep].filter(Boolean).join(', '),
+    `${EMPRESA.endereco.cidade}/${EMPRESA.endereco.estado}`,
   ].filter(Boolean)
 
   const emailContato = EMPRESA.encarregado || EMPRESA.email

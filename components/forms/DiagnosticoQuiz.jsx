@@ -204,7 +204,7 @@ export default function DiagnosticoQuiz() {
                           {rotuloDaNota(notas[i])}
                         </span>
                         <span className="text-[11px] uppercase tracking-[0.14em] text-ink-soft/45 max-mob:hidden">
-                          0 — 10
+                          0 a 10
                         </span>
                       </div>
                     </div>
@@ -216,7 +216,7 @@ export default function DiagnosticoQuiz() {
                           respondida ? 'text-ink' : 'text-line-2'
                         }`}
                       >
-                        {respondida ? valor : '—'}
+                        {respondida ? valor : '?'}
                       </div>
                       <div className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-ink-soft/45">
                         /10
@@ -244,12 +244,12 @@ export default function DiagnosticoQuiz() {
             className="min-w-[180px] flex-1 text-[13px] leading-[1.5] text-paper/70 max-mob:order-last max-mob:min-w-0 max-mob:basis-full max-mob:text-[11.5px] max-mob:leading-[1.45]"
           >
             {respondidas === 0
-              ? 'Comece pela primeira pergunta — o resultado aparece quando as 7 estiverem respondidas.'
+              ? 'Comece pela primeira pergunta; o resultado aparece quando as 7 estiverem respondidas.'
               : !completo
                 ? `Faltam ${faltam} ${faltam === 1 ? 'resposta' : 'respostas'} para o seu diagnóstico aparecer.`
                 : mostrarResultado
                   ? 'Diagnóstico pronto. Role para ver a leitura completa.'
-                  : 'Tudo respondido — veja o que a sua nota significa.'}
+                  : 'Tudo respondido: veja o que a sua nota significa.'}
           </p>
           <button
             ref={botaoRef}
@@ -296,7 +296,7 @@ export default function DiagnosticoQuiz() {
                     <b className="font-extrabold">
                       &ldquo;{PERGUNTAS[maisFragil].pergunta.replace(/\?$/, '')}&rdquo;
                     </b>{' '}
-                    — é por aí que o plano de mídia começa.
+                    e é por aí que o plano de mídia começa.
                   </p>
                 </div>
               </div>
@@ -320,7 +320,7 @@ export default function DiagnosticoQuiz() {
               })}
             </div>
 
-            <div className="ticks mt-4 rounded-[16px] border border-orange bg-orange p-[38px] text-white [--tick-color:#fff] max-mob:p-6">
+            <div className="ticks mt-4 rounded-[16px] border border-orange bg-orange p-[38px] text-white max-mob:p-6">
               <h3 className="m-0 font-display text-[clamp(28px,4.6vw,48px)] font-normal uppercase leading-[0.9]">
                 A sua marca está
                 <br />
@@ -328,7 +328,7 @@ export default function DiagnosticoQuiz() {
               </h3>
               <p className="mt-4 max-w-[52ch] text-white/[.92]">
                 Presença gera lembrança. Lembrança gera escolha. Escolha gera resultados. Nosso time
-                comercial monta um plano de mídia exterior a partir da sua nota — praças, formatos e
+                comercial monta um plano de mídia exterior a partir da sua nota: praças, formatos e
                 frequência sob medida.
               </p>
               <div className="mt-[30px] flex flex-wrap gap-3 max-mob:mt-6">

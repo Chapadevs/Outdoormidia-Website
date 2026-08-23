@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Logo from '@/components/ui/Logo'
+import { EMPRESA } from '@/lib/empresa'
 import { NAV } from '@/lib/nav'
 
 // Uma coluna por hub, com as filhas do menu; item de nível 1 sem filhas fecha a
@@ -89,6 +90,13 @@ export default function Footer() {
             >
               contato@outdoormidia.com.br
             </a>
+            <address className="mt-4 text-[14.5px] not-italic leading-[1.5]">
+              {EMPRESA.endereco.logradouro}
+              <br />
+              {EMPRESA.endereco.cidade}/{EMPRESA.endereco.estado}
+              <br />
+              CEP {EMPRESA.endereco.cep}
+            </address>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               {SOCIAIS.map((s) => (
                 <a
@@ -115,7 +123,11 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-[54px] flex flex-wrap justify-between gap-3 border-t border-line pt-6 text-xs uppercase tracking-[0.06em]">
-          <span>© 2026 Outdoormídia</span>
+          <span className="flex flex-col gap-1.5 normal-case tracking-normal">
+            <span className="uppercase tracking-[0.06em]">© 2026 Outdoormídia</span>
+            <span>{EMPRESA.razaoSocial}</span>
+            <span>CNPJ {EMPRESA.cnpj}</span>
+          </span>
           {/* Fora da NAV de propósito: lib/nav.js alimenta o menu do Header, e
               página legal não é item de navegação principal. */}
           <span className="flex flex-wrap gap-5">

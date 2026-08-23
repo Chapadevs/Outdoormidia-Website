@@ -14,7 +14,7 @@ const FERRAMENTAS = [
     href: '/diagnostico',
     eyebrow: 'Ferramenta · 7 perguntas',
     title: 'Diagnóstico de presença',
-    text: 'Descubra em um minuto se a sua marca está invisível, conhecida ou presente — e o que fazer a partir do resultado.',
+    text: 'Descubra em um minuto se a sua marca está invisível, conhecida ou presente, e o que fazer a partir do resultado.',
     cta: 'Fazer o diagnóstico',
   },
   {
@@ -41,11 +41,11 @@ const FERRAMENTAS = [
 ]
 
 export const metadata = {
-  title: 'Área do anunciante — Outdoormídia',
+  title: 'Área do anunciante | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/anunciante' },
   openGraph: {
-    title: 'Área do anunciante — Outdoormídia',
+    title: 'Área do anunciante | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

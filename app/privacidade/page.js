@@ -8,11 +8,11 @@ const DESCRIPTION =
   'Como a Outdoormídia coleta, usa e protege os dados de quem entra em contato pelo site: finalidades, bases legais da LGPD, prazos de guarda e como exercer os seus direitos.'
 
 export const metadata = {
-  title: 'Política de Privacidade — Outdoormídia',
+  title: 'Política de Privacidade | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/privacidade' },
   openGraph: {
-    title: 'Política de Privacidade — Outdoormídia',
+    title: 'Política de Privacidade | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',

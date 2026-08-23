@@ -1,6 +1,17 @@
-import Image from 'next/image'
+import ImageFlip from '@/components/ui/ImageFlip'
 
 const IMAGE_SIZES = '(max-width: 980px) 100vw, 620px'
+
+const FOTOS = [
+  {
+    src: '/media/OM-Foto.jpeg',
+    alt: 'Painel digital vertical da Outdoormídia em avenida no fim de tarde, exibindo campanha da Budweiser para a Copa do Mundo FIFA 2026',
+  },
+  {
+    src: '/media/hero-billboard.webp',
+    alt: 'Outdoor da Outdoormídia ao entardecer com a mensagem "Toda hora, em todo lugar"',
+  },
+]
 
 export default function Institutional() {
   return (
@@ -20,15 +31,7 @@ export default function Institutional() {
             </p>
           </div>
 
-          <div className="ticks reveal relative aspect-[16/9] w-full overflow-hidden rounded-[16px] border border-line">
-            <Image
-              src="/media/OM-Foto.jpeg"
-              alt="Painel digital vertical da Outdoormídia em avenida no fim de tarde, exibindo campanha da Budweiser para a Copa do Mundo FIFA 2026"
-              fill
-              sizes={IMAGE_SIZES}
-              className="object-cover"
-            />
-          </div>
+          <ImageFlip images={FOTOS} ratio="16/9" sizes={IMAGE_SIZES} className="reveal" />
         </div>
       </div>
     </section>

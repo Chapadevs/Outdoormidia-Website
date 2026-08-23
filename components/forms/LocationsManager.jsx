@@ -282,7 +282,7 @@ export default function LocationsManager({ locations }) {
                 placeholder="Ex.: Front Lights, Outdoors Digitais, MUB"
               />
               <span className="text-xs text-ink-soft">
-                Separe por vírgula — aparecem na faixa de praças da home.
+                Separe por vírgula. Aparecem na faixa de praças da home.
               </span>
             </div>
             <div className="flex items-center gap-4">
@@ -317,7 +317,7 @@ export default function LocationsManager({ locations }) {
           </div>
           {locations.length === 0 ? (
             <p className="mt-4 text-sm text-ink-soft">
-              Nenhuma localidade ainda. Clique no mapa para marcar a primeira — enquanto isso, o
+              Nenhuma localidade ainda. Clique no mapa para marcar a primeira; enquanto isso, o
               site mostra as praças padrão.
             </p>
           ) : (

@@ -11,14 +11,14 @@ import { WA_ICONICOS, waLink } from '@/lib/whatsapp'
 const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 400px'
 
 const DESCRIPTION =
-  'Elegancy, Green e Regenerativo: os projetos icônicos da Outdoormídia — estruturas de assinatura desenhadas ponto a ponto, fora do catálogo de plataformas.'
+  'Elegancy, Green e Regenerativo: os projetos icônicos da Outdoormídia: estruturas de assinatura desenhadas ponto a ponto, fora do catálogo de plataformas.'
 
 export const metadata = {
-  title: 'Projetos Icônicos — Outdoormídia',
+  title: 'Projetos Icônicos | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/plataformas/projetos-iconicos' },
   openGraph: {
-    title: 'Projetos Icônicos — Outdoormídia',
+    title: 'Projetos Icônicos | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -43,7 +43,7 @@ export default function ProjetosIconicosPage() {
                   Projetos Icônicos.
                 </h1>
                 <p className="reveal mt-6 max-w-[58ch] text-lg text-ink-soft">
-                  Nem toda mídia cabe num catálogo. São três linhas de projeto sob medida —
+                  Nem toda mídia cabe num catálogo. São três linhas de projeto sob medida,
                   desenhadas ponto a ponto, com estrutura própria e fluxo comercial que começa no
                   briefing, não na tabela.
                 </p>
@@ -122,7 +122,7 @@ export default function ProjetosIconicosPage() {
             <div className="reveal flex items-end justify-between gap-8 max-mob:flex-col max-mob:items-start max-mob:gap-5">
               <p className="m-0 max-w-[56ch] text-[15px] leading-relaxed text-ink-soft">
                 Para campanhas com formato, praça e período definidos, o caminho são as 7
-                plataformas de mídia exterior — do outdoor digital ao MUB, com disponibilidade e
+                plataformas de mídia exterior, do outdoor digital ao MUB, com disponibilidade e
                 estimativa imediatas.
               </p>
               <Link className="btn btn-ghost shrink-0" href="/plataformas">
