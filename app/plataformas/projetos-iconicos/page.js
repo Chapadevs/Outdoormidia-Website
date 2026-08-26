@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { ICONICOS } from '@/lib/iconicos'
 import { WA_ICONICOS, waLink } from '@/lib/whatsapp'
 
@@ -53,7 +53,7 @@ export default function ProjetosIconicosPage() {
               </div>
               <div className="ticks reveal rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
                 <p className="m-0 text-[15px] leading-relaxed text-ink-soft">
-                  A diferença para as 7 plataformas do catálogo é o ponto de partida: aqui a
+                  A diferença para as 8 plataformas do catálogo é o ponto de partida: aqui a
                   estrutura nasce do endereço. Cada projeto passa por briefing, estudo de
                   viabilidade e desenho antes de existir na rua.
                 </p>
@@ -132,7 +132,7 @@ export default function ProjetosIconicosPage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

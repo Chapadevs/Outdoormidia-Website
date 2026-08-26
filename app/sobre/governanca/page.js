@@ -3,7 +3,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { GOV_CERTIFICACOES, GOV_DOCUMENTOS, GOV_PILARES } from '@/lib/esg'
 import { WA_GOVERNANCA, waLink } from '@/lib/whatsapp'
 
@@ -189,7 +189,7 @@ export default function GovernancaPage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

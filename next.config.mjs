@@ -26,11 +26,40 @@ const nextConfig = {
   // semana em vez de ficar presa por um ano.
   // Green e Projetos Icônicos saíram do catálogo e viraram projetos icônicos —
   // as URLs antigas já estão indexadas.
+  // A área do anunciante mudou de /anunciante para /area-do-anunciante, o
+  // diagnóstico passou para dentro dela e dois itens foram renomeados (Mídia
+  // Kit virou Guia do Anunciante, Simulador OOH virou Sua marca no OOH). As
+  // URLs antigas estão indexadas e no material impresso: seguem vivas aqui.
   async redirects() {
     return [
       {
         source: '/plataformas/green',
         destination: '/plataformas/projetos-iconicos/green',
+        permanent: true,
+      },
+      {
+        source: '/diagnostico',
+        destination: '/area-do-anunciante/diagnostico-de-presenca',
+        permanent: true,
+      },
+      {
+        source: '/anunciante/midia-kit',
+        destination: '/area-do-anunciante/guia-do-anunciante',
+        permanent: true,
+      },
+      {
+        source: '/anunciante/simulador',
+        destination: '/area-do-anunciante/sua-marca-no-ooh',
+        permanent: true,
+      },
+      {
+        source: '/anunciante/faq',
+        destination: '/area-do-anunciante/faq',
+        permanent: true,
+      },
+      {
+        source: '/anunciante',
+        destination: '/area-do-anunciante',
         permanent: true,
       },
     ]

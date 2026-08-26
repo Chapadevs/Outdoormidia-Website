@@ -18,8 +18,8 @@ const COLUNAS = HUBS.map((hub, i) => ({
 }))
 
 const LEGAIS = [
-  { label: 'Privacidade', href: '/privacidade' },
-  { label: 'Termos de uso', href: '/termos' },
+  { label: 'Política de Privacidade', href: '/privacidade' },
+  { label: 'Termos de Uso', href: '/termos' },
 ]
 
 // TODO(cliente): confirmar os perfis de X e Facebook — os dois foram montados a
@@ -57,6 +57,9 @@ export default function Footer() {
             <p className="mt-[18px] max-w-[32ch] text-[14.5px]">
               Out of Home no Sul do Brasil há 67 anos. Sua marca onde as pessoas estão.
             </p>
+            <Link className="btn btn-ghost mt-6" href="/#nova-campanha">
+              Nova campanha →
+            </Link>
           </div>
           {COLUNAS.map((col) => (
             <div key={col.title}>
@@ -79,16 +82,24 @@ export default function Footer() {
               Contato
             </h4>
             <a
-              href="tel:+554132076400"
+              href={`tel:${EMPRESA.telefone}`}
               className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
             >
-              +55 41 3207.6400
+              {EMPRESA.telefoneExibicao} · Curitiba
             </a>
+            {EMPRESA.telefoneSc && (
+              <a
+                href={`tel:${EMPRESA.telefoneSc}`}
+                className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
+              >
+                {EMPRESA.telefoneScExibicao} · Santa Catarina
+              </a>
+            )}
             <a
-              href="mailto:contato@outdoormidia.com.br"
+              href={`mailto:${EMPRESA.email}`}
               className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
             >
-              contato@outdoormidia.com.br
+              {EMPRESA.email}
             </a>
             <address className="mt-4 text-[14.5px] not-italic leading-[1.5]">
               {EMPRESA.endereco.logradouro}

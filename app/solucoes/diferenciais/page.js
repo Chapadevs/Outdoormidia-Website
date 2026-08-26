@@ -4,15 +4,15 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { DIFERENCIAIS } from '@/lib/diferenciais'
 
 const DESCRIPTION =
   'Face única, audiência mensurada, câmeras ao vivo 24×7 e circuitos MUB segmentados: o que separa uma campanha que a cidade vê de uma que passa despercebida.'
 
 const PROVA = [
-  { n: '380M', label: 'Impactos por mês' },
-  { n: '138', label: 'Telas digitais' },
+  { n: '+530M', label: 'Impactos por mês' },
+  { n: '175', label: 'Telas digitais' },
   { n: '24×7', label: 'Câmeras ao vivo' },
   { n: '6', label: 'Circuitos MUB' },
 ]
@@ -38,7 +38,7 @@ export default function DiferenciaisPage() {
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Soluções · 6 diferenciais</div>
+            <div className="eyebrow reveal">Soluções · {DIFERENCIAIS.length} diferenciais</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               Diferenciais.
             </h1>
@@ -51,7 +51,7 @@ export default function DiferenciaisPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Os seis" className="reveal mb-[34px]" />
+            <SectionHeading num="01" title="Os diferenciais" className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
               {DIFERENCIAIS.map((d) => (
                 <Link
@@ -63,6 +63,7 @@ export default function DiferenciaisPage() {
                   <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
                     {d.title}
                   </h2>
+                  {d.tagline && <span className="eyebrow -mt-2 text-orange">{d.tagline}</span>}
                   <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{d.text}</p>
                   <span className="mt-auto pt-5 text-sm font-bold text-orange">
                     Ver diferencial →
@@ -84,7 +85,7 @@ export default function DiferenciaisPage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

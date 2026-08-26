@@ -3,7 +3,7 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { SOCIAL_IMPACTO, SOCIAL_PROJETOS } from '@/lib/esg'
 import { WA_SOCIAL, waLink } from '@/lib/whatsapp'
 
@@ -102,7 +102,7 @@ export default function SocialPage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

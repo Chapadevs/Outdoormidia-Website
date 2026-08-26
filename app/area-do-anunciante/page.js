@@ -3,36 +3,36 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { WA_ANUNCIANTE, waLink } from '@/lib/whatsapp'
 
 const DESCRIPTION =
-  'Diagnóstico de presença, mídia kit para download, simulador de campanha e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
+  'Diagnóstico de presença, Guia do Anunciante para download, Sua marca no OOH e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
 
 const FERRAMENTAS = [
   {
-    href: '/diagnostico',
-    eyebrow: 'Ferramenta · 7 perguntas',
+    href: '/area-do-anunciante/diagnostico-de-presenca',
+    eyebrow: 'Ferramenta · 10 perguntas',
     title: 'Diagnóstico de presença',
-    text: 'Descubra em um minuto se a sua marca está invisível, conhecida ou presente, e o que fazer a partir do resultado.',
+    text: 'Descubra em um minuto em qual dos cinco degraus da Escada da Presença a sua marca está, e o que fazer para subir.',
     cta: 'Fazer o diagnóstico',
   },
   {
-    href: '/anunciante/simulador',
+    href: '/area-do-anunciante/sua-marca-no-ooh',
     eyebrow: 'Ferramenta · Estimativa',
-    title: 'Simulador OOH',
+    title: 'Sua marca no OOH',
     text: 'Praça, plataforma e período: veja quantos impactos a campanha gera e a faixa de investimento antes de pedir proposta.',
     cta: 'Simular campanha',
   },
   {
-    href: '/anunciante/midia-kit',
+    href: '/area-do-anunciante/guia-do-anunciante',
     eyebrow: 'Downloads',
-    title: 'Mídia Kit e materiais',
+    title: 'Guia do Anunciante',
     text: 'Kit comercial, especificações técnicas por plataforma, tabela de praças e assets de marca.',
     cta: 'Ver materiais',
   },
   {
-    href: '/anunciante/faq',
+    href: '/area-do-anunciante/faq',
     eyebrow: 'Dúvidas',
     title: 'FAQ',
     text: 'Praças, formatos, exclusividade do ponto, medição de resultados e como pedir uma proposta.',
@@ -43,7 +43,7 @@ const FERRAMENTAS = [
 export const metadata = {
   title: 'Área do anunciante | Outdoormídia',
   description: DESCRIPTION,
-  alternates: { canonical: '/anunciante' },
+  alternates: { canonical: '/area-do-anunciante' },
   openGraph: {
     title: 'Área do anunciante | Outdoormídia',
     description: DESCRIPTION,
@@ -113,7 +113,7 @@ export default function AnunciantePage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

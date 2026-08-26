@@ -1,14 +1,13 @@
+// Praças na redação e na ordem do documento de copy do cliente.
 const ITEMS = [
-  'Curitiba',
-  'Região Metropolitana',
+  'Curitiba e Região Metropolitana',
   'Litoral do PR',
-  'Rodovias',
+  'Rodovias PR-SC',
   'Itajaí',
   'Joinville',
   'Balneário Camboriú',
   'Aeroporto',
   'Mídia Indoor',
-  'Mídia Móvel',
 ]
 
 function Track({ ariaHidden }) {

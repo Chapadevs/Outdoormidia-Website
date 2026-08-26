@@ -2,7 +2,20 @@
 
 import { useState } from 'react'
 import CoverageMap from '@/components/ui/CoverageMap'
-import { WA_COBERTURA, WA_COBERTURA_CURITIBA, waLink } from '@/lib/whatsapp'
+import PracaChips from '@/components/ui/PracaChips'
+import { WA_COBERTURA, waLink } from '@/lib/whatsapp'
+
+// As praças do checklist da home (claude/checklist-home.md, item 07). A lista
+// de /sobre é a mesma sem Rodovias PR-SC, que não é cidade.
+const PRACAS = [
+  'Curitiba',
+  'Região Metropolitana',
+  'Litoral do Paraná',
+  'Joinville',
+  'Itajaí',
+  'Balneário Camboriú',
+  'Rodovias PR-SC',
+]
 
 function plataformas(total) {
   return `${total} ${total === 1 ? 'plataforma' : 'plataformas'}`
@@ -21,22 +34,24 @@ export default function CoverageExplorer({ locations, num = '04' }) {
               <span className="eyebrow">Cobertura</span>
               <span className="h-px flex-1 bg-line"></span>
             </div>
-            <h2 className="display mt-[26px] max-w-[12ch] text-[clamp(40px,6.2vw,82px)] text-ink">
-              Seu público
+            <h2 className="display mt-[26px] max-w-[14ch] text-[clamp(34px,5.2vw,68px)] text-ink">
+              Não basta estar
               <br />
-              não fica
+              na cidade.
               <br />
-              <span className="text-orange">parado.</span>
+              É preciso estar
               <br />
-              A gente
+              no <span className="text-orange">trajeto</span>
               <br />
-              também não.
+              do seu público.
             </h2>
-            <p className="mt-7 max-w-[40ch] text-lg text-ink-soft">
-              Do Batel ao litoral, das rodovias às praias de Santa Catarina: uma malha contínua de
-              mídia exterior nos dois estados onde o Sul se movimenta. Escolha a praça e a gente
-              mostra o que existe nela.
+            <p className="mt-7 max-w-[42ch] text-lg text-ink-soft">
+              A Outdoormídia está em Curitiba, Região Metropolitana, Litoral do Paraná, Joinville,
+              Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo e visibilidade de cada
+              praça. Do Batel ao litoral, das rodovias às praias de Santa Catarina, sua marca
+              acompanha o trajeto do público nos dois estados.
             </p>
+            <PracaChips className="mt-6" pracas={PRACAS} />
           </div>
           <div className="mt-11 flex flex-wrap items-center gap-x-[18px] gap-y-3">
             <a href={waLink(WA_COBERTURA)} className="btn btn-fill">
@@ -80,16 +95,6 @@ export default function CoverageExplorer({ locations, num = '04' }) {
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="flex items-center justify-between gap-8 bg-orange px-16 py-[34px] max-tab:flex-col max-tab:items-start max-tab:gap-5 max-tab:px-10 max-mob:px-6 max-mob:py-7">
-        <span className="display flex-1 text-[clamp(16px,1.8vw,22px)] leading-[1.2]">
-          Temos a maior network de DOOH regional do Sul do Brasil, com 159 telas digitais e +22
-          milhões de impactos semanais em praças estratégicas.
-        </span>
-        <a href={waLink(WA_COBERTURA_CURITIBA)} className="btn btn-on-orange">
-          Consultar disponibilidade
-        </a>
       </div>
     </div>
   )

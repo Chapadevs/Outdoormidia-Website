@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import {
   AMBIENTAL_AUTORIDADE,
   AMBIENTAL_COMPROMISSOS,
@@ -185,7 +185,7 @@ export default function AmbientalPage() {
           </section>
         )}
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

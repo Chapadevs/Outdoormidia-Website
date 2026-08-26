@@ -4,8 +4,8 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
-import LeadCta from '@/components/sections/LeadCta'
-import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
+import NovaCampanha from '@/components/sections/NovaCampanha'
+import { PLATFORMS, PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
 const DESCRIPTION =
   'Conheça as plataformas de mídia exterior da Outdoormídia: do outdoor digital ao MUB, mais os Projetos Icônicos, cobrindo Paraná e Santa Catarina.'
@@ -31,12 +31,14 @@ export default function PlataformasPage() {
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Catálogo · 7 plataformas + Icônicos</div>
+            <div className="eyebrow reveal">
+              Catálogo · {PLATFORMS.length} plataformas + Icônicos
+            </div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               Plataformas.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Nenhuma campanha se resolve com um formato só. São 7 plataformas que se combinam
+              Nenhuma campanha se resolve com um formato só. São {PLATFORMS_LISTAGEM.length} plataformas que se combinam
               conforme o público que você quer alcançar, do LED de alta circulação ao mobiliário
               urbano de bairro, cobrindo Paraná e Santa Catarina. Fechando a lista, os Icônicos:
               projetos de assinatura desenhados ponto a ponto.
@@ -102,7 +104,7 @@ export default function PlataformasPage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

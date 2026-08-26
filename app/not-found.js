@@ -59,7 +59,7 @@ export default function NotFound() {
               saiu do ar.
             </h1>
             <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">
-              O endereço mudou ou nunca existiu. Nossos outros 380 milhões de impactos por mês
+              O endereço mudou ou nunca existiu. Nossos outros +530 milhões de impactos por mês
               continuam de pé. Escolha por onde seguir.
             </p>
           </div>

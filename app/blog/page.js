@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { listPublishedPosts } from '@/lib/blog/posts'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
@@ -225,7 +225,7 @@ export default async function BlogPage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

@@ -5,7 +5,7 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { DIFERENCIAIS, getDiferencialBySlug, getOutrosDiferenciais } from '@/lib/diferenciais'
 import { waDiferencial, waLink } from '@/lib/whatsapp'
 
@@ -35,8 +35,11 @@ export default async function DiferencialPage({ params }) {
   if (!diferencial) notFound()
 
   const { aside, oQueE, prova, aplicacao } = diferencial
-  const { comparativo, miniCase } = aplicacao
+  // Diferencial recém-escrito entra sem "A prova" e sem "Aplicação prática":
+  // as seções somem em vez de exibirem número que o cliente ainda não confirmou.
+  const { comparativo, miniCase } = aplicacao ?? {}
   const outros = getOutrosDiferenciais(slug)
+  const numOutros = String(2 + (prova ? 1 : 0) + (aplicacao ? 1 : 0)).padStart(2, '0')
 
   return (
     <>
@@ -67,9 +70,11 @@ export default async function DiferencialPage({ params }) {
                   <a href={waLink(waDiferencial(diferencial.title))} className="btn btn-fill">
                     {diferencial.ctaLabel}
                   </a>
-                  <a href="#aplicacao" className="btn btn-ghost">
-                    Ver na prática
-                  </a>
+                  {aplicacao && (
+                    <a href="#aplicacao" className="btn btn-ghost">
+                      Ver na prática
+                    </a>
+                  )}
                 </div>
               </div>
               <div className={`${CARD} reveal`}>
@@ -102,14 +107,17 @@ export default async function DiferencialPage({ params }) {
           </div>
         </section>
 
-        <section className="bg-bone py-[110px] max-mob:py-[72px]">
-          <div className="wrap">
-            <SectionHeading num="02" title="A prova" className="reveal mb-[34px]" />
-            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">{prova.lead}</p>
-            <StatGrid stats={prova.stats} size="md" className="reveal" />
-          </div>
-        </section>
+        {prova && (
+          <section className="bg-bone py-[110px] max-mob:py-[72px]">
+            <div className="wrap">
+              <SectionHeading num="02" title="A prova" className="reveal mb-[34px]" />
+              <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">{prova.lead}</p>
+              <StatGrid stats={prova.stats} size="md" className="reveal" />
+            </div>
+          </section>
+        )}
 
+        {aplicacao && (
         <section className="py-[110px] max-mob:py-[72px]" id="aplicacao">
           <div className="wrap">
             <SectionHeading num="03" title="Aplicação prática" className="reveal mb-[34px]" />
@@ -197,11 +205,12 @@ export default async function DiferencialPage({ params }) {
             </p>
           </div>
         </section>
+        )}
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
             <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-              <SectionHeading num="04" title="Os outros cinco" className="flex-1" />
+              <SectionHeading num={numOutros} title="Outros diferenciais" className="flex-1" />
               <Link
                 className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
                 href="/solucoes/diferenciais"
@@ -227,7 +236,7 @@ export default async function DiferencialPage({ params }) {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

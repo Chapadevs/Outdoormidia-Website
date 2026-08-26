@@ -6,7 +6,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import FormatSpecCard from '@/components/ui/FormatSpecCard'
 import PlatformFaq from '@/components/sections/PlatformFaq'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import CaseCard from '@/components/cases/CaseCard'
 import { ICONICOS, getIconicoBySlug, getOutrosIconicos } from '@/lib/iconicos'
 import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
@@ -226,7 +226,7 @@ export default async function IconicoPage({ params }) {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

@@ -3,7 +3,7 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverageExplorer from '@/components/sections/CoverageExplorer'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { getLocations } from '@/lib/locations'
 
 const DESCRIPTION =
@@ -37,7 +37,7 @@ export default async function RegioesPage() {
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
-              Cobertura · <b>380 milhões de impactos por mês</b>
+              Cobertura · <b>+530 milhões de impactos por mês</b>
             </div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               Regiões.
@@ -60,7 +60,7 @@ export default async function RegioesPage() {
             <SectionHeading num="02" title="Praças atendidas" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               Cada praça com as plataformas disponíveis nela. Não achou a sua cidade? Fale com o
-              time. A malha cresce por demanda.
+              time. A rede cresce por demanda.
             </p>
             <div className="reveal border-t border-ink">
               {locations.map((loc) => (
@@ -96,7 +96,7 @@ export default async function RegioesPage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

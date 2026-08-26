@@ -279,7 +279,7 @@ export default function LocationsManager({ locations }) {
                 type="text"
                 value={formats}
                 onChange={(e) => setFormats(e.target.value)}
-                placeholder="Ex.: Front Lights, Outdoors Digitais, MUB"
+                placeholder="Ex.: Front Light, Outdoor Digital, MUB"
               />
               <span className="text-xs text-ink-soft">
                 Separe por vírgula. Aparecem na faixa de praças da home.

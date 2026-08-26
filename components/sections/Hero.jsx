@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 const VIDEO_SRC = '/media/video-hero.mp4'
 
@@ -29,9 +30,24 @@ export default function Hero() {
     <section className="relative h-[min(100svh,56.25vw)] min-h-[560px] w-full overflow-hidden bg-ink max-mob:flex max-mob:h-auto max-mob:min-h-0 max-mob:flex-col max-mob:gap-5 max-mob:bg-paper max-mob:pb-[40px] max-mob:pt-[32px]">
       <div className="wrap absolute inset-x-0 top-0 z-10 pt-[48px] max-mob:static max-mob:pt-0">
         <h1 className="display text-center text-[clamp(30px,5vw,78px)] [text-shadow:0_2px_18px_rgba(22,17,13,0.45)] max-mob:text-ink max-mob:[text-shadow:none]">
-          Toda <span className="text-orange">Hora</span> em Todo{' '}
-          <span className="text-orange">Lugar.</span>
+          <strong className="font-extrabold text-orange">Toda Hora</strong>, em Todo Lugar.
         </h1>
+        <p className="mx-auto mt-6 max-w-[70ch] text-center text-[17px] leading-relaxed text-white/[.92] [text-shadow:0_1px_12px_rgba(22,17,13,0.5)] max-mob:mt-4 max-mob:text-left max-mob:text-base max-mob:text-ink-soft max-mob:[text-shadow:none]">
+          Não escolhemos apenas onde sua marca aparece, mas onde ela precisa estar. Planejamos
+          praça, formato e período com base em fluxo e audiência real: do outdoor clássico ao DOOH,
+          nas praças e rodovias que ligam o Paraná a Santa Catarina.
+        </p>
+        <div className="mt-7 flex flex-wrap justify-center gap-3 max-mob:mt-5 max-mob:justify-start">
+          <Link className="btn btn-fill" href="/#nova-campanha">
+            Planejar Campanha
+          </Link>
+          <Link
+            className="btn max-mob:border-ink max-mob:text-ink max-mob:hover:bg-ink max-mob:hover:text-white"
+            href="/#plataformas"
+          >
+            Ver Plataformas
+          </Link>
+        </div>
       </div>
 
       <video

@@ -3,8 +3,8 @@ import StatGrid from '@/components/ui/StatGrid'
 
 const NUMEROS = [
   { n: '67', label: 'Anos de história' },
-  { n: '380M', label: 'Impactos por mês' },
-  { n: '82', label: 'Equipamentos digitais' },
+  { n: '+530M', label: 'Impactos por mês' },
+  { n: '175', label: 'Telas digitais' },
   { n: '2', label: 'Estados · PR + SC' },
 ]
 
@@ -15,7 +15,7 @@ const PILARES = [
   },
   {
     title: '67 anos, mercado em movimento',
-    text: 'A empresa é de 1959 e se digitalizou: 82 equipamentos digitais, dados de audiência por campanha e câmeras ao vivo 24×7. Estabilidade de quem atravessou seis décadas, com a tecnologia de quem não parou.',
+    text: 'A empresa é de 1959 e se digitalizou: 175 telas de LED, dados de audiência por campanha e câmeras ao vivo 24×7. Estabilidade de quem atravessou seis décadas, com a tecnologia de quem não parou.',
   },
   {
     title: 'Time enxuto, dono do que faz',

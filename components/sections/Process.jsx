@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
 import ScrollToButton from '@/components/widgets/ScrollToButton'
 
@@ -6,47 +7,36 @@ const ETAPAS = [
     num: '01',
     title: 'Planejamento',
     dark: false,
-    bullets: [
-      'Definição de objetivo e praça.',
-      'Seleção de plataformas e pontos.',
-      'Leitura de audiência.',
-      'Construção da proposta de mídia.',
-    ],
+    text: 'Objetivo e praça definidos, plataformas e pontos selecionados, audiência lida e proposta de mídia montada.',
   },
   {
     num: '02',
     title: 'Produção',
     dark: true,
-    bullets: [
-      'Especificações por formato.',
-      'Adequação do criativo ao ponto.',
-      'Preparação dos materiais estáticos ou digitais.',
-    ],
+    text: 'Especificação por formato, adequação do criativo ao ponto e preparo dos materiais, estáticos ou digitais.',
   },
   {
     num: '03',
     title: 'Veiculação e dados',
     dark: false,
-    bullets: [
-      'Instalação ou upload do criativo.',
-      'Conferência e monitoramento.',
-      'Registro da campanha.',
-      'Entrega das informações de audiência do período.',
-    ],
+    text: 'Instalação ou upload, conferência, monitoramento e entrega dos dados de audiência do período.',
   },
 ]
 
-export default function Process() {
+// O mesmo bloco serve a home e /sobre — editar aqui reflete nos dois. Em /sobre
+// ele entra sob o título "Por que a Outdoormídia", que é a seção que ele passou
+// a ocupar; o conteúdo não muda de uma página para a outra.
+export default function Process({ num = '07', title = 'Gestão 360 OM' }) {
   return (
     <section className="bg-bone py-[110px] max-mob:py-[72px]" id="processo">
       <div className="wrap">
-        <SectionHeading num="08" title="Como funciona" className="reveal mb-[18px]" />
+        <SectionHeading num={num} title={title} className="reveal mb-[18px]" />
         <p className="reveal mb-5 max-w-[520px] text-lg text-ink-soft">
           Do objetivo à notoriedade.
         </p>
         <p className="reveal mb-16 max-w-[60ch] text-ink-soft max-mob:mb-10">
-          Você diz qual objetivo, para quem e onde precisa aparecer. A Outdoormídia cruza praça,
-          fluxo, formato, audiência e investimento para montar o caminho da campanha.
+          Você diz o objetivo, para quem e onde precisa aparecer. A Outdoormídia cruza praça, fluxo,
+          formato, audiência e investimento para montar o melhor caminho da campanha.
         </p>
 
         <div className="grid grid-cols-3 items-stretch gap-9 max-tab:grid-cols-1">
@@ -76,31 +66,31 @@ export default function Process() {
                 </h3>
                 <div className={`mb-[22px] h-[3px] w-9 ${etapa.dark ? 'bg-ink' : 'bg-orange'}`}></div>
 
-                <ul className="m-0 flex list-none flex-col gap-3.5 p-0">
-                  {etapa.bullets.map((b) => (
-                    <li className="flex items-start gap-3" key={b}>
-                      <span
-                        aria-hidden="true"
-                        className={`flex-none font-extrabold leading-normal ${etapa.dark ? 'text-ink' : 'text-orange'}`}
-                      >
-                        •
-                      </span>
-                      <span
-                        className={`text-[15.5px] leading-normal ${etapa.dark ? 'text-ink/80' : 'text-ink-soft'}`}
-                      >
-                        {b}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <p
+                  className={`m-0 text-[15.5px] leading-relaxed ${etapa.dark ? 'text-ink/80' : 'text-ink-soft'}`}
+                >
+                  {etapa.text}
+                </p>
               </div>
             </article>
           ))}
         </div>
 
-        <div className="reveal mt-12 max-mob:mt-9">
-          <ScrollToButton className="btn btn-ghost" targetId="formulario">
-            Quero planejar uma campanha de OOH
+        <p className="reveal mt-12 max-w-[70ch] text-ink-soft max-mob:mt-9">
+          Em projetos de painel exclusivo, o Gestão 360 OM inclui ainda consultoria legal de
+          licenciamento e instalação completa.{' '}
+          <Link
+            className="font-bold text-orange transition-colors duration-150 hover:text-ink"
+            href="/plataformas/digital-signage"
+          >
+            Saiba mais
+          </Link>
+          .
+        </p>
+
+        <div className="reveal mt-9">
+          <ScrollToButton className="btn btn-ghost" targetId="nova-campanha">
+            Quero anunciar
           </ScrollToButton>
         </div>
       </div>
