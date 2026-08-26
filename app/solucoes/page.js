@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import Diferenciais from '@/components/sections/Diferenciais'
 import Platforms from '@/components/sections/Platforms'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { getLocations } from '@/lib/locations'
 
 const TIPOS_MIDIA = [
@@ -40,7 +40,7 @@ const FORMATOS = [
 ]
 
 const DESCRIPTION =
-  'Tudo o que a Outdoormídia coloca na rua: os diferenciais que sustentam a operação, as praças de PR e SC, as 7 plataformas de mídia exterior e os projetos icônicos.'
+  'Tudo o que a Outdoormídia coloca na rua: os diferenciais que sustentam a operação, as praças de PR e SC, as 8 plataformas de mídia exterior e os projetos icônicos.'
 
 export const metadata = {
   title: 'Soluções | Outdoormídia',
@@ -92,7 +92,7 @@ export default async function SolucoesPage() {
               </Link>
             </div>
             <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">
-              Uma malha contínua nos dois estados onde o Sul se movimenta. Escolha a praça e a
+              Uma rede contínua nos dois estados onde o Sul se movimenta. Escolha a praça e a
               gente mostra o que existe nela.
             </p>
             <div className="reveal mb-10 grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-3">
@@ -180,7 +180,7 @@ export default async function SolucoesPage() {
 
         <Platforms num="04" />
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

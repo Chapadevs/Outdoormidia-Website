@@ -7,7 +7,7 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
 import FormatSpecCard from '@/components/ui/FormatSpecCard'
 import PlatformFaq from '@/components/sections/PlatformFaq'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import CaseCard from '@/components/cases/CaseCard'
 import { getPlatformBySlug } from '@/lib/platforms'
 import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
@@ -112,7 +112,7 @@ export default async function PlatformPage({ params }) {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

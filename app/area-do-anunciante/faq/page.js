@@ -2,7 +2,9 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import FaqCategorias from '@/components/sections/FaqCategorias'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
+import FaqJsonLd from '@/components/widgets/FaqJsonLd'
+import { FAQS } from '@/lib/faq'
 
 const DESCRIPTION =
   'Dúvidas sobre anunciar em mídia exterior no Paraná e em Santa Catarina: praças, formatos, medição de resultados, exclusividade do ponto e como pedir uma proposta.'
@@ -10,7 +12,7 @@ const DESCRIPTION =
 export const metadata = {
   title: 'FAQ | Outdoormídia',
   description: DESCRIPTION,
-  alternates: { canonical: '/anunciante/faq' },
+  alternates: { canonical: '/area-do-anunciante/faq' },
   openGraph: {
     title: 'FAQ | Outdoormídia',
     description: DESCRIPTION,
@@ -22,10 +24,11 @@ export const metadata = {
 export default function FaqPage() {
   return (
     <>
+      <FaqJsonLd faqs={FAQS} />
       <Header />
       <main>
         <Breadcrumb
-          items={[{ label: 'Área do anunciante', href: '/anunciante' }, { label: 'FAQ' }]}
+          items={[{ label: 'Área do anunciante', href: '/area-do-anunciante' }, { label: 'FAQ' }]}
         />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
@@ -45,7 +48,7 @@ export default function FaqPage() {
 
         <FaqCategorias />
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

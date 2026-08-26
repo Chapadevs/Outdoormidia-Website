@@ -2,7 +2,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { PODCAST, EPISODIOS } from '@/lib/podcast'
 
 const DESCRIPTION =
@@ -92,7 +92,7 @@ export default function PodcastPage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

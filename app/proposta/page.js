@@ -21,7 +21,7 @@ export const revalidate = 3600
 
 export default async function PropostaPage() {
   // getLocations() já cai em DEFAULT_LOCATIONS se o Firestore não responder.
-  // Os formatos saem de PLATFORMS (o catálogo de 7), não de PLATFORMS_LISTAGEM:
+  // Os formatos saem de PLATFORMS (o catálogo de 8), não de PLATFORMS_LISTAGEM:
   // os Projetos Icônicos são sob medida e têm CTA próprio, fora do briefing.
   const pracas = await getLocations()
   const formatos = PLATFORMS.map(({ slug, name }) => ({ slug, name }))

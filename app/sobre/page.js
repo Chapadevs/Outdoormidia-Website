@@ -2,33 +2,57 @@ import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import CoverMedia from '@/components/ui/CoverMedia'
+import PracaChips from '@/components/ui/PracaChips'
 import SectionHeading from '@/components/ui/SectionHeading'
 import Institutional from '@/components/sections/Institutional'
-import Impact from '@/components/sections/Impact'
-import Culture from '@/components/sections/Culture'
-import LeadCta from '@/components/sections/LeadCta'
+import Process from '@/components/sections/Process'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import { MARCOS } from '@/lib/sobre'
 
+// TODO(Imagine): falta a imagem de capa do topo da página. Enquanto for `null`
+// a capa não é renderizada — painel bege vazio ocupando a primeira dobra é pior
+// que capa nenhuma.
+const CAPA = null
+
+const PRACAS = [
+  'Curitiba',
+  'Região Metropolitana',
+  'Litoral do Paraná',
+  'Joinville',
+  'Itajaí',
+  'Balneário Camboriú',
+  'Rodovias PR-SC',
+]
+
+// TODO(Imagine): falta uma imagem por compromisso (`image`, 16/9, ≥1600px, com
+// `imageAlt` descrevendo a cena). Sem ela o card fica como está hoje, só texto.
 const COMPROMISSO = [
   {
     href: '/sobre/ambiental',
+    image: null,
+    imageAlt: null,
     eyebrow: 'Compromisso · Ambiental',
     title: 'Ambiental',
-    text: 'Destinação da lona, iluminação LED, origem da energia dos painéis e contrapartida em mobiliário urbano.',
+    text: 'Painel iluminado gasta energia e lona vira resíduo. Por isso operamos em LED, com energia limpa, e devolvemos em mobiliário urbano o que ocupamos da cidade.',
     cta: 'Ver compromissos',
   },
   {
     href: '/sobre/social',
+    image: null,
+    imageAlt: null,
     eyebrow: 'Compromisso · Social',
     title: 'Social',
-    text: 'Campanhas de utilidade pública, instituições apoiadas e a rede à disposição quando a cidade precisa avisar.',
+    text: 'OOH é o único meio que ninguém consegue desligar. Colocamos esse alcance à disposição de campanhas de utilidade pública e das instituições que apoiamos.',
     cta: 'Ver projetos',
   },
   {
     href: '/sobre/governanca',
+    image: null,
+    imageAlt: null,
     eyebrow: 'Compromisso · Governança',
     title: 'Governança',
-    text: 'Pontos licenciados, exclusividade em contrato e os documentos que o seu jurídico vai pedir.',
+    text: 'Ponto irregular é problema que respinga no anunciante. Todos os nossos são licenciados, com exclusividade em contrato e documentação pronta antes do seu jurídico pedir.',
     cta: 'Ver documentos',
   },
 ]
@@ -62,37 +86,47 @@ export default function SobrePage() {
               Sobre nós.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              67 anos colocando marcas onde a cidade passa. Da negociação à
-              instalação, a operação é nossa, e é isso que sustenta o que prometemos na rua.
+              Nove plataformas de mídia exterior no Paraná e em Santa Catarina, operadas de ponta
+              a ponta pela nossa equipe. Da negociação à instalação, quem promete é quem executa.
             </p>
+
+            {CAPA && (
+              <CoverMedia
+                alt={CAPA.alt}
+                className="reveal mt-[54px]"
+                ratio="16/7"
+                sizes="(max-width: 1280px) 100vw, 1216px"
+                src={CAPA.src}
+              />
+            )}
 
             <div className="reveal mt-[54px] grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
               <div className="eyebrow text-orange">Sobre a OM</div>
               <div className="flex max-w-[68ch] flex-col gap-5 text-[15.5px] leading-relaxed text-ink-soft">
                 <p className="m-0">
-                  Tudo começou em 1959, nas margens das estradas do Paraná, com um balde de
-                  cola, papel e uma ideia na cabeça. O Sr. Euclides Aristides Farias não vendia
-                  mídia. Ele colava sonhos em painéis de papel, conectando mensagens ao
-                  movimento das pessoas que cruzavam as rodovias.
+                  Tudo começou em 1959, nas margens das rodovias do Paraná, com um balde de cola,
+                  papel e uma ideia na cabeça. O Sr. Euclides Aristides Farias não vendia mídia
+                  exterior. Ele colava sonhos em painéis de papel, conectando mensagens ao
+                  movimento de quem cruzava as estradas.
                 </p>
                 <p className="m-0">
-                  Ao lado de seu genro, Hamilton Pontarola, transformou talento em visão e essa
-                  visão em negócio. Assim nasceu a Outdoormídia.
+                  Ao lado de seu genro, Hamilton Pontarola, transformou talento em visão e visão
+                  em negócio. Assim nasceu a Outdoormídia.
                 </p>
                 <p className="m-0">
-                  De uma pequena empresa familiar em Curitiba, viramos referência em Out of
-                  Home. Crescemos acompanhando o movimento das ruas, das cidades, da tecnologia
-                  e principalmente, das pessoas.
+                  De uma pequena empresa familiar em Curitiba, viramos referência em Out of Home
+                  no Sul do Brasil. Crescemos acompanhando o movimento das ruas, das cidades, da
+                  tecnologia e, principalmente, das pessoas.
                 </p>
                 <p className="m-0">
-                  Hoje, mais de seis décadas depois, ainda carregamos o mesmo espírito: o de
-                  marcar presença de forma inesquecível. Hoje, somos a empresa que lidera a
-                  inovação em OOH no Sul do país, com soluções que unem estratégia, tecnologia e
-                  inteligência de audiência.
+                  São 67 anos e nove plataformas integradas de OOH e DOOH: a única operação do
+                  Paraná com esse alcance. Do outdoor impresso ao painel de LED, unimos
+                  estratégia, tecnologia e inteligência de audiência para colocar sua marca onde
+                  ela precisa ser vista.
                 </p>
                 <p className="m-0">
                   Mas essa transformação não aconteceu sozinha. Ela foi construída com cada
-                  cliente que acreditou que dava pra fazer diferente e com um time que faz isso
+                  cliente que acreditou que dava para fazer diferente, e com um time que faz isso
                   acontecer todos os dias, com paixão, técnica e visão de futuro.
                 </p>
               </div>
@@ -106,30 +140,13 @@ export default function SobrePage() {
                   Joinville, Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo,
                   visibilidade e impacto real.
                 </p>
-                <ul className="m-0 flex flex-wrap gap-2 p-0">
-                  {[
-                    'Curitiba',
-                    'Região Metropolitana',
-                    'Litoral do Paraná',
-                    'Joinville',
-                    'Itajaí',
-                    'Balneário Camboriú',
-                  ].map((praca) => (
-                    <li
-                      className="rounded-full border border-line px-4 py-1.5 text-[13.5px] font-bold text-ink-soft"
-                      key={praca}
-                    >
-                      {praca}
-                    </li>
-                  ))}
-                </ul>
+                <PracaChips pracas={PRACAS} />
               </div>
             </div>
           </div>
         </section>
 
         <Institutional />
-        <Impact />
 
         <section className="py-[110px] max-mob:py-[72px]" id="linha-do-tempo">
           <div className="wrap">
@@ -137,12 +154,22 @@ export default function SobrePage() {
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               O que mudou desde a primeira face na rua, e o que não mudou.
             </p>
-            <ol className="m-0 grid list-none grid-cols-5 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
+            <ol className="m-0 grid list-none grid-cols-4 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
               {MARCOS.map((m) => (
                 <li
                   className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-6"
                   key={m.ano}
                 >
+                  {m.image && (
+                    <CoverMedia
+                      alt={m.imageAlt}
+                      className="-mx-1 mb-1"
+                      label={m.ano}
+                      ratio="16/9"
+                      sizes="(max-width: 980px) 100vw, 300px"
+                      src={m.image}
+                    />
+                  )}
                   <span className="display text-[30px] leading-none text-orange">{m.ano}</span>
                   <h3 className="m-0 text-[17px] font-extrabold leading-tight text-ink">
                     {m.title}
@@ -154,9 +181,9 @@ export default function SobrePage() {
           </div>
         </section>
 
-        <Culture num="02" />
+        <Process num="02" title="Por que a Outdoormídia" />
 
-        <section className="pb-[110px] max-mob:pb-[72px]" id="compromisso">
+        <section className="py-[110px] max-mob:py-[72px]" id="compromisso">
           <div className="wrap">
             <SectionHeading num="03" title="Nosso compromisso" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
@@ -170,6 +197,16 @@ export default function SobrePage() {
                   href={c.href}
                   key={c.href}
                 >
+                  {c.image && (
+                    <CoverMedia
+                      alt={c.imageAlt}
+                      className="mb-1"
+                      label={c.title}
+                      ratio="16/9"
+                      sizes="(max-width: 980px) 100vw, 400px"
+                      src={c.image}
+                    />
+                  )}
                   <span className="eyebrow">{c.eyebrow}</span>
                   <h3 className="m-0 text-[25px] font-extrabold leading-tight text-ink transition-colors duration-200 group-hover:text-orange">
                     {c.title}
@@ -195,11 +232,11 @@ export default function SobrePage() {
             <div className="ticks reveal flex items-center justify-between gap-8 rounded-[16px] border border-line bg-bone p-10 max-mob:flex-col max-mob:items-start max-mob:gap-5 max-mob:p-7">
               <div>
                 <h2 className="m-0 text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
-                  Quer trabalhar com a rua?
+                  Quer fazer parte do time OM?
                 </h2>
                 <p className="mt-3 max-w-[52ch] text-[15.5px] leading-relaxed text-ink-soft">
-                  Não temos vaga aberta o tempo todo, mas temos banco de talentos. Deixe seu
-                  currículo e a gente chama quando o time crescer.
+                  Toda campanha que a cidade vê passou pela mão de alguém aqui. Se você quer que o
+                  seu trabalho apareça na rua, deixe seu currículo no nosso banco de talentos.
                 </p>
               </div>
               <Link href="/trabalhe-conosco" className="btn btn-ghost whitespace-nowrap">
@@ -209,7 +246,7 @@ export default function SobrePage() {
           </div>
         </section>
 
-        <LeadCta />
+        <NovaCampanha />
       </main>
       <Footer />
     </>

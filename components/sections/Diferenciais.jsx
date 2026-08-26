@@ -51,7 +51,10 @@ export default function Diferenciais({ num = '01', moreHref }) {
           id="diferencial-painel"
         >
           <div className="reveal flex min-w-0 flex-col gap-4">
-            <span className="eyebrow text-orange">{d.num}</span>
+            <span className="eyebrow text-orange">
+              {d.num}
+              {d.tagline && <span className="text-ink-soft"> · {d.tagline}</span>}
+            </span>
             <h3 className="m-0 text-balance text-[clamp(26px,3vw,38px)] font-extrabold leading-[1.06] tracking-[-0.025em] text-ink">
               {d.title}
             </h3>

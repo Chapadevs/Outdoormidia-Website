@@ -10,11 +10,11 @@ const DESCRIPTION =
   'Kit comercial, especificações técnicas por plataforma, tabela de praças e assets de marca da Outdoormídia para download.'
 
 export const metadata = {
-  title: 'Mídia Kit e materiais de apoio | Outdoormídia',
+  title: 'Guia do Anunciante | Outdoormídia',
   description: DESCRIPTION,
-  alternates: { canonical: '/anunciante/midia-kit' },
+  alternates: { canonical: '/area-do-anunciante/guia-do-anunciante' },
   openGraph: {
-    title: 'Mídia Kit e materiais de apoio | Outdoormídia',
+    title: 'Guia do Anunciante | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
@@ -27,14 +27,19 @@ export default function MidiaKitPage() {
       <Header />
       <main>
         <Breadcrumb
-          items={[{ label: 'Área do anunciante', href: '/anunciante' }, { label: 'Mídia Kit' }]}
+          items={[
+            { label: 'Área do anunciante', href: '/area-do-anunciante' },
+            { label: 'Guia do Anunciante' },
+          ]}
         />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">Área do anunciante · Downloads</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Mídia Kit.
+              Guia do
+              <br />
+              Anunciante.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               O material para você defender o plano internamente. A ficha técnica completa fica

@@ -97,9 +97,14 @@ export default function Header() {
         </button>
         <Logo />
         <div className="ml-auto flex items-center gap-[18px] max-lap:gap-3 max-mob:gap-2">
-          <a href={waLink(WA_HEADER)} className="btn btn-on-orange">
-            Falar agora
-          </a>
+          {/* "Quero Anunciar" é mais largo que o antigo "Falar agora": no mobile o
+              botão encolhe para caber ao lado do logo dentro do .wrap. */}
+          <Link
+            href="/#nova-campanha"
+            className="btn btn-on-orange max-mob:px-4 max-mob:py-3 max-mob:text-[13px]"
+          >
+            Quero Anunciar
+          </Link>
         </div>
       </div>
 

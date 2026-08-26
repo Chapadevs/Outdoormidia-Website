@@ -70,6 +70,10 @@ export default function PlatformsCarousel({ num = '02' }) {
             </button>
           </div>
         </div>
+
+        <p className="reveal mt-6 max-w-[54ch] text-lg text-ink-soft">
+          Você entende do seu negócio. A gente entende de colocar sua marca nos lugares certos.
+        </p>
       </div>
 
       {/* carrossel de peek: sangra a largura toda da tela e centraliza o card
@@ -113,7 +117,10 @@ export default function PlatformsCarousel({ num = '02' }) {
                 <h3 className="m-0 mt-3 text-[clamp(30px,3vw,46px)] font-extrabold leading-none tracking-[-0.02em] text-ink">
                   {p.name}
                 </h3>
-                <p className="m-0 mt-3.5 max-w-[40ch] text-base leading-normal text-ink-soft">
+                {/* O card de mobile é um tile 4/5 de altura fixa: o texto do documento
+                    não cabe inteiro nele. Corta em 3 linhas aqui e vai completo
+                    na página da plataforma. */}
+                <p className="m-0 mt-3.5 max-w-[40ch] text-base leading-normal text-ink-soft max-mob:line-clamp-3">
                   {p.short}
                 </p>
               </div>

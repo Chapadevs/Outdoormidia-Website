@@ -10,9 +10,10 @@ import Process from '@/components/sections/Process'
 import Reviews from '@/components/sections/Reviews'
 import BlogTeaser from '@/components/sections/BlogTeaser'
 import Coverage from '@/components/sections/Coverage'
-import LeadCta from '@/components/sections/LeadCta'
+import NovaCampanha from '@/components/sections/NovaCampanha'
 import Faq from '@/components/sections/Faq'
 import Footer from '@/components/layout/Footer'
+import HomeTimeline from '@/components/widgets/HomeTimeline'
 
 export const revalidate = 3600
 
@@ -22,17 +23,19 @@ export default function Home() {
       <Header />
       <Hero />
       <Ticker />
-      <Institutional />
-      <Diferenciais />
-      <PlatformsCarousel />
-      <Iconicos />
-      <Reviews />
-      <Coverage />
-      <Cases />
-      <BlogTeaser />
-      <Process />
-      <LeadCta />
-      <Faq />
+      <HomeTimeline>
+        <Institutional />
+        <Diferenciais />
+        <PlatformsCarousel />
+        <Iconicos />
+        <Coverage />
+        <Reviews />
+        <Cases />
+        <Process />
+        <NovaCampanha />
+        <BlogTeaser />
+        <Faq />
+      </HomeTimeline>
       <Footer />
     </>
   )
