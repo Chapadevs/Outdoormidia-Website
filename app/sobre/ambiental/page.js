@@ -3,26 +3,20 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
-import StatGrid from '@/components/ui/StatGrid'
+import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import {
-  AMBIENTAL_AUTORIDADE,
-  AMBIENTAL_COMPROMISSOS,
-  AMBIENTAL_INDICADORES,
-  AMBIENTAL_PRODUTOS,
-} from '@/lib/esg'
+import { AMBIENTAL_PRATICAS, AMBIENTAL_REALIDADE } from '@/lib/esg'
 
 const DESCRIPTION =
-  'Gestão de resíduos de lona, iluminação LED, origem da energia dos painéis e contrapartida em mobiliário urbano: os compromissos ambientais da operação da Outdoormídia no Paraná e em Santa Catarina.'
-
-const indicadores = AMBIENTAL_INDICADORES.filter((i) => i.n)
+  'Praça de Carregamento Elétrico, Praça Pet Batel e Jardim Vertical, o ciclo da lona e as práticas que reduzem o impacto da operação: a frente ambiental da Outdoormídia no Paraná e em Santa Catarina.'
 
 export const metadata = {
   title: 'Ambiental | Outdoormídia',
   description: DESCRIPTION,
   alternates: { canonical: '/sobre/ambiental' },
-  // TODO(cliente): remover o `robots` quando os números e as certificações
-  // forem preenchidos em lib/esg.js — até lá a página não deve ser indexada.
+  // TODO(Imagine): remover o `robots` quando a foto da Praça de Carregamento
+  // Elétrico existir. É o único item que bloqueia a publicação da página —
+  // sem ela a seção 01 não sustenta o peso que ganhou.
   robots: { index: false, follow: true },
   openGraph: {
     title: 'Ambiental | Outdoormídia',
@@ -46,144 +40,124 @@ export default function AmbientalPage() {
               Ambiental.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Mídia exterior ocupa a cidade, e isso vem com conta. Aqui só entra compromisso
-              com número e com prazo: o que a operação faz com a lona que sai da face, com a
-              energia que acende o painel e com o espaço que ocupa na rua.
+              Ocupar a cidade por 67 anos cria obrigação com ela. Nossa resposta não é
+              relatório: são praças entregues, painéis vivos e lona que volta como produto.
+              Mídia exterior que devolve na prática para o espaço que ela ocupa.
             </p>
           </div>
         </section>
 
-        <section className="pb-[110px] max-mob:pb-[72px]" id="compromissos">
+        <section className="pb-[110px] max-mob:pb-[72px]" id="realidade">
           <div className="wrap">
-            <SectionHeading num="01" title="Compromissos" className="reveal mb-[34px]" />
+            <SectionHeading num="01" title="O que já é realidade" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              Quatro frentes que dependem da nossa operação, não de intenção. Cada uma com meta
-              e data. Quando o número está fechado, ele aparece aqui.
+              Não falamos de intenção ambiental. Falamos de estrutura entregue, com endereço,
+              manutenção por nossa conta e uso público diário. Cada projeto abaixo é um ativo
+              de mídia exterior que a cidade usa mesmo quando não está olhando para a marca.
+            </p>
+            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
+              {AMBIENTAL_REALIDADE.map((p) => (
+                <article
+                  className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
+                  key={p.slug}
+                >
+                  <CoverMedia
+                    src={p.image}
+                    alt={p.title}
+                    label={p.title}
+                    ratio="16/9"
+                    sizes="(max-width: 980px) 100vw, 33vw"
+                    className="mb-1"
+                  />
+                  <span className="eyebrow">{p.tag}</span>
+                  <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
+                    {p.title}
+                  </h2>
+                  {p.text.map((paragrafo) => (
+                    <p
+                      className="m-0 text-[15.5px] leading-relaxed text-ink-soft"
+                      key={paragrafo}
+                    >
+                      {paragrafo}
+                    </p>
+                  ))}
+                </article>
+              ))}
+            </div>
+            <p className="reveal mt-[34px] max-w-[70ch] text-[15.5px] leading-relaxed text-ink-soft">
+              Todos integram a carteira <strong className="font-extrabold text-ink">Gentileza
+              Urbana</strong>, que reúne ainda o MUB Garden, primeiro mobiliário urbano digital
+              de Curitiba com jardim vivo, o Jardim Digital e as demais praças pet da cidade.
+            </p>
+          </div>
+        </section>
+
+        <section className="pb-[110px] max-mob:pb-[72px]" id="ciclo-da-lona">
+          <div className="wrap">
+            <SectionHeading num="02" title="O ciclo da lona" className="reveal mb-[34px]" />
+            <div className="ticks reveal rounded-[16px] border border-line bg-white p-10 max-mob:p-7">
+              <h2 className="m-0 max-w-[24ch] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
+                A lona sai da face e volta como produto.
+              </h2>
+              <div className="mt-6 flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
+                <p className="m-0">
+                  Toda campanha impressa termina com uma lona retirada. O destino padrão do
+                  setor é o aterro. O nosso não é.
+                </p>
+                <p className="m-0">
+                  A Outdoormídia doa, sem custo, as lonas publicitárias que já cumpriram o
+                  ciclo de exibição. Costureiras capacitadas transformam o material em ecobags
+                  e outros produtos, gerando renda e tirando o resíduo de circulação. Economia
+                  circular com processo verificável, não com selo comprado.
+                </p>
+                <p className="m-0">
+                  A iniciativa faz parte do programa Corajosamente Éticos, e todo o resultado é
+                  destinado a projeto social parceiro.
+                </p>
+              </div>
+              <Link
+                className="group mt-7 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange"
+                href="/sobre/social"
+              >
+                Conheça o programa completo
+                <span
+                  aria-hidden
+                  className="text-base transition-transform duration-200 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-[110px] max-mob:pb-[72px]" id="operacao">
+          <div className="wrap">
+            <SectionHeading
+              num="03"
+              title="Como a operação reduz impacto"
+              className="reveal mb-[34px]"
+            />
+            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
+              Painel iluminado consome energia e face impressa gera resíduo. São duas contas
+              que a mídia exterior paga todo mês, e que a nossa operação trata como decisão
+              técnica, não como discurso.
             </p>
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
-              {AMBIENTAL_COMPROMISSOS.map((c) => (
+              {AMBIENTAL_PRATICAS.map((p) => (
                 <div
-                  className={`ticks reveal flex flex-col gap-3 rounded-[16px] border border-line p-7 max-mob:p-6 ${
-                    c.n ? 'bg-white' : 'bg-bone'
-                  }`}
-                  key={c.slug}
+                  className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
+                  key={p.slug}
                 >
-                  <span className="eyebrow">{c.meta}</span>
-                  {c.n ? (
-                    <span className="display text-[44px] leading-none text-orange">{c.n}</span>
-                  ) : null}
                   <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                    {c.title}
+                    {p.title}
                   </h2>
-                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{c.text}</p>
-                  {c.n ? null : (
-                    <span className="mt-auto pt-5 text-[13px] font-bold uppercase tracking-[0.1em] text-line-2">
-                      Em breve
-                    </span>
-                  )}
+                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{p.text}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
-
-        <section className="pb-[110px] max-mob:pb-[72px]" id="produtos-verdes">
-          <div className="wrap">
-            <SectionHeading
-              num="02"
-              title="Projetos de menor impacto"
-              className="reveal mb-[34px]"
-            />
-            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              Onde o posicionamento ambiental da marca aparece na própria estrutura de mídia.
-            </p>
-            <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
-              {AMBIENTAL_PRODUTOS.map((p) => (
-                <Link
-                  className="ticks reveal group flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
-                  href={p.href}
-                  key={p.href}
-                >
-                  <span className="eyebrow">{p.eyebrow}</span>
-                  <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink transition-colors duration-200 group-hover:text-orange">
-                    {p.title}
-                  </h2>
-                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{p.text}</p>
-                  <span className="mt-auto flex items-center gap-2 pt-5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
-                    {p.cta}
-                    <span
-                      aria-hidden
-                      className="text-base transition-transform duration-200 group-hover:translate-x-1"
-                    >
-                      →
-                    </span>
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="pb-[110px] max-mob:pb-[72px]" id="autoridade">
-          <div className="wrap">
-            <SectionHeading num="03" title="Autoridade externa" className="reveal mb-[34px]" />
-            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              O que outra parte atesta sobre a nossa operação. Sem selo verificável, é só
-              adjetivo.
-            </p>
-            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
-              {AMBIENTAL_AUTORIDADE.map((a) => {
-                const conteudo = (
-                  <>
-                    <span className="eyebrow">{a.tipo}</span>
-                    <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                      {a.title}
-                    </h2>
-                    <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{a.text}</p>
-                    <span
-                      className={`mt-auto pt-5 text-[13px] font-bold uppercase tracking-[0.1em] ${
-                        a.url ? 'text-orange' : 'text-line-2'
-                      }`}
-                    >
-                      {a.url ? 'Ver comprovação →' : 'Em breve'}
-                    </span>
-                  </>
-                )
-
-                return a.url ? (
-                  <a
-                    className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
-                    href={a.url}
-                    key={a.slug}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    {conteudo}
-                  </a>
-                ) : (
-                  <div
-                    className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-bone p-7 max-mob:p-6"
-                    key={a.slug}
-                  >
-                    {conteudo}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        {indicadores.length === AMBIENTAL_INDICADORES.length && (
-          <section className="pb-[110px] max-mob:pb-[72px]" id="indicadores">
-            <div className="wrap">
-              <SectionHeading num="04" title="Indicadores" className="reveal mb-[34px]" />
-              <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-                Os números do último ano fechado, atualizados quando o balanço da operação sai.
-              </p>
-              <StatGrid stats={indicadores} size="md" className="reveal" />
-            </div>
-          </section>
-        )}
 
         <NovaCampanha />
       </main>

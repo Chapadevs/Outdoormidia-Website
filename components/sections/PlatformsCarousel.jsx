@@ -71,8 +71,13 @@ export default function PlatformsCarousel({ num = '02' }) {
           </div>
         </div>
 
+        {/* A abertura enquadra a amplitude do portfólio, e é ela que justifica
+            nove plataformas em vez de uma: Front Light é aparecer, Projetos
+            Icônicos é ser impossível de ignorar. A frase que estava aqui
+            ("Você entende do seu negócio…") voltou para o NovaCampanha, onde
+            justifica os quatro caminhos — não pode aparecer nos dois lugares. */}
         <p className="reveal mt-6 max-w-[54ch] text-lg text-ink-soft">
-          Você entende do seu negócio. A gente entende de colocar sua marca nos lugares certos.
+          Algumas campanhas precisam aparecer. Outras precisam ser impossíveis de ignorar.
         </p>
       </div>
 

@@ -1,6 +1,18 @@
+// `**negrito**` é o único realce que a copy das respostas usa — o resto é texto
+// corrido, e uma dependência de markdown aqui custaria mais que estas três
+// linhas.
+function comDestaque(texto) {
+  return texto
+    .split(/\*\*(.+?)\*\*/g)
+    .map((parte, i) => (i % 2 ? <strong className="font-bold text-ink" key={i}>{parte}</strong> : parte))
+}
+
 // Controlado pelo pai: quem usa precisa do índice aberto para montar o link de
 // WhatsApp com a pergunta em foco. `idPrefix` mantém os ids únicos quando mais
 // de um acordeão convive na mesma página.
+//
+// A resposta aceita string ou lista de parágrafos, e `fonte` é a linha de
+// atribuição em corpo reduzido abaixo dela.
 export default function Accordion({ items, idPrefix, openIndex, onToggle, className = '' }) {
   return (
     <div className={`border-t border-ink ${className}`}>
@@ -8,6 +20,7 @@ export default function Accordion({ items, idPrefix, openIndex, onToggle, classN
         const open = openIndex === i
         const panelId = `${idPrefix}-panel-${i}`
         const buttonId = `${idPrefix}-button-${i}`
+        const paragrafos = Array.isArray(item.a) ? item.a : [item.a]
         return (
           <div className="border-b border-line" key={item.q}>
             <h3 className="m-0">
@@ -38,7 +51,14 @@ export default function Accordion({ items, idPrefix, openIndex, onToggle, classN
               hidden={!open}
               className="pb-[22px] pr-9 text-[15.5px] leading-relaxed text-ink-soft"
             >
-              {item.a}
+              {paragrafos.map((paragrafo, j) => (
+                <p className={j > 0 ? 'mt-4' : ''} key={j}>
+                  {comDestaque(paragrafo)}
+                </p>
+              ))}
+              {item.fonte && (
+                <p className="mt-4 text-[13px] text-ink-soft/75">{item.fonte}</p>
+              )}
             </div>
           </div>
         )

@@ -32,7 +32,7 @@ export default function Process({ num = '07', title = 'Gestão 360 OM' }) {
       <div className="wrap">
         <SectionHeading num={num} title={title} className="reveal mb-[18px]" />
         <p className="reveal mb-5 max-w-[520px] text-lg text-ink-soft">
-          Do objetivo à notoriedade.
+          Do objetivo à notoriedade
         </p>
         <p className="reveal mb-16 max-w-[60ch] text-ink-soft max-mob:mb-10">
           Você diz o objetivo, para quem e onde precisa aparecer. A Outdoormídia cruza praça, fluxo,

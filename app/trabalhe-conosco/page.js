@@ -2,7 +2,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import Culture from '@/components/sections/Culture'
-import TalentForm from '@/components/forms/TalentForm'
+import BancoDeTalentos from '@/components/sections/BancoDeTalentos'
 
 const DESCRIPTION =
   'Faça parte da empresa que ocupa as ruas do Sul do Brasil desde 1959. Cadastre-se no banco de talentos da Outdoormídia e seja avisado quando abrir uma vaga na sua área.'
@@ -40,7 +40,7 @@ export default function TrabalheConoscoPage() {
           </div>
         </section>
         <Culture />
-        <TalentForm />
+        <BancoDeTalentos />
       </main>
       <Footer />
     </>

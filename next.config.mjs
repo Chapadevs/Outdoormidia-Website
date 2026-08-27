@@ -28,8 +28,12 @@ const nextConfig = {
   // as URLs antigas já estão indexadas.
   // A área do anunciante mudou de /anunciante para /area-do-anunciante, o
   // diagnóstico passou para dentro dela e dois itens foram renomeados (Mídia
-  // Kit virou Guia do Anunciante, Simulador OOH virou Sua marca no OOH). As
+  // Kit virou Melhores Práticas, Simulador OOH virou Sua marca no OOH). As
   // URLs antigas estão indexadas e no material impresso: seguem vivas aqui.
+  //
+  // Guia do Anunciante foi um nome intermediário do Mídia Kit, no ar entre a
+  // renomeação da área e o checklist de 26/08. Como chegou a ser publicado,
+  // ganha redirect próprio.
   async redirects() {
     return [
       {
@@ -44,7 +48,12 @@ const nextConfig = {
       },
       {
         source: '/anunciante/midia-kit',
-        destination: '/area-do-anunciante/guia-do-anunciante',
+        destination: '/area-do-anunciante/melhores-praticas',
+        permanent: true,
+      },
+      {
+        source: '/area-do-anunciante/guia-do-anunciante',
+        destination: '/area-do-anunciante/melhores-praticas',
         permanent: true,
       },
       {
@@ -60,6 +69,12 @@ const nextConfig = {
       {
         source: '/anunciante',
         destination: '/area-do-anunciante',
+        permanent: true,
+      },
+      {
+        // O diferencial 02 passou a atender pelo nome oficial em 27/08/2026.
+        source: '/solucoes/diferenciais/painel-hibrido',
+        destination: '/solucoes/diferenciais/aeroporto-square',
         permanent: true,
       },
     ]

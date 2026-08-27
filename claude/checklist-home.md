@@ -2,7 +2,7 @@
 
 **Página:** home
 **Fonte da copy:** COPY_SITE 4
-**Fechado:** 25/08/2026
+**Fechado:** 25/08/2026 · **Revisado:** 26/08/2026, renomeação da Área do Anunciante e bloco Nova Campanha
 **Idiomas:** PT · EN · ES · 中文
 
 ---
@@ -29,8 +29,12 @@ Sem essa troca o site tem dois caminhos de WhatsApp e nenhum botão fixo para o 
 **ENTRA:**
 - **Sobre nós** — Ambiental · Social · Governança · Trabalhe conosco
 - **Soluções** — Diferenciais · Regiões-Cobertura · Plataformas · Projetos Icônicos
-- **Área do Anunciante** — Diagnóstico de presença · Mídia Kit · Simulador OOH · FAQ
+- **Área do Anunciante** — Diagnóstico de presença · Melhores Práticas · Sua marca no OOH · FAQ
 - **Blog** — Cases · Artigos · Podcast
+
+> **Renomeação decidida em 26/08.** `Mídia Kit` passa a ser **Melhores Práticas** e `Simulador OOH` passa a ser **Sua marca no OOH**. Vale para header, dropdown, rodapé, breadcrumb e qualquer link interno. URLs: `/area-do-anunciante/melhores-praticas` e `/area-do-anunciante/sua-marca-no-ooh`.
+>
+> Mídia Kit saiu porque não haverá arquivo para download: a página traz recomendações de como anunciar melhor. Simulador OOH saiu porque a ferramenta aplica logo ou peça pronta sobre a foto do painel e não devolve preço, alcance nem estimativa de impacto. Nome que promete cálculo em ferramenta que não calcula gera frustração na página mais comercial do site.
 
 ---
 
@@ -53,7 +57,7 @@ Planejar Campanha (sólido) → Nova Campanha
 Ver Plataformas (ghost)    → seção 06, âncora
 ```
 
-Decidido em 25/08. O hero usa **Planejar Campanha** e o menu fixo usa **Quero Anunciar**. Os dois levam ao mesmo formulário — a diferença de rótulo é proposital. Sem terceiro botão no hero.
+Decidido em 25/08. O hero usa **Planejar Campanha** e o menu fixo usa **Quero Anunciar**. Os dois levam ao mesmo formulário, e a diferença de rótulo é proposital. Sem terceiro botão no hero.
 
 ---
 
@@ -138,7 +142,13 @@ O título passa a nomear o ativo, como pede a regra de nomenclatura do cliente. 
 
 # 06 · PLATAFORMAS
 
-Linha de abertura da seção: *Você entende do seu negócio. A gente entende de colocar sua marca nos lugares certos.*
+### Linha de abertura da seção · TEXTO
+**ENTRA:**
+> Algumas campanhas precisam aparecer. Outras precisam ser impossíveis de ignorar.
+
+Decidido em 26/08. A frase *Você entende do seu negócio. A gente entende de colocar sua marca nos lugares certos.* voltou para o bloco Nova Campanha, item 10, onde ela justifica a existência dos quatro caminhos. Ela não pode aparecer nos dois lugares.
+
+A abertura nova enquadra a amplitude do portfólio: Front Light é aparecer, Projetos Icônicos é ser impossível de ignorar. Ela justifica por que existem nove plataformas em vez de uma. Origem: documento de Personas, onde descreve o papel da Outdoormídia para grandes marcas.
 
 ### Nova ordem · ESTRUTURA
 **HOJE:** Outdoors Digitais · Front Lights · Icônicos · Mídia Indoor · Aeroporto · Mídia Móvel · MUB · Rodovias
@@ -310,7 +320,7 @@ CTA final: **Acessar Cases → Blog**
 
 **03 · Veiculação e dados** — Instalação ou upload, conferência, monitoramento e entrega dos dados de audiência do período.
 
-Mesmo componente é reaproveitado na página Sobre Nós — editar num lugar reflete nos dois.
+Mesmo componente é reaproveitado na página Sobre Nós. Editar num lugar reflete nos dois.
 
 ### Linha extra e CTA · INCLUIR
 **ENTRA:**
@@ -328,25 +338,43 @@ CTA: **Quero anunciar → Nova Campanha**
 > Você entende do seu negócio. A gente entende de colocar sua marca nos lugares certos.
 
 **ENTRA:**
+> `NOVA CAMPANHA`
 > Como você prefere começar?
-> Escolha o caminho que combina com o momento da sua marca.
+> Você entende do seu negócio. A gente entende de colocar sua marca nos lugares certos.
 
-A frase antiga não some do site: passa a abrir a seção de Plataformas.
+Revisado em 26/08. O kicker `NOVA CAMPANHA` é novo: hoje a caixa laranja abre direto no título e o visitante não sabe que aquilo é o formulário principal do site. Com ele, o bloco ganha identidade e pode ser referenciado por âncora a partir de qualquer página.
+
+A frase *Você entende do seu negócio...* fica aqui, e não em Plataformas. Ela explica por que existem quatro caminhos, em vez de só mandar escolher um. Plataformas recebe abertura nova, item 06.
 
 ### Hierarquia visual dos quatro caminhos · ESTRUTURA
 **HOJE:** dois botões — Anunciar já · Diagnóstico de Presença
 **ENTRA:**
 ```
 1  Diagnóstico de Presença     FAIXA FINA, ~56px, fundo levemente distinto
-                               "Quero uma curadoria da presença da minha marca"
 2  FORMULÁRIO                  CARD DOMINANTE, branco, elevado, largura total
 3  Mídia Programática          card menor, preto
-                               "Quero ver os espaços disponíveis"
-4  Atendimento Automatizado    card menor
-                               "Quero atendimento agora"
+4  Atendimento automatizado    card menor
 ```
 
-O Diagnóstico fica no topo por decisão de estratégia, mas **como faixa, não como card cheio**: a diferença de área é o que impede que ele roube o clique do formulário. O card preto de Mídia Programática é exceção autorizada à paleta — **não corrigir**.
+O Diagnóstico fica no topo por decisão de estratégia, mas **como faixa, não como card cheio**: a diferença de área é o que impede que ele roube o clique do formulário. O card preto de Mídia Programática é exceção autorizada à paleta, **não corrigir**.
+
+### Anatomia dos cards · APLICADO EM 26/08
+
+Estrutura, da esquerda para a direita: ícone em quadrado claro arredondado, numeração, nome do caminho em destaque, linha de intenção abaixo, chevron circular à direita.
+
+| | Ícone | Nome | Linha de intenção |
+|---|---|---|---|
+| 01 | Alvo | **Diagnóstico de Presença** | Quero uma curadoria da presença da minha marca → |
+| 02 | *(sem ícone)* | **Formulário** | Card branco dominante, largura total |
+| 03 | Raio | **Mídia Programática** | Quero ver os espaços disponíveis → |
+| 04 | Robô | **Atendimento automatizado** | Quero atendimento agora → |
+
+**Nome grande e intenção embaixo, não o contrário.** Chegamos a considerar inverter, seguindo a referência da Outfront, onde a intenção vem grande e o nome do produto pequeno. Com a numeração `01` a `04` na frente, nome grande funciona melhor: os números criam sequência e o conjunto lê como menu de caminhos nomeados. Na referência não havia numeração, e por isso a intenção precisava carregar sozinha.
+
+O card 04 é atendimento por bot, e o ícone de robô resolve isso sozinho. Não usar "falar com alguém", que promete humano. O caminho humano é o link de especialista no WhatsApp, e os dois precisam ficar distintos: o bot é velocidade, o especialista é conversa.
+
+### Contraste · RESOLVIDO EM 26/08
+Os cards 01 e 04 usavam título laranja sobre fundo claro e ficavam ilegíveis. Corrigido no deploy. Manter o tratamento atual.
 
 ### As seis etapas do formulário · INCLUIR
 
@@ -398,7 +426,7 @@ Payload: `momento · objetivo · praças (array) · período · segmento · nome
 
 # 11 · BLOG
 
-Sem alteração de copy. A seção está marcada como "conferir conteúdo na página inicial" — definir quais cards entram no lançamento.
+Sem alteração de copy. A seção está marcada como "conferir conteúdo na página inicial". Definir quais cards entram no lançamento.
 
 Sistema de cor no lugar da legenda:
 
@@ -416,7 +444,7 @@ Sistema de cor no lugar da legenda:
 
 ### Substituir as oito perguntas · TEXTO
 
-1. Quanto custa anunciar em outdoor? *(CPM de referência em rodovias: R$ 2,06)*
+1. Quanto custa anunciar em outdoor? *(sem valor de referência. Ver nota abaixo)*
 2. Qual a antecedência mínima para colocar a campanha no ar? **← aguardando dado**
 3. Existe duração mínima de veiculação? *(bi-semana; rodovia sob demanda: 15 meses)*
 4. Quem faz a arte? Quais são as especificações de arquivo?
@@ -426,6 +454,14 @@ Sistema de cor no lugar da legenda:
 8. Quantos pontos preciso para a campanha ser percebida? *(circuito de 40 faces: 36 milhões em 30 dias)*
 
 Na home entram as oito. A página `/faq` recebe todas as 18. **Primeira pergunta já aberta** no acordeão. CTA final: **Falar com um especialista → WhatsApp**.
+
+### CPM de referência · REMOVIDO EM 26/08
+
+O valor de **R$ 2,06 por mil impactos em rodovias** saiu de circulação. Nenhum material do projeto traz esse número: Apresentação 2025, Orientações para agência, COPY_SITE e Site OM citam CPM como métrica entregue ao anunciante, mas nenhum registra um valor. A origem do dado não está identificada.
+
+Preço em FAQ público é a informação mais checável que existe, e um valor errado é desmentido pelo próprio comercial na primeira ligação. A resposta funciona sem ele.
+
+Se o comercial confirmar o valor, ele volta e entra na base como dado oficial.
 
 ### FAQ 02 sem resposta · AGUARDANDO
 Falta o prazo de produção e instalação de lona e o prazo para subir criativo em LED. Se o dado não chegar antes do deploy, **publicar sete perguntas**. Pergunta visível sem resposta é pior que pergunta ausente.
@@ -443,6 +479,17 @@ Falta o prazo de produção e instalação de lona e o prazo para subir criativo
 
 Colunas: **Sobre nós** · **Soluções** · **Área do anunciante** · **Blog** · **Contato**, cada uma abrindo por "Visão geral".
 
+### Itens da coluna Área do anunciante · CORRIGIR
+
+| HOJE | ENTRA |
+|---|---|
+| `Midia Kit` | **`Melhores Práticas`** |
+| `Simulador OOH` | **`Sua marca no OOH`** |
+| `Diagnóstico de presença` | *Sem alteração* |
+| `Visão geral` · `FAQ` | *Sem alteração* |
+
+"Midia Kit" está sem acento no rodapé, mas isso deixa de importar porque o item sai.
+
 ### Itens que faltam · INCLUIR
 - Link para **Nova Campanha**
 - **Política de Privacidade** e **Termos de Uso**
@@ -457,8 +504,10 @@ Fica `contato@outdoormidia.com.br`, mesmo os materiais oficiais usando `comercia
 # REGRAS QUE VALEM PARA O SITE INTEIRO
 
 - Não usar o termo **malha**. Substituir por **rede** ou **operação**
+- **Não usar travessão** em nenhuma copy. Reescrever a frase ou usar vírgula, dois pontos ou ponto
 - Nome da empresa sempre **Outdoormídia**, junto e com acento. Nunca "Outdoor Mídia"
 - Nome oficial completo dos produtos. Nunca "Cascata" ou "Square" sozinhos
+- Grafia oficial do CEO: **Halisson Pontarola**, com H
 - Preto não faz parte da paleta. Única exceção: o card de Mídia Programática
 - Elementos arredondados, não quadrados
 - Ícones em monocromia laranja. Única exceção: o verde do WhatsApp
@@ -468,8 +517,8 @@ Fica `contato@outdoormidia.com.br`, mesmo os materiais oficiais usando `comercia
 # NÚMEROS VÁLIDOS
 
 - **9** plataformas integradas
-- **+530 milhões** de impactos por mês — operação completa
-- **175 telas** digitais com **+20 milhões** de impactos semanais — só o circuito de Outdoor Digital
+- **+530 milhões** de impactos por mês, operação completa
+- **175 telas** digitais com **+20 milhões** de impactos semanais, só o circuito de Outdoor Digital
 - **312 m²** no Aeroporto Square · **577,5 m²** no Distrito de Mídia Duo Square
 - **67 anos**, fundada em 1959
 
@@ -484,16 +533,19 @@ Fica `contato@outdoormidia.com.br`, mesmo os materiais oficiais usando `comercia
 
 ---
 
-# DECISÕES FECHADAS EM 25/08
+# DECISÕES FECHADAS
 
-| Item | Decisão |
-|---|---|
-| Hero | "Planejar Campanha"; o menu fixo usa "Quero Anunciar". Ambos vão para Nova Campanha |
-| Esteira | Aeroporto e Mídia Indoor ficam. Correção só de acento |
-| Diferencial 02 | Passa a se chamar Aeroporto Square, 312 m² |
-| Plataforma 05 | Vira Distrito de Mídia Duo Square, 577,5 m², abrigando o Aeroporto Square |
-| Depoimento 03 | Aspas removidas |
-| Rodapé | Fica contato@; dados jurídicos incluídos |
+| Data | Item | Decisão |
+|---|---|---|
+| 25/08 | Hero | "Planejar Campanha"; o menu fixo usa "Quero Anunciar". Ambos vão para Nova Campanha |
+| 25/08 | Esteira | Aeroporto e Mídia Indoor ficam. Correção só de acento |
+| 25/08 | Diferencial 02 | Passa a se chamar Aeroporto Square, 312 m² |
+| 25/08 | Plataforma 05 | Vira Distrito de Mídia Duo Square, 577,5 m², abrigando o Aeroporto Square |
+| 25/08 | Depoimento 03 | Aspas removidas |
+| 25/08 | Rodapé | Fica contato@; dados jurídicos incluídos |
+| 26/08 | Área do Anunciante | `Mídia Kit` vira **Melhores Práticas** · `Simulador OOH` vira **Sua marca no OOH** |
+| 26/08 | Nova Campanha | Kicker `NOVA CAMPANHA` incluído · subtítulo volta a ser "Você entende do seu negócio..." · cards passam a abrir pela intenção |
+| 26/08 | Plataformas | Abertura nova: "Algumas campanhas precisam aparecer. Outras precisam ser impossíveis de ignorar." |
 
 # AINDA TRAVA A PUBLICAÇÃO
 

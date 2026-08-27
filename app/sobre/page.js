@@ -34,8 +34,8 @@ const COMPROMISSO = [
     imageAlt: null,
     eyebrow: 'Compromisso · Ambiental',
     title: 'Ambiental',
-    text: 'Painel iluminado gasta energia e lona vira resíduo. Por isso operamos em LED, com energia limpa, e devolvemos em mobiliário urbano o que ocupamos da cidade.',
-    cta: 'Ver compromissos',
+    text: 'Painel iluminado gasta energia e lona vira resíduo. Por isso convertemos as faces para LED, damos outro destino à lona e devolvemos em mobiliário urbano o que ocupamos da cidade.',
+    cta: 'Ver o que já é realidade',
   },
   {
     href: '/sobre/social',
@@ -43,8 +43,8 @@ const COMPROMISSO = [
     imageAlt: null,
     eyebrow: 'Compromisso · Social',
     title: 'Social',
-    text: 'OOH é o único meio que ninguém consegue desligar. Colocamos esse alcance à disposição de campanhas de utilidade pública e das instituições que apoiamos.',
-    cta: 'Ver projetos',
+    text: 'Integramos o Corajosamente Éticos, doamos a lona que sai da face para virar renda na Loja OM do Bem e assinamos a primeira Mídia Regenerativa de Curitiba.',
+    cta: 'Ver iniciativas',
   },
   {
     href: '/sobre/governanca',
@@ -52,8 +52,8 @@ const COMPROMISSO = [
     imageAlt: null,
     eyebrow: 'Compromisso · Governança',
     title: 'Governança',
-    text: 'Ponto irregular é problema que respinga no anunciante. Todos os nossos são licenciados, com exclusividade em contrato e documentação pronta antes do seu jurídico pedir.',
-    cta: 'Ver documentos',
+    text: 'Ponto irregular é problema que respinga no anunciante. Todos os nossos são licenciados, com exclusividade em contrato e um nome respondendo por cada linha dele.',
+    cta: 'Ver como operamos',
   },
 ]
 

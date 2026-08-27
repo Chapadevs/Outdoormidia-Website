@@ -1,41 +1,59 @@
 import Link from 'next/link'
+import { CircleQuestionMark, Gauge, Lightbulb, Presentation } from 'lucide-react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import NovaCampanha from '@/components/sections/NovaCampanha'
+import { FAQS } from '@/lib/faq'
 import { WA_ANUNCIANTE, waLink } from '@/lib/whatsapp'
 
 const DESCRIPTION =
-  'Diagnóstico de presença, Guia do Anunciante para download, Sua marca no OOH e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
+  'Diagnóstico de presença, Sua marca no OOH, Melhores Práticas e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
 
+// A ordem não muda: as duas ferramentas interativas na primeira linha, os dois
+// conteúdos na segunda.
+//
+// O card 02 é o mais perigoso da página. A ferramenta aplica logo ou peça
+// pronta sobre a foto real do painel, e nada além disso: não há tabela de preço
+// nem alcance validado na base para sustentar quantidade de impactos ou faixa de
+// investimento. Foram o kicker "Estimativa" e a palavra "Simulador" que criaram
+// essa expectativa, e por isso os dois saíram. O nome Simulador OOH fica
+// reservado para o dia em que existir cálculo real de audiência ou investimento.
 const FERRAMENTAS = [
   {
     href: '/area-do-anunciante/diagnostico-de-presenca',
+    Icone: Gauge,
     eyebrow: 'Ferramenta · 10 perguntas',
     title: 'Diagnóstico de presença',
-    text: 'Descubra em um minuto em qual dos cinco degraus da Escada da Presença a sua marca está, e o que fazer para subir.',
+    text: 'Sua marca é lembrada primeiro, ou só reconhecida depois que alguém diz o nome? Em apenas 1 minuto, entenda como o mercado enxerga a sua marca hoje.',
     cta: 'Fazer o diagnóstico',
   },
   {
     href: '/area-do-anunciante/sua-marca-no-ooh',
-    eyebrow: 'Ferramenta · Estimativa',
+    Icone: Presentation,
+    eyebrow: 'Ferramenta · Pré-visualização',
     title: 'Sua marca no OOH',
-    text: 'Praça, plataforma e período: veja quantos impactos a campanha gera e a faixa de investimento antes de pedir proposta.',
-    cta: 'Simular campanha',
+    text: 'Escolha a praça e o formato, suba a sua logo ou a peça pronta, e veja a sua marca aplicada no painel real. Baixe a imagem e mande para quem decide.',
+    cta: 'Ver minha marca no painel',
   },
   {
-    href: '/area-do-anunciante/guia-do-anunciante',
-    eyebrow: 'Downloads',
-    title: 'Guia do Anunciante',
-    text: 'Kit comercial, especificações técnicas por plataforma, tabela de praças e assets de marca.',
-    cta: 'Ver materiais',
+    href: '/area-do-anunciante/melhores-praticas',
+    Icone: Lightbulb,
+    eyebrow: 'Conteúdo · Ideias e práticas',
+    title: 'Melhores Práticas',
+    text: 'Conteúdos e ideias para tirar mais da sua campanha: como escolher a praça certa, o que funciona em cada formato e as práticas que fazem uma marca ser lembrada na mídia exterior.',
+    cta: 'Ver os conteúdos',
   },
   {
+    // O checklist pedia "18 perguntas", contagem anterior à revisão do FAQ de
+    // 26/08/2026, que fechou em 19. O número acompanha o que está publicado:
+    // kicker com contagem errada é a primeira coisa que o visitante confere.
     href: '/area-do-anunciante/faq',
-    eyebrow: 'Dúvidas',
+    Icone: CircleQuestionMark,
+    eyebrow: `Dúvidas · ${FAQS.length} perguntas`,
     title: 'FAQ',
-    text: 'Praças, formatos, exclusividade do ponto, medição de resultados e como pedir uma proposta.',
+    text: 'Preço, prazo de veiculação, quem faz a arte, exclusividade do ponto e como saber se a campanha veiculou. As perguntas que o comercial mais recebe, respondidas antes da conversa.',
     cta: 'Tirar dúvidas',
   },
 ]
@@ -84,6 +102,7 @@ export default function AnunciantePage() {
                   href={f.href}
                   key={f.href}
                 >
+                  <f.Icone size={24} className="text-orange" />
                   <span className="eyebrow">{f.eyebrow}</span>
                   <h2 className="m-0 text-[25px] font-extrabold leading-tight text-ink transition-colors duration-200 group-hover:text-orange">
                     {f.title}
@@ -102,7 +121,7 @@ export default function AnunciantePage() {
               ))}
             </div>
             <p className="reveal mt-9 text-[15px] text-ink-soft">
-              Prefere resolver com gente?{' '}
+              Prefere resolver diretamente com a gente?{' '}
               <a
                 href={waLink(WA_ANUNCIANTE)}
                 className="font-bold text-orange hover:underline"

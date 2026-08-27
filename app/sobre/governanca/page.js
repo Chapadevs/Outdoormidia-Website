@@ -1,22 +1,18 @@
-import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
+import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { GOV_CERTIFICACOES, GOV_DOCUMENTOS, GOV_PILARES } from '@/lib/esg'
+import { GOV_PILARES } from '@/lib/esg'
 import { WA_GOVERNANCA, waLink } from '@/lib/whatsapp'
 
 const DESCRIPTION =
-  'Licenças dos pontos, exclusividade em contrato, tratamento de dados de audiência e documentos para cadastro de fornecedor: como a Outdoormídia opera e o que entrega por escrito.'
+  'Quem responde pela empresa, licenças dos pontos, exclusividade em contrato, tratamento de dados de audiência e conduta comercial: como a Outdoormídia opera e o que entrega por escrito.'
 
 export const metadata = {
   title: 'Governança | Outdoormídia',
   description: DESCRIPTION,
-  // TODO(cliente): remover o `robots` quando as certificações e os PDFs de
-  // GOV_CERTIFICACOES/GOV_DOCUMENTOS existirem em lib/esg.js. Mesma régua da
-  // página Ambiental.
-  robots: { index: false, follow: true },
   alternates: { canonical: '/sobre/governanca' },
   openGraph: {
     title: 'Governança | Outdoormídia',
@@ -40,16 +36,52 @@ export default function GovernancaPage() {
               Governança.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Somos uma empresa de capital fechado: não há estrutura de acionistas para
-              apresentar. O que existe é o que sustenta um contrato: ponto licenciado,
-              exclusividade por escrito e documento na mão de quem precisa aprovar a compra.
+              Aprovar uma compra de mídia exterior exige saber com que licença o ponto opera, o
+              que está escrito no contrato e quem assina por ele. Em uma empresa familiar de
+              capital fechado, essa última resposta tem nome e sobrenome.
             </p>
+          </div>
+        </section>
+
+        <section className="pb-[110px] max-mob:pb-[72px]" id="quem-responde">
+          <div className="wrap">
+            <SectionHeading num="01" title="Quem responde" className="reveal mb-[34px]" />
+            <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] items-start gap-[44px] max-tab:grid-cols-1 max-tab:gap-[34px]">
+              <figure className="reveal m-0">
+                {/* TODO(cliente): retrato profissional do Halisson Pontarola, fundo
+                    neutro, meio corpo, olhar para a câmera. Não serve recorte de foto
+                    de evento nem imagem de palco. */}
+                <CoverMedia
+                  src=""
+                  label="Halisson Pontarola"
+                  ratio="16/10"
+                  sizes="(max-width: 980px) 100vw, 40vw"
+                />
+                {/* A legenda identifica quem está na foto. Enquanto o texto ao lado
+                    for institucional, ela não pode virar assinatura: isso atribuiria
+                    a uma pessoa real uma declaração que ela ainda não aprovou. */}
+                <figcaption className="mt-3 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft">
+                  Halisson Pontarola, CEO
+                </figcaption>
+              </figure>
+              <div className="reveal flex max-w-[58ch] flex-col gap-5 text-[16.5px] leading-relaxed text-ink-soft">
+                <p className="m-0">
+                  Reputação em mídia exterior não se constrói durante a campanha. Se constrói
+                  no que acontece depois dela.
+                </p>
+                <p className="m-0">
+                  São 67 anos de operação familiar. O ponto instalado hoje continua nosso daqui
+                  a dez anos, e o anunciante atendido também. Isso muda como se negocia, o que
+                  se promete e o que se recusa a fazer.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="estrutura">
           <div className="wrap">
-            <SectionHeading num="01" title="Estrutura e compliance" className="reveal mb-[34px]" />
+            <SectionHeading num="02" title="Estrutura e compliance" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
               {GOV_PILARES.map((p) => (
                 <div
@@ -62,110 +94,6 @@ export default function GovernancaPage() {
                   <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{p.text}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="pb-[110px] max-mob:pb-[72px]" id="certificacoes">
-          <div className="wrap">
-            <SectionHeading num="02" title="Certificações" className="reveal mb-[34px]" />
-            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              O que é atestado por terceiro: mensuração auditada, filiação setorial e
-              regularidade fiscal.
-            </p>
-            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
-              {GOV_CERTIFICACOES.map((c) => {
-                const conteudo = (
-                  <>
-                    <span className="eyebrow">{c.meta}</span>
-                    <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                      {c.title}
-                    </h3>
-                    <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{c.text}</p>
-                    <span
-                      className={`mt-auto pt-5 text-[13px] font-bold uppercase tracking-[0.1em] ${
-                        c.url ? 'text-orange' : 'text-line-2'
-                      }`}
-                    >
-                      {c.url ? 'Ver certificação →' : 'Em breve'}
-                    </span>
-                  </>
-                )
-
-                return c.url ? (
-                  <a
-                    className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
-                    href={c.url}
-                    key={c.slug}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    {conteudo}
-                  </a>
-                ) : (
-                  <div
-                    className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-bone p-7 max-mob:p-6"
-                    key={c.slug}
-                  >
-                    {conteudo}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="pb-[110px] max-mob:pb-[72px]" id="documentos">
-          <div className="wrap">
-            <SectionHeading num="03" title="Documentos" className="reveal mb-[34px]" />
-            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              O pacote que o jurídico e o setor de compras costumam pedir antes de aprovar a
-              primeira campanha.
-            </p>
-            <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
-              {GOV_DOCUMENTOS.map((d) => {
-                const disponivel = Boolean(d.file || d.href)
-                const conteudo = (
-                  <>
-                    <span className="eyebrow">{d.meta}</span>
-                    <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                      {d.title}
-                    </h3>
-                    <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{d.text}</p>
-                    <span
-                      className={`mt-auto pt-5 text-[13px] font-bold uppercase tracking-[0.1em] ${
-                        disponivel ? 'text-orange' : 'text-line-2'
-                      }`}
-                    >
-                      {d.href ? 'Ler →' : disponivel ? 'Baixar →' : 'Em breve'}
-                    </span>
-                  </>
-                )
-
-                const classeCard =
-                  'ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6'
-
-                if (d.href) {
-                  return (
-                    <Link className={classeCard} href={d.href} key={d.slug}>
-                      {conteudo}
-                    </Link>
-                  )
-                }
-
-                return disponivel ? (
-                  <a className={classeCard} download href={d.file} key={d.slug}>
-                    {conteudo}
-                  </a>
-                ) : (
-                  <div
-                    className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-bone p-7 max-mob:p-6"
-                    key={d.slug}
-                  >
-                    {conteudo}
-                  </div>
-                )
-              })}
             </div>
           </div>
         </section>

@@ -385,8 +385,8 @@ export default function DiagnosticoQuiz() {
                 >
                   Falar com um especialista →
                 </a>
-                <Link className="btn" href="/area-do-anunciante/guia-do-anunciante">
-                  Ver o Guia do Anunciante →
+                <Link className="btn" href="/area-do-anunciante/melhores-praticas">
+                  Ver o Melhores Práticas →
                 </Link>
               </div>
               <p className="mt-6 max-w-[62ch] text-[14.5px] text-white/[.92]">

@@ -10,18 +10,18 @@ const DESCRIPTION =
   'Kit comercial, especificações técnicas por plataforma, tabela de praças e assets de marca da Outdoormídia para download.'
 
 export const metadata = {
-  title: 'Guia do Anunciante | Outdoormídia',
+  title: 'Melhores Práticas | Outdoormídia',
   description: DESCRIPTION,
-  alternates: { canonical: '/area-do-anunciante/guia-do-anunciante' },
+  alternates: { canonical: '/area-do-anunciante/melhores-praticas' },
   openGraph: {
-    title: 'Guia do Anunciante | Outdoormídia',
+    title: 'Melhores Práticas | Outdoormídia',
     description: DESCRIPTION,
     locale: 'pt_BR',
     type: 'website',
   },
 }
 
-export default function MidiaKitPage() {
+export default function MelhoresPraticasPage() {
   return (
     <>
       <Header />
@@ -29,7 +29,7 @@ export default function MidiaKitPage() {
         <Breadcrumb
           items={[
             { label: 'Área do anunciante', href: '/area-do-anunciante' },
-            { label: 'Guia do Anunciante' },
+            { label: 'Melhores Práticas' },
           ]}
         />
 
@@ -37,9 +37,9 @@ export default function MidiaKitPage() {
           <div className="wrap">
             <div className="eyebrow reveal">Área do anunciante · Downloads</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Guia do
+              Melhores
               <br />
-              Anunciante.
+              Práticas.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               O material para você defender o plano internamente. A ficha técnica completa fica
