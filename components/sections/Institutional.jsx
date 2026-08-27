@@ -1,6 +1,6 @@
 import ImageFlip from '@/components/ui/ImageFlip'
 import StatGrid from '@/components/ui/StatGrid'
-import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
+import { NUMEROS_MARCA } from '@/lib/numeros'
 
 const IMAGE_SIZES = '(max-width: 980px) 100vw, 620px'
 
@@ -12,26 +12,6 @@ const FOTOS = [
   {
     src: '/media/hero-billboard.webp',
     alt: 'Outdoor da Outdoormídia ao entardecer com a mensagem "Toda hora, em todo lugar"',
-  },
-]
-
-// Números da marca, no quadro fechado no checklist da home (claude/checklist-home.md,
-// item 04). O mesmo componente monta a faixa da home e a de /sobre — é o que
-// impede as duas de divergirem.
-//
-// A contagem de plataformas sai da própria listagem para não desencontrar do
-// carrossel logo abaixo quando o catálogo mudar; hoje ela dá os 9 do checklist.
-//
-// Os 312 m² são a área do Aeroporto Square. O Distrito de Mídia Duo Square, que
-// o abriga, tem 577,5 m² e aparece no card da plataforma — são dois ativos, não
-// duas medidas do mesmo.
-const NUMEROS = [
-  { n: String(PLATFORMS_LISTAGEM.length), label: 'Plataformas integradas' },
-  { n: '312 m²', label: 'Maior painel híbrido do Sul do Brasil em área visual' },
-  { n: '+530M', label: 'Impactos por mês' },
-  {
-    n: 'DOOH',
-    label: 'Maior network regional no Sul do Brasil: 175 telas com 20 milhões de impactos semanais',
   },
 ]
 
@@ -61,7 +41,7 @@ export default function Institutional() {
           <ImageFlip images={FOTOS} ratio="16/9" sizes={IMAGE_SIZES} className="reveal" />
         </div>
 
-        <StatGrid className="reveal mt-[72px] max-mob:mt-12" size="md" stats={NUMEROS} />
+        <StatGrid className="reveal mt-[72px] max-mob:mt-12" size="md" stats={NUMEROS_MARCA} />
       </div>
     </section>
   )

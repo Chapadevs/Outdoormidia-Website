@@ -1,28 +1,64 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import {
+  Briefcase,
+  Building2,
+  Calendar,
+  CalendarCheck,
+  CalendarClock,
+  CalendarDays,
+  CalendarRange,
+  Car,
+  CircleHelp,
+  Cross,
+  Factory,
+  Flag,
+  GraduationCap,
+  Home,
+  Landmark,
+  MapPin,
+  Megaphone,
+  Milestone,
+  Package,
+  Plus,
+  Route,
+  ShoppingCart,
+  Store,
+  Umbrella,
+  UtensilsCrossed,
+  Wrench,
+} from 'lucide-react'
 import { waQualificador, waLinkPorPraca } from '@/lib/whatsapp'
 import { enviarLead } from '@/lib/leads/enviarLead'
 
-// Perguntas, opções e rótulos na redação oficial do cliente (COPY_SITE).
-const INTENCOES = ['É minha primeira campanha', 'Já anunciei em OOH antes', 'Sou agência ou planejamento']
+// Perguntas, opções e rótulos na redação oficial do cliente (COPY_SITE); os
+// ícones são o mapa entregue pela Imagine Concept (claude/icones-nova-campanha.md).
+//
+// `label` continua sendo o valor da resposta — é ele que vai para o resumo, para
+// o lead e para a mensagem de WhatsApp. O ícone é só apresentação.
+const INTENCOES = [
+  { label: 'É minha primeira campanha', Icone: Flag },
+  { label: 'Já anunciei em OOH antes', Icone: Megaphone },
+  { label: 'Sou agência ou planejamento', Icone: Briefcase },
+]
 
 const OBJETIVOS = [
-  'Levar gente até a loja',
-  'Lançar produto ou unidade',
-  'Construir marca na região',
-  'Divulgar uma data ou evento',
-  'Ainda não sei',
+  { label: 'Levar gente até a loja', Icone: Store },
+  { label: 'Lançar produto ou unidade', Icone: Package },
+  { label: 'Construir marca na região', Icone: MapPin },
+  { label: 'Divulgar uma data ou evento', Icone: Calendar },
+  { label: 'Ainda não sei', Icone: CircleHelp },
 ]
 
 const PRACAS = [
-  'Curitiba e Região Metropolitana',
-  'Litoral do Paraná',
-  'Joinville',
-  'Itajaí e Balneário Camboriú',
-  'Rodovias',
-  'Todas as praças',
-  'Ainda não sei',
+  { label: 'Curitiba e Região Metropolitana', Icone: Building2 },
+  { label: 'Litoral do Paraná', Icone: Umbrella },
+  { label: 'Joinville', Icone: Milestone },
+  { label: 'Itajaí e Balneário Camboriú', Icone: Landmark },
+  { label: 'Rodovias', Icone: Route },
+  { label: 'Todas as praças', Icone: MapPin },
+  { label: 'Ainda não sei', Icone: CircleHelp },
 ]
 
 // O checklist trazia "Bi-semana" e "Quinzenal" como opções separadas, mas a
@@ -31,23 +67,31 @@ const PRACAS = [
 // virar duas alternativas que dizem o mesmo.
 const TOOLTIP_BI_SEMANA = 'Período padrão de veiculação OOH, com troca a cada 14 dias'
 
-const PERIODOS = ['Bi-semana', '1 mês', '3 meses', '6 meses ou mais', 'Ainda não sei']
-
-const SEGMENTOS = [
-  'Varejo',
-  'Serviços',
-  'Restaurantes e alimentação',
-  'Imobiliário e construção civil',
-  'Saúde',
-  'Educação',
-  'Indústria',
-  'Supermercados',
-  'Automotivo',
-  'Eventos',
-  'Agências de marketing e publicidade',
-  'Outro',
+const PERIODOS = [
+  { label: 'Bi-semana', Icone: CalendarRange },
+  { label: '1 mês', Icone: CalendarCheck },
+  { label: '3 meses', Icone: Calendar },
+  { label: '6 meses ou mais', Icone: CalendarClock },
+  { label: 'Ainda não sei', Icone: CircleHelp },
 ]
 
+const SEGMENTOS = [
+  { label: 'Varejo', Icone: Store },
+  { label: 'Serviços', Icone: Wrench },
+  { label: 'Restaurantes e alimentação', Icone: UtensilsCrossed },
+  { label: 'Imobiliário e construção civil', Icone: Home },
+  { label: 'Saúde', Icone: Cross },
+  { label: 'Educação', Icone: GraduationCap },
+  { label: 'Indústria', Icone: Factory },
+  { label: 'Supermercados', Icone: ShoppingCart },
+  { label: 'Automotivo', Icone: Car },
+  { label: 'Eventos', Icone: CalendarDays },
+  { label: 'Agências de marketing e publicidade', Icone: Megaphone },
+  { label: 'Outro', Icone: Plus },
+]
+
+// A etapa de contato não leva ícone (regra da Imagine): só campo de input puro e
+// os chips de preferência e verba.
 const CONTATOS = ['WhatsApp', 'Ligação', 'E-mail']
 
 const VERBAS = [
@@ -58,10 +102,32 @@ const VERBAS = [
   'Não há orçamento planejado',
 ]
 
-const CHIP =
-  'cursor-pointer rounded-full border px-4 py-2 text-[13px] font-bold transition-colors duration-150 border-line text-ink-soft hover:border-orange hover:text-orange'
-const CHIP_ATIVO =
-  'cursor-pointer rounded-full border px-4 py-2 text-[13px] font-bold transition-colors duration-150 border-orange bg-orange text-white'
+const CHIP_BASE =
+  'inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-[13px] font-bold transition-colors duration-150'
+const CHIP = `${CHIP_BASE} border-line text-ink-soft hover:border-orange hover:text-orange`
+const CHIP_ATIVO = `${CHIP_BASE} border-orange bg-orange text-white`
+
+// O ícone fica no laranja da marca; no chip marcado ele herda o branco do texto,
+// porque laranja sobre laranja some. `aria-hidden` quem põe é o próprio lucide,
+// que já trata como decorativo o ícone sem rótulo acessível.
+//
+// `ativo` só é passado pelos chips que alternam (praça, contato, verba): nos
+// demais o clique avança a etapa, e um aria-pressed="false" ali anunciaria como
+// interruptor o que é ação.
+function OpcaoChip({ label, Icone, ativo, onClick, title }) {
+  return (
+    <button
+      type="button"
+      title={title}
+      aria-pressed={ativo}
+      className={ativo ? CHIP_ATIVO : CHIP}
+      onClick={onClick}
+    >
+      {Icone && <Icone size={20} className={`shrink-0 ${ativo ? '' : 'text-orange'}`} />}
+      {label}
+    </button>
+  )
+}
 
 const CHAVES = ['intencao', 'objetivo', 'praca', 'periodo', 'segmento']
 const TOTAL = CHAVES.length + 1
@@ -271,10 +337,13 @@ export default function QualifierForm() {
               Onde você está hoje?
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {INTENCOES.map((op) => (
-                <button key={op} type="button" className={CHIP} onClick={() => responder('intencao', op)}>
-                  {op}
-                </button>
+              {INTENCOES.map(({ label, Icone }) => (
+                <OpcaoChip
+                  key={label}
+                  label={label}
+                  Icone={Icone}
+                  onClick={() => responder('intencao', label)}
+                />
               ))}
             </div>
           </fieldset>
@@ -286,10 +355,13 @@ export default function QualifierForm() {
               Qual o objetivo da campanha?
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {OBJETIVOS.map((op) => (
-                <button key={op} type="button" className={CHIP} onClick={() => responder('objetivo', op)}>
-                  {op}
-                </button>
+              {OBJETIVOS.map(({ label, Icone }) => (
+                <OpcaoChip
+                  key={label}
+                  label={label}
+                  Icone={Icone}
+                  onClick={() => responder('objetivo', label)}
+                />
               ))}
             </div>
           </fieldset>
@@ -302,16 +374,14 @@ export default function QualifierForm() {
             </legend>
             <p className="mb-4 text-[13.5px] text-ink-soft">Pode marcar mais de uma praça.</p>
             <div className="flex flex-wrap gap-2.5">
-              {PRACAS.map((op) => (
-                <button
-                  key={op}
-                  type="button"
-                  aria-pressed={respostas.praca.includes(op)}
-                  className={respostas.praca.includes(op) ? CHIP_ATIVO : CHIP}
-                  onClick={() => alternarPraca(op)}
-                >
-                  {op}
-                </button>
+              {PRACAS.map(({ label, Icone }) => (
+                <OpcaoChip
+                  key={label}
+                  label={label}
+                  Icone={Icone}
+                  ativo={respostas.praca.includes(label)}
+                  onClick={() => alternarPraca(label)}
+                />
               ))}
             </div>
             <button
@@ -331,16 +401,14 @@ export default function QualifierForm() {
               Por quanto tempo a campanha fica no ar?
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {PERIODOS.map((op) => (
-                <button
-                  key={op}
-                  type="button"
-                  className={CHIP}
-                  onClick={() => responder('periodo', op)}
-                  title={op === 'Bi-semana' ? TOOLTIP_BI_SEMANA : undefined}
-                >
-                  {op}
-                </button>
+              {PERIODOS.map(({ label, Icone }) => (
+                <OpcaoChip
+                  key={label}
+                  label={label}
+                  Icone={Icone}
+                  onClick={() => responder('periodo', label)}
+                  title={label === 'Bi-semana' ? TOOLTIP_BI_SEMANA : undefined}
+                />
               ))}
             </div>
           </fieldset>
@@ -352,10 +420,13 @@ export default function QualifierForm() {
               Qual o segmento do seu negócio?
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {SEGMENTOS.map((op) => (
-                <button key={op} type="button" className={CHIP} onClick={() => responder('segmento', op)}>
-                  {op}
-                </button>
+              {SEGMENTOS.map(({ label, Icone }) => (
+                <OpcaoChip
+                  key={label}
+                  label={label}
+                  Icone={Icone}
+                  onClick={() => responder('segmento', label)}
+                />
               ))}
             </div>
           </fieldset>
@@ -408,30 +479,24 @@ export default function QualifierForm() {
             <p className="field-label mt-6">Como prefere receber contato?*</p>
             <div className="mt-2.5 flex flex-wrap gap-2.5">
               {CONTATOS.map((op) => (
-                <button
+                <OpcaoChip
                   key={op}
-                  type="button"
-                  aria-pressed={dados.contato === op}
-                  className={dados.contato === op ? CHIP_ATIVO : CHIP}
+                  label={op}
+                  ativo={dados.contato === op}
                   onClick={() => setDados({ ...dados, contato: op })}
-                >
-                  {op}
-                </button>
+                />
               ))}
             </div>
 
             <p className="field-label mt-6">Quanto pretende investir? (opcional)</p>
             <div className="mt-2.5 flex flex-wrap gap-2.5">
               {VERBAS.map((op) => (
-                <button
+                <OpcaoChip
                   key={op}
-                  type="button"
-                  aria-pressed={dados.verba === op}
-                  className={dados.verba === op ? CHIP_ATIVO : CHIP}
+                  label={op}
+                  ativo={dados.verba === op}
                   onClick={() => setDados({ ...dados, verba: dados.verba === op ? '' : op })}
-                >
-                  {op}
-                </button>
+                />
               ))}
             </div>
 

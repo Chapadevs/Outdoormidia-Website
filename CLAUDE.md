@@ -16,6 +16,7 @@ Site atual (a ser substituído): https://outdoormidia.com.br
 - **Next.js 16** (App Router, Turbopack) + **React 19** — JavaScript puro (sem TypeScript)
 - **Tailwind CSS v4** — tokens da marca no `@theme` de `app/globals.css`; estilos via classes utilitárias no JSX. Primitivos do design system (`.wrap`, `.display`, `.eyebrow`, `.btn*`, `.ticks`, `.reveal`, `.select-caret`) em `@layer components`
 - **Fontes:** Poppins via `next/font/google` (pesos 400–900, var `--font-poppins`, exposta em `font-sans` e `font-display`)
+- **Ícones:** `lucide-react` — biblioteca de ícones escolhida pela Imagine Concept. Import direto do componente, sem SVG gerado à mão e sem sprite
 - **Firebase** — Firestore (conteúdo), Auth (sessão do admin), Storage (capas). Acesso server-side via `firebase-admin` em `lib/firebase/admin.js`
 - **CMS próprio** — painel em `app/admin/`, protegido por cookie de sessão + claim `admin`. Não usamos CMS headless de terceiros
 - **Deploy:** Firebase App Hosting (Cloud Run) — ver [`DEPLOY.md`](DEPLOY.md)
@@ -77,7 +78,7 @@ Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, 
 - **`SectionHeading`** (`components/ui/SectionHeading.jsx`) — cabeçalho de seção (número laranja + h2 + linha)
 - **`StatGrid`** (`components/ui/StatGrid.jsx`) — faixa de números da marca (`size="md"` em `Institutional`, Culture, diferenciais e ESG). Em `Institutional` ele monta os big numbers (9 plataformas integradas · 312 m² · +530M impactos/mês · DOOH), com a contagem de plataformas derivada de `PLATFORMS_LISTAGEM`. Como o bloco é o mesmo na home e em `/sobre`, o quadro não diverge entre as duas — era o segundo quadro de números de `/sobre` que saiu, não este
 - **`PracaChips`** (`components/ui/PracaChips.jsx`) — lista de praças em cápsulas. Um componente para a seção Presença de `/sobre` e a Cobertura da home; as listas divergem (a home inclui Rodovias PR-SC), o desenho não
-- **`Accordion`** (`components/ui/Accordion.jsx`) — acordeão controlado do FAQ; o pai guarda o `openIndex` porque precisa da pergunta aberta para montar o link de WhatsApp
+- **`Accordion`** (`components/ui/Accordion.jsx`) — acordeão controlado do FAQ; o pai guarda o `openIndex` porque precisa da pergunta aberta para montar o link de WhatsApp. A resposta pode ser string ou lista de parágrafos, aceita `**negrito**` no meio do texto, e `fonte` sai em corpo reduzido abaixo dela
 - **`CoverMedia`** (`components/ui/CoverMedia.jsx`) — capa com fallback: renderiza a imagem se houver `src`, senão o painel bege com o rótulo. Proporções em mapa estático (classe interpolada não é vista pelo scanner do Tailwind)
 - **`DeleteButton`** (`components/widgets/DeleteButton.jsx`) — exclusão no admin, parametrizada por `resource` (segmento de `/api/admin/…`) e `label`
 - **`HeaderShell`** (`components/layout/HeaderShell.jsx`) — barra clara de proposta/login/painel (o `Header` laranja é só do site institucional)
@@ -104,6 +105,11 @@ Na dúvida: recebe props e não sabe o que acontece depois → `ui/`. Age sozinh
   - `rounded-[10px]` em inputs, selects, textareas e elementos pequenos (código inline, pins do mapa)
   - `rounded-full` (cápsula/círculo) em botões (`.btn`), badges, tags e chips de filtro
 - Fundo padrão: `--paper`, não branco puro
+- Ícone (`lucide-react`): `size={20}` em chip e faixa, `size={24}` em card; stroke
+  padrão da lib, sem `strokeWidth` customizado. Cor no laranja da marca sobre fundo
+  claro; sobre laranja, sobre `--ink` ou em chip marcado ele herda o branco do texto,
+  porque laranja sobre laranja some. Ícone decorativo não leva rótulo: o lucide já
+  marca `aria-hidden` sozinho quando não recebe prop de acessibilidade
 
 ---
 
@@ -119,11 +125,11 @@ app/
   globals.css             — Tailwind (@theme com tokens + @layer components com primitivos)
   sobre/                  — hub Sobre nós (linha do tempo, cultura, trabalhe conosco)
   solucoes/               — hub + diferenciais/ e regioes/ (mapa + lista por praça)
-  anunciante/             — hub + midia-kit/, simulador/ e faq/
+  area-do-anunciante/     — hub + melhores-praticas/, sua-marca-no-ooh/,
+                            diagnostico-de-presenca/ e faq/
   blog/                   — hub (portas Cases e Artigos + destaque), artigos/ e [slug]
   cases/                  — listagem com filtro por tag (ISR 300)
   plataformas/            — índice + [slug] das 8 plataformas; projetos-iconicos/ (hub + [slug])
-  diagnostico/            — quiz de diagnóstico de marca
   proposta/               — briefing
   trabalhe-conosco/       — banco de talentos
   admin/(dashboard)/      — CMS: posts, cases, locations, tags. Protegido por proxy.js
@@ -139,7 +145,7 @@ components/
                             NovaCampanha (bloco laranja: 4 portas + QualifierForm),
                             PlatformFaq
   blog/ cases/            — cards, explorers com filtro, markdown, share
-  forms/                  — 11 formulários (públicos + editores do admin)
+  forms/                  — 10 formulários (públicos + editores do admin)
   ui/                     — Logo, SectionHeading, Breadcrumb, TagFilter, CoverMedia,
                             FormatSpecCard, CoverageMap (SVG de PR+SC, dados IBGE)
   widgets/                — WhatsAppButton, RevealObserver, DeleteButton, LogoutButton
@@ -153,7 +159,8 @@ lib/
   blog/ cases/ tags/      — leitura, escrita e validação de cada coleção
   platforms.js            — as 8 plataformas do catálogo (dados estáticos, não vem do Firestore)
   iconicos.js             — os 3 projetos icônicos (fora do catálogo): carrossel + página dedicada
-  faq.js                  — perguntas com categoria
+  faq.js                  — as 19 perguntas com categoria e resposta em parágrafos;
+                            PERGUNTAS_HOME é a seleção de 8 da home, em ordem própria
   sobre.js                — marcos da linha do tempo; midiakit.js — materiais para download
   diferenciais.js         — diferenciais: resumo dos cards + página dedicada. `publicado: false`
                             mantém a entrada escrita e fora do ar
@@ -163,10 +170,12 @@ public/media/             — video-hero.mp4 (fundo do Hero), logo.png (wordmark
                             recolorido por mask no primitivo .logo-mark)
 scripts/                  — seed-admin, migrate-tags-scope, generate-map-paths
 claude/                   — checklists de aplicação entregues pelo cliente, fonte da
-                            copy oficial: checklist-home.md (home, 25/08/2026),
-                            checklist-sobre-nos.md (25/08/2026) e
-                            copy-diagnostico-presenca.md. Não é código; é o que manda
-                            quando divergir deste documento
+                            copy oficial: checklist-home.md (home, 25/08/2026, revisado
+                            em 26/08/2026),
+                            checklist-sobre-nos.md (25/08/2026), checklist-faq.md
+                            (26/08/2026), icones-nova-campanha.md (mapa de ícones
+                            da Imagine) e copy-diagnostico-presenca.md. Não é
+                            código; é o que manda quando divergir deste documento
 ```
 
 ---
@@ -202,10 +211,14 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Hero com vídeo de fundo (carrega após o load da página) | `components/sections/Hero.jsx` |
 | Seções da home | `components/sections/` |
 | Bloco institucional (texto + foto) entre o ticker e as plataformas | `components/sections/Institutional.jsx` |
-| Big numbers da home — 4 números no fim do bloco institucional (`StatGrid`): 9 plataformas, 312 m² do Aeroporto Square, +530M impactos/mês e a rede DOOH de 175 telas. Mesmo quadro em `/sobre`, porque é o mesmo componente | `components/sections/Institutional.jsx` |
+| Big numbers da marca — 4 números (`StatGrid`): 9 plataformas, 312 m² do Aeroporto Square, +530M impactos/mês e a rede DOOH de 175 telas. A lista vive em `lib/numeros.js` e alimenta as três páginas que a exibem: a home e `/sobre` pelo `Institutional`, e `/trabalhe-conosco` pelo `Culture`. Fonte única de propósito — foi cópia por página que produziu os 380 milhões e os 82 equipamentos que saíram de circulação | `lib/numeros.js`, `components/sections/Institutional.jsx`, `components/sections/Culture.jsx` |
 | Copy oficial do cliente (COPY_SITE) aplicada em menu, hero, esteira, institucional, diferenciais, plataformas, cobertura, depoimentos, Gestão 360 OM, nova campanha, FAQ e rodapé | home, `lib/faq.js`, `lib/platforms.js`, `lib/diferenciais.js` |
 | Nova campanha — bloco laranja com as 4 portas, na hierarquia do checklist da home: Diagnóstico como faixa fina, Formulário como card dominante branco e elevado, Mídia Programática (preto, exceção autorizada à paleta) e Atendimento como cards menores. A diferença de área é o que impede o Diagnóstico de roubar o clique do formulário. Substituiu o `LeadCta` em todas as páginas; `#formulario` segue valendo como âncora | `components/sections/NovaCampanha.jsx` |
+| Nova campanha — revisão de 26/08: kicker `NOVA CAMPANHA` acima do título (sem ele a caixa laranja abria direto no `h2` e o visitante não sabia que aquilo é o formulário principal do site) e o subtítulo volta a ser "Você entende do seu negócio…", que estava aberto em Plataformas. A frase não pode viver nos dois lugares | `components/sections/NovaCampanha.jsx`, `components/sections/PlatformsCarousel.jsx` |
+| Anatomia das portas — ícone em quadrado claro arredondado, numeração, nome em destaque, linha de intenção e chevron circular à direita. O chevron é a seta da linha de intenção promovida a elemento, por isso ela não termina mais em "→" | `components/sections/NovaCampanha.jsx` |
+| Plataformas — abertura própria ("Algumas campanhas precisam aparecer. Outras precisam ser impossíveis de ignorar."), que enquadra a amplitude do portfólio e justifica nove plataformas em vez de uma | `components/sections/PlatformsCarousel.jsx` |
 | Qualificador — 6 etapas, resumo acumulado com `EDITAR`, barra `X de 6`, convite ao Diagnóstico só para quem marca "Ainda não sei" no objetivo, celular oculto quando a preferência é e-mail, e microcopy dizendo o que falta em vez de asterisco vermelho. Grava o lead antes do redirecionamento ao WhatsApp, com campanha de origem (querystring) e página de origem no payload | `components/forms/QualifierForm.jsx`, `lib/leads/origens.js` |
+| Ícones da Nova campanha — mapa da Imagine Concept aplicado nos 3 cards (Diagnóstico, Mídia Programática, Atendimento) e nas 5 etapas de opção do qualificador, 35 ícones ao todo. A etapa de contato não leva ícone, por regra do documento. As opções deixaram de ser lista de string e viraram `{ label, Icone }`; `label` segue sendo o valor da resposta, então resumo, lead e mensagem de WhatsApp não mudaram | `claude/icones-nova-campanha.md`, `components/forms/QualifierForm.jsx`, `components/sections/NovaCampanha.jsx` |
 | WhatsApp flutuante | `components/widgets/WhatsAppButton.jsx` |
 | WhatsApp com mensagem pré-preenchida por CTA (pré-qualificação) | `lib/whatsapp.js` |
 | ProposalForm (briefing) | `app/proposta/` |
@@ -224,15 +237,19 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Hub Sobre nós — hero, Sobre a OM, Presença, bloco institucional com os big numbers, linha do tempo, Gestão 360 OM sob o título "Por que a Outdoormídia", Nosso compromisso e banco de talentos. Checklist do cliente aplicado (`claude/checklist-sobre-nos.md`, 25/08/2026) | `app/sobre/`, `lib/sobre.js` |
 | Linha do tempo — quatro marcos (1959 · 1980s · 2000s · Hoje). Os antigos 2000s e 2010s contavam o mesmo movimento de expansão e viraram um só | `lib/sobre.js` |
 | Gestão 360 OM compartilhado — o mesmo `Process` monta a seção na home e em `/sobre`; só `num` e `title` mudam. Editar num lugar reflete nos dois | `components/sections/Process.jsx` |
-| Filhas de Sobre nós — Ambiental, Social, Governança (estrutura pronta; conteúdo em `TODO(cliente)`) | `app/sobre/{ambiental,social,governanca}/`, `lib/esg.js` |
+| Filhas de Sobre nós — Ambiental, Social e Governança com a copy dos checklists de 25/08/2026. Ambiental: "O que já é realidade" (Praça de Carregamento Elétrico, Praça Pet Batel e Jardim Vertical, cada card abrindo pelo endereço), "O ciclo da lona" e "Como a operação reduz impacto". Social: Corajosamente Éticos, Loja OM do Bem com a Caminho do Renascer e a Mídia Regenerativa. Governança: "Quem responde" (retrato do CEO, texto institucional) e os 5 pilares. Saíram todos os cards de meta vazia, "em breve" e certificação não confirmada | `app/sobre/{ambiental,social,governanca}/`, `lib/esg.js` |
 | Hub Soluções + Diferenciais + Regiões | `app/solucoes/`, `lib/diferenciais.js` |
-| Páginas dos diferenciais (SSG) — mesma estrutura, conteúdo por slug. `publicado: false` tira do ar sem apagar o texto; "A prova" e "Aplicação prática" somem quando o diferencial ainda não tem esses dados | `app/solucoes/diferenciais/[slug]/`, `lib/diferenciais.js` |
-| Área do anunciante (hub + 4 ferramentas) | `app/anunciante/` |
+| Páginas dos diferenciais (SSG) — mesma estrutura, conteúdo por slug. `publicado: false` tira do ar sem apagar o texto. Toda seção abaixo do "o que é" é opcional e some quando o campo não existe: "A prova", "Aplicação prática", a comparação e o mini-case. A numeração das seções é calculada em cima do que sobrou, para não abrir buraco. Também são opcionais `aside.footer`, os cards do "o que é" (com `cardsTitle` próprio), a capa do topo (`image`) e a da seção 01 (`oQueE.image`), e o `lead` aceita string ou lista de parágrafos. O CTA secundário do topo vem de `ctaSecundario` quando existe; sem ele, cai na âncora de "Aplicação prática" como antes | `app/solucoes/diferenciais/[slug]/`, `lib/diferenciais.js` |
+| Diferencial 01 · Face Única — checklist de 27/08/2026. "O que é" com o texto oficial do PDF Conceito Face Única em dois parágrafos e os 3 benefícios como card; "A prova", "Aplicação prática" e o mini-case saíram; a comparação virou **Amador / Especialista** em foto, em seção própria (`#comparacao`), com a nota de rodapé que vale só para o lado Amador, que é mockup. O CTA "Ver na prática" do topo, órfão com a saída de "Aplicação prática", passou a apontar para a comparação | `lib/diferenciais.js` |
+| Diferencial 02 · Aeroporto Square — versão curta de 27/08/2026: só argumento de diferenciação, nenhum número de rede e nenhuma localização, porque os dois também aparecem na plataforma Aeroporto e divergiriam ali. O CTA secundário leva a `/plataformas/aeroporto`. O slug virou `aeroporto-square`; `/solucoes/diferenciais/painel-hibrido` segue como redirect permanente | `lib/diferenciais.js`, `next.config.mjs` |
+| Teaser de "Outros diferenciais" usa o texto canônico do hub — o card lê `text`, o mesmo campo que monta o card na home e na listagem, em vez do `resumo`. `resumo` continua sendo a linha do `llms.txt` | `app/solucoes/diferenciais/[slug]/page.js` |
+| Área do anunciante (hub + 4 ferramentas) — checklist de 26/08/2026 aplicado: os 4 cards ganharam ícone `lucide-react` em laranja (medidor, painel, lâmpada e interrogação) e textos novos. Saíram o kicker `Downloads` e a promessa de impactos e faixa de investimento do card de Sua marca no OOH: a ferramenta aplica logo ou peça sobre a foto real do painel, e nada além disso. O kicker do FAQ conta as perguntas de `lib/faq.js` em vez de trazer o número na mão | `app/area-do-anunciante/page.js` |
 | Simulador de campanha (estimativa de impactos e CPM) | `app/anunciante/simulador/`, `lib/simulador.js` |
-| Mídia Kit / materiais de apoio | `app/anunciante/midia-kit/`, `lib/midiakit.js` |
-| FAQ | `components/sections/Faq.jsx`, `FaqCategorias.jsx`, `PlatformFaq.jsx`, `lib/faq.js` |
+| Melhores Práticas — nome final do antigo Mídia Kit, fechado no checklist da home de 26/08. Rota, rótulo, breadcrumb, metadata e todo link interno renomeados; `/anunciante/midia-kit` e `/area-do-anunciante/guia-do-anunciante` (nome intermediário que chegou a ir ao ar) seguem como redirect permanente | `app/area-do-anunciante/melhores-praticas/`, `lib/midiakit.js`, `next.config.mjs` |
+| FAQ — checklist do cliente aplicado (26/08/2026): 19 perguntas nos mesmos 4 grupos, com as quatro do Marcelo (empresa pequena, mídia exterior vs redes sociais, ponto específico, o que está incluso no valor) e a home com uma seleção própria de 8, na ordem do documento. "Todos os painéis são iluminados?" saiu, absorvida pela pergunta de diferença entre formatos | `components/sections/Faq.jsx`, `FaqCategorias.jsx`, `PlatformFaq.jsx`, `lib/faq.js` |
+| Resposta do FAQ em parágrafos — `a` é lista, `fonte` é a linha de atribuição em corpo reduzido abaixo dela, e o `Accordion` aceita `**negrito**` no meio do parágrafo. As FAQs das plataformas seguem passando `a` como string | `components/ui/Accordion.jsx`, `lib/faq.js` |
 | Avaliações de clientes — três cards 9:16 com capa, badge de duração, citação sobre o gradiente e modal de vídeo. O card 03 é título editorial, sem aspas: entre aspas viraria fala fabricada. Vídeos e capas em `TODO(cliente)`; sem eles o card cai no painel bege, sem botão de play | `components/sections/Reviews.jsx` |
-| Banco de talentos | `app/trabalhe-conosco/`, `components/forms/TalentForm.jsx` |
+| Banco de talentos — sem formulário no site desde 25/08/2026: a seção traz o texto, o botão **Preencher cadastro** (Google Forms do cliente, nova aba) e o e-mail do RH como alternativa. As respostas caem direto no Drive do cliente, sem formulário, validação, armazenamento nem envio do nosso lado; as áreas de atuação vivem dentro do formulário, não na página. Nenhuma promessa de prazo de resposta ou de validade do cadastro, porque não há processo definido para isso | `components/sections/BancoDeTalentos.jsx`, `TALENTOS_FORM_URL` em `lib/constants.js` |
 | Diagnóstico de marca (quiz) | `app/diagnostico/`, `lib/diagnostico.js` |
 | Mapa de praças (SVG, dados IBGE) | `components/ui/CoverageMap.jsx`, `lib/mapShapes.js` |
 | Painel admin (leads, posts, cases, locations, tags) | `app/admin/`, `app/api/admin/` |
@@ -241,7 +258,7 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Breadcrumb em todas as páginas | `components/ui/Breadcrumb.jsx` |
 | Páginas de sistema — `/obrigado` (noindex), `/privacidade`, `/termos` e 404 | `app/obrigado/`, `app/privacidade/`, `app/termos/`, `app/not-found.js` |
 | Textos legais data-driven (LGPD + Termos) num renderizador só | `lib/legal.js`, `components/ui/LegalDoc.jsx` |
-| Formulários levam a `/obrigado` — URL de conversão, briefing pelo `sessionStorage` | `ProposalForm`, `TalentForm`, `components/widgets/ObrigadoCta.jsx` |
+| Formulários levam a `/obrigado` — URL de conversão, briefing pelo `sessionStorage` | `ProposalForm`, `components/widgets/ObrigadoCta.jsx` |
 | Cache: ISR nas rotas de conteúdo + headers em `/media/` | `next.config.mjs`, `lib/revalidate.js` |
 | `robots.txt` — libera busca e rastreadores de IA (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended); bloqueia `/admin` e `/api` | `app/robots.js` |
 | `sitemap.xml` — estáticas de `lib/seo.js` + plataformas, icônicos, diferenciais e posts do Firestore | `app/sitemap.js`, `lib/seo.js` |
@@ -261,18 +278,27 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Evento de conversão em `/obrigado` | A página existe e é o destino dos dois formulários, mas não há GA4/GTM no projeto. Instalar Analytics torna falsa a frase "sem rastreamento" do `CookieNotice` e exige decidir opt-in — os dois andam juntos |
 | Imagem de Open Graph | Nenhuma rota declara `openGraph.images` fora do blog e não há asset de OG em `public/`. Link compartilhado sai sem card. `logo.png` e `om.png` são brancos (viram máscara CSS), não servem como `logo` de schema |
 | Idiomas (PT / EN / ES / ZH) | Os botões de idioma (agora dentro do menu) só trocam `useState` — não há i18n |
-| Envio de e-mail nos formulários | Falta integrar Resend. `ProposalForm` e o qualificador já gravam em `leads` — o comercial vê tudo em `/admin/leads` —, mas ninguém é **avisado**: só descobre entrando no painel. `TalentForm` continua descartando os dados no browser. A copy de `/obrigado?origem=proposta` foi escrita quando nada era guardado e ainda não promete guarda; pode ser revista |
+| Envio de e-mail nos formulários | Falta integrar Resend. `ProposalForm` e o qualificador já gravam em `leads` — o comercial vê tudo em `/admin/leads` —, mas ninguém é **avisado**: só descobre entrando no painel. A copy de `/obrigado?origem=proposta` foi escrita quando nada era guardado e ainda não promete guarda; pode ser revista |
 | Leads do Diagnóstico e do Simulador | Os dois fluxos são anônimos hoje (o diagnóstico só tem 7 notas, o simulador só 4 selects) — gravar exige antes decidir um passo de contato. `lib/leads/origens.js` já nasceu preparado: basta uma entrada nova no mapa para a validação, a listagem e o detalhe passarem a aceitá-los |
 | Página de case individual (`/cases/[slug]`) | Não existe; só a listagem. `isCaseSlugTaken` mantém o slug único de propósito, para a página poder ser criada depois sem colisão |
 | Arquivos do Mídia Kit | As páginas existem; falta o cliente entregar PDFs e assets (`lib/midiakit.js`) |
 | Números oficiais do simulador | `lib/simulador.js` usa ordem de grandeza estimada — falta CPM e alcance por plataforma |
-| Conteúdo de Ambiental / Social / Governança | Páginas no ar, dados em `lib/esg.js` sob `TODO(cliente)`. Falta o lastro: números com prazo, certificações, projetos e PDFs. `/sobre/ambiental` está com `robots: noindex` até lá |
+| Imagens de Ambiental / Social / Governança | Toda a copy dos três checklists está aplicada; falta a foto. Ambiental: os 3 cards de "O que já é realidade" (a Praça de Carregamento Elétrico é a única sem foto disponível, e é o **único item que bloqueia a publicação** — a página segue com `robots: noindex` até ela chegar; Praça Pet Batel e Jardim Vertical têm foto no SharePoint do cliente). Social: Loja OM do Bem, Caminho do Renascer (exige autorização de uso de imagem da ONG; criança só com autorização escrita dos responsáveis) e Mídia Regenerativa. Governança: retrato profissional do Halisson Pontarola, fundo neutro, meio corpo, olhar para a câmera — não serve recorte de foto de evento |
+| Governança — declaração em primeira pessoa | O bloco "Quem responde" está no ar com o texto institucional, e a legenda da foto identifica o CEO **sem ser assinatura**. A versão em primeira pessoa (com "nunca mudou de dono") está no checklist e só entra com a aprovação do Halisson. Na troca, o texto institucional sai, o texto em primeira pessoa entra e a legenda vira assinatura; o layout não muda |
+| Governança — validação jurídica em paralelo | Não bloqueia a publicação (decisão de 25/08/2026), mas 4 afirmações precisam de confirmação com a Alexandra e o jurídico: licença municipal para todas as faces e quem guarda, cláusula de exclusividade na minuta de contrato, existência de código de conduta escrito, e se a afirmação de métricas agregadas e anônimas se sustenta sob LGPD (a de maior exposição da página) |
+| Governança — WhatsApp do CTA de documento | O CTA usa o número geral (41 99835-0210). A base do cliente traz 41 99275-1065 para Curitiba e Região e 47 99132-9771 para Santa Catarina. Falta confirmar qual atende documentação e cadastro antes de trocar |
 | Conteúdo do Podcast | Estrutura no ar em `/blog/podcast` com episódios de exemplo em `lib/podcast.js` sob `TODO(cliente)`. Falta gravar os episódios e preencher o campo `audio`; a página está com `robots: noindex` até lá |
 | Retaxonomia das plataformas (22 produtos sob 9 formatos) | Catálogo em 8 na ordem final, com Rodovias e Digital Signage criados, Shoppings renomeado para Mídia Indoor e Gentileza Urbana removida do catálogo; Projetos Icônicos abrem a listagem como entrada única (9 no total). Falta desdobrar os 22 produtos sob os formatos. Rodovias e Digital Signage estão com o descritivo mínimo sob `TODO(cliente)` |
-| CPM de rodovia divergente | O COPY_SITE traz CPM de R$ 2,06 em rodovias; `lib/simulador.js` trabalha com R$ 8 a 14. A cifra fica fora do FAQ até o cliente cravar qual vale — ver o `TODO(cliente)` em `lib/faq.js`. As demais divergências (telas e área do Aeroporto) foram fechadas pelo checklist da home |
-| FAQ sem a pergunta de antecedência | A nº 2 do documento veio marcada AGUARDANDO DADO (prazo de lona e de subida em LED). Sem ela o FAQ da home mostra 7 perguntas em vez das 8 marcadas no documento — ver `FAQS_HOME` em `lib/faq.js` |
+| CPM de referência | Fechado no que sai: o R$ 2,06 em rodovias saiu de circulação em 26/08/2026, sem fonte identificada em nenhum material do projeto. Falta o comercial validar um CPM — quando validar, ele entra em `lib/simulador.js` (hoje R$ 8 a 14, ordem de grandeza estimada) e volta para a resposta de custo em `lib/faq.js` |
+| FAQ sem a pergunta de antecedência | Única das 20 do checklist que não subiu: dois dos três parágrafos vieram marcados AGUARDANDO DADO (prazo para subir criativo em LED · prazo de produção e instalação de lona). Só o de rodovia sob demanda está fechado, em 15 meses. Quando o dado vier, ela entra em segundo lugar em Contratação e a página passa de 19 para 20 — a home não muda, porque ela já fica fora da seleção de 8 |
+| FAQ da home — dois checklists divergem | O checklist da home (item 12) e o checklist do FAQ (item 06) mandam oito perguntas cada, e as seleções não têm nada em comum além de custo, duração e comprovação. Vale o do FAQ, que é o documento dedicado ao escopo e diz explicitamente "SUBSTITUIR SELEÇÃO"; o da home também fala em "todas as 18" perguntas, contagem que o do FAQ levou a 20. Confirmar com o cliente que a home fica com a seleção do checklist do FAQ |
+| Conteúdo de Melhores Práticas | Falta a Alexandra liberar a copy. O nome mudou, o conteúdo não. A decisão de 26/08 diz que Mídia Kit saiu justamente porque **não haverá arquivo para download**, e que a página passa a trazer recomendações de como anunciar melhor. Hoje ela ainda é a lista de PDFs de `lib/midiakit.js`, com o eyebrow "Downloads", e o FAQ já promete ao visitante "conteúdos e recomendações sobre como escolher praça, formato e período". Falta o cliente entregar essa copy: nenhum checklist trouxe o texto da página |
+| FAQ — o que está incluso no valor | A base não registra se produção da lona e instalação entram no valor da campanha. Se entrarem, vão para a lista do primeiro parágrafo; se não, para a exceção do segundo. São os dois itens que o anunciante mais teme receber como extra |
+| FAQ — escopo de "donos dos pontos" | "Operamos estrutura própria, sem ativos de concessão" está dito de forma geral, mas MUB é mobiliário urbano e banca e relógio digital costumam existir por concessão municipal. Se for o caso, a frase precisa ficar restrita ao Aeroporto, que é o próprio exemplo que ela dá |
+| FAQ — fluxo de ponto específico | A resposta de "Posso escolher um ponto específico?" é genérica de propósito: o fluxo real do comercial para quem chega com a foto de um painel no celular não está documentado. Confirmar se aceita foto e endereço, se oferece alternativa no mesmo trajeto e se existe fila de espera |
 | Portas 03 e 04 da Nova campanha | Mídia Programática e Atendimento automatizado ainda caem no WhatsApp (MercadoOOH e comercial). Falta o cliente dizer se existe plataforma de espaços disponíveis e atendimento automatizado de verdade — ver `WA_PROGRAMATICA` e `WA_ATENDIMENTO_AGORA` |
-| Diferenciais novos sem prova | Aeroporto Square e Mídia Regenerativa estão no ar sem os números de "A prova" e sem mini-case; as seções são omitidas até o dado chegar |
+| Mídia Regenerativa sem prova | Está no ar sem os números de "A prova" e sem mini-case; as seções são omitidas até o dado chegar. Aeroporto Square saiu desta linha: lá a ausência é decisão de 27/08/2026, não falta de dado |
+| Fotos dos diferenciais 01 e 02 | **Bloqueia a publicação das duas páginas.** Face Única: 3 fotos (capa do topo e os dois lados da comparação, Amador e Especialista). As duas do PDF Conceito Face Única servem como referência de enquadramento; confirmar se entram como estão ou se precisam de captação nova. Aeroporto Square: 2 fotos (capa do topo e a da seção "O que é", ilustrando o conceito híbrido). Regra da base para todas: foto real, painel 100% limpo e visível, sem filtro ou IA que altere cor ou proporção, sem fio elétrico na frente, produto nunca cortado |
 | Depoimentos — autorização | Os 3 depoimentos da home são reais e identificam pessoa e marca (Claro, Agência Verbal, Cia do Pastel). Confirmar autorização de uso antes de publicar |
 | Conteúdo dos Projetos Icônicos | `lib/iconicos.js` está sob `TODO(cliente)`: falta o descritivo oficial de Elegancy/Urbanity/Urbanity Light, as medidas de cada estrutura (os cards de formato hoje descrevem sem cravar dimensão), as praças instaladas e a foto de cada card (`image`, 16/9, ≥1600px) — sem ela o card cai num painel escuro com o nome |
 | Foto das plataformas no carrossel da home | `PLATFORMS_LISTAGEM` já carrega o campo `image` (16/9, ≥1600px), mas nenhuma das 9 entradas tem foto — todos os cards caem no painel bege com o nome. É o que falta para a seção ficar apresentável |
@@ -281,6 +307,9 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Telefone comercial de Santa Catarina | `lib/empresa.js` tem `telefoneSc` vazio sob `TODO(cliente)`. Quando o número chegar, o rodapé e o JSON-LD passam a mostrar os dois sozinhos |
 | Blog na home — sistema de cor por tipo | O checklist da home pede Case preto, Podcast cinza e Artigo branco no teaser. Depende de duas decisões que ainda não vieram: quais cards entram no lançamento (o teaser hoje só lista artigos) e como o card preto convive com a regra de paleta, que só abre exceção para o de Mídia Programática |
 | Conteúdo do blog para o lançamento | Um artigo só, com erro de título (`Porque` → `Por que`) e assinatura "Shunda" sem autor identificado. O checklist da home exige três artigos com autoria antes de publicar. É conteúdo no Firestore, corrigido pelo `/admin`, não pelo código |
+| **Sua marca no OOH — a página não faz o que o card promete** | **Bloqueia a publicação da Área do anunciante.** O checklist de 26/08/2026 reescreveu o card para uma ferramenta de pré-visualização: escolher praça e formato, subir a logo ou a peça pronta e ver a marca aplicada na foto do painel real, com download da imagem. A página em `app/area-do-anunciante/sua-marca-no-ooh/` continua sendo o simulador de impactos e CPM (`SimuladorForm`, `lib/simulador.js`), que é justamente o que o checklist tirou de circulação por não ter lastro. Hoje o card promete pré-visualização e entrega calculadora, o espelho do problema que o checklist quis resolver. Ou a ferramenta é reescrita, ou o card volta ao texto antigo |
+| Aviso de tratamento de dados no Google Forms | O cadastro do banco de talentos coleta nome, e-mail, WhatsApp e link de portfólio, e o formulário não traz aviso de tratamento de dados no cabeçalho. É alteração dentro do próprio Google Forms, não no código. Confirmar também que o `rh@outdoormidia.com.br` está ativo e monitorado |
+| `/obrigado?origem=talentos` ficou órfã | Com a saída do formulário de talentos, nada mais leva a essa URL: a entrada em `lib/obrigado.js` e o ramo de `ObrigadoCta` seguem no ar sem produtor. Não quebra nada e o `MAILTO_RH` que ela oferece agora aponta para o RH, mas é código sem caminho de chegada |
 | Automação de marketing | — |
 | Testes automatizados | Nenhum. Regressão só aparece em conferência manual |
 
@@ -556,7 +585,7 @@ O texto do diagnóstico e do CTA de cada uma das dez perguntas está em
   visual no formulário.
 - **Bloqueia publicação:** confirmar que as quatro páginas de destino dos CTAs
   contextuais existem — `Regiões e cobertura`, `Plataformas`, `Projetos Icônicos` e
-  `Guia do Anunciante`.
+  `Melhores Práticas`.
 
 ### CTA de fim de página · novo
 
@@ -571,8 +600,10 @@ Hoje a página encerra direto no rodapé, sem bloco de saída. Entra:
 > Camboriú.
 
 - Botão primário: `Falar com um especialista →`
-- Botão secundário: `Ver o Guia do Anunciante →` — destino
-  `/area-do-anunciante/guia-do-anunciante`
+- Botão secundário: `Ver as Melhores Práticas →` — destino
+  `/area-do-anunciante/melhores-praticas`. O checklist do Diagnóstico ainda escreve
+  "Guia do Anunciante", nome que a revisão da home de 26/08 aposentou; vale o nome novo,
+  porque a renomeação foi explícita para "qualquer link interno"
 - Linha de saída, abaixo dos botões: "Quer ver como a sua marca ficaria em um painel
   antes de conversar? Monte a simulação em **Sua marca no OOH**."
 
@@ -596,7 +627,7 @@ Três itens da coluna `ÁREA DO ANUNCIANTE`:
 
 | HOJE | ENTRA |
 |---|---|
-| Midia Kit | **Guia do Anunciante** |
+| Midia Kit | **Melhores Práticas** |
 | Simulador OOH | **Sua marca no OOH** |
 | Diagnóstico de presença | sem alteração |
 
@@ -664,8 +695,9 @@ reflete a autoavaliação de quem responde, ele não mede nada.
 O nome exibido e o slug divergem em **Mídia Indoor**: a rota segue
 `/plataformas/shoppings` de propósito, para não quebrar links nem os cases já
 gravados com esse slug. **Gentileza Urbana** saiu do catálogo de plataformas (segue
-viva como diferencial) — a rota de plataforma 404 e a
-menção em `lib/esg.js` passou a apontar para o MUB.
+viva como diferencial) — a rota de plataforma 404. Em `lib/esg.js` ela voltou pelo
+nome oficial: **Gentileza Urbana** é a carteira que reúne a Praça de Carregamento
+Elétrico, a Praça Pet Batel e o Jardim Vertical na seção 01 da Ambiental.
 
 Na listagem (home e `/plataformas`) os **Icônicos** abrem a lista, na 1ª
 posição, levando ao hub dos 3 projetos — são 9 entradas ao todo, o número que a
@@ -727,7 +759,10 @@ usuário nas páginas** — não se aplica a este documento nem a comentários/c
 - Números que saíram de circulação, e não podem voltar a nenhuma página: 380 milhões
   de impactos/mês · 82 equipamentos · 138 telas · 159 telas · +22 milhões de impactos
   semanais · 77 locais e 13 milhões no MUB · 100 ativos em rodovias · 7 ou 8
-  plataformas · 65 ou 66 anos. Os válidos estão em **Conteúdo — Empresa**
+  plataformas · 65 ou 66 anos · R$ 2,06 de CPM em rodovias. Os válidos estão em
+  **Conteúdo — Empresa**
+- Não falar de concorrente com agressividade, e a regra vale também para outros
+  meios: a resposta do FAQ sobre redes sociais soma, não substitui
 - **Não usar travessão** em nenhuma copy do site. Reescrever a frase ou usar vírgula,
   dois pontos ou ponto
 - Nomenclatura sempre completa e oficial — nunca abreviar ou apelidar nome de projeto
@@ -798,7 +833,8 @@ Produção roda em **Firebase App Hosting** (Cloud Run), projeto `outdoormidia-e
 - Estilo: utilitários Tailwind no JSX; classes custom só para primitivos do design system em `@layer components` (`kebab-case`)
 - Constantes globais: `lib/constants.js` (exportações nomeadas)
 - Sem TypeScript por ora — JavaScript puro
-- Sem bibliotecas de UI externas (Tailwind CSS é a única camada de estilo)
+- Sem bibliotecas de UI externas (Tailwind CSS é a única camada de estilo). `lucide-react`
+  é a exceção, e é só ícone: não traz CSS, não traz componente de layout
 - Sem comentários desnecessários — código deve ser autoexplicativo
 - Texto de usuário sempre em PT-BR (suporte a i18n vem na Fase 3)
 - Imagens em `/public/` — referenciadas por caminho absoluto (`/cases/case1.jpg`)
