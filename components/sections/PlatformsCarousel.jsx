@@ -16,6 +16,7 @@ export default function PlatformsCarousel({ num = '02' }) {
   const dragRef = useRef(null)
   const arrastouRef = useRef(false)
   const [active, setActive] = useState(0)
+  const [midiaLiberada, setMidiaLiberada] = useState(false)
 
   /* Roda a cada frame de rolagem: além de eleger o card central, escurece cada
      card na proporção da distância até o centro. O escurecimento contínuo é o
@@ -54,6 +55,30 @@ export default function PlatformsCarousel({ num = '02' }) {
     sync()
     return () => cancelAnimationFrame(frameRef.current)
   }, [sync])
+
+  /* O vídeo do card de Projetos Icônicos é decorativo e pesa 13 MB: só recebe o
+     `src` quando o carrossel chega à tela, e pausa quando sai dela — deixar um
+     loop rodando fora de vista gasta bateria sem ninguém ver. */
+  useEffect(() => {
+    const rail = railRef.current
+    if (!rail) return
+    const io = new IntersectionObserver(
+      ([entrada]) => {
+        if (entrada.isIntersecting) {
+          setMidiaLiberada(true)
+          rail.querySelectorAll('video').forEach((v) => {
+            const play = v.play()
+            if (play) play.catch(() => {})
+          })
+          return
+        }
+        rail.querySelectorAll('video').forEach((v) => v.pause())
+      },
+      { threshold: 0.2 }
+    )
+    io.observe(rail)
+    return () => io.disconnect()
+  }, [])
 
   const goTo = useCallback((i) => {
     const rail = railRef.current
@@ -162,7 +187,18 @@ export default function PlatformsCarousel({ num = '02' }) {
             className="ticks relative aspect-[16/9] flex-[0_0_min(1000px,86%)] snap-center overflow-hidden rounded-[18px] border border-line bg-paper [&::after]:z-[3] [&::before]:z-[3] max-mob:aspect-[4/5] max-mob:flex-[0_0_100%]"
             key={p.slug}
           >
-            {p.image ? (
+            {p.video ? (
+              <video
+                aria-hidden="true"
+                autoPlay
+                className="pointer-events-none absolute inset-0 size-full object-cover"
+                loop
+                muted
+                playsInline
+                preload="none"
+                src={midiaLiberada ? p.video : undefined}
+              />
+            ) : p.image ? (
               <Image
                 alt={p.imageAlt || `${p.name}: ${p.short}`}
                 className="object-cover"
