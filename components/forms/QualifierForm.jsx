@@ -102,10 +102,20 @@ const VERBAS = [
   'Não há orçamento planejado',
 ]
 
+// Mesma anatomia das portas 03 e 04 do bloco Nova campanha: o ícone vive dentro
+// de um quadrado claro arredondado à esquerda, e o rótulo fica ao lado dele, na
+// mesma linha de base. Solto na cápsula o ícone de 20px ficava maior que o texto
+// e desalinhado dele.
 const CHIP_BASE =
-  'inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-[13px] font-bold transition-colors duration-150'
-const CHIP = `${CHIP_BASE} border-line text-ink-soft hover:border-orange hover:text-orange`
-const CHIP_ATIVO = `${CHIP_BASE} border-orange bg-orange text-white`
+  'inline-flex cursor-pointer items-center rounded-full border text-left text-[13.5px] font-bold leading-tight transition-colors duration-150'
+// Com o quadrado do ícone a cápsula perde padding à esquerda, senão ele flutua
+// dentro da borda; sem ícone o padding volta a ser simétrico.
+const CHIP_COM_ICONE = 'gap-2.5 py-1.5 pl-1.5 pr-5'
+const CHIP_SEM_ICONE = 'px-5 py-2.5'
+const CHIP = 'border-line text-ink hover:border-orange hover:text-orange'
+const CHIP_ATIVO = 'border-orange bg-orange text-white'
+
+const CHIP_ICONE = 'grid size-9 shrink-0 place-items-center rounded-[10px]'
 
 // O ícone fica no laranja da marca; no chip marcado ele herda o branco do texto,
 // porque laranja sobre laranja some. `aria-hidden` quem põe é o próprio lucide,
@@ -120,10 +130,18 @@ function OpcaoChip({ label, Icone, ativo, onClick, title }) {
       type="button"
       title={title}
       aria-pressed={ativo}
-      className={ativo ? CHIP_ATIVO : CHIP}
+      className={`${CHIP_BASE} ${Icone ? CHIP_COM_ICONE : CHIP_SEM_ICONE} ${
+        ativo ? CHIP_ATIVO : CHIP
+      }`}
       onClick={onClick}
     >
-      {Icone && <Icone size={20} className={`shrink-0 ${ativo ? '' : 'text-orange'}`} />}
+      {Icone && (
+        <span
+          className={`${CHIP_ICONE} ${ativo ? 'bg-white/20 text-white' : 'bg-orange/10 text-orange'}`}
+        >
+          <Icone size={20} />
+        </span>
+      )}
       {label}
     </button>
   )
@@ -516,24 +534,31 @@ export default function QualifierForm() {
               </span>
             </label>
 
-            <button
-              type="button"
-              onClick={enviar}
-              disabled={!completo || enviando}
-              className="btn btn-fill mt-6 disabled:opacity-50"
-            >
-              {enviando ? 'Enviando…' : 'Enviar pelo WhatsApp'}
-            </button>
-            {!completo && (
-              <p className="mt-3 text-[13.5px] font-semibold text-ink">
-                {faltando.length > 0
-                  ? `Falta preencher: ${listar(faltando)}.`
-                  : 'Falta aceitar os Termos de Privacidade.'}
-              </p>
-            )}
-            <p className="mt-3 text-[13.5px] text-ink-soft">
-              Suas respostas vão junto na mensagem. Retornamos em até 1 dia útil.
-            </p>
+            {/* CTA fechando a etapa: linha própria acima do botão, e a microcopy
+                ao lado dele em vez de empilhada embaixo, para que o que falta
+                preencher fique na altura do olho de quem tenta clicar. */}
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3.5 border-t border-line pt-6">
+              <button
+                type="button"
+                onClick={enviar}
+                disabled={!completo || enviando}
+                className="btn btn-fill shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {enviando ? 'Enviando…' : 'Enviar pelo WhatsApp'}
+              </button>
+              <div className="min-w-[220px] flex-1 text-[13.5px] leading-snug">
+                {!completo && (
+                  <p className="m-0 mb-1 font-semibold text-ink">
+                    {faltando.length > 0
+                      ? `Falta preencher: ${listar(faltando)}.`
+                      : 'Falta aceitar os Termos de Privacidade.'}
+                  </p>
+                )}
+                <p className="m-0 text-ink-soft">
+                  Suas respostas vão junto na mensagem. Retornamos em até 1 dia útil.
+                </p>
+              </div>
+            </div>
           </fieldset>
         )}
       </div>

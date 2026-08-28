@@ -1,8 +1,12 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import CoverMedia from '@/components/ui/CoverMedia'
 import EscadaPresenca from '@/components/ui/EscadaPresenca'
 import DiagnosticoQuiz from '@/components/forms/DiagnosticoQuiz'
+
+const HERO_ALT =
+  'A teoria da Escada da Presença: pessoa subindo cinco degraus de concreto, nomeados existência, descoberta, reconhecimento, preferência e referência, até um outdoor iluminado da Outdoormídia no topo.'
 
 const DESCRIPTION =
   'Responda 10 perguntas em um minuto e descubra em qual dos cinco degraus da Escada da Presença a sua marca está hoje, e o que fazer para subir.'
@@ -48,6 +52,18 @@ export default function DiagnosticoDePresencaPage() {
               Toda marca ocupa um espaço na cabeça do cliente. Responda em apenas um minuto, e
               descubra em qual degrau a sua está hoje.
             </p>
+
+            {/* A capa do hero mostra a escada inteira antes de qualquer texto
+                explicar o conceito, e é a primeira imagem da página: entra com
+                `priority` para não disputar a fila de carregamento. */}
+            <CoverMedia
+              alt={HERO_ALT}
+              className="reveal mt-11 max-mob:mt-8"
+              priority
+              ratio="16/9"
+              sizes="(max-width: 1280px) 100vw, 1280px"
+              src="/media/hero-diagnostico.jpeg"
+            />
           </div>
         </section>
 
@@ -69,7 +85,7 @@ export default function DiagnosticoDePresencaPage() {
               decide. Antes de responder, veja o caminho inteiro.
             </p>
 
-            <EscadaPresenca className="reveal mt-9 max-mob:mt-7" />
+            <EscadaPresenca className="mt-9 max-mob:mt-7" />
 
             <p className="reveal mt-4 text-[12.5px] text-ink-soft/70">
               Fonte: Kantar Ibope Media, Target Group Index, 2024.

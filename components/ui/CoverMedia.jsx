@@ -16,6 +16,7 @@ export default function CoverMedia({
   label,
   ratio = '16/10',
   sizes,
+  priority = false,
   className = '',
 }) {
   const base = `relative w-full overflow-hidden rounded-[16px] border border-line ${RATIOS[ratio]}`
@@ -27,7 +28,14 @@ export default function CoverMedia({
     const textoAlt = alt || label || 'Outdoormídia, mídia Out of Home'
     return (
       <div className={`${base} ${className}`}>
-        <Image src={src} alt={textoAlt} fill sizes={sizes} className="object-cover" />
+        <Image
+          src={src}
+          alt={textoAlt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover"
+        />
       </div>
     )
   }
