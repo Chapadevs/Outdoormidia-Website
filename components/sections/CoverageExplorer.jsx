@@ -21,11 +21,26 @@ function plataformas(total) {
   return `${total} ${total === 1 ? 'plataforma' : 'plataformas'}`
 }
 
-export default function CoverageExplorer({ locations, num = '04' }) {
+// `mostrarLista` desliga a faixa de praças do rodapé do card. Na home ela sai:
+// a lista completa por praça vive em /solucoes/regioes, e repetir as duas
+// deixava a mesma informação em dois lugares. O mapa e os chips ficam.
+// `moldura` desliga a borda e o arredondamento do card. Na home a seção corre
+// solta sobre o fundo; em /solucoes/regioes ela continua emoldurada, porque lá
+// o card carrega também a faixa de praças e precisa ter começo e fim visíveis.
+export default function CoverageExplorer({
+  locations,
+  num = '04',
+  mostrarLista = true,
+  moldura = true,
+}) {
   const [hoverId, setHoverId] = useState(null)
 
   return (
-    <div className="reveal overflow-hidden rounded-[16px] border border-line bg-paper">
+    <div
+      className={`reveal overflow-hidden bg-paper ${
+        moldura ? 'rounded-[16px] border border-line' : ''
+      }`}
+    >
       <div className="grid grid-cols-[1.25fr_1fr] items-stretch max-tab:grid-cols-1">
         <div className="flex flex-col justify-between px-14 pb-14 pt-[72px] max-tab:p-10 max-mob:px-6 max-mob:py-9">
           <div>
@@ -70,32 +85,34 @@ export default function CoverageExplorer({ locations, num = '04' }) {
         </div>
       </div>
 
-      <div className="overflow-hidden border-t border-ink">
-        <div className="-mb-px -mr-px grid grid-cols-5 max-tab:grid-cols-2 max-mob:grid-cols-1">
-          {locations.map((loc) => (
-            <div
-              key={loc.id}
-              className={`border-b border-r border-line px-6 pb-[34px] pt-[30px] transition-colors duration-150 max-mob:py-7 ${
-                hoverId === loc.id ? 'bg-bone' : 'bg-paper'
-              }`}
-              onMouseEnter={() => setHoverId(loc.id)}
-              onMouseLeave={() => setHoverId(null)}
-            >
-              {loc.formats?.length > 0 && (
-                <div className="text-[11.5px] font-bold uppercase tracking-[0.12em] text-orange">
-                  {plataformas(loc.formats.length)}
+      {mostrarLista && (
+        <div className="overflow-hidden border-t border-ink">
+          <div className="-mb-px -mr-px grid grid-cols-5 max-tab:grid-cols-2 max-mob:grid-cols-1">
+            {locations.map((loc) => (
+              <div
+                key={loc.id}
+                className={`border-b border-r border-line px-6 pb-[34px] pt-[30px] transition-colors duration-150 max-mob:py-7 ${
+                  hoverId === loc.id ? 'bg-bone' : 'bg-paper'
+                }`}
+                onMouseEnter={() => setHoverId(loc.id)}
+                onMouseLeave={() => setHoverId(null)}
+              >
+                {loc.formats?.length > 0 && (
+                  <div className="text-[11.5px] font-bold uppercase tracking-[0.12em] text-orange">
+                    {plataformas(loc.formats.length)}
+                  </div>
+                )}
+                <div className="mt-2.5 text-[19px] font-extrabold leading-[1.15] tracking-[-0.01em]">
+                  {loc.name}
                 </div>
-              )}
-              <div className="mt-2.5 text-[19px] font-extrabold leading-[1.15] tracking-[-0.01em]">
-                {loc.name}
+                {loc.desc && (
+                  <p className="mt-2 text-[13.5px] leading-[1.45] text-ink-soft">{loc.desc}</p>
+                )}
               </div>
-              {loc.desc && (
-                <p className="mt-2 text-[13.5px] leading-[1.45] text-ink-soft">{loc.desc}</p>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

@@ -14,7 +14,9 @@ const SLIDES = ICONICOS.map((i) => ({
   alt: i.imageAlt || `${i.name}: ${i.tagline}`,
 }))
 
-export default function Iconicos({ num = '03' }) {
+// `linkTitulo` desliga o link do h2: dentro de /plataformas/projetos-iconicos
+// ele apontaria para a própria página.
+export default function Iconicos({ num = '01', linkTitulo = true }) {
   const [active, setActive] = useState(0)
   const item = ICONICOS[active]
 
@@ -39,12 +41,16 @@ export default function Iconicos({ num = '03' }) {
         <div className="reveal flex items-center gap-3.5">
           <span className="font-display text-[15px] text-white/75">{num}</span>
           <h2 className="m-0 text-[clamp(28px,4.4vw,54px)] font-extrabold leading-none tracking-[-0.02em]">
-            <Link
-              className="text-white transition-opacity duration-150 hover:opacity-70"
-              href="/plataformas/projetos-iconicos"
-            >
-              Icônicos
-            </Link>
+            {linkTitulo ? (
+              <Link
+                className="text-white transition-opacity duration-150 hover:opacity-70"
+                href="/plataformas/projetos-iconicos"
+              >
+                Icônicos
+              </Link>
+            ) : (
+              'Icônicos'
+            )}
           </h2>
           <span className="h-px flex-1 bg-white/40"></span>
           <span className="eyebrow shrink-0 text-white/85 max-tab:hidden">Fora do catálogo</span>

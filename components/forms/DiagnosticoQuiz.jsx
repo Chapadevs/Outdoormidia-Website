@@ -265,43 +265,45 @@ export default function DiagnosticoQuiz() {
             </div>
           ))}
 
-          <div className="sticky bottom-[18px] z-30 flex flex-wrap items-center gap-6 rounded-[16px] bg-ink px-6 py-[18px] text-paper shadow-[0_14px_34px_rgba(22,17,13,.22)] max-mob:bottom-[84px] max-mob:gap-x-3 max-mob:gap-y-2 max-mob:px-4 max-mob:py-3">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-paper/55 max-mob:hidden">
-              Parcial
-            </span>
-            <span className="flex items-baseline gap-1">
-              <span className="font-display text-[34px] leading-none max-mob:text-[26px]">
-                {score}
+          {/* A barra parcial sai de cena quando o resultado aparece: ela
+              repetia a nota que o card de resultado já mostra em corpo maior. */}
+          {!mostrarResultado && (
+            <div className="sticky bottom-[18px] z-30 flex flex-wrap items-center gap-6 rounded-[16px] bg-ink px-6 py-[18px] text-paper shadow-[0_14px_34px_rgba(22,17,13,.22)] max-mob:bottom-[84px] max-mob:gap-x-3 max-mob:gap-y-2 max-mob:px-4 max-mob:py-3">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-paper/55 max-mob:hidden">
+                Parcial
               </span>
-              <span className="font-display text-base text-paper/45 max-mob:text-sm">
-                /{NOTA_MAXIMA}
+              <span className="flex items-baseline gap-1">
+                <span className="font-display text-[34px] leading-none max-mob:text-[26px]">
+                  {score}
+                </span>
+                <span className="font-display text-base text-paper/45 max-mob:text-sm">
+                  /{NOTA_MAXIMA}
+                </span>
               </span>
-            </span>
-            <p
-              aria-live="polite"
-              className="min-w-[180px] flex-1 text-[13px] leading-[1.5] text-paper/70 max-mob:order-last max-mob:min-w-0 max-mob:basis-full max-mob:text-[11.5px] max-mob:leading-[1.45]"
-            >
-              {respondidas === 0
-                ? `Comece pela primeira pergunta. O seu degrau aparece quando as ${PERGUNTAS.length} estiverem respondidas.`
-                : !completo
-                  ? `Faltam ${faltam} ${faltam === 1 ? 'resposta' : 'respostas'} para o seu degrau aparecer.`
-                  : mostrarResultado
-                    ? 'Degrau pronto. Role para ver a leitura completa.'
+              <p
+                aria-live="polite"
+                className="min-w-[180px] flex-1 text-[13px] leading-[1.5] text-paper/70 max-mob:order-last max-mob:min-w-0 max-mob:basis-full max-mob:text-[11.5px] max-mob:leading-[1.45]"
+              >
+                {respondidas === 0
+                  ? `Comece pela primeira pergunta. O seu degrau aparece quando as ${PERGUNTAS.length} estiverem respondidas.`
+                  : !completo
+                    ? `Faltam ${faltam} ${faltam === 1 ? 'resposta' : 'respostas'} para o seu degrau aparecer.`
                     : 'Tudo respondido: veja em qual degrau a sua marca está.'}
-            </p>
-            <button
-              ref={botaoRef}
-              type="button"
-              onClick={mostrarResultado ? refazer : verResultado}
-              className={`cursor-pointer scroll-mt-[100px] rounded-full px-[22px] py-[13px] text-[13px] font-bold tracking-[0.06em] transition duration-[180ms] max-mob:ml-auto max-mob:px-4 max-mob:py-2.5 max-mob:text-xs ${
-                completo
-                  ? 'bg-orange text-white hover:bg-white hover:text-ink'
-                  : 'bg-white/10 text-paper/50 hover:bg-white/[.18]'
-              }`}
-            >
-              {mostrarResultado ? 'Refazer diagnóstico' : 'Ver meu resultado'}
-            </button>
-          </div>
+              </p>
+              <button
+                ref={botaoRef}
+                type="button"
+                onClick={verResultado}
+                className={`cursor-pointer scroll-mt-[100px] rounded-full px-[22px] py-[13px] text-[13px] font-bold tracking-[0.06em] transition duration-[180ms] max-mob:ml-auto max-mob:px-4 max-mob:py-2.5 max-mob:text-xs ${
+                  completo
+                    ? 'bg-orange text-white hover:bg-white hover:text-ink'
+                    : 'bg-white/10 text-paper/50 hover:bg-white/[.18]'
+                }`}
+              >
+                Ver meu resultado
+              </button>
+            </div>
+          )}
         </div>
 
         {mostrarResultado && (
@@ -324,14 +326,8 @@ export default function DiagnosticoQuiz() {
                   <h2 className="m-0 mt-3 text-balance text-[clamp(24px,3.4vw,34px)] font-extrabold leading-[1.1]">
                     {degrau.fraseDura}
                   </h2>
-                  {degrau.paragrafos.map((paragrafo) => (
-                    <p className={`mt-3 text-[14.5px] leading-[1.65] ${degrau.soft}`} key={paragrafo}>
-                      {paragrafo}
-                    </p>
-                  ))}
-
                   {fragil && (
-                    <div className="mt-7 border-t border-current/20 pt-6">
+                    <div className="mt-7 border-b border-current/20 pb-7">
                       <p className="m-0 text-[15px] font-bold leading-[1.5]">
                         Seu ponto mais frágil hoje é{' '}
                         <span className="font-extrabold">&ldquo;{fragil.pergunta}&rdquo;</span>
@@ -361,6 +357,12 @@ export default function DiagnosticoQuiz() {
                       </a>
                     </div>
                   )}
+
+                  {degrau.paragrafos.map((paragrafo) => (
+                    <p className={`mt-3 text-[14.5px] leading-[1.65] ${degrau.soft}`} key={paragrafo}>
+                      {paragrafo}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>
@@ -456,6 +458,12 @@ export default function DiagnosticoQuiz() {
                 {envio === 'enviando' ? 'Enviando…' : 'Enviar'}
               </button>
             </form>
+
+            <div className="mt-4 flex justify-center">
+              <button className="btn btn-ghost" onClick={refazer} type="button">
+                Refazer diagnóstico
+              </button>
+            </div>
           </div>
         )}
       </div>

@@ -39,14 +39,14 @@ export default function DiagnosticoDePresencaPage() {
             <h1 className="display reveal mt-[18px] text-[clamp(40px,6.4vw,88px)] text-ink">
               Diagnóstico de
               <br />
-              presença de marca.
+              {/* O .display sobe tudo para caixa alta; o miolo volta para caixa
+                  baixa para "DIAGNÓSTICO DE" e "MARCA" carregarem o destaque. */}
+              <span className="lowercase">presença de</span>{' '}
+              <span className="font-extrabold">marca.</span>
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
               Toda marca ocupa um espaço na cabeça do cliente. Responda em apenas um minuto, e
               descubra em qual degrau a sua está hoje.
-            </p>
-            <p className="eyebrow reveal mt-7">
-              Presença gera lembrança. Lembrança gera escolha. <b>Escolha gera resultados.</b>
             </p>
           </div>
         </section>

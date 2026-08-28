@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
+import Iconicos from '@/components/sections/Iconicos'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import { ICONICOS } from '@/lib/iconicos'
 import { WA_ICONICOS, waLink } from '@/lib/whatsapp'
@@ -63,9 +64,11 @@ export default function ProjetosIconicosPage() {
           </div>
         </section>
 
+        <Iconicos linkTitulo={false} num="01" />
+
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Os três projetos" className="reveal mb-[34px]" />
+            <SectionHeading num="02" title="Os três projetos" className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
               {ICONICOS.map((iconico) => (
                 <article
@@ -118,7 +121,7 @@ export default function ProjetosIconicosPage() {
 
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
-            <SectionHeading num="02" title="Procurando o catálogo?" className="reveal mb-[34px]" />
+            <SectionHeading num="03" title="Procurando o catálogo?" className="reveal mb-[34px]" />
             <div className="reveal flex items-end justify-between gap-8 max-mob:flex-col max-mob:items-start max-mob:gap-5">
               <p className="m-0 max-w-[56ch] text-[15px] leading-relaxed text-ink-soft">
                 Para campanhas com formato, praça e período definidos, o caminho são as 7

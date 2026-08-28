@@ -4,7 +4,6 @@ import Ticker from '@/components/sections/Ticker'
 import Institutional from '@/components/sections/Institutional'
 import Diferenciais from '@/components/sections/Diferenciais'
 import PlatformsCarousel from '@/components/sections/PlatformsCarousel'
-import Iconicos from '@/components/sections/Iconicos'
 import Cases from '@/components/sections/Cases'
 import Process from '@/components/sections/Process'
 import Reviews from '@/components/sections/Reviews'
@@ -21,13 +20,13 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Hero />
-      <Ticker />
-      <HomeTimeline>
+      <HomeTimeline />
+      <div className="desloca-trilho">
+        <Hero />
+        <Ticker />
         <Institutional />
         <Diferenciais />
         <PlatformsCarousel />
-        <Iconicos />
         <Coverage />
         <Reviews />
         <Cases />
@@ -35,7 +34,7 @@ export default function Home() {
         <NovaCampanha />
         <BlogTeaser />
         <Faq />
-      </HomeTimeline>
+      </div>
       <Footer />
     </>
   )

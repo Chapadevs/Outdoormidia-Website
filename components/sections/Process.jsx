@@ -1,3 +1,4 @@
+import { MapPinned, MonitorCheck, PencilRuler } from 'lucide-react'
 import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
 import ScrollToButton from '@/components/widgets/ScrollToButton'
@@ -6,18 +7,21 @@ const ETAPAS = [
   {
     num: '01',
     title: 'Planejamento',
+    Icone: MapPinned,
     dark: false,
     text: 'Objetivo e praça definidos, plataformas e pontos selecionados, audiência lida e proposta de mídia montada.',
   },
   {
     num: '02',
     title: 'Produção',
+    Icone: PencilRuler,
     dark: true,
     text: 'Especificação por formato, adequação do criativo ao ponto e preparo dos materiais, estáticos ou digitais.',
   },
   {
     num: '03',
     title: 'Veiculação e dados',
+    Icone: MonitorCheck,
     dark: false,
     text: 'Instalação ou upload, conferência, monitoramento e entrega dos dados de audiência do período.',
   },
@@ -26,7 +30,7 @@ const ETAPAS = [
 // O mesmo bloco serve a home e /sobre — editar aqui reflete nos dois. Em /sobre
 // ele entra sob o título "Por que a Outdoormídia", que é a seção que ele passou
 // a ocupar; o conteúdo não muda de uma página para a outra.
-export default function Process({ num = '07', title = 'Gestão 360 OM' }) {
+export default function Process({ num = '06', title = 'Gestão 360 OM' }) {
   return (
     <section className="bg-bone py-[110px] max-mob:py-[72px]" id="processo">
       <div className="wrap">
@@ -61,6 +65,14 @@ export default function Process({ num = '07', title = 'Gestão 360 OM' }) {
               </span>
 
               <div className="relative z-[2]">
+                <span
+                  className={`mb-6 grid size-11 shrink-0 place-items-center rounded-[10px] ${
+                    etapa.dark ? 'bg-ink/10 text-ink' : 'bg-orange/10 text-orange'
+                  }`}
+                >
+                  <etapa.Icone size={24} />
+                </span>
+
                 <h3 className="display m-0 mb-2.5 flex min-h-[65px] max-w-[60%] items-start text-[26px] leading-tight text-ink max-mob:min-h-0 max-mob:max-w-[66%]">
                   {etapa.title}
                 </h3>
