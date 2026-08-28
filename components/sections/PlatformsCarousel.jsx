@@ -2,21 +2,32 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
+const DIM_MAXIMO = 0.55
+const ARRASTE_MINIMO = 6
+
 export default function PlatformsCarousel({ num = '02' }) {
   const railRef = useRef(null)
-  const timerRef = useRef(null)
+  const frameRef = useRef(0)
+  const activeRef = useRef(0)
+  const dragRef = useRef(null)
+  const arrastouRef = useRef(false)
   const [active, setActive] = useState(0)
 
+  /* Roda a cada frame de rolagem: além de eleger o card central, escurece cada
+     card na proporção da distância até o centro. O escurecimento contínuo é o
+     que faz a rolagem parecer suave — por transição de classe ele chegava
+     atrasado, depois que a rolagem já havia parado. */
   const sync = useCallback(() => {
     const rail = railRef.current
     if (!rail) return
     const mid = rail.getBoundingClientRect().left + rail.clientWidth / 2
     let best = 0
     let bestDistance = Infinity
+
     Array.from(rail.children).forEach((card, i) => {
       const box = card.getBoundingClientRect()
       const distance = Math.abs(box.left + box.width / 2 - mid)
@@ -24,13 +35,24 @@ export default function PlatformsCarousel({ num = '02' }) {
         bestDistance = distance
         best = i
       }
+      const dim = card.querySelector('[data-dim]')
+      if (dim) dim.style.opacity = Math.min(distance / box.width, 1) * DIM_MAXIMO
     })
-    setActive(best)
+
+    if (best !== activeRef.current) {
+      activeRef.current = best
+      setActive(best)
+    }
   }, [])
 
   const onScroll = useCallback(() => {
-    clearTimeout(timerRef.current)
-    timerRef.current = setTimeout(sync, 60)
+    cancelAnimationFrame(frameRef.current)
+    frameRef.current = requestAnimationFrame(sync)
+  }, [sync])
+
+  useEffect(() => {
+    sync()
+    return () => cancelAnimationFrame(frameRef.current)
   }, [sync])
 
   const goTo = useCallback((i) => {
@@ -40,8 +62,49 @@ export default function PlatformsCarousel({ num = '02' }) {
     const railBox = rail.getBoundingClientRect()
     const cardBox = card.getBoundingClientRect()
     const left = rail.scrollLeft + (cardBox.left - railBox.left) - (rail.clientWidth - cardBox.width) / 2
-    rail.scrollTo({ left: Math.max(0, left), behavior: 'smooth' })
-    setActive(i)
+    const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    rail.scrollTo({ left: Math.max(0, left), behavior: reduzido ? 'auto' : 'smooth' })
+  }, [])
+
+  /* Arrastar com o mouse. O toque já tem inércia nativa e fica de fora; o snap
+     é desligado durante o arraste para não puxar o card de volta a cada frame,
+     e reatado ao soltar, quando o card mais próximo é centralizado. */
+  const onPointerDown = useCallback((e) => {
+    const rail = railRef.current
+    if (e.pointerType === 'touch' || !rail) return
+    dragRef.current = { x: e.clientX, left: rail.scrollLeft, id: e.pointerId }
+    arrastouRef.current = false
+    rail.style.scrollSnapType = 'none'
+    rail.style.cursor = 'grabbing'
+  }, [])
+
+  const onPointerMove = useCallback((e) => {
+    const drag = dragRef.current
+    const rail = railRef.current
+    if (!drag || !rail) return
+    const dx = e.clientX - drag.x
+    if (!arrastouRef.current && Math.abs(dx) > ARRASTE_MINIMO) {
+      arrastouRef.current = true
+      rail.setPointerCapture(drag.id)
+    }
+    rail.scrollLeft = drag.left - dx
+  }, [])
+
+  const onPointerUp = useCallback(() => {
+    const rail = railRef.current
+    if (!dragRef.current || !rail) return
+    dragRef.current = null
+    rail.style.scrollSnapType = ''
+    rail.style.cursor = ''
+    if (arrastouRef.current) goTo(activeRef.current)
+  }, [goTo])
+
+  // Solto o arraste em cima de um card, o clique dispararia o link por baixo.
+  const onClickCapture = useCallback((e) => {
+    if (!arrastouRef.current) return
+    e.preventDefault()
+    e.stopPropagation()
+    arrastouRef.current = false
   }, [])
 
   return (
@@ -85,11 +148,16 @@ export default function PlatformsCarousel({ num = '02' }) {
           ativo, deixando o próximo espiando nas bordas. O padding lateral é o
           que segura o primeiro e o último card centralizados. */}
       <div
-        className="reveal mt-11 flex snap-x snap-proximity gap-[22px] overflow-x-auto px-[max(32px,calc((100%-1000px)/2))] pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-mob:px-5"
+        className="reveal mt-11 flex cursor-grab touch-pan-y snap-x snap-mandatory gap-[22px] overflow-x-auto overscroll-x-contain px-[max(32px,calc((100%-1000px)/2))] pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-mob:cursor-auto max-mob:px-5"
+        onClickCapture={onClickCapture}
+        onPointerCancel={onPointerUp}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
         onScroll={onScroll}
         ref={railRef}
       >
-        {PLATFORMS_LISTAGEM.map((p, index) => (
+        {PLATFORMS_LISTAGEM.map((p) => (
           <article
             className="ticks relative aspect-[16/9] flex-[0_0_min(1000px,86%)] snap-center overflow-hidden rounded-[18px] border border-line bg-paper [&::after]:z-[3] [&::before]:z-[3] max-mob:aspect-[4/5] max-mob:flex-[0_0_100%]"
             key={p.slug}
@@ -98,6 +166,7 @@ export default function PlatformsCarousel({ num = '02' }) {
               <Image
                 alt={p.imageAlt || `${p.name}: ${p.short}`}
                 className="object-cover"
+                draggable={false}
                 fill
                 sizes="(max-width: 560px) 100vw, 1000px"
                 src={p.image}
@@ -129,14 +198,14 @@ export default function PlatformsCarousel({ num = '02' }) {
                   {p.short}
                 </p>
               </div>
-              <Link className="btn btn-fill pointer-events-auto shrink-0" href={p.href}>
+              <Link className="btn btn-fill pointer-events-auto shrink-0" draggable={false} href={p.href}>
                 {p.cta} →
               </Link>
             </div>
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 z-[2] bg-bone transition-opacity duration-[550ms] ease-[cubic-bezier(.2,.7,.2,1)]"
-              style={{ opacity: index === active ? 0 : 0.6 }}
+              className="pointer-events-none absolute inset-0 z-[2] bg-bone opacity-0"
+              data-dim=""
             />
           </article>
         ))}

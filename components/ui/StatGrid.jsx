@@ -1,3 +1,5 @@
+import LetterSwap from '@/components/ui/LetterSwap'
+
 // Faixa de números da marca. O wrapper com overflow-hidden + `-mb-px` recorta a
 // borda da última linha, então o grid mantém as divisórias entre linhas quando
 // quebra em 2 ou 1 coluna, sem sobrar um traço solto embaixo.
@@ -18,9 +20,11 @@ export default function StatGrid({ stats, size = 'lg', cellClassName = '', class
   return (
     <div className={`overflow-hidden border-l border-ink/15 ${className}`}>
       <div className="-mb-px grid grid-cols-4 max-tab:grid-cols-2 max-xs:grid-cols-1">
-        {stats.map((stat) => (
+        {stats.map((stat, i) => (
           <div className={`border-b border-r border-ink/15 ${cell} ${cellClassName}`} key={stat.label}>
-            <div className={`display leading-[0.9] text-orange ${num}`}>{stat.n}</div>
+            <div className={`display leading-[0.9] text-orange ${num}`}>
+              <LetterSwap delay={i * 0.18} text={stat.n} />
+            </div>
             <div className="mt-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-soft">
               {stat.label}
             </div>

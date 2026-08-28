@@ -36,8 +36,17 @@ export default function EscadaPresenca({ ativo = null, className = '' }) {
               }`}
               style={{ width: `${(i + 1) * 20}%` }}
             />
-            <span className="text-[10px] font-bold uppercase tracking-[0.16em] opacity-60">
-              Degrau {degrau.n}
+            <span className="mt-1 flex items-center gap-2.5">
+              <span
+                className={`grid size-9 shrink-0 place-items-center rounded-[10px] ${
+                  aceso ? degrau.icone : 'bg-orange/10 text-orange'
+                } ${apagado ? 'opacity-70' : ''}`}
+              >
+                <degrau.Icone size={20} />
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.16em] opacity-60">
+                Degrau {degrau.n}
+              </span>
             </span>
             <span className="text-[15px] font-extrabold leading-tight">{degrau.nome}</span>
             <p

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import Coverflow from '@/components/ui/Coverflow'
 import SectionHeading from '@/components/ui/SectionHeading'
 
 // Depoimentos reais, na redação oficial do cliente (COPY_SITE).
@@ -9,10 +10,17 @@ import SectionHeading from '@/components/ui/SectionHeading'
 // TODO(cliente): confirmar a autorização de uso de nome, cargo e marca dos três
 // depoentes antes de publicar — são pessoas e empresas identificáveis.
 //
-// TODO(cliente): faltam os três vídeos (9:16, legenda embutida obrigatória) e as
-// capas estáticas. Enquanto `video` e `capa` estiverem vazios, o card mostra a
-// citação sobre o painel bege, sem botão de play e sem modal — o badge de
-// duração continua, porque a duração já é dado confirmado.
+// Os três vídeos entraram em `public/media/cases-videos/`, na ordem numérica
+// dos arquivos.
+//
+// TODO(cliente): a duração medida de `depoimento-1` (01:00) e de
+// `depoimento-2` (00:45) é o inverso da que os cards 01 e 02 declaram (00:44 e
+// 01:00). O arquivo 3 casa exato. Confirmar se os dois primeiros arquivos estão
+// trocados antes de publicar: o card 01 identifica pessoa e marca reais.
+//
+// TODO(cliente): faltam as capas estáticas. Enquanto `capa` estiver vazio, o
+// card mostra a citação sobre o painel bege com o play por cima — o vídeo só
+// carrega quando o modal abre.
 //
 // TODO(cliente): o card do Auto Shopping Curitiba cita um case que ainda não
 // tem página (/cases/[slug] não existe, só a listagem). Enquanto não existir, o
@@ -26,7 +34,7 @@ const REVIEWS = [
     name: 'Guilherme Heimbecher',
     role: 'Especialista de Marketing · Claro',
     duracao: '00:44',
-    video: null,
+    video: '/media/cases-videos/depoimento-1-compressed.mp4',
     capa: null,
   },
   {
@@ -36,7 +44,7 @@ const REVIEWS = [
     role: 'Diretor · Agência Verbal',
     contexto: 'Case: Auto Shopping Curitiba',
     duracao: '01:00',
-    video: null,
+    video: '/media/cases-videos/depoimento-2-compressed.mp4',
     capa: null,
   },
   {
@@ -44,7 +52,7 @@ const REVIEWS = [
     name: 'Mônica Kachel',
     role: 'Proprietária · Cia do Pastel',
     duracao: '01:27',
-    video: null,
+    video: '/media/cases-videos/depoimento-3-compressed.mp4',
     capa: null,
   },
 ]
@@ -78,37 +86,41 @@ export default function Reviews() {
 
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="depoimentos">
-      <div className="wrap">
-        <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-          <SectionHeading num="05" title="O que dizem" className="flex-1" />
-          <span className="eyebrow self-end whitespace-nowrap max-mob:hidden">Arraste →</span>
-        </div>
-        <p className="eyebrow reveal mb-3 text-orange">Histórias de sucesso na prática</p>
-        <p className="reveal mb-3 max-w-[54ch] text-lg font-bold text-ink">
-          Quem valida nosso portfólio é o mercado
-        </p>
-        <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">
+      {/* Composição centralizada: sem a linha do `SectionHeading`, que só faz
+          sentido puxando o olho para a direita. O "Arraste →" saiu junto — era
+          um elemento à direita brigando com o eixo central, e o cursor de
+          arrasto mais os dots já dizem que a faixa anda. */}
+      <div className="wrap text-center">
+        <SectionHeading className="reveal justify-center" num="04" rule={false} title="O que dizem" />
+        <p className="eyebrow reveal mt-4 text-orange">Histórias de sucesso na prática</p>
+        <p className="reveal mx-auto mb-9 mt-3 max-w-[46ch] text-base text-ink-soft">
           De quem anuncia pela primeira vez a quem gerencia grandes marcas, a experiência de quem já
           colocou sua mensagem nas ruas do Sul do Brasil.
         </p>
       </div>
       <div className="wrap">
-        <div className="rail items-start">
+        <Coverflow
+          // Abre no card 02: é o único com case associado, e é o depoimento
+          // mais forte dos três.
+          gap={22}
+          inicial={1}
+          label="Depoimentos de clientes"
+          labels={REVIEWS.map((r) => r.name)}
+          rotulo="depoimento"
+          width="clamp(228px,70vw,290px)"
+        >
           {REVIEWS.map((r) => {
             const texto = r.quote ? `“${r.quote}”` : r.titulo
 
             return (
-              <figure
-                className="m-0 flex flex-[0_0_300px] snap-start flex-col gap-4 max-mob:flex-[0_0_74vw]"
-                key={r.name}
-              >
+              <figure className="m-0 flex w-full flex-col gap-4" key={r.name}>
                 <div className="ticks group relative aspect-[9/16] w-full overflow-hidden rounded-[16px] border border-line bg-bone">
                   {r.capa ? (
                     <Image
                       alt={`${r.name}, ${r.role}`}
                       className="object-cover"
                       fill
-                      sizes="(max-width: 560px) 74vw, 300px"
+                      sizes="(max-width: 560px) 70vw, 290px"
                       src={r.capa}
                     />
                   ) : (
@@ -139,7 +151,7 @@ export default function Reviews() {
                   )}
                 </div>
 
-                <figcaption>
+                <figcaption className="text-center">
                   <div className="font-extrabold text-ink">{r.name}</div>
                   <div className="text-[13.5px] text-ink-soft">{r.role}</div>
                   {r.contexto && (
@@ -151,10 +163,10 @@ export default function Reviews() {
               </figure>
             )
           })}
-        </div>
+        </Coverflow>
       </div>
       <div className="wrap">
-        <div className="reveal mt-10">
+        <div className="reveal mt-9 flex justify-center">
           <Link className="btn btn-ghost" href="/cases">
             Acessar cases
           </Link>

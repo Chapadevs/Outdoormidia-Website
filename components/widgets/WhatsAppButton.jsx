@@ -1,24 +1,23 @@
+import Image from 'next/image'
 import { WA_FLUTUANTE, waLink } from '@/lib/whatsapp'
 
 export default function WhatsAppButton() {
   return (
     <a
-      className="fixed bottom-6 right-6 z-[70] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-[0_14px_32px_-10px_rgba(22,17,13,.45)] transition-transform duration-[180ms] hover:scale-[1.07] max-mob:bottom-4 max-mob:right-4 max-mob:h-13 max-mob:w-13"
+      className="fixed bottom-6 right-6 z-[70] flex h-14 w-14 items-center justify-center transition-transform duration-[180ms] hover:scale-[1.07] max-mob:bottom-4 max-mob:right-4 max-mob:h-13 max-mob:w-13"
       href={waLink(WA_FLUTUANTE)}
       aria-label="WhatsApp"
     >
-      <svg
-        width="30"
-        height="30"
-        viewBox="0 0 24 24"
-        fill="#fff"
-        fillRule="evenodd"
-        clipRule="evenodd"
-        aria-hidden="true"
-        className="shrink-0"
-      >
-        <path d="M20.464-2.915A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413ZM17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-      </svg>
+      {/* O PNG já traz o balão inteiro, então o botão não leva fundo próprio.
+          A sombra vai de drop-shadow, e não de box-shadow, porque o recorte é
+          o do balão: box-shadow desenharia a sombra do quadrado do <a>. */}
+      <Image
+        alt=""
+        className="size-12 shrink-0 [filter:drop-shadow(0_14px_32px_rgba(22,17,13,.45))] max-mob:size-11"
+        height={48}
+        src="/media/icone-whatsapp.png"
+        width={48}
+      />
     </a>
   )
 }

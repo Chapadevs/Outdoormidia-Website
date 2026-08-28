@@ -90,6 +90,25 @@
     @apply mx-auto w-full max-w-[1280px] px-8 max-mob:px-5;
   }
 
+  /* A home tem o trilho vertical fixo no canto esquerdo (HomeTimeline), que a
+     partir de 1080px passa por cima do conteúdo enquanto o vão do .wrap for
+     estreito. Este deslocamento empurra texto, título e imagem para a direita
+     só na medida que falta: 108px quando a viewport tem 1280px ou menos, caindo
+     de volta aos 32px normais a partir de ~1432px, quando o vão natural do
+     .wrap já passa o trilho. Fundo de seção e sangria do .rail não se movem —
+     o padding é do container, não da seção. */
+  @media (min-width: 1080px) {
+    .desloca-trilho .wrap {
+      padding-left: clamp(2rem, 108px - (100vw - 1280px) / 2, 108px);
+    }
+
+    /* Esteira (sem .wrap), O que dizem e FAQ ficam onde estão, a pedido. */
+    .desloca-trilho #depoimentos .wrap,
+    .desloca-trilho #faq .wrap {
+      padding-left: 2rem;
+    }
+  }
+
   .display {
     @apply font-display font-normal uppercase leading-[0.86] tracking-[0.005em] text-white;
   }
