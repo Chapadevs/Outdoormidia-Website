@@ -164,6 +164,24 @@
     transform: none;
   }
 
+  /* Escada da Presença — os cinco degraus entram um a um, em cascata, com o
+     atraso de cada card no `style` do próprio <li>.
+
+     O `.in` aqui não vem do RevealObserver global: quem observa é o próprio
+     EscadaPresenca, porque no resultado do quiz a escada é montada no clique,
+     depois da única varredura que o observer global faz por rota. */
+  .escada > li {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  .escada.in > li {
+    opacity: var(--degrau-opacidade, 1);
+    transform: none;
+    transition:
+      opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
   /* corpo de post do blog — Markdown renderizado */
   .post-body {
     @apply text-[17px] leading-[1.7] text-ink max-mob:text-base;
@@ -347,6 +365,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .escada > li {
     opacity: 1;
     transform: none;
     transition: none;
