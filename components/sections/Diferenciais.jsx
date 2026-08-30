@@ -4,7 +4,7 @@ import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { DIFERENCIAIS } from '@/lib/diferenciais'
 
-export default function Diferenciais({ num = '01', moreHref }) {
+export default function Diferenciais({ num, moreHref }) {
   const [ativo, setAtivo] = useState(0)
   const d = DIFERENCIAIS[ativo]
   const cards = d.oQueE?.cards ?? []

@@ -91,7 +91,7 @@ export default function Reviews() {
           um elemento à direita brigando com o eixo central, e o cursor de
           arrasto mais os dots já dizem que a faixa anda. */}
       <div className="wrap text-center">
-        <SectionHeading className="reveal justify-center" num="04" rule={false} title="O que dizem" />
+        <SectionHeading className="reveal justify-center" rule={false} title="O que dizem" />
         <p className="eyebrow reveal mt-4 text-orange">Histórias de sucesso na prática</p>
         <p className="reveal mx-auto mb-9 mt-3 max-w-[46ch] text-base text-ink-soft">
           De quem anuncia pela primeira vez a quem gerencia grandes marcas, a experiência de quem já

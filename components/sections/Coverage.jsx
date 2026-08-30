@@ -7,7 +7,7 @@ export default async function Coverage() {
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="cobertura">
       <div className="wrap">
-        <CoverageExplorer locations={locations} moldura={false} num="03" mostrarLista={false} />
+        <CoverageExplorer locations={locations} moldura={false} eyebrow={null} mostrarLista={false} />
       </div>
     </section>
   )

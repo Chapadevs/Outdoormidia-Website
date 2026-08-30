@@ -9,7 +9,7 @@ import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 const DIM_MAXIMO = 0.55
 const ARRASTE_MINIMO = 6
 
-export default function PlatformsCarousel({ num = '02' }) {
+export default function PlatformsCarousel({ num }) {
   const railRef = useRef(null)
   const frameRef = useRef(0)
   const activeRef = useRef(0)
