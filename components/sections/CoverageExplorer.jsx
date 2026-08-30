@@ -29,7 +29,8 @@ function plataformas(total) {
 // o card carrega também a faixa de praças e precisa ter começo e fim visíveis.
 export default function CoverageExplorer({
   locations,
-  num = '04',
+  num,
+  eyebrow = 'Cobertura',
   mostrarLista = true,
   moldura = true,
 }) {
@@ -44,12 +45,18 @@ export default function CoverageExplorer({
       <div className="grid grid-cols-[1.25fr_1fr] items-stretch max-tab:grid-cols-1">
         <div className="flex flex-col justify-between px-14 pb-14 pt-[72px] max-tab:p-10 max-mob:px-6 max-mob:py-9">
           <div>
-            <div className="flex items-center gap-3.5">
-              <span className="font-display text-[15px] text-orange">{num}</span>
-              <span className="eyebrow">Cobertura</span>
-              <span className="h-px flex-1 bg-line"></span>
-            </div>
-            <h2 className="display mt-[26px] max-w-[14ch] text-[clamp(34px,5.2vw,68px)] text-ink">
+            {(num || eyebrow) && (
+              <div className="flex items-center gap-3.5">
+                {num && <span className="font-display text-[15px] text-orange">{num}</span>}
+                {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+                <span className="h-px flex-1 bg-line"></span>
+              </div>
+            )}
+            <h2
+              className={`display max-w-[14ch] text-[clamp(34px,5.2vw,68px)] text-ink ${
+                num || eyebrow ? 'mt-[26px]' : ''
+              }`}
+            >
               Não basta estar
               <br />
               na cidade.

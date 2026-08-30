@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function SectionHeading({ num, title, href, rule = true, className = '' }) {
   return (
     <div className={`flex items-center gap-3.5 ${className}`}>
-      <span className="font-display text-[15px] text-orange">{num}</span>
+      {num && <span className="font-display text-[15px] text-orange">{num}</span>}
       <h2 className="m-0 text-[clamp(28px,4.4vw,54px)] font-extrabold leading-none tracking-[-0.02em]">
         {href ? (
           <Link href={href} className="transition-colors duration-150 hover:text-orange">
