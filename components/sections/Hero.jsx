@@ -43,7 +43,7 @@ export default function Hero() {
             Planejar Campanha
           </Link>
           <Link
-            className="btn max-mob:w-full max-mob:justify-center max-mob:border-ink max-mob:text-ink max-mob:hover:bg-ink max-mob:hover:text-white"
+            className="btn max-mob:w-full max-mob:justify-center max-mob:border-ink max-mob:text-ink max-mob:[--rr-fill:var(--color-ink)] max-mob:hover:text-white"
             href="/#plataformas"
           >
             Ver Plataformas

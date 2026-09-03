@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import { MAP_W, MAP_H, STATES } from '@/lib/mapShapes'
 import { projectToMap, unprojectFromMap } from '@/lib/mapProjection'
 
-const PIN = 26
-const PIN_CORE = 9
+const PIN_R = 11
+const PIN_CORE_R = 4
 const HIT = 64
 
 export default function CoverageMap({
@@ -164,48 +164,27 @@ export default function CoverageMap({
               }}
             >
               <rect x={-HIT / 2} y={-HIT / 2} width={HIT} height={HIT} fill="transparent" />
-              <rect
-                x={-PIN / 2}
-                y={-PIN / 2}
-                width={PIN}
-                height={PIN}
-                rx="8"
-                fill={on ? 'var(--color-paper)' : 'var(--color-ink)'}
-                stroke={on ? 'var(--color-ink)' : 'var(--color-paper)'}
+              <circle
+                r={PIN_R}
+                fill="var(--color-paper)"
+                stroke={on ? 'var(--color-ink)' : 'var(--color-orange)'}
                 strokeWidth="2.5"
               />
-              <rect
-                x={-PIN_CORE / 2}
-                y={-PIN_CORE / 2}
-                width={PIN_CORE}
-                height={PIN_CORE}
-                rx="3"
-                fill={on ? 'var(--color-ink)' : 'var(--color-paper)'}
-              />
+              {on && <circle r={PIN_CORE_R} fill="var(--color-ink)" />}
             </g>
           )
         })}
 
         {draftPos && (
           <g transform={`translate(${draftPos.x} ${draftPos.y})`} className="pointer-events-none">
-            <rect
-              x={-PIN / 2}
-              y={-PIN / 2}
-              width={PIN}
-              height={PIN}
-              rx="8"
+            <circle
+              r={PIN_R}
               fill="var(--color-orange-2)"
               stroke="var(--color-ink)"
               strokeWidth="2.5"
               strokeDasharray="5 4"
             />
-            <rect
-              x={-PIN_CORE / 2}
-              y={-PIN_CORE / 2}
-              width={PIN_CORE}
-              height={PIN_CORE}
-              fill="var(--color-paper)"
-            />
+            <circle r={PIN_CORE_R} fill="var(--color-paper)" />
           </g>
         )}
       </svg>

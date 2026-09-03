@@ -6,8 +6,6 @@ import { DIFERENCIAIS } from '@/lib/diferenciais'
 
 export default function Diferenciais({ num, moreHref }) {
   const [ativo, setAtivo] = useState(0)
-  const d = DIFERENCIAIS[ativo]
-  const cards = d.oQueE?.cards ?? []
 
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="diferenciais">
@@ -33,11 +31,12 @@ export default function Diferenciais({ num, moreHref }) {
           <div className="flex min-w-0 flex-col" role="tablist">
             {DIFERENCIAIS.map((item, i) => (
               <button
-                aria-controls="diferencial-painel"
+                aria-controls={`painel-${item.slug}`}
                 aria-selected={i === ativo}
                 className={`relative flex w-full cursor-pointer items-center gap-4 border-b border-white/10 py-3.5 pl-4 text-left transition-colors duration-200 ${
                   i === ativo ? 'text-white' : 'text-white/55 hover:text-white/85'
                 }`}
+                id={`aba-${item.slug}`}
                 key={item.slug}
                 onClick={() => setAtivo(i)}
                 role="tab"
@@ -56,34 +55,61 @@ export default function Diferenciais({ num, moreHref }) {
             ))}
           </div>
 
-          <div className="flex min-w-0 flex-col gap-4" id="diferencial-painel">
-            {d.tagline && <span className="eyebrow text-orange">{d.tagline}</span>}
-            <h3 className="m-0 text-balance text-[clamp(26px,3vw,38px)] font-extrabold leading-[1.06] tracking-[-0.025em] text-white">
-              {d.title}
-            </h3>
-            <p className="m-0 max-w-[52ch] text-pretty text-[clamp(16px,1.35vw,17.5px)] leading-relaxed text-white/70">
-              {d.intro}
-            </p>
+          <div className="grid min-w-0">
+            {DIFERENCIAIS.map((item, i) => {
+              const atual = i === ativo
+              const cards = item.oQueE?.cards ?? []
 
-            {cards.length > 0 && (
-              <div className="mt-3 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-8 gap-y-3.5 border-t border-white/12 pt-6">
-                {cards.map((card) => (
-                  <div className="flex items-baseline gap-3" key={card.title}>
-                    <span className="h-[5px] w-[5px] flex-none rounded-full bg-orange"></span>
-                    <span className="text-pretty text-[15px] font-semibold leading-snug text-white">
-                      {card.title}
+              return (
+                <div
+                  aria-hidden={!atual}
+                  aria-labelledby={`aba-${item.slug}`}
+                  className={`col-start-1 row-start-1 flex min-w-0 flex-col gap-4 ${atual ? '' : 'invisible'}`}
+                  id={`painel-${item.slug}`}
+                  inert={!atual}
+                  key={item.slug}
+                  role="tabpanel"
+                >
+                  {item.tagline && (
+                    <span
+                      className={`eyebrow text-orange ${atual ? 'animate-tagline-troca motion-reduce:animate-none' : ''}`}
+                      key={`${atual ? 'on' : 'off'}-tagline`}
+                    >
+                      {item.tagline}
                     </span>
-                  </div>
-                ))}
-              </div>
-            )}
+                  )}
+                  <h3
+                    className={`m-0 text-balance text-[clamp(26px,3vw,38px)] font-extrabold leading-[1.06] tracking-[-0.025em] text-white ${atual ? 'animate-titulo-troca [animation-delay:70ms] motion-reduce:animate-none' : ''}`}
+                    key={`${atual ? 'on' : 'off'}-titulo`}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="m-0 max-w-[52ch] text-pretty text-[clamp(16px,1.35vw,17.5px)] leading-relaxed text-white/70">
+                    {item.intro}
+                  </p>
 
-            <Link
-              className="mt-2 text-sm font-bold text-orange transition-colors duration-150 hover:text-white"
-              href={d.href}
-            >
-              Ver diferencial →
-            </Link>
+                  {cards.length > 0 && (
+                    <div className="mt-3 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-8 gap-y-3.5 border-t border-white/12 pt-6">
+                      {cards.map((card) => (
+                        <div className="flex items-baseline gap-3" key={card.title}>
+                          <span className="h-[5px] w-[5px] flex-none rounded-full bg-orange"></span>
+                          <span className="text-pretty text-[15px] font-semibold leading-snug text-white">
+                            {card.title}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <Link
+                    className="mt-2 text-sm font-bold text-orange transition-colors duration-150 hover:text-white"
+                    href={item.href}
+                  >
+                    Ver diferencial →
+                  </Link>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>

@@ -1,12 +1,13 @@
 'use client'
 import { useState } from 'react'
 import CaseCard from '@/components/cases/CaseCard'
-import TagFilter, { groupTagRows } from '@/components/ui/TagFilter'
+import TagFilter, { contarPorTag, groupTagRows } from '@/components/ui/TagFilter'
 
 export default function CasesExplorer({ cases, tags, groups }) {
   const [selected, setSelected] = useState({})
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
   const rows = groupTagRows(tags, groups)
+  const counts = contarPorTag(cases, rows, selected)
 
   const active = Object.values(selected).filter(Boolean)
   const filtered = cases.filter((c) => active.every((slug) => c.tags.includes(slug)))
@@ -19,10 +20,12 @@ export default function CasesExplorer({ cases, tags, groups }) {
     <div>
       {rows.length > 0 && (
         <TagFilter
+          counts={counts}
+          onClear={() => setSelected({})}
+          onToggle={toggle}
           rows={rows}
           selected={selected}
-          onToggle={toggle}
-          onClear={() => setSelected({})}
+          total={filtered.length}
         />
       )}
       {filtered.length === 0 ? (

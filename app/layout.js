@@ -2,6 +2,7 @@ import { Poppins } from 'next/font/google'
 import './globals.css'
 import WhatsAppButton from '@/components/widgets/WhatsAppButton'
 import RevealObserver from '@/components/widgets/RevealObserver'
+import RadialReveal from '@/components/widgets/RadialReveal'
 import JsonLd from '@/components/widgets/JsonLd'
 import CookieNotice from '@/components/widgets/CookieNotice'
 import { SITE_URL } from '@/lib/constants'
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
         {children}
         <WhatsAppButton />
         <RevealObserver />
+        <RadialReveal />
         <CookieNotice />
       </body>
     </html>

@@ -85,7 +85,7 @@ export default function Reviews() {
   }, [aberto])
 
   return (
-    <section className="py-[110px] max-mob:py-[72px]" id="depoimentos">
+    <section className="pb-[110px] pt-[48px] max-mob:pb-[72px] max-mob:pt-[32px]" id="depoimentos">
       {/* Composição centralizada: sem a linha do `SectionHeading`, que só faz
           sentido puxando o olho para a direita. O "Arraste →" saiu junto — era
           um elemento à direita brigando com o eixo central, e o cursor de
