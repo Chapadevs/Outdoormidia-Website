@@ -39,6 +39,36 @@
     }
   }
 
+  --animate-titulo-troca: titulo-troca 0.46s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes titulo-troca {
+    from {
+      opacity: 0;
+      transform: translateY(0.3em);
+      clip-path: inset(-20% 0 100% 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      clip-path: inset(-20% 0 -20% 0);
+    }
+  }
+
+  --animate-tagline-troca: tagline-troca 0.62s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes tagline-troca {
+    from {
+      opacity: 0;
+      transform: translateX(-0.5em);
+      clip-path: inset(-20% -20% -20% 100%);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      clip-path: inset(-20% -20% -20% -20%);
+    }
+  }
+
   --animate-aurora-a: aurora-a 19s ease-in-out infinite alternate;
   --animate-aurora-b: aurora-b 23s ease-in-out infinite alternate;
   --animate-aurora-c: aurora-c 15s ease-in-out infinite alternate;
@@ -85,6 +115,16 @@
   }
 }
 
+/* Raio do círculo do Radial Reveal (ver .btn em @layer components). Precisa ser
+   propriedade registrada: só assim o browser interpola o valor, e só o raio
+   anima — a origem (--rr-x/--rr-y) pode saltar para o ponto do ponteiro no
+   mesmo frame sem arrastar o círculo junto. */
+@property --rr-r {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
 @layer components {
   .wrap {
     @apply mx-auto w-full max-w-[1280px] px-8 max-mob:px-5;
@@ -120,18 +160,76 @@
     @apply text-orange;
   }
 
+  /* Radial Reveal — regra do design system: o estado de hover de todo botão
+     entra como um círculo que cresce a partir do ponto onde o ponteiro tocou,
+     em vez de trocar a cor de uma vez. Nenhuma cor e nenhuma forma mudam; o
+     que muda é o caminho até elas.
+
+     Por isso as variantes não trazem mais `hover:bg-*` nem `hover:border-*`:
+     quem pinta o preenchimento de hover é a camada ::after, e o elemento
+     precisa manter o estado de repouso visível fora do círculo. Só a cor do
+     texto continua no elemento, em crossfade no mesmo tempo e na mesma curva
+     do círculo — assim a letra nunca fica de uma cor sobre o fundo da outra.
+
+     `--rr-fill` é a cor que a camada pinta: a mesma que o `hover:bg-*` pintava
+     antes. Botão com hover próprio no call site declara a sua com a utilitária
+     `[--rr-fill:…]`, que vence por vir da layer utilities. */
   .btn {
-    @apply inline-flex shrink-0 cursor-pointer items-center gap-2.5 whitespace-nowrap rounded-full border-[1.5px] border-white bg-transparent px-[26px] py-[15px] text-sm font-bold tracking-[0.02em] text-white transition duration-[180ms] hover:bg-white hover:text-ink;
+    @apply inline-flex shrink-0 cursor-pointer items-center gap-2.5 whitespace-nowrap rounded-full border-[1.5px] border-white bg-transparent px-[26px] py-[15px] text-sm font-bold tracking-[0.02em] text-white transition duration-[420ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] hover:text-ink;
+    --rr-fill: #fff;
   }
   .btn-fill {
-    @apply border-orange bg-orange text-white hover:border-ink hover:bg-ink hover:text-white;
+    @apply border-orange bg-orange text-white hover:text-white;
+    --rr-fill: var(--color-ink);
   }
   .btn-on-orange {
-    @apply border-white bg-white text-ink hover:border-ink hover:bg-ink hover:text-white;
+    @apply border-white bg-white text-ink hover:text-white;
+    --rr-fill: var(--color-ink);
   }
   /* contraparte do .btn para fundos claros — o .btn puro é branco sobre branco */
   .btn-ghost {
-    @apply border-ink text-ink hover:border-ink hover:bg-ink hover:text-white;
+    @apply border-ink text-ink hover:text-white;
+    --rr-fill: var(--color-ink);
+  }
+
+  /* O contexto de posicionamento mora aqui, e não no @apply do .btn, porque as
+     variantes também aparecem soltas (o `.btn-ghost` de /blog/podcast) — sem
+     isso a camada delas se posicionaria contra algum ancestral. `.radial-reveal`
+     é a porta de entrada de quem está fora da família .btn: a classe mais um
+     --rr-fill próprio. */
+  :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal) {
+    position: relative;
+    isolation: isolate;
+    --rr-x: 50%;
+    --rr-y: 50%;
+  }
+
+  /* A camada sangra 1.5px para fora porque a borda também troca de cor no
+     hover, e `inset: 0` pararia na caixa de padding. Em z-index -1 dentro do
+     `isolate` do botão ela pinta por cima do fundo e da borda dele, e por
+     baixo do texto — que é o que permite o texto seguir legível durante o
+     crescimento. */
+  :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal)::after {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--rr-fill, transparent);
+    /* o 0% do fallback é o que segura a camada escondida onde o @property não
+       existe: sem ele --rr-r fica sem valor, o var() invalida o clip-path
+       inteiro e o preenchimento de hover aparece já em repouso */
+    clip-path: circle(var(--rr-r, 0%) at var(--rr-x) var(--rr-y));
+    transition: --rr-r 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    pointer-events: none;
+  }
+
+  /* --rr-max é o raio que cobre o canto mais distante do ponto de entrada; quem
+     mede é o widget RadialReveal. Sem JS o efeito continua acontecendo, a
+     partir do centro, com o 150% do fallback. */
+  :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal):not(:disabled):not([aria-disabled='true']):hover::after,
+  :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal):focus-visible::after {
+    --rr-r: var(--rr-max, 150%);
   }
 
   /* carrossel horizontal que sangra até a borda do .wrap — o padding negativo
@@ -373,5 +471,10 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  /* o botão continua trocando de estado no hover, só sem o crescimento */
+  :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal),
+  :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal)::after {
+    transition-duration: 1ms;
   }
 }

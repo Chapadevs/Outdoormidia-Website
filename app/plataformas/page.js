@@ -3,8 +3,8 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
-import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
+import PlatformsCatalog from '@/components/sections/PlatformsCatalog'
 import { PLATFORMS, PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
 const DESCRIPTION =
@@ -48,43 +48,8 @@ export default function PlataformasPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Catálogo" className="reveal mb-[34px]" />
-            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
-              {PLATFORMS_LISTAGEM.map((p) => (
-                <Link
-                  className="group reveal flex scroll-mt-24 flex-col rounded-[16px] border border-line bg-white p-6 transition-colors duration-200 hover:border-orange max-mob:p-5"
-                  href={p.href}
-                  key={p.slug}
-                  id={p.slug}
-                >
-                  <CoverMedia label={p.name} />
-                  <div className="mt-6 flex items-baseline gap-3">
-                    <span className="font-display text-[15px] text-orange">{p.num}</span>
-                    <h2 className="m-0 text-[21px] font-extrabold leading-none tracking-[-0.01em] transition-colors duration-200 group-hover:text-orange">
-                      {p.name}
-                    </h2>
-                  </div>
-                  <div className="mt-3 flex flex-wrap items-center gap-2.5">
-                    <p className="eyebrow m-0">{p.desc}</p>
-                    {p.marcador && (
-                      <span className="rounded-full border border-orange px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-orange">
-                        {p.marcador}
-                      </span>
-                    )}
-                  </div>
-                  <p className="m-0 mt-4 text-[14.5px] leading-relaxed text-ink-soft">{p.intro}</p>
-                  <span className="mt-auto flex items-center gap-2 pt-6 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
-                    {p.cta}
-                    <span
-                      aria-hidden
-                      className="text-base transition-transform duration-200 group-hover:translate-x-1"
-                    >
-                      →
-                    </span>
-                  </span>
-                </Link>
-              ))}
-            </div>
+            <SectionHeading num="01" title="Catálogo" className="reveal mb-5" />
+            <PlatformsCatalog plataformas={PLATFORMS_LISTAGEM} />
           </div>
         </section>
 

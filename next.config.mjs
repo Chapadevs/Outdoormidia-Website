@@ -27,13 +27,13 @@ const nextConfig = {
   // Green e Projetos Icônicos saíram do catálogo e viraram projetos icônicos —
   // as URLs antigas já estão indexadas.
   // A área do anunciante mudou de /anunciante para /area-do-anunciante, o
-  // diagnóstico passou para dentro dela e dois itens foram renomeados (Mídia
-  // Kit virou Melhores Práticas, Simulador OOH virou Sua marca no OOH). As
-  // URLs antigas estão indexadas e no material impresso: seguem vivas aqui.
+  // diagnóstico passou para dentro dela e o Simulador OOH virou Sua marca no
+  // OOH. As URLs antigas estão indexadas e no material impresso: seguem vivas
+  // aqui.
   //
-  // Guia do Anunciante foi um nome intermediário do Mídia Kit, no ar entre a
-  // renomeação da área e o checklist de 26/08. Como chegou a ser publicado,
-  // ganha redirect próprio.
+  // Mídia Kit (depois Guia do Anunciante, depois Melhores Práticas) saiu do
+  // site. Os três nomes chegaram a ser publicados, então as três URLs caem no
+  // hub da área do anunciante em vez de 404.
   async redirects() {
     return [
       {
@@ -48,12 +48,17 @@ const nextConfig = {
       },
       {
         source: '/anunciante/midia-kit',
-        destination: '/area-do-anunciante/melhores-praticas',
+        destination: '/area-do-anunciante',
         permanent: true,
       },
       {
         source: '/area-do-anunciante/guia-do-anunciante',
-        destination: '/area-do-anunciante/melhores-praticas',
+        destination: '/area-do-anunciante',
+        permanent: true,
+      },
+      {
+        source: '/area-do-anunciante/melhores-praticas',
+        destination: '/area-do-anunciante',
         permanent: true,
       },
       {

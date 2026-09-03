@@ -28,7 +28,7 @@ export default async function AdminBlogPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/admin/tags/blog"
-              className="btn border-ink text-ink hover:border-orange hover:text-orange"
+              className="btn border-ink text-ink [--rr-fill:transparent] hover:border-orange hover:text-orange"
             >
               Gerenciar tags
             </Link>

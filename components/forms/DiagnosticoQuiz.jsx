@@ -387,9 +387,6 @@ export default function DiagnosticoQuiz() {
                 >
                   Falar com um especialista →
                 </a>
-                <Link className="btn" href="/area-do-anunciante/melhores-praticas">
-                  Ver o Melhores Práticas →
-                </Link>
               </div>
               <p className="mt-6 max-w-[62ch] text-[14.5px] text-white/[.92]">
                 Quer ver como a sua marca ficaria em um painel antes de conversar? Monte a simulação

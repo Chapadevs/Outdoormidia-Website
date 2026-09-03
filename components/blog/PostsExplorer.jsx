@@ -1,12 +1,13 @@
 'use client'
 import { useState } from 'react'
 import PostCard from '@/components/blog/PostCard'
-import TagFilter, { groupTagRows } from '@/components/ui/TagFilter'
+import TagFilter, { contarPorTag, groupTagRows } from '@/components/ui/TagFilter'
 
 export default function PostsExplorer({ posts, tags, groups }) {
   const [selected, setSelected] = useState({})
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
   const rows = groupTagRows(tags, groups)
+  const counts = contarPorTag(posts, rows, selected)
 
   const active = Object.values(selected).filter(Boolean)
   const filtered = posts.filter((p) => active.every((slug) => p.tags.includes(slug)))
@@ -19,10 +20,12 @@ export default function PostsExplorer({ posts, tags, groups }) {
     <div>
       {rows.length > 0 && (
         <TagFilter
+          counts={counts}
+          onClear={() => setSelected({})}
+          onToggle={toggle}
           rows={rows}
           selected={selected}
-          onToggle={toggle}
-          onClear={() => setSelected({})}
+          total={filtered.length}
         />
       )}
       {filtered.length === 0 ? (

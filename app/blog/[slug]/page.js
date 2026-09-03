@@ -125,7 +125,7 @@ export default async function BlogPostPage({ params }) {
                 </Link>
                 <Link
                   href="/blog/artigos"
-                  className="btn border-ink text-ink hover:border-orange hover:bg-transparent hover:text-orange"
+                  className="btn border-ink text-ink [--rr-fill:transparent] hover:border-orange hover:text-orange"
                 >
                   Ver mais artigos
                 </Link>

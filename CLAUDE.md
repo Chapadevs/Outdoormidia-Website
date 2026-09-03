@@ -69,6 +69,7 @@ Usar como utilitários: `bg-paper`, `text-ink`, `text-ink-soft`, `border-line`, 
 - **`.btn-fill`** — botão laranja sólido
 - **`.btn-on-orange`** — botão branco sobre fundo laranja
 - **`.btn-ghost`** — contraparte do `.btn` para fundos claros (borda e texto `--ink`, preenche de `--ink` no hover)
+- **`.radial-reveal`** — o Radial Reveal, aplicado de fábrica em toda a família `.btn`. O preenchimento de hover entra como um círculo que cresce do ponto onde o ponteiro tocou o botão, em vez de trocar a cor de uma vez. Quem pinta é uma camada `::after` (`inset: -1.5px`, para cobrir também a borda) em `z-index: -1` dentro do `isolate` do botão: acima do fundo e da borda, abaixo do texto. O raio é `--rr-r`, propriedade registrada no `@property` — só ele anima, então a origem (`--rr-x`/`--rr-y`) salta para o ponto novo no mesmo frame sem arrastar o círculo. Quem mede origem e raio de cobertura é o widget `RadialReveal`; sem JS o efeito continua, a partir do centro. **É por isso que nenhuma variante declara `hover:bg-*` nem `hover:border-*`** — o estado de repouso precisa ficar visível fora do círculo. A cor de hover mora em `--rr-fill`. Usar a classe em qualquer botão fora da família `.btn`, sempre com um `--rr-fill` próprio
 - **`.rail`** — carrossel horizontal com snap que sangra até a borda do `.wrap`. Já traz o `scroll-padding` que impede o snap de encostar o primeiro card na borda da tela. Usar em vez de repetir `-mx-8 … px-8`
 - **`.ticks`** — só contexto de posicionamento (`position: relative`). As cantoneiras laranja que dava ao elemento foram removidas do site a pedido do cliente; a classe continua nos cards porque eles posicionam filhos absolutos a partir dela
 - **`.reveal`** — elemento com animação de entrada (adiciona `.in` via IntersectionObserver global)
@@ -105,6 +106,11 @@ Na dúvida: recebe props e não sabe o que acontece depois → `ui/`. Age sozinh
   - `rounded-[10px]` em inputs, selects, textareas e elementos pequenos (código inline, pins do mapa)
   - `rounded-full` (cápsula/círculo) em botões (`.btn`), badges, tags e chips de filtro
 - Fundo padrão: `--paper`, não branco puro
+- **Todo botão tem Radial Reveal no hover.** A família `.btn` já vem com ele; qualquer
+  outro elemento que se comporte como botão (chip, aba, seta de carrossel) recebe
+  `.radial-reveal` mais o seu `--rr-fill`. Botão com hover próprio no call site declara a
+  cor do círculo junto, com a utilitária `[--rr-fill:…]`, senão o círculo pinta a cor
+  errada. Nunca voltar a resolver hover de botão com `hover:bg-*`
 - Ícone (`lucide-react`): `size={20}` em chip e faixa, `size={24}` em card; stroke
   padrão da lib, sem `strokeWidth` customizado. Cor no laranja da marca sobre fundo
   claro; sobre laranja, sobre `--ink` ou em chip marcado ele herda o branco do texto,
@@ -125,7 +131,7 @@ app/
   globals.css             — Tailwind (@theme com tokens + @layer components com primitivos)
   sobre/                  — hub Sobre nós (linha do tempo, cultura, trabalhe conosco)
   solucoes/               — hub + diferenciais/ e regioes/ (mapa + lista por praça)
-  area-do-anunciante/     — hub + melhores-praticas/, sua-marca-no-ooh/,
+  area-do-anunciante/     — hub + sua-marca-no-ooh/,
                             diagnostico-de-presenca/ e faq/
   blog/                   — hub (portas Cases e Artigos + destaque), artigos/ e [slug]
   cases/                  — listagem com filtro por tag (ISR 300)
@@ -148,7 +154,8 @@ components/
   forms/                  — 10 formulários (públicos + editores do admin)
   ui/                     — Logo, SectionHeading, Breadcrumb, TagFilter, CoverMedia,
                             FormatSpecCard, CoverageMap (SVG de PR+SC, dados IBGE)
-  widgets/                — WhatsAppButton, RevealObserver, DeleteButton, LogoutButton
+  widgets/                — WhatsAppButton, RevealObserver, RadialReveal, DeleteButton,
+                            LogoutButton
 lib/
   constants.js            — WHATSAPP_URL, SITE_URL
   format.js               — DATA_LONGA (público) e DATA_CURTA (admin)
@@ -161,7 +168,7 @@ lib/
   iconicos.js             — os 3 projetos icônicos (fora do catálogo): carrossel + página dedicada
   faq.js                  — as 19 perguntas com categoria e resposta em parágrafos;
                             PERGUNTAS_HOME é a seleção de 8 da home, em ordem própria
-  sobre.js                — marcos da linha do tempo; midiakit.js — materiais para download
+  sobre.js                — marcos da linha do tempo
   diferenciais.js         — diferenciais: resumo dos cards + página dedicada. `publicado: false`
                             mantém a entrada escrita e fora do ar
   simulador.js            — parâmetros da estimativa de campanha (impactos, CPM)
@@ -208,6 +215,7 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Feature | Onde |
 |---|---|
 | Layout base / identidade visual / responsividade | `app/globals.css`, componentes |
+| Radial Reveal em todo botão — o preenchimento de hover cresce em círculo a partir do ponto onde o ponteiro entrou, e recua em direção ao ponto de saída. Mesmas cores e mesmo formato de antes: o que mudou é o caminho até o estado de hover. Vale para a família `.btn` inteira sem tocar em call site, e para qualquer outro botão com `.radial-reveal` | `app/globals.css`, `components/widgets/RadialReveal.jsx` |
 | Hero com vídeo de fundo (carrega após o load da página) | `components/sections/Hero.jsx` |
 | Seções da home | `components/sections/` |
 | Bloco institucional (texto + foto) entre o ticker e as plataformas | `components/sections/Institutional.jsx` |
@@ -223,9 +231,10 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | WhatsApp com mensagem pré-preenchida por CTA (pré-qualificação) | `lib/whatsapp.js` |
 | ProposalForm (briefing) | `app/proposta/` |
 | Plataformas — índice + página das 7 | `app/plataformas/`, `lib/platforms.js` |
-| Plataformas na home — carrossel de peek full-bleed das 8 entradas de `PLATFORMS_LISTAGEM` (as 7 do catálogo + Icônicos), com setas e dots. Substituiu o acordeão e o carrossel dos 3 icônicos; o acordeão `Platforms` segue vivo só em `/solucoes` | `components/sections/PlatformsCarousel.jsx`, `lib/platforms.js` |
+| Plataformas na home — coverflow das 9 entradas de `PLATFORMS_LISTAGEM` (as 8 do catálogo + Icônicos): card central em tamanho cheio, vizinhos girados para dentro em 3D (`Coverflow`, o mesmo componente de `Reviews`). Título "Plataformas" animado letra a letra como um letreiro de postes luminosos, cada um subindo até a própria altura em ordem embaralhada conforme a seção entra na tela; o "f" nasce com o poste aceso em laranja. Substituiu o carrossel de peek com setas; o acordeão `Platforms` segue vivo só em `/solucoes` | `components/sections/PlatformsCarousel.jsx`, `components/ui/Coverflow.jsx`, `lib/platforms.js` |
 | Icônicos na home — faixa laranja logo abaixo das Plataformas: número gigante de fundo, projeto em destaque (`.display`) e abas dos 3 projetos. Lê `lib/iconicos.js` | `components/sections/Iconicos.jsx` |
 | Projetos Icônicos — hub + página dos 3 (ISR 300 + `generateStaticParams`). Elegancy traz Urbanity e Urbanity Light como seções ancoradas (`#urbanity`, `#urbanity-light`) | `app/plataformas/projetos-iconicos/`, `lib/iconicos.js` |
+| Filtro de tags em dropdown — a barra deixou de listar as ~30 tags de uma vez: um botão por grupo (Plataforma, Cobertura, Indústrias), a lista abre em popover com a contagem de resultados de cada tag, opção sem resultado é omitida e os filtros ativos viram chips com × abaixo da barra. Serve blog e cases pelo mesmo componente | `components/ui/TagFilter.jsx`, `components/blog/PostsExplorer.jsx`, `components/cases/CasesExplorer.jsx` |
 | Cases com filtro por tag | `app/cases/`, `lib/cases/` |
 | Blog com CMS próprio | `app/blog/artigos/`, `app/admin/`, `lib/blog/` |
 | Classificação obrigatória do post — Plataforma, Cobertura e Indústrias são grupos fixos do escopo `blog`: existem sempre (sem doc no Firestore), o admin não renomeia nem exclui, e nenhum post é publicado sem ao menos uma tag de cada. Rascunho pode ficar incompleto | `lib/tags/obrigatorios.js`, `lib/blog/validate.js`, `app/api/admin/posts/` |
@@ -245,13 +254,13 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Teaser de "Outros diferenciais" usa o texto canônico do hub — o card lê `text`, o mesmo campo que monta o card na home e na listagem, em vez do `resumo`. `resumo` continua sendo a linha do `llms.txt` | `app/solucoes/diferenciais/[slug]/page.js` |
 | Área do anunciante (hub + 4 ferramentas) — checklist de 26/08/2026 aplicado: os 4 cards ganharam ícone `lucide-react` em laranja (medidor, painel, lâmpada e interrogação) e textos novos. Saíram o kicker `Downloads` e a promessa de impactos e faixa de investimento do card de Sua marca no OOH: a ferramenta aplica logo ou peça sobre a foto real do painel, e nada além disso. O kicker do FAQ conta as perguntas de `lib/faq.js` em vez de trazer o número na mão | `app/area-do-anunciante/page.js` |
 | Simulador de campanha (estimativa de impactos e CPM) | `app/anunciante/simulador/`, `lib/simulador.js` |
-| Melhores Práticas — nome final do antigo Mídia Kit, fechado no checklist da home de 26/08. Rota, rótulo, breadcrumb, metadata e todo link interno renomeados; `/anunciante/midia-kit` e `/area-do-anunciante/guia-do-anunciante` (nome intermediário que chegou a ir ao ar) seguem como redirect permanente | `app/area-do-anunciante/melhores-praticas/`, `lib/midiakit.js`, `next.config.mjs` |
+| Melhores Práticas removido do site — a página (antigo Mídia Kit, depois Guia do Anunciante) saiu junto com `lib/midiakit.js`, o item do menu, o card do hub, a entrada do sitemap/llms.txt e os CTAs que apontavam para ela. Os três nomes chegaram a ser publicados, então `/anunciante/midia-kit`, `/area-do-anunciante/guia-do-anunciante` e `/area-do-anunciante/melhores-praticas` caem no hub `/area-do-anunciante` como redirect permanente | `next.config.mjs`, `lib/nav.js`, `lib/seo.js` |
 | FAQ — checklist do cliente aplicado (26/08/2026): 19 perguntas nos mesmos 4 grupos, com as quatro do Marcelo (empresa pequena, mídia exterior vs redes sociais, ponto específico, o que está incluso no valor) e a home com uma seleção própria de 8, na ordem do documento. "Todos os painéis são iluminados?" saiu, absorvida pela pergunta de diferença entre formatos | `components/sections/Faq.jsx`, `FaqCategorias.jsx`, `PlatformFaq.jsx`, `lib/faq.js` |
 | Resposta do FAQ em parágrafos — `a` é lista, `fonte` é a linha de atribuição em corpo reduzido abaixo dela, e o `Accordion` aceita `**negrito**` no meio do parágrafo. As FAQs das plataformas seguem passando `a` como string | `components/ui/Accordion.jsx`, `lib/faq.js` |
 | Avaliações de clientes — três cards 9:16 com capa, badge de duração, citação sobre o gradiente e modal de vídeo. O card 03 é título editorial, sem aspas: entre aspas viraria fala fabricada. Vídeos e capas em `TODO(cliente)`; sem eles o card cai no painel bege, sem botão de play | `components/sections/Reviews.jsx` |
 | Banco de talentos — sem formulário no site desde 25/08/2026: a seção traz o texto, o botão **Preencher cadastro** (Google Forms do cliente, nova aba) e o e-mail do RH como alternativa. As respostas caem direto no Drive do cliente, sem formulário, validação, armazenamento nem envio do nosso lado; as áreas de atuação vivem dentro do formulário, não na página. Nenhuma promessa de prazo de resposta ou de validade do cadastro, porque não há processo definido para isso | `components/sections/BancoDeTalentos.jsx`, `TALENTOS_FORM_URL` em `lib/constants.js` |
 | Diagnóstico de marca (quiz) | `app/diagnostico/`, `lib/diagnostico.js` |
-| Mapa de praças (SVG, dados IBGE) | `components/ui/CoverageMap.jsx`, `lib/mapShapes.js` |
+| Mapa de praças (SVG, dados IBGE) — contorno suavizado: malha `intermediaria` do IBGE, anéis degenerados descartados (os dois pontinhos no oeste do PR eram artefato de 4 vértices, não ilhas), simplificação Ramer-Douglas-Peucker e conversão em Bézier cúbica (Catmull-Rom). O epsilon é alto de propósito (6 no contorno, 10 na divisa, ~72 vértices por estado contra 418 da malha crua): o mapa aparece com menos de 500px de largura, e nesse tamanho detalhe geográfico fino não lê como costa, lê como ruído. Subir a resolução da malha sem simplificar junto piora a peça. A divisa PR/SC é desenhada duas vezes, uma por estado, então a simplificação é topológica: os arcos compartilhados são simplificados uma vez e reaproveitados nos dois lados, e a tangente é zerada no ponto tríplice. Sem isso os dois traçados divergem e abre uma fresta. Tudo no gerador, que roda uma vez e é commitado — nenhuma dependência nova e nada em runtime | `scripts/generate-map-paths.mjs`, `components/ui/CoverageMap.jsx`, `lib/mapShapes.js` |
 | Painel admin (leads, posts, cases, locations, tags) | `app/admin/`, `app/api/admin/` |
 | Leads gravados no Firestore — `/proposta` e o qualificador do `NovaCampanha` gravam na coleção `leads`; o campo `origem` discrimina o fluxo. Única rota `POST` pública do site (honeypot + tetos de tamanho, sem `requireAdmin`) | `lib/leads/`, `app/api/leads/route.js` |
 | Área de Leads no admin — listagem com filtro por origem/status, tela de detalhe com tudo o que o cliente enviou e acompanhamento comercial (novo / contatado / descartado) | `app/admin/(dashboard)/leads/`, `components/widgets/LeadStatusSelect.jsx` |
@@ -281,7 +290,6 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | Envio de e-mail nos formulários | Falta integrar Resend. `ProposalForm` e o qualificador já gravam em `leads` — o comercial vê tudo em `/admin/leads` —, mas ninguém é **avisado**: só descobre entrando no painel. A copy de `/obrigado?origem=proposta` foi escrita quando nada era guardado e ainda não promete guarda; pode ser revista |
 | Leads do Diagnóstico e do Simulador | Os dois fluxos são anônimos hoje (o diagnóstico só tem 7 notas, o simulador só 4 selects) — gravar exige antes decidir um passo de contato. `lib/leads/origens.js` já nasceu preparado: basta uma entrada nova no mapa para a validação, a listagem e o detalhe passarem a aceitá-los |
 | Página de case individual (`/cases/[slug]`) | Não existe; só a listagem. `isCaseSlugTaken` mantém o slug único de propósito, para a página poder ser criada depois sem colisão |
-| Arquivos do Mídia Kit | As páginas existem; falta o cliente entregar PDFs e assets (`lib/midiakit.js`) |
 | Números oficiais do simulador | `lib/simulador.js` usa ordem de grandeza estimada — falta CPM e alcance por plataforma |
 | Imagens de Ambiental / Social / Governança | Toda a copy dos três checklists está aplicada; falta a foto. Ambiental: os 3 cards de "O que já é realidade" (a Praça de Carregamento Elétrico é a única sem foto disponível, e é o **único item que bloqueia a publicação** — a página segue com `robots: noindex` até ela chegar; Praça Pet Batel e Jardim Vertical têm foto no SharePoint do cliente). Social: Loja OM do Bem, Caminho do Renascer (exige autorização de uso de imagem da ONG; criança só com autorização escrita dos responsáveis) e Mídia Regenerativa. Governança: retrato profissional do Halisson Pontarola, fundo neutro, meio corpo, olhar para a câmera — não serve recorte de foto de evento |
 | Governança — declaração em primeira pessoa | O bloco "Quem responde" está no ar com o texto institucional, e a legenda da foto identifica o CEO **sem ser assinatura**. A versão em primeira pessoa (com "nunca mudou de dono") está no checklist e só entra com a aprovação do Halisson. Na troca, o texto institucional sai, o texto em primeira pessoa entra e a legenda vira assinatura; o layout não muda |
@@ -292,7 +300,6 @@ sangre para fora do `.wrap` com margem negativa precisa acompanhar as duas medid
 | CPM de referência | Fechado no que sai: o R$ 2,06 em rodovias saiu de circulação em 26/08/2026, sem fonte identificada em nenhum material do projeto. Falta o comercial validar um CPM — quando validar, ele entra em `lib/simulador.js` (hoje R$ 8 a 14, ordem de grandeza estimada) e volta para a resposta de custo em `lib/faq.js` |
 | FAQ sem a pergunta de antecedência | Única das 20 do checklist que não subiu: dois dos três parágrafos vieram marcados AGUARDANDO DADO (prazo para subir criativo em LED · prazo de produção e instalação de lona). Só o de rodovia sob demanda está fechado, em 15 meses. Quando o dado vier, ela entra em segundo lugar em Contratação e a página passa de 19 para 20 — a home não muda, porque ela já fica fora da seleção de 8 |
 | FAQ da home — dois checklists divergem | O checklist da home (item 12) e o checklist do FAQ (item 06) mandam oito perguntas cada, e as seleções não têm nada em comum além de custo, duração e comprovação. Vale o do FAQ, que é o documento dedicado ao escopo e diz explicitamente "SUBSTITUIR SELEÇÃO"; o da home também fala em "todas as 18" perguntas, contagem que o do FAQ levou a 20. Confirmar com o cliente que a home fica com a seleção do checklist do FAQ |
-| Conteúdo de Melhores Práticas | Falta a Alexandra liberar a copy. O nome mudou, o conteúdo não. A decisão de 26/08 diz que Mídia Kit saiu justamente porque **não haverá arquivo para download**, e que a página passa a trazer recomendações de como anunciar melhor. Hoje ela ainda é a lista de PDFs de `lib/midiakit.js`, com o eyebrow "Downloads", e o FAQ já promete ao visitante "conteúdos e recomendações sobre como escolher praça, formato e período". Falta o cliente entregar essa copy: nenhum checklist trouxe o texto da página |
 | FAQ — o que está incluso no valor | A base não registra se produção da lona e instalação entram no valor da campanha. Se entrarem, vão para a lista do primeiro parágrafo; se não, para a exceção do segundo. São os dois itens que o anunciante mais teme receber como extra |
 | FAQ — escopo de "donos dos pontos" | "Operamos estrutura própria, sem ativos de concessão" está dito de forma geral, mas MUB é mobiliário urbano e banca e relógio digital costumam existir por concessão municipal. Se for o caso, a frase precisa ficar restrita ao Aeroporto, que é o próprio exemplo que ela dá |
 | FAQ — fluxo de ponto específico | A resposta de "Posso escolher um ponto específico?" é genérica de propósito: o fluxo real do comercial para quem chega com a foto de um painel no celular não está documentado. Confirmar se aceita foto e endereço, se oferece alternativa no mesmo trajeto e se existe fila de espera |
@@ -583,9 +590,10 @@ O texto do diagnóstico e do CTA de cada uma das dez perguntas está em
   número menor.
 - **Comportamento:** a frase aparece dentro do bloco de resultado, sem marcação
   visual no formulário.
-- **Bloqueia publicação:** confirmar que as quatro páginas de destino dos CTAs
-  contextuais existem — `Regiões e cobertura`, `Plataformas`, `Projetos Icônicos` e
-  `Melhores Práticas`.
+- **Bloqueia publicação:** confirmar que as páginas de destino dos CTAs contextuais
+  existem — `Regiões e cobertura`, `Plataformas`, `Projetos Icônicos` e `Soluções`.
+  O CTA que apontava para `Melhores Práticas` passou a apontar para `/solucoes` com a
+  saída daquela página.
 
 ### CTA de fim de página · novo
 
@@ -600,10 +608,9 @@ Hoje a página encerra direto no rodapé, sem bloco de saída. Entra:
 > Camboriú.
 
 - Botão primário: `Falar com um especialista →`
-- Botão secundário: `Ver as Melhores Práticas →` — destino
-  `/area-do-anunciante/melhores-praticas`. O checklist do Diagnóstico ainda escreve
-  "Guia do Anunciante", nome que a revisão da home de 26/08 aposentou; vale o nome novo,
-  porque a renomeação foi explícita para "qualquer link interno"
+- Botão secundário: removido. O checklist pede `Ver as Melhores Práticas →` (que ele
+  ainda chama de "Guia do Anunciante"), mas a página saiu do site: o CTA de fim de
+  página ficou só com o botão primário
 - Linha de saída, abaixo dos botões: "Quer ver como a sua marca ficaria em um painel
   antes de conversar? Monte a simulação em **Sua marca no OOH**."
 
@@ -627,7 +634,7 @@ Três itens da coluna `ÁREA DO ANUNCIANTE`:
 
 | HOJE | ENTRA |
 |---|---|
-| Midia Kit | **Melhores Práticas** |
+| Midia Kit | *(item removido do menu junto com a página)* |
 | Simulador OOH | **Sua marca no OOH** |
 | Diagnóstico de presença | sem alteração |
 

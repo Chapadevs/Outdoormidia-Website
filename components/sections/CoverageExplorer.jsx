@@ -42,7 +42,7 @@ export default function CoverageExplorer({
         moldura ? 'rounded-[16px] border border-line' : ''
       }`}
     >
-      <div className="grid grid-cols-[1.25fr_1fr] items-stretch max-tab:grid-cols-1">
+      <div className="grid grid-cols-[1.05fr_1fr] items-stretch max-tab:grid-cols-1">
         <div className="flex flex-col justify-between px-14 pb-14 pt-[72px] max-tab:p-10 max-mob:px-6 max-mob:py-9">
           <div>
             {(num || eyebrow) && (
@@ -85,7 +85,7 @@ export default function CoverageExplorer({
           </div>
         </div>
 
-        <div className="flex items-center justify-center px-12 py-14 max-tab:px-10 max-tab:py-12 max-mob:px-6 max-mob:py-9">
+        <div className="flex items-center justify-center px-4 py-10 max-tab:px-10 max-tab:py-12 max-mob:px-6 max-mob:py-9">
           <div className="w-full max-tab:max-w-[420px]">
             <CoverageMap locations={locations} highlightId={hoverId} onHighlight={setHoverId} />
           </div>

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CircleQuestionMark, Gauge, Lightbulb, Presentation } from 'lucide-react'
+import { CircleQuestionMark, Gauge, Presentation } from 'lucide-react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -9,10 +9,9 @@ import { FAQS } from '@/lib/faq'
 import { WA_ANUNCIANTE, waLink } from '@/lib/whatsapp'
 
 const DESCRIPTION =
-  'Diagnóstico de presença, Sua marca no OOH, Melhores Práticas e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
+  'Diagnóstico de presença, Sua marca no OOH e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
 
-// A ordem não muda: as duas ferramentas interativas na primeira linha, os dois
-// conteúdos na segunda.
+// A ordem não muda: as duas ferramentas interativas primeiro, o FAQ depois.
 //
 // O card 02 é o mais perigoso da página. A ferramenta aplica logo ou peça
 // pronta sobre a foto real do painel, e nada além disso: não há tabela de preço
@@ -36,14 +35,6 @@ const FERRAMENTAS = [
     title: 'Sua marca no OOH',
     text: 'Escolha a praça e o formato, suba a sua logo ou a peça pronta, e veja a sua marca aplicada no painel real. Baixe a imagem e mande para quem decide.',
     cta: 'Ver minha marca no painel',
-  },
-  {
-    href: '/area-do-anunciante/melhores-praticas',
-    Icone: Lightbulb,
-    eyebrow: 'Conteúdo · Ideias e práticas',
-    title: 'Melhores Práticas',
-    text: 'Conteúdos e ideias para tirar mais da sua campanha: como escolher a praça certa, o que funciona em cada formato e as práticas que fazem uma marca ser lembrada na mídia exterior.',
-    cta: 'Ver os conteúdos',
   },
   {
     // O checklist pedia "18 perguntas", contagem anterior à revisão do FAQ de
@@ -96,9 +87,15 @@ export default function AnunciantePage() {
           <div className="wrap">
             <SectionHeading num="01" title="As ferramentas" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
-              {FERRAMENTAS.map((f) => (
+              {FERRAMENTAS.map((f, i) => (
                 <Link
-                  className="ticks reveal group flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
+                  className={`ticks reveal group flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6 ${
+                    // Em número ímpar de cards o último ocupa a linha inteira:
+                    // meio card sozinho na segunda linha abre buraco na página.
+                    i === FERRAMENTAS.length - 1 && FERRAMENTAS.length % 2
+                      ? 'col-span-2 max-mob:col-span-1'
+                      : ''
+                  }`}
                   href={f.href}
                   key={f.href}
                 >
