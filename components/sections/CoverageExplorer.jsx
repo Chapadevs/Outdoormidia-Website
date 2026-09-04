@@ -1,6 +1,3 @@
-'use client'
-
-import { useState } from 'react'
 import CoverageMap from '@/components/ui/CoverageMap'
 import PracaChips from '@/components/ui/PracaChips'
 import { WA_COBERTURA, waLink } from '@/lib/whatsapp'
@@ -17,25 +14,19 @@ const PRACAS = [
   'Rodovias PR-SC',
 ]
 
-function plataformas(total) {
-  return `${total} ${total === 1 ? 'plataforma' : 'plataformas'}`
-}
-
-// `mostrarLista` desliga a faixa de praças do rodapé do card. Na home ela sai:
-// a lista completa por praça vive em /solucoes/regioes, e repetir as duas
-// deixava a mesma informação em dois lugares. O mapa e os chips ficam.
 // `moldura` desliga a borda e o arredondamento do card. Na home a seção corre
-// solta sobre o fundo; em /solucoes/regioes ela continua emoldurada, porque lá
-// o card carrega também a faixa de praças e precisa ter começo e fim visíveis.
+// solta sobre o fundo; em /solucoes/regioes-cobertura ela continua emoldurada,
+// porque lá o card precisa ter começo e fim visíveis.
+// `mapaEstatico` desliga a interação do mapa. Em /solucoes/regioes-cobertura o
+// mapa é peça de leitura, e não ferramenta: a lista da seção 02 é que responde
+// o que existe em cada região.
 export default function CoverageExplorer({
   locations,
   num,
   eyebrow = 'Cobertura',
-  mostrarLista = true,
   moldura = true,
+  mapaEstatico = false,
 }) {
-  const [hoverId, setHoverId] = useState(null)
-
   return (
     <div
       className={`reveal overflow-hidden bg-paper ${
@@ -69,8 +60,8 @@ export default function CoverageExplorer({
             </h2>
             <p className="mt-7 max-w-[42ch] text-lg text-ink-soft">
               A Outdoormídia está em Curitiba, Região Metropolitana, Litoral do Paraná, Joinville,
-              Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo e visibilidade de cada
-              praça. Do Batel ao litoral, das rodovias às praias de Santa Catarina, sua marca
+              Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo, visibilidade e impacto
+              real. Do Batel ao litoral, das rodovias às praias de Santa Catarina, sua marca
               acompanha o trajeto do público nos dois estados.
             </p>
             <PracaChips className="mt-6" pracas={PRACAS} />
@@ -87,39 +78,10 @@ export default function CoverageExplorer({
 
         <div className="flex items-center justify-center px-4 py-10 max-tab:px-10 max-tab:py-12 max-mob:px-6 max-mob:py-9">
           <div className="w-full max-tab:max-w-[420px]">
-            <CoverageMap locations={locations} highlightId={hoverId} onHighlight={setHoverId} />
+            <CoverageMap locations={locations} estatico={mapaEstatico} />
           </div>
         </div>
       </div>
-
-      {mostrarLista && (
-        <div className="overflow-hidden border-t border-ink">
-          <div className="-mb-px -mr-px grid grid-cols-5 max-tab:grid-cols-2 max-mob:grid-cols-1">
-            {locations.map((loc) => (
-              <div
-                key={loc.id}
-                className={`border-b border-r border-line px-6 pb-[34px] pt-[30px] transition-colors duration-150 max-mob:py-7 ${
-                  hoverId === loc.id ? 'bg-bone' : 'bg-paper'
-                }`}
-                onMouseEnter={() => setHoverId(loc.id)}
-                onMouseLeave={() => setHoverId(null)}
-              >
-                {loc.formats?.length > 0 && (
-                  <div className="text-[11.5px] font-bold uppercase tracking-[0.12em] text-orange">
-                    {plataformas(loc.formats.length)}
-                  </div>
-                )}
-                <div className="mt-2.5 text-[19px] font-extrabold leading-[1.15] tracking-[-0.01em]">
-                  {loc.name}
-                </div>
-                {loc.desc && (
-                  <p className="mt-2 text-[13.5px] leading-[1.45] text-ink-soft">{loc.desc}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }

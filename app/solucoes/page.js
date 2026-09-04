@@ -86,7 +86,7 @@ export default async function SolucoesPage() {
               <SectionHeading num="02" title="Regiões" className="flex-1" />
               <Link
                 className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
-                href="/solucoes/regioes"
+                href="/solucoes/regioes-cobertura"
               >
                 Ver o mapa →
               </Link>
@@ -107,7 +107,7 @@ export default async function SolucoesPage() {
               {locations.map((loc) => (
                 <Link
                   className="ticks reveal flex flex-col gap-2.5 rounded-[16px] border border-line bg-white p-6 transition-colors duration-200 hover:border-orange"
-                  href="/solucoes/regioes"
+                  href="/solucoes/regioes-cobertura"
                   key={loc.id}
                 >
                   {loc.formats?.length > 0 && (

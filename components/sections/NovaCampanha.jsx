@@ -30,7 +30,10 @@ const CARD_MENOR =
 const ICONE_QUADRADO = 'grid shrink-0 place-items-center rounded-[10px] bg-white/15'
 const CHEVRON = 'grid size-9 shrink-0 place-items-center rounded-full border border-white/35 transition-colors duration-200 group-hover:border-white'
 
-export default function NovaCampanha() {
+// `contexto` identifica de onde o lead saiu quando o bloco está montado numa
+// página de plataforma ou de linha icônica. Repassado ao qualificador, entra no
+// lead junto com a página de origem.
+export default function NovaCampanha({ contexto = '' }) {
   return (
     <section className="relative scroll-mt-24 bg-orange text-white" id="nova-campanha">
       <div className="wrap py-[90px] max-tab:py-[60px] max-mob:py-[52px]">
@@ -70,7 +73,7 @@ export default function NovaCampanha() {
         {/* `formulario` era o id da seção inteira antes do bloco Nova campanha —
             fica no formulário para não quebrar os links já publicados. */}
         <div className="mt-5 scroll-mt-24" id="formulario">
-          <QualifierForm />
+          <QualifierForm contexto={contexto} />
         </div>
 
         <div className="mt-5 grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">

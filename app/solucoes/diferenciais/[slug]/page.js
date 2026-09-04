@@ -7,13 +7,20 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
 import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { DIFERENCIAIS, getDiferencialBySlug, getOutrosDiferenciais } from '@/lib/diferenciais'
+import {
+  DIFERENCIAIS_COM_PAGINA,
+  getDiferencialBySlug,
+  getOutrosDiferenciais,
+} from '@/lib/diferenciais'
 import { waDiferencial, waLink } from '@/lib/whatsapp'
 
 const CARD = 'ticks rounded-[16px] border border-line bg-white p-7 max-mob:p-6'
 
+// Só os diferenciais com página própria geram rota. Os que viram âncora para a
+// plataforma ou para a seção da home aparecem como card, e o teaser de "Outros
+// diferenciais" leva o leitor até lá pelo `href` deles.
 export function generateStaticParams() {
-  return DIFERENCIAIS.map((d) => ({ slug: d.slug }))
+  return DIFERENCIAIS_COM_PAGINA.map((d) => ({ slug: d.slug }))
 }
 
 export async function generateMetadata({ params }) {
@@ -21,12 +28,15 @@ export async function generateMetadata({ params }) {
   const diferencial = getDiferencialBySlug(slug)
   if (!diferencial) return { title: 'Diferencial não encontrado | Outdoormídia' }
 
-  const title = `${diferencial.title} | Outdoormídia`
+  // `seo` só existe onde o documento de copy fechou title e description
+  // próprios; sem ele vale o padrão, montado do nome e do texto de abertura.
+  const title = diferencial.seo?.title ?? `${diferencial.title} | Outdoormídia`
+  const description = diferencial.seo?.description ?? diferencial.intro
   return {
     title,
-    description: diferencial.intro,
+    description,
     alternates: { canonical: `/solucoes/diferenciais/${diferencial.slug}` },
-    openGraph: { title, description: diferencial.intro, locale: 'pt_BR', type: 'website' },
+    openGraph: { title, description, locale: 'pt_BR', type: 'website' },
   }
 }
 
@@ -35,19 +45,35 @@ export default async function DiferencialPage({ params }) {
   const diferencial = getDiferencialBySlug(slug)
   if (!diferencial) notFound()
 
-  const { aside, oQueE, prova, aplicacao, comparativo, ctaSecundario } = diferencial
-  // Toda seção abaixo do "o que é" é opcional: some quando o diferencial não
-  // traz o campo, em vez de exibir número que o cliente não confirmou.
+  const {
+    aside,
+    oQueE,
+    prova,
+    aplicacao,
+    comparativo,
+    ctaSecundario,
+    monitoramento,
+    relatorio,
+    leitura,
+    privacidade,
+  } = diferencial
+  // Toda seção é opcional: some quando o diferencial não traz o campo, em vez
+  // de exibir número que o cliente não confirmou.
   //
   // São duas comparações diferentes, e nunca convivem na mesma página: a antiga
   // é o esquema de blocos que fecha a "Aplicação prática", a nova é a de foto
   // Amador/Especialista, que vive em seção própria.
   const { comparativo: comparativoBlocos, miniCase } = aplicacao ?? {}
   const outros = getOutrosDiferenciais(slug)
-  const leadOQueE = Array.isArray(oQueE.lead) ? oQueE.lead : [oQueE.lead]
+  // "O que é" depende do `lead`: um `oQueE` só com `cards` existe para alimentar
+  // os marcadores do card na home, sem abrir a seção na página dedicada.
+  const leadOQueE = oQueE?.lead ? (Array.isArray(oQueE.lead) ? oQueE.lead : [oQueE.lead]) : null
+  // O hero usa `subtitulo` onde o documento de copy separou o texto da página do
+  // texto do card da home; sem ele os dois continuam sendo o mesmo `intro`.
+  const textoHero = diferencial.subtitulo ?? diferencial.intro
 
   // A numeração acompanha as seções que sobraram, para não abrir buraco.
-  let secao = 1
+  let secao = 0
   const proximoNum = () => String(++secao).padStart(2, '0')
 
   return (
@@ -64,7 +90,13 @@ export default async function DiferencialPage({ params }) {
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="grid grid-cols-[1.15fr_0.85fr] items-end gap-12 max-tab:grid-cols-1 max-tab:gap-[34px]">
+            <div
+              className={
+                aside
+                  ? 'grid grid-cols-[1.15fr_0.85fr] items-end gap-12 max-tab:grid-cols-1 max-tab:gap-[34px]'
+                  : ''
+              }
+            >
               <div>
                 <div className="eyebrow reveal">
                   Diferencial <b className="text-orange">{diferencial.num}</b> · Soluções
@@ -72,37 +104,44 @@ export default async function DiferencialPage({ params }) {
                 <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
                   {diferencial.heading}
                 </h1>
-                <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-                  {diferencial.intro}
-                </p>
-                <div className="reveal mt-[30px] flex flex-wrap gap-3">
-                  <a href={waLink(waDiferencial(diferencial.title))} className="btn btn-fill">
-                    {diferencial.ctaLabel}
-                  </a>
-                  {ctaSecundario ? (
-                    <Link href={ctaSecundario.href} className="btn btn-ghost">
-                      {ctaSecundario.label} →
-                    </Link>
-                  ) : (
-                    aplicacao && (
-                      <a href="#aplicacao" className="btn btn-ghost">
-                        Ver na prática
-                      </a>
-                    )
-                  )}
-                </div>
-              </div>
-              <div className={`${CARD} reveal`}>
-                <span className="display text-[30px] leading-none text-orange">
-                  {diferencial.num}
-                </span>
-                <p className="m-0 mt-4 text-[15.5px] leading-relaxed text-ink-soft">{aside.text}</p>
-                {aside.footer && (
-                  <div className="mt-[22px] border-t border-line pt-[18px] text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-soft">
-                    {aside.footer}
+                <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{textoHero}</p>
+                {/* `semCta` é decisão de copy, não falta de conteúdo: onde os
+                    botões saíram, o subtítulo é o único lugar da página em que a
+                    tese aparece escrita. */}
+                {!diferencial.semCta && (
+                  <div className="reveal mt-[30px] flex flex-wrap gap-3">
+                    <a href={waLink(waDiferencial(diferencial.title))} className="btn btn-fill">
+                      {diferencial.ctaLabel}
+                    </a>
+                    {ctaSecundario ? (
+                      <Link href={ctaSecundario.href} className="btn btn-ghost">
+                        {ctaSecundario.label} →
+                      </Link>
+                    ) : (
+                      aplicacao && (
+                        <a href="#aplicacao" className="btn btn-ghost">
+                          Ver na prática
+                        </a>
+                      )
+                    )}
                   </div>
                 )}
               </div>
+              {aside && (
+                <div className={`${CARD} reveal`}>
+                  <span className="display text-[30px] leading-none text-orange">
+                    {diferencial.num}
+                  </span>
+                  <p className="m-0 mt-4 text-[15.5px] leading-relaxed text-ink-soft">
+                    {aside.text}
+                  </p>
+                  {aside.footer && (
+                    <div className="mt-[22px] border-t border-line pt-[18px] text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-soft">
+                      {aside.footer}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             {/* Capa só quando existe: painel bege vazio na primeira dobra é pior
                 que capa nenhuma. */}
@@ -119,49 +158,192 @@ export default async function DiferencialPage({ params }) {
           </div>
         </section>
 
-        <section className="pb-[110px] max-mob:pb-[72px]">
-          <div className="wrap">
-            <SectionHeading num="01" title="O que é" className="reveal mb-[34px]" />
-            <div className="reveal mb-[54px] flex max-w-[62ch] flex-col gap-5 text-lg text-ink-soft">
-              {leadOQueE.map((paragrafo) => (
-                <p className="m-0" key={paragrafo}>
-                  {paragrafo}
-                </p>
-              ))}
+        {leadOQueE && (
+          <section className="pb-[110px] max-mob:pb-[72px]">
+            <div className="wrap">
+              <SectionHeading num={proximoNum()} title="O que é" className="reveal mb-[34px]" />
+              <div className="reveal mb-[54px] flex max-w-[62ch] flex-col gap-5 text-lg text-ink-soft">
+                {leadOQueE.map((paragrafo) => (
+                  <p className="m-0" key={paragrafo}>
+                    {paragrafo}
+                  </p>
+                ))}
+              </div>
+              {oQueE.image && (
+                <CoverMedia
+                  src={oQueE.image}
+                  alt={oQueE.imageAlt}
+                  label={diferencial.title}
+                  ratio="16/7"
+                  sizes="100vw"
+                  className="reveal mb-[54px]"
+                />
+              )}
+              {oQueE.cards && (
+                <>
+                  {oQueE.cardsTitle && (
+                    <h2 className="reveal mb-[26px] text-[21px] font-extrabold leading-tight text-ink">
+                      {oQueE.cardsTitle}
+                    </h2>
+                  )}
+                  <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
+                    {oQueE.cards.map((card) => (
+                      <article className={`${CARD} reveal flex flex-col gap-4`} key={card.title}>
+                        <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
+                          {card.title}
+                        </h3>
+                        <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
+                          {card.text}
+                        </p>
+                      </article>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
-            {oQueE.image && (
-              <CoverMedia
-                src={oQueE.image}
-                alt={oQueE.imageAlt}
-                label={diferencial.title}
-                ratio="16/7"
-                sizes="100vw"
-                className="reveal mb-[54px]"
+          </section>
+        )}
+
+        {/* A seção é o vídeo, e é o vídeo que a governa: sem ele os dois
+            parágrafos não sustentam uma seção inteira e o conteúdo já está dito
+            no hero. */}
+        {monitoramento?.video && (
+          <section className="pb-[110px] max-mob:pb-[72px]">
+            <div className="wrap">
+              <SectionHeading
+                num={proximoNum()}
+                title={monitoramento.title}
+                className="reveal mb-[34px]"
               />
-            )}
-            {oQueE.cards && (
-              <>
-                {oQueE.cardsTitle && (
-                  <h2 className="reveal mb-[26px] text-[21px] font-extrabold leading-tight text-ink">
-                    {oQueE.cardsTitle}
-                  </h2>
-                )}
-                <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
-                  {oQueE.cards.map((card) => (
-                    <article className={`${CARD} reveal flex flex-col gap-4`} key={card.title}>
-                      <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                        {card.title}
-                      </h3>
-                      <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
-                        {card.text}
-                      </p>
-                    </article>
+              <div className="reveal mb-[38px] flex max-w-[62ch] flex-col gap-5 text-lg text-ink-soft">
+                {monitoramento.paragrafos.map((paragrafo) => (
+                  <p className="m-0" key={paragrafo}>
+                    {paragrafo}
+                  </p>
+                ))}
+              </div>
+              <video
+                className="reveal w-full rounded-[16px] border border-line"
+                src={monitoramento.video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              />
+              {monitoramento.imagens?.length > 0 && (
+                <div className="mt-[18px] grid grid-cols-4 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
+                  {monitoramento.imagens.map((imagem) => (
+                    <CoverMedia
+                      key={imagem}
+                      src={imagem}
+                      alt={monitoramento.imagensAlt}
+                      label={diferencial.title}
+                      ratio="16/10"
+                      sizes="(max-width: 980px) 50vw, 25vw"
+                      className="reveal"
+                    />
                   ))}
                 </div>
-              </>
-            )}
-          </div>
-        </section>
+              )}
+            </div>
+          </section>
+        )}
+
+        {relatorio && (
+          <section className="pb-[110px] max-mob:pb-[72px]">
+            <div className="wrap">
+              <SectionHeading
+                num={proximoNum()}
+                title={relatorio.title}
+                className="reveal mb-[34px]"
+              />
+              <p className="reveal mb-[38px] max-w-[62ch] text-lg text-ink-soft">
+                {relatorio.lead}
+              </p>
+              {relatorio.image && (
+                <CoverMedia
+                  src={relatorio.image}
+                  alt={relatorio.imageAlt}
+                  label={relatorio.title}
+                  ratio="16/9"
+                  sizes="100vw"
+                  className="reveal mb-[38px]"
+                />
+              )}
+              {/* Lista, não card: são oito itens de vocabulário de mídia, e em
+                  card eles competiriam entre si em vez de serem lidos em
+                  sequência. */}
+              <ul className="m-0 grid list-none grid-cols-2 gap-x-[38px] p-0 max-tab:grid-cols-1">
+                {relatorio.itens.map((item) => (
+                  <li className="reveal border-t border-line py-[22px]" key={item.title}>
+                    <h3 className="m-0 text-[17px] font-extrabold leading-tight text-ink">
+                      {item.title}
+                    </h3>
+                    <p className="m-0 mt-2 text-[15.5px] leading-relaxed text-ink-soft">
+                      {item.text}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              <p className="reveal mt-[38px] max-w-[62ch] text-lg font-semibold text-ink">
+                {relatorio.fechamento}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {leitura && (
+          <section className="pb-[110px] max-mob:pb-[72px]">
+            <div className="wrap">
+              <SectionHeading
+                num={proximoNum()}
+                title={leitura.title}
+                className="reveal mb-[34px]"
+              />
+              {/* O período apurado vive na abertura e não sai dali: número de
+                  audiência sem período declarado é o que a página combate. */}
+              <p className="reveal mb-[38px] max-w-[62ch] text-lg text-ink-soft">{leitura.lead}</p>
+              <div className="reveal grid grid-cols-2 gap-px overflow-hidden rounded-[16px] border border-line bg-line max-mob:grid-cols-1">
+                {leitura.dados.map((dado, i) => (
+                  <div
+                    className={`bg-white px-7 py-[38px] max-mob:px-[22px] max-mob:py-[26px] ${
+                      i === 0 ? 'col-span-2 max-mob:col-span-1' : ''
+                    }`}
+                    key={dado.label}
+                  >
+                    <div className="display text-[clamp(38px,5vw,64px)] leading-[0.9] text-orange">
+                      {dado.n}
+                    </div>
+                    <div className="mt-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-soft">
+                      {dado.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {privacidade && (
+          <section className="pb-[110px] max-mob:pb-[72px]">
+            <div className="wrap">
+              <SectionHeading
+                num={proximoNum()}
+                title={privacidade.title}
+                className="reveal mb-[34px]"
+              />
+              {/* Bloco curto, sem card e sem ícone. */}
+              <div className="reveal flex max-w-[62ch] flex-col gap-5 text-lg text-ink-soft">
+                {privacidade.paragrafos.map((paragrafo) => (
+                  <p className="m-0" key={paragrafo}>
+                    {paragrafo}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {prova && (
           <section className="bg-bone py-[110px] max-mob:py-[72px]">

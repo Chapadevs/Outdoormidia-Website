@@ -22,7 +22,7 @@ const ROTAS = [
     text: 'Outdoor digital, front light, mídia indoor, aeroporto, MUB, rodovias e mídia móvel.',
   },
   {
-    href: '/solucoes/regioes',
+    href: '/solucoes/regioes-cobertura',
     meta: 'Cobertura',
     title: 'Regiões',
     text: 'Onde temos ponto no Paraná e em Santa Catarina, praça por praça.',

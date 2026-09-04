@@ -8,6 +8,10 @@ const RATIOS = {
   '16/10': 'aspect-[16/10]',
   '16/9': 'aspect-[16/9]',
   '16/7': 'aspect-[16/7]',
+  // As fotos dos ativos icônicos vêm em 2:1 do acervo do cliente. Recortar para
+  // 16/9 cortaria justamente o céu e a base da estrutura, que é o que mostra a
+  // altura do painel na via.
+  '2/1': 'aspect-[2/1]',
 }
 
 export default function CoverMedia({

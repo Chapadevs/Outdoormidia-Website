@@ -8,7 +8,7 @@ import NovaCampanha from '@/components/sections/NovaCampanha'
 import { DIFERENCIAIS } from '@/lib/diferenciais'
 
 const DESCRIPTION =
-  'Face única, audiência mensurada, câmeras ao vivo 24×7 e circuitos MUB segmentados: o que separa uma campanha que a cidade vê de uma que passa despercebida.'
+  'Face única, o Aeroporto Square, audiência mensurada, mídia regenerativa, circuitos MUB por nicho e a Gestão 360 OM: o que separa uma campanha que a cidade vê de uma que passa despercebida.'
 
 const PROVA = [
   { n: '+530M', label: 'Impactos por mês' },
@@ -66,7 +66,7 @@ export default function DiferenciaisPage() {
                   {d.tagline && <span className="eyebrow -mt-2 text-orange">{d.tagline}</span>}
                   <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{d.text}</p>
                   <span className="mt-auto pt-5 text-sm font-bold text-orange">
-                    Ver diferencial →
+                    {d.cardCta ?? 'Ver diferencial'} →
                   </span>
                 </Link>
               ))}
