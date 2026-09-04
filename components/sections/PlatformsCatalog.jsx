@@ -103,24 +103,30 @@ function Linha({ p }) {
 
   return (
     <Link
-      className="group block scroll-mt-24 border-b border-line transition-colors duration-300 hover:bg-orange"
+      className="group block scroll-mt-24 border-b border-line"
       href={p.href}
       id={p.slug}
     >
-      <div className="grid grid-cols-[64px_minmax(0,1fr)_240px_auto_54px] items-center gap-6 px-3 py-6 max-tab:grid-cols-[46px_minmax(0,1fr)_auto] max-tab:gap-4 max-mob:py-5">
-        <span className="font-display text-xl text-ink-soft transition-colors duration-200 group-hover:text-white/70">
+      <div className="relative grid grid-cols-[64px_minmax(0,1fr)_240px_auto_54px] items-center gap-6 overflow-hidden px-3 py-6 max-tab:grid-cols-[46px_minmax(0,1fr)_auto] max-tab:gap-4 max-mob:py-5">
+        {/* O laranja entra subindo por trás da linha inteira, em vez de trocar
+            de cor de uma vez: é o mesmo sweep do acordeão de /solucoes. */}
+        <span
+          aria-hidden
+          className="absolute inset-0 z-[1] translate-y-[101%] bg-orange transition-transform duration-[320ms] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:translate-y-0 group-focus-visible:translate-y-0"
+        />
+        <span className="relative z-[2] font-display text-xl text-ink-soft transition-colors duration-[250ms] group-hover:text-white/70 group-focus-visible:text-white/70">
           {p.num}
         </span>
-        <span className="text-[clamp(22px,2.6vw,38px)] font-extrabold leading-none tracking-[-0.02em] transition-colors duration-200 group-hover:text-white">
+        <span className="relative z-[2] text-[clamp(22px,2.6vw,38px)] font-extrabold leading-none tracking-[-0.02em] transition-colors duration-[250ms] group-hover:text-white group-focus-visible:text-white">
           {p.name}
         </span>
-        <span className="text-[12px] font-bold uppercase tracking-[0.14em] text-ink-soft transition-colors duration-200 group-hover:text-white/70 max-tab:hidden">
+        <span className="relative z-[2] text-[12px] font-bold uppercase tracking-[0.14em] text-ink-soft transition-colors duration-[250ms] group-hover:text-white/70 group-focus-visible:text-white/70 max-tab:hidden">
           {p.desc}
         </span>
-        <span className="flex h-[34px] items-end gap-2.5 max-tab:hidden">
+        <span className="relative z-[2] flex h-[34px] items-end gap-2.5 max-tab:hidden">
           {medidos.map((f, i) => (
             <span
-              className="block rounded-[2px] border-[1.5px] border-line-2 transition-colors duration-200 group-hover:border-white/80"
+              className="block rounded-[2px] border-[1.5px] border-line-2 transition-colors duration-[250ms] group-hover:border-white/80 group-focus-visible:border-white/80"
               key={`${f.dims}-${i}`}
               style={{ width: `${f.w}px`, height: `${f.h}px` }}
             />
@@ -128,7 +134,7 @@ function Linha({ p }) {
         </span>
         <span
           aria-hidden
-          className="justify-self-end text-[22px] text-ink-soft transition-[color,transform] duration-200 group-hover:translate-x-1 group-hover:text-white"
+          className="relative z-[2] justify-self-end text-[22px] text-ink-soft transition-[color,transform] duration-[250ms] group-hover:translate-x-1.5 group-hover:text-white group-focus-visible:translate-x-1.5 group-focus-visible:text-white"
         >
           →
         </span>
