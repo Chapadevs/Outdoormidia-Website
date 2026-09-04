@@ -103,8 +103,9 @@ function Linha({ p }) {
 
   return (
     <Link
-      className="group block border-b border-line transition-colors duration-300 hover:bg-orange"
+      className="group block scroll-mt-24 border-b border-line transition-colors duration-300 hover:bg-orange"
       href={p.href}
+      id={p.slug}
     >
       <div className="grid grid-cols-[64px_minmax(0,1fr)_240px_auto_54px] items-center gap-6 px-3 py-6 max-tab:grid-cols-[46px_minmax(0,1fr)_auto] max-tab:gap-4 max-mob:py-5">
         <span className="font-display text-xl text-ink-soft transition-colors duration-200 group-hover:text-white/70">

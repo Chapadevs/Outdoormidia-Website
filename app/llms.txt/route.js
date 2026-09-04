@@ -3,7 +3,7 @@ import { EMPRESA } from '@/lib/empresa'
 import { PAGINAS_DESTAQUE, PAGINAS_INDEXAVEIS } from '@/lib/seo'
 import { PLATFORMS } from '@/lib/platforms'
 import { ICONICOS } from '@/lib/iconicos'
-import { DIFERENCIAIS } from '@/lib/diferenciais'
+import { DIFERENCIAIS_COM_PAGINA } from '@/lib/diferenciais'
 
 // /llms.txt — índice do site em markdown para motores generativos (ChatGPT,
 // Gemini, Claude, Perplexity). Não substitui o sitemap: o sitemap diz ao Google
@@ -58,7 +58,7 @@ ${ICONICOS.map((i) => link(i.name, `/plataformas/projetos-iconicos/${i.slug}`, i
 
 ## Diferenciais
 
-${DIFERENCIAIS.map((d) => link(d.title, `/solucoes/diferenciais/${d.slug}`, d.resumo)).join('\n')}
+${DIFERENCIAIS_COM_PAGINA.map((d) => link(d.title, `/solucoes/diferenciais/${d.slug}`, d.resumo)).join('\n')}
 
 ## Outras páginas
 

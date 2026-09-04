@@ -82,6 +82,34 @@ const nextConfig = {
         destination: '/solucoes/diferenciais/aeroporto-square',
         permanent: true,
       },
+      {
+        // O diferencial 03 passou a atender pelo nome que já usa na home e no
+        // menu com o texto final de 02/09/2026.
+        source: '/solucoes/diferenciais/audiencia-mensurada',
+        destination: '/solucoes/diferenciais/inteligencia-e-audiencia',
+        permanent: true,
+      },
+      {
+        // Regiões passou a atender pelo slug do documento de copy de
+        // 02/09/2026, o mesmo par que o menu e o breadcrumb já usavam.
+        source: '/solucoes/regioes',
+        destination: '/solucoes/regioes-cobertura',
+        permanent: true,
+      },
+      {
+        // Gentileza Urbana saiu do bloco de diferenciais em 02/09/2026, e a
+        // carteira passou a viver inteira na Ambiental, com copy completa.
+        source: '/solucoes/diferenciais/gentileza-urbana',
+        destination: '/sobre/ambiental',
+        permanent: true,
+      },
+      {
+        // Operação e monitoramento saiu do bloco de diferenciais em 02/09/2026:
+        // o que ele dizia já estava dito nos que ficaram.
+        source: '/solucoes/diferenciais/operacao-propria',
+        destination: '/solucoes/diferenciais',
+        permanent: true,
+      },
     ]
   },
   async headers() {

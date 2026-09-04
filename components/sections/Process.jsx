@@ -11,7 +11,7 @@ const ETAPAS = [
     num: '01',
     title: 'Planejamento',
     Icone: MapPinned,
-    text: 'Objetivo e praça definidos, plataformas e pontos selecionados, audiência lida e proposta de mídia montada.',
+    text: 'Objetivo e região definidos, plataformas e pontos selecionados, audiência lida e proposta de mídia montada.',
   },
   {
     num: '02',
@@ -91,8 +91,8 @@ export default function Process({ num, title = 'Gestão 360 OM' }) {
         <SectionHeading className="reveal mb-4 justify-center" num={num} rule={false} title={title} />
         <p className="reveal mb-4 text-lg text-ink-soft">Do objetivo à notoriedade</p>
         <p className="reveal mx-auto max-w-[72ch] text-ink-soft">
-          Você diz o objetivo, para quem e onde precisa aparecer. A Outdoormídia cruza praça, fluxo,
-          formato, audiência e investimento para montar o melhor caminho da campanha.
+          Você diz o objetivo, para quem e onde precisa aparecer. A Outdoormídia cruza região,
+          fluxo, formato, audiência e investimento para montar o melhor caminho da campanha.
         </p>
       </div>
 

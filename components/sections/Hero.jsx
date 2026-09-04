@@ -35,8 +35,8 @@ export default function Hero() {
         </h1>
         <p className="mx-auto mt-6 max-w-[70ch] text-center text-[17px] leading-relaxed text-white/[.92] [text-shadow:0_1px_12px_rgba(22,17,13,0.5)] max-mob:mt-4 max-mob:text-left max-mob:text-base max-mob:text-ink-soft max-mob:[text-shadow:none]">
           Não escolhemos apenas onde sua marca aparece, mas onde ela precisa estar. Planejamos
-          praça, formato e período com base em fluxo e audiência real: do outdoor clássico ao DOOH,
-          nas praças e rodovias que ligam o Paraná a Santa Catarina.
+          região, formato e período com base em fluxo e audiência real: do outdoor clássico ao
+          DOOH, nas regiões e rodovias que ligam o Paraná a Santa Catarina.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3 max-mob:mt-6 max-mob:flex-col max-mob:flex-nowrap max-mob:items-stretch">
           <Link className="btn btn-fill max-mob:w-full max-mob:justify-center" href="/#nova-campanha">

@@ -101,11 +101,15 @@ export default function Diferenciais({ num, moreHref }) {
                     </div>
                   )}
 
+                  {/* `cardCta` existe nos diferenciais que não têm página
+                      própria e entregam o leitor na plataforma ou na seção que
+                      já os abriga: ali "Ver diferencial" mentiria sobre o
+                      destino do clique. */}
                   <Link
                     className="mt-2 text-sm font-bold text-orange transition-colors duration-150 hover:text-white"
                     href={item.href}
                   >
-                    Ver diferencial →
+                    {item.cardCta ?? 'Ver diferencial'} →
                   </Link>
                 </div>
               )

@@ -181,7 +181,13 @@ function vazio(valor) {
   return Array.isArray(valor) ? valor.length === 0 : !valor
 }
 
-export default function QualifierForm() {
+// `contexto` é a plataforma ou a linha da página onde o bloco Nova campanha
+// está montado. O handoff de Plataformas pedia isso como querystring
+// (`/nova-campanha?plataforma=…`); como o formulário continua sendo a seção no
+// fim de cada página, o dado chega por prop e vai junto no lead. A `pagina` já
+// diria a plataforma nas rotas de /plataformas, mas não diz a linha de quem
+// preenche pela aba Green dentro do hub de Icônicos.
+export default function QualifierForm({ contexto = '' }) {
   const [respostas, setRespostas] = useState({
     intencao: '',
     objetivo: '',
@@ -275,6 +281,7 @@ export default function QualifierForm() {
         verba: dados.verba,
         campanha,
         pagina,
+        contexto,
       },
     })
     window.location.href = destino

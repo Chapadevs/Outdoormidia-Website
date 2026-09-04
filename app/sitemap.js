@@ -2,7 +2,7 @@ import { SITE_URL } from '@/lib/constants'
 import { PAGINAS_INDEXAVEIS } from '@/lib/seo'
 import { PLATFORMS } from '@/lib/platforms'
 import { ICONICOS } from '@/lib/iconicos'
-import { DIFERENCIAIS } from '@/lib/diferenciais'
+import { DIFERENCIAIS_COM_PAGINA } from '@/lib/diferenciais'
 import { listPublishedPosts } from '@/lib/blog/posts'
 
 // Reconstruído a cada hora junto com o ISR das rotas de conteúdo.
@@ -36,7 +36,7 @@ export default async function sitemap() {
     priority: 0.6,
   }))
 
-  const diferenciais = DIFERENCIAIS.map((d) => ({
+  const diferenciais = DIFERENCIAIS_COM_PAGINA.map((d) => ({
     url: url(`/solucoes/diferenciais/${d.slug}`),
     lastModified: agora,
     changeFrequency: 'monthly',

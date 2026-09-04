@@ -1,18 +1,26 @@
-import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
-import CoverMedia from '@/components/ui/CoverMedia'
+import BigNumbers from '@/components/ui/BigNumbers'
+import AtivoCard from '@/components/ui/AtivoCard'
+import LinhaTabs from '@/components/ui/LinhaTabs'
 import Iconicos from '@/components/sections/Iconicos'
+import Process from '@/components/sections/Process'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { ICONICOS } from '@/lib/iconicos'
-import { WA_ICONICOS, waLink } from '@/lib/whatsapp'
-
-const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 400px'
+import { ICONICOS, ICONICOS_ASSINATURA } from '@/lib/iconicos'
 
 const DESCRIPTION =
-  'Elegancy, Green e Regenerativo: os projetos icônicos da Outdoormídia: estruturas de assinatura desenhadas ponto a ponto, fora do catálogo de plataformas.'
+  'Estruturas de assinatura da Outdoormídia: esquinas digitais em 3D, painéis híbridos, jardins vivos e requalificação urbana em Curitiba e Joinville.'
+
+// Os quatro números do handoff. Os dois de impacto são por ativo, não somados:
+// somar impacto de painéis diferentes produziria um número que ninguém apurou.
+const NUMEROS = [
+  { n: '4', label: 'Ícones de assinatura' },
+  { n: '3', label: 'Linhas exclusivas' },
+  { n: 'até 1 mi', label: 'Impactos/mês por esquina digital' },
+  { n: '800 mil', label: 'Impactos/mês no Distrito de Mídia' },
+]
 
 export const metadata = {
   title: 'Projetos Icônicos | Outdoormídia',
@@ -35,22 +43,30 @@ export default function ProjetosIconicosPage() {
           items={[{ label: 'Plataformas', href: '/plataformas' }, { label: 'Projetos Icônicos' }]}
         />
 
+        {/* Hero em duas colunas com o card lateral, como nas outras páginas de
+            hub. A coluna da direita é o que diferencia Icônicos do catálogo, e
+            some do fluxo de leitura quando a tela estreita. */}
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="grid grid-cols-[1.15fr_0.85fr] items-end gap-[50px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <div>
-                <div className="eyebrow reveal">Assinatura · 3 projetos</div>
+                <div className="eyebrow reveal">Ícones · Mobiliário de assinatura</div>
                 <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-                  Projetos Icônicos.
+                  Icônicos.
                 </h1>
                 <p className="reveal mt-6 max-w-[58ch] text-lg text-ink-soft">
-                  Nem toda mídia cabe num catálogo. São três linhas de projeto sob medida,
-                  desenhadas ponto a ponto, com estrutura própria e fluxo comercial que começa no
-                  briefing, não na tabela.
+                  Existem endereços que a cidade já reconhece. Os Projetos Icônicos ocupam esses
+                  pontos com estruturas desenhadas uma a uma, sem molde de catálogo. É o produto
+                  que a Outdoormídia projeta, não o que ela replica.
                 </p>
-                <a className="btn btn-fill reveal mt-8" href={waLink(WA_ICONICOS)}>
-                  Falar sobre um projeto
-                </a>
+                <div className="reveal mt-8 flex flex-wrap gap-3">
+                  <a className="btn btn-fill" href="#nova-campanha">
+                    Quero avaliar um Icônico
+                  </a>
+                  <a className="btn btn-ghost" href="#assinatura">
+                    Ver os ícones
+                  </a>
+                </div>
               </div>
               <div className="ticks reveal rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
                 <p className="m-0 text-[15px] leading-relaxed text-ink-soft">
@@ -61,81 +77,43 @@ export default function ProjetosIconicosPage() {
                 <p className="eyebrow mt-5">Briefing → viabilidade → estrutura</p>
               </div>
             </div>
+            <BigNumbers className="reveal mt-[64px]" stats={NUMEROS} />
           </div>
         </section>
 
         <Iconicos linkTitulo={false} num="01" />
 
-        <section className="border-t border-line py-[90px] max-mob:py-[60px]">
+        <section
+          className="scroll-mt-24 border-t border-line py-[90px] max-mob:py-[60px]"
+          id="assinatura"
+        >
           <div className="wrap">
-            <SectionHeading num="02" title="Os três projetos" className="reveal mb-[34px]" />
-            <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
-              {ICONICOS.map((iconico) => (
-                <article
-                  className="group reveal flex flex-col rounded-[16px] border border-line bg-white p-6 transition-colors duration-200 hover:border-orange max-mob:p-5"
-                  key={iconico.slug}
-                >
-                  <CoverMedia
-                    src={iconico.image}
-                    alt={iconico.imageAlt || `${iconico.name}: ${iconico.short}`}
-                    label={iconico.name}
-                    sizes={CARD_SIZES}
-                  />
-                  <div className="mt-6 flex items-baseline gap-3">
-                    <span className="font-display text-[15px] text-orange">{iconico.num}</span>
-                    <h3 className="m-0 text-[21px] font-extrabold leading-none tracking-[-0.01em] transition-colors duration-200 group-hover:text-orange">
-                      <Link href={iconico.href}>{iconico.name}</Link>
-                    </h3>
-                  </div>
-                  <p className="eyebrow mt-3">{iconico.tagline}</p>
-                  <p className="m-0 mt-4 text-[14.5px] leading-relaxed text-ink-soft">
-                    {iconico.short}
-                  </p>
-                  {iconico.linhas.length > 0 && (
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {iconico.linhas.map((linha) => (
-                        <Link
-                          className="rounded-full border border-line px-3.5 py-1.5 text-[12px] font-bold uppercase tracking-[0.08em] text-ink-soft transition-colors duration-200 hover:border-orange hover:text-orange"
-                          href={`${iconico.href}#${linha.slug}`}
-                          key={linha.slug}
-                        >
-                          {linha.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                  <Link
-                    className="mt-auto flex items-center gap-2 pt-6 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 hover:text-orange"
-                    href={iconico.href}
-                  >
-                    Ver projeto
-                    <span aria-hidden className="text-base">
-                      →
-                    </span>
-                  </Link>
-                </article>
+            <SectionHeading num="02" title="Ícones de assinatura" className="reveal mb-[34px]" />
+            <p className="reveal mb-[54px] max-w-[58ch] text-lg text-ink-soft">
+              Quatro estruturas que não pertencem a nenhuma linha, porque cada uma resolveu um
+              problema que não se repete. Três estão no Distrito de Mídia do Aeroporto, uma na
+              Avenida das Torres.
+            </p>
+            <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
+              {ICONICOS_ASSINATURA.map((ativo, i) => (
+                <AtivoCard ativo={ativo} key={ativo.slug} prioridadeImagem={i === 0} />
               ))}
             </div>
           </div>
         </section>
 
+        {/* Sem `bg-bone` aqui de propósito: o Gestão 360 logo abaixo já é bege,
+            e as duas seções juntas viravam um bloco só. */}
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
-            <SectionHeading num="03" title="Procurando o catálogo?" className="reveal mb-[34px]" />
-            <div className="reveal flex items-end justify-between gap-8 max-mob:flex-col max-mob:items-start max-mob:gap-5">
-              <p className="m-0 max-w-[56ch] text-[15px] leading-relaxed text-ink-soft">
-                Para campanhas com formato, praça e período definidos, o caminho são as 7
-                plataformas de mídia exterior, do outdoor digital ao MUB, com disponibilidade e
-                estimativa imediatas.
-              </p>
-              <Link className="btn btn-ghost shrink-0" href="/plataformas">
-                Ver as plataformas →
-              </Link>
-            </div>
+            <SectionHeading num="03" title="As três linhas" className="reveal mb-[34px]" />
+            <LinhaTabs linhas={ICONICOS} />
           </div>
         </section>
 
-        <NovaCampanha />
+        <Process num="04" title="Como contratar" />
+
+        <NovaCampanha contexto="Projetos Icônicos" />
       </main>
       <Footer />
     </>
