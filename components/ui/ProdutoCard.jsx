@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import CoverMedia from '@/components/ui/CoverMedia'
 
 // Componentes C7 e C4 do handoff no mesmo card: a anatomia fixa do produto
 // (kicker em caixa alta, nome, copy, linha de specs) e o seletor de tecnologia.
@@ -20,7 +21,8 @@ const TOGGLE =
   'radial-reveal cursor-pointer rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] transition-colors duration-150 [--rr-fill:var(--color-ink)]'
 
 export default function ProdutoCard({ produto, tecnologiaPadrao = 'digital' }) {
-  const { name, kicker, text, specs, specsPor, pontos, selo, tecnologias } = produto
+  const { name, kicker, text, specs, specsPor, pontos, selo, tecnologias, image, imageAlt, imageRatio } =
+    produto
 
   const dupla = tecnologias?.length > 1
   const inicial = tecnologias?.includes(tecnologiaPadrao) ? tecnologiaPadrao : tecnologias?.[0]
@@ -32,6 +34,17 @@ export default function ProdutoCard({ produto, tecnologiaPadrao = 'digital' }) {
 
   return (
     <article className="ticks reveal flex flex-col rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
+      {image && (
+        <CoverMedia
+          alt={imageAlt}
+          className="mb-5"
+          label={name}
+          ratio={imageRatio || '16/9'}
+          sizes="(max-width: 980px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          src={image}
+        />
+      )}
+
       <div className="flex items-start justify-between gap-4">
         <p className="eyebrow m-0 text-orange">{rotulo}</p>
         {selo && (

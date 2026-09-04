@@ -46,6 +46,13 @@ function TituloPlataformas() {
     // estar dentro da tela no primeiro paint: guardar esse valor de partida
     // (t0) e renormalizar em cima dele é o que garante que as onze colunas
     // comecem embaixo e participem da subida, seja qual for a altura da janela.
+    // A escrita de `padding-top` refaz o layout da página inteira, então ela só
+    // acontece quando a coluna de fato troca de altura: nos demais frames de
+    // rolagem o laço não toca no DOM. É o que mantém o carrossel logo abaixo
+    // rodando com todos os frames.
+    const colunas = Array.from(linhaRef.current?.querySelectorAll('[data-letra]') ?? [])
+    const alturas = LETRAS.map(() => null)
+
     const elevar = () => {
       const linha = linhaRef.current
       if (!linha) return
@@ -53,10 +60,12 @@ function TituloPlataformas() {
       const bruto = Math.min(Math.max((window.innerHeight - r.top) / (window.innerHeight * 0.95), 0), 1)
       if (t0Ref.current === undefined) t0Ref.current = Math.min(bruto, 0.9)
       const t = Math.min(Math.max((bruto - t0Ref.current) / (1 - t0Ref.current), 0), 1)
-      linha.querySelectorAll('[data-letra]').forEach((el, i) => {
+      colunas.forEach((el, i) => {
         const alto = LETRAS[i].alto
-        const limiar = limiaresRef.current[i]
-        el.style.paddingTop = `${t > limiar ? alto : alto + 54}px`
+        const topo = t > limiaresRef.current[i] ? alto : alto + 54
+        if (alturas[i] === topo) return
+        alturas[i] = topo
+        el.style.paddingTop = `${topo}px`
       })
     }
 
@@ -126,13 +135,15 @@ export default function PlatformsCarousel() {
 
       <div className="reveal mt-10">
         <Coverflow
-          // Abre no segundo card, e não no primeiro: com Icônicos centralizado
-          // não haveria vizinho à esquerda para mostrar o ângulo do coverflow
-          // já na primeira dobra.
+          // Abre no segundo card, e não no primeiro: é a entrada mais forte da
+          // primeira dobra. Com `loop`, a lista é contínua nos dois sentidos,
+          // então Icônicos passa a ter vizinho à esquerda em qualquer posição —
+          // as 9 plataformas são um circuito, não uma fila com ponta.
           gap={26}
           inicial={1}
           label="Plataformas Outdoormídia"
           labels={PLATFORMS_LISTAGEM.map((p) => p.name)}
+          loop
           rotulo="plataforma"
           width="min(820px,74vw)"
         >

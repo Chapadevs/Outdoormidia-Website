@@ -8,7 +8,12 @@ import { useRef, useState } from 'react'
 // são a mesma letra, o texto continua legível o tempo todo, ao contrário do
 // sorteio de caracteres aleatórios que isto substituiu.
 //
-// Dispara uma vez, quando o texto entra em cena na rolagem.
+// Dispara uma vez, quando o texto entra em cena na rolagem, e depois nunca
+// para: `repeat: Infinity` faz a letra girar de novo a cada ciclo, porque o
+// salto de volta ao início (`repeatType: 'loop'`) é invisível, já que as duas
+// cópias são o mesmo caractere. O `delay` inicial é o que dá a entrada rápida
+// e escalonada do primeiro scroll; o `repeatDelay`, bem maior, é o que segura
+// o giro seguinte, contínuo, num ritmo lento e preguiçoso.
 //
 // A letra e a cópia viajam juntas dentro de um trilho: é o trilho que anda
 // -100%, e a moldura com overflow-hidden recorta o que sai. Um elemento animado
@@ -23,6 +28,7 @@ import { useRef, useState } from 'react'
 
 const ESCADA_S = 0.14
 const MOLA = { type: 'spring', duration: 0.7, bounce: 0.15 }
+const REPEAT_DELAY_S = 5
 
 function embaralha(indices) {
   const a = [...indices]
@@ -60,7 +66,15 @@ export default function LetterSwap({ text, delay = 0, escada = ESCADA_S, classNa
             <motion.span
               animate={{ y: trocar ? '-100%' : '0%' }}
               className="relative inline-block"
-              transition={{ ...MOLA, delay: delay + posicao.get(i) * escada }}
+              transition={{
+                ...MOLA,
+                delay: delay + posicao.get(i) * escada,
+                ...(trocar && {
+                  repeat: Infinity,
+                  repeatType: 'loop',
+                  repeatDelay: REPEAT_DELAY_S + posicao.get(i) * escada,
+                }),
+              }}
             >
               {char}
               <span className="absolute left-0 top-full">{char}</span>

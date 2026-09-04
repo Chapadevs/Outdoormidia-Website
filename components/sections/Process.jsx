@@ -99,7 +99,7 @@ export default function Process({ num, title = 'Gestão 360 OM' }) {
       <div className="relative -mt-[7vh] h-[300vh] max-tab:mt-0 max-tab:h-auto" ref={pistaRef}>
         <div className="sticky top-0 flex h-screen flex-col justify-center max-tab:static max-tab:h-auto max-tab:py-16">
           <div className="wrap w-full">
-            <div className="grid grid-cols-3 max-tab:grid-cols-1">
+            <div className="mx-auto grid max-w-[1040px] grid-cols-3 max-tab:max-w-none max-tab:grid-cols-1">
               {ETAPAS.map((etapa, i) => (
                 <div className="relative flex flex-col max-tab:pb-14 max-tab:pl-12" key={etapa.num}>
                   <div

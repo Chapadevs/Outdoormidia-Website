@@ -83,7 +83,20 @@ export default async function PlatformPage({ params }) {
           items={[{ label: 'Plataformas', href: '/plataformas' }, { label: platform.name }]}
         />
 
-        <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
+        <section className="relative overflow-hidden pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
+          {platform.slug === 'aeroporto' && (
+            <>
+              <video
+                autoPlay
+                className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-45"
+                loop
+                muted
+                playsInline
+                src="/media/aeroporto-midia.mp4"
+              />
+              <div className="pointer-events-none absolute inset-0 -z-10 bg-paper/40" />
+            </>
+          )}
           <div className="wrap">
             <div className="grid grid-cols-[1fr_1fr] items-center gap-[50px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <div>
@@ -93,7 +106,14 @@ export default async function PlatformPage({ params }) {
                 </h1>
                 <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">{platform.intro}</p>
               </div>
-              <CoverMedia label={platform.name} className="reveal" />
+              <CoverMedia
+                alt={platform.imageAlt}
+                className="reveal"
+                label={platform.name}
+                priority
+                sizes="(max-width: 980px) 100vw, 50vw"
+                src={platform.image}
+              />
             </div>
 
             {platform.quando?.length > 0 && (
@@ -134,6 +154,16 @@ export default async function PlatformPage({ params }) {
                     className="ticks reveal flex flex-col rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
                     key={bloco.title}
                   >
+                    {bloco.image && (
+                      <CoverMedia
+                        alt={bloco.imageAlt}
+                        className="mb-5"
+                        label={bloco.title}
+                        ratio="16/9"
+                        sizes="(max-width: 980px) 100vw, 33vw"
+                        src={bloco.image}
+                      />
+                    )}
                     <h3 className="m-0 text-[19px] font-extrabold leading-tight text-ink">
                       {bloco.title}
                     </h3>

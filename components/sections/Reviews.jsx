@@ -10,17 +10,18 @@ import SectionHeading from '@/components/ui/SectionHeading'
 // TODO(cliente): confirmar a autorização de uso de nome, cargo e marca dos três
 // depoentes antes de publicar — são pessoas e empresas identificáveis.
 //
-// Os três vídeos entraram em `public/media/cases-videos/`, na ordem numérica
-// dos arquivos.
+// Os três vídeos entraram em `public/media/cases-videos/`, nomeados pelo
+// depoente. A duração medida de cada arquivo bate exata com a que o card já
+// declarava (Claro 00:45 · Diretor Verbal 01:00 · Cia do Pastel 01:27),
+// confirmando o pareamento.
 //
-// TODO(cliente): a duração medida de `depoimento-1` (01:00) e de
-// `depoimento-2` (00:45) é o inverso da que os cards 01 e 02 declaram (00:44 e
-// 01:00). O arquivo 3 casa exato. Confirmar se os dois primeiros arquivos estão
-// trocados antes de publicar: o card 01 identifica pessoa e marca reais.
-//
-// TODO(cliente): faltam as capas estáticas. Enquanto `capa` estiver vazio, o
-// card mostra a citação sobre o painel bege com o play por cima — o vídeo só
-// carrega quando o modal abre.
+// `capa` é um frame extraído do próprio vídeo (`ffmpeg -ss … scale=600:-1`,
+// arquivo `<nome>-capa.webp` ao lado do `.mp4`), não uma foto separada do
+// cliente: os três vídeos trazem legenda queimada do início ao fim, sem
+// nenhum trecho limpo, então o frame escolhido é o de melhor enquadramento
+// (olhos abertos, sem cartela de abertura) com a legenda mais curta possível
+// naquele instante — ela fica escondida sob o gradiente e a citação do
+// próprio card. Trocar por capa oficial do cliente é upgrade, não bloqueio.
 //
 // TODO(cliente): o card do Auto Shopping Curitiba cita um case que ainda não
 // tem página (/cases/[slug] não existe, só a listagem). Enquanto não existir, o
@@ -33,9 +34,9 @@ const REVIEWS = [
     quote: 'A principal vantagem que a gente vê neste tipo de campanha é a mensuração.',
     name: 'Guilherme Heimbecher',
     role: 'Especialista de Marketing · Claro',
-    duracao: '00:44',
-    video: '/media/cases-videos/depoimento-1-compressed.mp4',
-    capa: null,
+    duracao: '00:45',
+    video: '/media/cases-videos/claro.mp4',
+    capa: '/media/cases-videos/claro-capa.webp',
   },
   {
     quote:
@@ -44,16 +45,16 @@ const REVIEWS = [
     role: 'Diretor · Agência Verbal',
     contexto: 'Case: Auto Shopping Curitiba',
     duracao: '01:00',
-    video: '/media/cases-videos/depoimento-2-compressed.mp4',
-    capa: null,
+    video: '/media/cases-videos/diretor-verbal.mp4',
+    capa: '/media/cases-videos/diretor-verbal-capa.webp',
   },
   {
     titulo: 'Quando o bairro inteiro passa a conhecer sua marca',
     name: 'Mônica Kachel',
     role: 'Proprietária · Cia do Pastel',
     duracao: '01:27',
-    video: '/media/cases-videos/depoimento-3-compressed.mp4',
-    capa: null,
+    video: '/media/cases-videos/cia-do-pastel.mp4',
+    capa: '/media/cases-videos/cia-do-pastel-capa.webp',
   },
 ]
 
@@ -129,7 +130,12 @@ export default function Reviews() {
                     </span>
                   )}
 
-                  <span className="absolute right-3 top-3 z-[3] rounded-full bg-ink/70 px-2.5 py-1 text-[11.5px] font-bold tabular-nums text-white backdrop-blur-[2px]">
+                  {/* Sem `backdrop-blur`: dentro de um card que gira e muda de
+                      opacidade a cada frame, o desfoque de fundo obriga o
+                      compositor a refazer a camada inteira junto, e é o que
+                      derruba os frames do coverflow. O ink/70 já sustenta a
+                      leitura sobre a foto. */}
+                  <span className="absolute right-3 top-3 z-[3] rounded-full bg-ink/70 px-2.5 py-1 text-[11.5px] font-bold tabular-nums text-white">
                     {r.duracao}
                   </span>
 

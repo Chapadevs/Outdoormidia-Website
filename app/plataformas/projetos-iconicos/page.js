@@ -46,8 +46,17 @@ export default function ProjetosIconicosPage() {
         {/* Hero em duas colunas com o card lateral, como nas outras páginas de
             hub. A coluna da direita é o que diferencia Icônicos do catálogo, e
             some do fluxo de leitura quando a tela estreita. */}
-        <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
-          <div className="wrap">
+        <section className="relative overflow-hidden pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
+          <video
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.12]"
+            src="/media/cases-videos/video-iconicos.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          />
+          <div className="wrap relative z-10">
             <div className="grid grid-cols-[1.15fr_0.85fr] items-end gap-[50px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <div>
                 <div className="eyebrow reveal">Ícones · Mobiliário de assinatura</div>
