@@ -1,9 +1,8 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
 import { useEffect, useRef } from 'react'
-import Coverflow from '@/components/ui/Coverflow'
+import CarrosselContinuo from '@/components/ui/CarrosselContinuo'
+import PlatformShowcaseCard from '@/components/ui/PlatformShowcaseCard'
 import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
 // 11 colunas soletram "Plataformas" como um letreiro de postes luminosos: cada
@@ -30,6 +29,7 @@ function TituloPlataformas() {
   const linhaRef = useRef(null)
   const frameRef = useRef(0)
   const t0Ref = useRef(undefined)
+  const topoRef = useRef(0)
   const limiaresRef = useRef(null)
 
   useEffect(() => {
@@ -46,26 +46,34 @@ function TituloPlataformas() {
     // estar dentro da tela no primeiro paint: guardar esse valor de partida
     // (t0) e renormalizar em cima dele é o que garante que as onze colunas
     // comecem embaixo e participem da subida, seja qual for a altura da janela.
-    // A escrita de `padding-top` refaz o layout da página inteira, então ela só
-    // acontece quando a coluna de fato troca de altura: nos demais frames de
-    // rolagem o laço não toca no DOM. É o que mantém o carrossel logo abaixo
-    // rodando com todos os frames.
+    //
+    // A posição do título no documento é medida uma vez, na montagem e no
+    // resize, e o laço de rolagem só lê `scrollY`. Medir com
+    // `getBoundingClientRect` a cada frame obriga o navegador a recalcular o
+    // layout da página inteira no meio do frame, e o carrossel logo abaixo
+    // pagava a conta em frames perdidos. A escrita de `padding-top` também
+    // refaz o layout, então ela só acontece quando a coluna de fato troca de
+    // altura: onze vezes na subida, nenhuma nos demais frames.
     const colunas = Array.from(linhaRef.current?.querySelectorAll('[data-letra]') ?? [])
     const alturas = LETRAS.map(() => null)
 
-    const elevar = () => {
+    const medir = () => {
       const linha = linhaRef.current
       if (!linha) return
-      const r = linha.getBoundingClientRect()
-      const bruto = Math.min(Math.max((window.innerHeight - r.top) / (window.innerHeight * 0.95), 0), 1)
+      topoRef.current = linha.getBoundingClientRect().top + window.scrollY
+    }
+
+    const elevar = () => {
+      const topo = topoRef.current - window.scrollY
+      const bruto = Math.min(Math.max((window.innerHeight - topo) / (window.innerHeight * 0.95), 0), 1)
       if (t0Ref.current === undefined) t0Ref.current = Math.min(bruto, 0.9)
       const t = Math.min(Math.max((bruto - t0Ref.current) / (1 - t0Ref.current), 0), 1)
       colunas.forEach((el, i) => {
         const alto = LETRAS[i].alto
-        const topo = t > limiaresRef.current[i] ? alto : alto + 54
-        if (alturas[i] === topo) return
-        alturas[i] = topo
-        el.style.paddingTop = `${topo}px`
+        const destino = t > limiaresRef.current[i] ? alto : alto + 54
+        if (alturas[i] === destino) return
+        alturas[i] = destino
+        el.style.paddingTop = `${destino}px`
       })
     }
 
@@ -74,13 +82,19 @@ function TituloPlataformas() {
       frameRef.current = requestAnimationFrame(elevar)
     }
 
+    const aoRedimensionar = () => {
+      medir()
+      aoRolar()
+    }
+
+    medir()
     elevar()
     window.addEventListener('scroll', aoRolar, { passive: true })
-    window.addEventListener('resize', aoRolar)
+    window.addEventListener('resize', aoRedimensionar)
     return () => {
       cancelAnimationFrame(frameRef.current)
       window.removeEventListener('scroll', aoRolar)
-      window.removeEventListener('resize', aoRolar)
+      window.removeEventListener('resize', aoRedimensionar)
     }
   }, [])
 
@@ -121,7 +135,11 @@ function TituloPlataformas() {
 
 export default function PlatformsCarousel() {
   return (
-    <section className="overflow-hidden bg-bone py-[104px] text-ink max-mob:py-[72px]" id="plataformas">
+    // `overflow-clip` e não `overflow-hidden`: o segundo faz da seção um
+    // contêiner rolável, e o navegador rolaria essa caixa na horizontal para
+    // trazer à vista um card que o Tab focou do outro lado do círculo — a seção
+    // inteira sairia do lugar. `clip` corta igual e não rola.
+    <section className="overflow-clip bg-bone py-[104px] text-ink max-mob:py-[72px]" id="plataformas">
       {/* A abertura enquadra a amplitude do portfólio, e é ela que justifica
           nove plataformas em vez de uma: Front Light é aparecer, Projetos
           Icônicos é ser impossível de ignorar. */}
@@ -134,78 +152,25 @@ export default function PlatformsCarousel() {
       <div className="reveal mx-auto h-[1.5px] max-w-[1280px] bg-[linear-gradient(to_right,rgba(22,17,13,0),rgba(22,17,13,.34)_14%,rgba(22,17,13,.34)_86%,rgba(22,17,13,0))]" />
 
       <div className="reveal mt-10">
-        <Coverflow
-          // Abre no segundo card, e não no primeiro: é a entrada mais forte da
-          // primeira dobra. Com `loop`, a lista é contínua nos dois sentidos,
-          // então Icônicos passa a ter vizinho à esquerda em qualquer posição —
-          // as 9 plataformas são um circuito, não uma fila com ponta.
+        {/* A fita é um circuito, não uma fila: gira sozinha, devagar, e o
+            visitante roda para os dois lados sem chegar a ponta nenhuma. Sem
+            fileira de bolinhas embaixo, porque com giro contínuo a posição na
+            lista não quer dizer nada — e a bolinha marcada era o único ponto do
+            site que anunciava uma ordem que a seção não tem.
+
+            A altura vem em classe porque quem conhece a proporção do card é
+            este arquivo: 16/9 no desktop, 4/5 no tile de mobile. */}
+        <CarrosselContinuo
+          alturaClasse="h-[calc(var(--cw)*0.5625)] max-mob:h-[calc(var(--cw)*1.25)]"
           gap={26}
-          inicial={1}
           label="Plataformas Outdoormídia"
-          labels={PLATFORMS_LISTAGEM.map((p) => p.name)}
-          loop
-          rotulo="plataforma"
+          velocidade={0.055}
           width="min(820px,74vw)"
         >
           {PLATFORMS_LISTAGEM.map((p) => (
-            <article
-              className="ticks relative aspect-[16/9] w-full overflow-hidden rounded-[18px] border border-line bg-paper max-mob:aspect-[4/5]"
-              key={p.slug}
-            >
-              {p.video ? (
-                <video
-                  aria-hidden="true"
-                  autoPlay
-                  className="pointer-events-none absolute inset-0 size-full object-cover"
-                  loop
-                  muted
-                  playsInline
-                  preload="none"
-                  src={p.video}
-                />
-              ) : p.image ? (
-                <Image
-                  alt={p.imageAlt || `${p.name}: ${p.short}`}
-                  className="object-cover"
-                  draggable={false}
-                  fill
-                  sizes="(max-width: 560px) 74vw, 820px"
-                  src={p.image}
-                />
-              ) : (
-                <div className="absolute inset-0 grid place-items-center bg-ink/[.06] pb-[42%] text-[11px] font-bold uppercase tracking-[0.16em] text-ink/30">
-                  {p.name}
-                </div>
-              )}
-              {/* scrim claro — segura a leitura do texto em ink sobre a foto */}
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(246,242,236,.94)_0%,rgba(246,242,236,.62)_42%,rgba(246,242,236,0)_74%)]" />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-7 p-[38px] max-mob:flex-col max-mob:items-start max-mob:gap-5 max-mob:p-6">
-                <div>
-                  {p.marcador && (
-                    <span className="mb-3 inline-flex rounded-full border border-orange px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-orange">
-                      {p.marcador}
-                    </span>
-                  )}
-                  <div className="eyebrow text-orange">
-                    {p.num} · {p.desc}
-                  </div>
-                  <h3 className="m-0 mt-3 text-[clamp(26px,2.6vw,42px)] font-extrabold leading-none tracking-[-0.02em] text-ink">
-                    {p.name}
-                  </h3>
-                  {/* O card de mobile é um tile 4/5 de altura fixa: o texto do documento
-                      não cabe inteiro nele. Corta em 3 linhas aqui e vai completo
-                      na página da plataforma. */}
-                  <p className="m-0 mt-3.5 max-w-[40ch] text-[15.5px] leading-normal text-ink-soft max-mob:line-clamp-3">
-                    {p.short}
-                  </p>
-                </div>
-                <Link className="btn btn-fill shrink-0" draggable={false} href={p.href}>
-                  {p.cta} →
-                </Link>
-              </div>
-            </article>
+            <PlatformShowcaseCard key={p.slug} p={p} />
           ))}
-        </Coverflow>
+        </CarrosselContinuo>
       </div>
     </section>
   )

@@ -11,6 +11,10 @@ import LetterSwap from '@/components/ui/LetterSwap'
 //
 // Sem `stats` o componente não renderiza. É a regra do handoff: onde não há
 // dado validado, a página fica sem o quadro em vez de inventar número.
+//
+// O `font-bold` no número não é redundante: `.display` declara `font-normal`, e
+// o briefing da reta final pede os big numbers em bold (G1). O peso entra aqui,
+// na utilitária, e não dentro de `.display`, que veste todo hero do site.
 const COLUNAS = {
   2: 'grid-cols-2 max-mob:grid-cols-1',
   3: 'grid-cols-3 max-tab:grid-cols-1',
@@ -27,7 +31,7 @@ export default function BigNumbers({ stats, className = '' }) {
       <div className={`-mb-px grid ${cols}`}>
         {stats.map((stat, i) => (
           <div className="border-b border-r border-ink/15 px-7 py-[38px] max-mob:px-[22px] max-mob:py-[26px]" key={stat.label}>
-            <div className="display text-[clamp(38px,5vw,64px)] leading-[0.9] text-orange">
+            <div className="display font-bold text-[clamp(38px,5vw,64px)] leading-[0.9] text-orange">
               <LetterSwap delay={i * 0.18} text={stat.n} />
             </div>
             <div className="mt-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-soft">

@@ -17,13 +17,16 @@ const COLUNAS = HUBS.map((hub, i) => ({
   ],
 }))
 
-const LEGAIS = [
-  { label: 'Política de Privacidade', href: '/privacidade' },
-  { label: 'Termos de Uso', href: '/termos' },
-]
+// A privacidade sai da lista e vira botão na mesma linha: é o único item legal
+// que o visitante procura por conta própria, e link de 12px na barra do rodapé
+// não se acha. O rótulo diz LGPD porque é o termo com que ele chega.
+const LEGAIS = [{ label: 'Termos de Uso', href: '/termos' }]
 
-// TODO(cliente): confirmar os perfis de X e Facebook — os dois foram montados a
-// partir do handle do Instagram e ainda não foram verificados.
+// TODO(cliente): confirmar os perfis de Youtube e Facebook — os dois foram
+// montados a partir do handle do Instagram e ainda não foram verificados.
+//
+// A ordem é a do briefing da reta final: Instagram, LinkedIn, YouTube,
+// Facebook. Não é alfabética nem por relevância de código, é a do cliente.
 const SOCIAIS = [
   {
     label: 'Instagram',
@@ -31,19 +34,19 @@ const SOCIAIS = [
     path: 'M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16Zm0 3.18a6.66 6.66 0 1 0 0 13.32 6.66 6.66 0 0 0 0-13.32Zm0 10.98a4.32 4.32 0 1 1 0-8.64 4.32 4.32 0 0 1 0 8.64Zm8.48-11.24a1.56 1.56 0 1 1-3.11 0 1.56 1.56 0 0 1 3.11 0Z',
   },
   {
-    label: 'X',
-    href: 'https://x.com/outdoormidia',
-    path: 'M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z',
+    label: 'LinkedIn',
+    href: 'https://br.linkedin.com/company/outdoormidia',
+    path: 'M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z',
+  },
+  {
+    label: 'Youtube',
+    href: 'https://www.youtube.com/@outdoormidia',
+    path: 'M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.27 3.6-6.27 3.6Z',
   },
   {
     label: 'Facebook',
     href: 'https://www.facebook.com/outdoormidia',
     path: 'M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07Z',
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://br.linkedin.com/company/outdoormidia',
-    path: 'M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z',
   },
 ]
 
@@ -141,7 +144,13 @@ export default function Footer() {
           </span>
           {/* Fora da NAV de propósito: lib/nav.js alimenta o menu do Header, e
               página legal não é item de navegação principal. */}
-          <span className="flex flex-wrap gap-5">
+          <span className="flex flex-wrap items-center gap-5">
+            <Link
+              className="btn btn-ghost px-[18px] py-[9px] text-[11px] tracking-[0.06em]"
+              href="/privacidade"
+            >
+              Conferir LGPD
+            </Link>
             {LEGAIS.map((l) => (
               <Link
                 key={l.href}

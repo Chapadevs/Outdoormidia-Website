@@ -1,21 +1,23 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { Bot, ChevronRight, Target, Zap } from 'lucide-react'
+import { ChevronRight, Target, Zap } from 'lucide-react'
 import QualifierForm from '@/components/forms/QualifierForm'
-import { WA_ATENDIMENTO_AGORA, WA_PROGRAMATICA, waLink, waLinkMercadoOoh } from '@/lib/whatsapp'
+import { WA_ATENDIMENTO_AGORA, waLink } from '@/lib/whatsapp'
 
-// As quatro portas do bloco "Nova campanha", na hierarquia fechada no checklist
-// da home (claude/checklist-home.md, item 10).
+// As três portas do bloco "Nova campanha", na hierarquia fechada no checklist
+// da home (claude/checklist-home.md, item 10) — a porta de Mídia Programática
+// saiu de circulação (decisão de 05/09/2026).
 //
 // A ordem é de estratégia, o tamanho é de conversão: o Diagnóstico abre a seção
 // como faixa fina justamente para não roubar o clique do formulário, que é o
-// card dominante. As duas portas de baixo são cards menores.
+// card dominante. A porta de baixo é card menor.
 //
-// O preto do card de Mídia Programática é a única exceção autorizada à paleta.
+// O preto do card de Atendimento rápido é a única exceção autorizada à paleta.
 //
 // Ícones no mapa da Imagine Concept (claude/icones-nova-campanha.md). Aqui eles
-// herdam o branco do texto em vez do laranja da regra: as três portas ficam
-// sobre laranja ou sobre o preto do card 03, e laranja sobre laranja some. O
-// laranja da regra vale dentro do card branco do formulário.
+// herdam o branco do texto em vez do laranja da regra: as portas ficam sobre
+// laranja ou sobre o preto do card 03, e laranja sobre laranja some. O laranja
+// da regra vale dentro do card branco do formulário.
 //
 // Anatomia de cada porta, na ordem do checklist: ícone em quadrado claro
 // arredondado, numeração, nome em destaque, linha de intenção abaixo e chevron
@@ -76,38 +78,24 @@ export default function NovaCampanha({ contexto = '' }) {
           <QualifierForm contexto={contexto} />
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
+        <div className="mt-5 max-w-[600px]">
           <a
             className={`${CARD_MENOR} border-ink bg-ink hover:border-ink/70 hover:bg-ink/85`}
-            href={waLinkMercadoOoh(WA_PROGRAMATICA)}
-          >
-            <span className={`${ICONE_QUADRADO} size-10 bg-white/10`}>
-              <Zap size={24} />
-            </span>
-            <span className="eyebrow text-white/55">03</span>
-            <span className="text-[21px] font-extrabold leading-tight">Mídia Programática</span>
-            <span className="mt-auto flex items-center justify-between gap-4 pt-4">
-              <span className="text-[14.5px] text-white/[.85]">
-                Quero ver os espaços disponíveis
-              </span>
-              <span aria-hidden="true" className={CHEVRON}>
-                <ChevronRight size={18} />
-              </span>
-            </span>
-          </a>
-          <a
-            className={`${CARD_MENOR} border-white/45 hover:border-white hover:bg-white/10`}
             href={waLink(WA_ATENDIMENTO_AGORA)}
           >
-            <span className={`${ICONE_QUADRADO} size-10`}>
-              <Bot size={24} />
+            <span className={`${ICONE_QUADRADO} relative size-10 bg-white/10`}>
+              <Image alt="" className="size-6" height={24} src="/media/icone-whatsapp.png" width={24} />
+              <span
+                aria-hidden="true"
+                className="absolute -bottom-1 -right-1 grid size-4 place-items-center rounded-full bg-orange"
+              >
+                <Zap className="fill-white text-white" size={10} />
+              </span>
             </span>
-            <span className="eyebrow text-white/70">04</span>
-            <span className="text-[21px] font-extrabold leading-tight">
-              Atendimento automatizado
-            </span>
+            <span className="eyebrow text-white/55">03</span>
+            <span className="text-[21px] font-extrabold leading-tight">Atendimento rápido</span>
             <span className="mt-auto flex items-center justify-between gap-4 pt-4">
-              <span className="text-[14.5px] text-white/[.92]">Quero atendimento agora</span>
+              <span className="text-[14.5px] text-white/[.85]">Quero atendimento agora</span>
               <span aria-hidden="true" className={CHEVRON}>
                 <ChevronRight size={18} />
               </span>

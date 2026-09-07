@@ -95,14 +95,14 @@ const SEGMENTOS = [
 const CONTATOS = ['WhatsApp', 'Ligação', 'E-mail']
 
 const VERBAS = [
+  'Não há orçamento planejado',
   'Até R$ 5.000',
   'De R$ 5.000 a R$ 10.000',
   'De R$ 10.000 a R$ 50.000',
   'Acima de R$ 50.000',
-  'Não há orçamento planejado',
 ]
 
-// Mesma anatomia das portas 03 e 04 do bloco Nova campanha: o ícone vive dentro
+// Mesma anatomia da porta 03 do bloco Nova campanha: o ícone vive dentro
 // de um quadrado claro arredondado à esquerda, e o rótulo fica ao lado dele, na
 // mesma linha de base. Solto na cápsula o ícone de 20px ficava maior que o texto
 // e desalinhado dele.

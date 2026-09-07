@@ -26,9 +26,19 @@ import { useRef, useState } from 'react'
 // Espaço fica de fora do sorteio, para não gastar um degrau da escada com um
 // caractere que ninguém vê se mexer.
 
+// O briefing da reta final pede a troca mais evidente (G1). Ela ficou mais
+// evidente por dois caminhos, não por velocidade: a mola ganhou salto
+// (`bounce`), então a letra passa um pouco do lugar e volta em vez de deslizar
+// reto, e o intervalo entre um giro e o outro caiu de 5s para 3,4s, o que põe
+// o número em movimento enquanto o leitor ainda está na seção. Acelerar a
+// `duration` faria a letra piscar em vez de girar, e o número deixaria de ser
+// legível durante a troca, que é justamente o que este componente resolve.
+//
+// Só `StatGrid` e `BigNumbers` usam LetterSwap, então este ajuste é o G1
+// inteiro: não há outro texto no site que ele alcance.
 const ESCADA_S = 0.14
-const MOLA = { type: 'spring', duration: 0.7, bounce: 0.15 }
-const REPEAT_DELAY_S = 5
+const MOLA = { type: 'spring', duration: 0.7, bounce: 0.34 }
+const REPEAT_DELAY_S = 3.4
 
 function embaralha(indices) {
   const a = [...indices]

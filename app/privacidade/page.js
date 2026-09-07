@@ -38,6 +38,12 @@ export default function PrivacidadePage() {
               Que dados pedimos, por que pedimos, com quem compartilhamos e por quanto tempo
               guardamos. Em português, sem letra miúda.
             </p>
+            {/* Atalho para a seção que o visitante veio procurar: quem abre esta
+                página quer saber o que pode exigir, não ler as onze cláusulas até
+                chegar lá. */}
+            <a className="btn btn-ghost reveal mt-8" href="#direitos">
+              Conferir os seus direitos na LGPD
+            </a>
           </div>
         </section>
 

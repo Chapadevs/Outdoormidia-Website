@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import CoverMedia from '@/components/ui/CoverMedia'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { DIFERENCIAIS } from '@/lib/diferenciais'
 
@@ -59,6 +60,7 @@ export default function Diferenciais({ num, moreHref }) {
             {DIFERENCIAIS.map((item, i) => {
               const atual = i === ativo
               const cards = item.oQueE?.cards ?? []
+              const temCapa = Boolean(item.image || item.cardVideo)
 
               return (
                 <div
@@ -87,6 +89,23 @@ export default function Diferenciais({ num, moreHref }) {
                   <p className="m-0 max-w-[52ch] text-pretty text-[clamp(16px,1.35vw,17.5px)] leading-relaxed text-white/70">
                     {item.intro}
                   </p>
+
+                  {/* Só a capa do painel aberto é montada: as seis ficam no
+                      mesmo lugar da grade, e montar todas faria a home baixar
+                      cinco imagens invisíveis e dar play num vídeo escondido.
+                      Sem foto nem vídeo, nada entra no lugar, pela mesma razão
+                      de sempre: painel bege vazio é pior que capa nenhuma. */}
+                  {atual && temCapa && (
+                    <CoverMedia
+                      alt={item.imageAlt}
+                      className="mt-1"
+                      label={item.title}
+                      ratio="16/7"
+                      sizes="(max-width: 980px) 92vw, 760px"
+                      src={item.image}
+                      video={item.cardVideo}
+                    />
+                  )}
 
                   {cards.length > 0 && (
                     <div className="mt-3 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-8 gap-y-3.5 border-t border-white/12 pt-6">

@@ -1,6 +1,9 @@
 import Image from 'next/image'
 
-// Capa com fallback. Sem `src`, cai no painel bege com o rótulo.
+// Capa com fallback. Com `video`, toca em loop mudo dentro do próprio card, em
+// vez de vazar como fundo de seção inteira (era assim que Aeroporto e os
+// Projetos Icônicos usavam o vídeo antes). Sem `video` nem `src`, cai no
+// painel bege com o rótulo.
 //
 // As proporções são um mapa estático de propósito: classe montada por
 // interpolação não é vista pelo scanner do Tailwind e o CSS não sai no bundle.
@@ -17,6 +20,7 @@ const RATIOS = {
 
 export default function CoverMedia({
   src,
+  video,
   alt,
   label,
   ratio = '16/10',
@@ -25,6 +29,25 @@ export default function CoverMedia({
   className = '',
 }) {
   const base = `relative w-full overflow-hidden rounded-[16px] border border-line ${RATIOS[ratio]}`
+
+  // Vídeo tem prioridade sobre imagem: as duas nunca são passadas juntas, mas
+  // se fossem, o vídeo é o dado mais completo. É decorativo porque a mesma
+  // informação já está no texto ao lado do card.
+  if (video) {
+    return (
+      <div className={`${base} ${className}`}>
+        <video
+          aria-hidden="true"
+          autoPlay
+          className="absolute inset-0 size-full object-cover"
+          loop
+          muted
+          playsInline
+          src={video}
+        />
+      </div>
+    )
+  }
 
   // Havendo imagem, o alt é obrigatório: cai no rótulo do card e, na falta dele,
   // na marca. Nunca em string vazia — isso marcaria a capa como decorativa e a
