@@ -3,9 +3,12 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
+import CoverageMap from '@/components/ui/CoverageMap'
 import Diferenciais from '@/components/sections/Diferenciais'
 import Platforms from '@/components/sections/Platforms'
+import SolucoesHero from '@/components/sections/SolucoesHero'
 import NovaCampanha from '@/components/sections/NovaCampanha'
+import FormatosGallery from '@/components/sections/FormatosGallery'
 import { getLocations } from '@/lib/locations'
 
 const TIPOS_MIDIA = [
@@ -20,23 +23,85 @@ const TIPOS_MIDIA = [
 ]
 
 const FORMATOS = [
-  { name: 'Top Sight', tech: 'Estático / Digital' },
-  { name: 'Top Sight Urbanity', tech: 'Digital' },
-  { name: 'Super Top Urbanity', tech: 'Digital' },
+  {
+    name: 'Top Sight',
+    tech: 'Estático / Digital',
+    images: [
+      { src: '/media/tipos-de-midia/top-sight-estatico.jpeg', label: 'Estático' },
+      { src: '/media/tipos-de-midia/top-sight-digital.jpg', label: 'Digital' },
+    ],
+  },
+  {
+    name: 'Top Sight Urbanity',
+    tech: 'Digital',
+    images: [{ src: '/media/tipos-de-midia/top-sight-urbanity-digital.jpg' }],
+  },
+  {
+    name: 'Super Top Urbanity',
+    tech: 'Digital',
+    images: [{ src: '/media/tipos-de-midia/super-top-urbanity.jpg' }],
+  },
   { name: 'Super Top Sequencial', tech: 'Estático' },
-  { name: 'Super Billboard', tech: 'Estático' },
-  { name: 'Poster Sight', tech: 'Estático / Digital' },
-  { name: 'Super Poster', tech: 'Estático' },
-  { name: 'Relógio Digital', tech: 'Digital' },
-  { name: 'Banca Horizontal', tech: 'Digital' },
-  { name: 'Banca Vertical', tech: 'Digital' },
-  { name: 'Totem (Shoppings)', tech: 'Digital' },
+  {
+    name: 'Super Billboard',
+    tech: 'Estático',
+    images: [{ src: '/media/tipos-de-midia/super-billboard.jpg' }],
+  },
+  {
+    name: 'Poster Sight',
+    tech: 'Estático / Digital',
+    images: [{ src: '/media/tipos-de-midia/poster-sight-digital.jpg', label: 'Digital' }],
+  },
+  {
+    name: 'Super Poster',
+    tech: 'Estático',
+    images: [{ src: '/media/tipos-de-midia/super-poster-estatico.jpg' }],
+  },
+  {
+    name: 'Relógio Digital',
+    tech: 'Digital',
+    images: [{ src: '/media/tipos-de-midia/relogio-digital.jpg' }],
+  },
+  {
+    name: 'Banca Horizontal',
+    tech: 'Digital',
+    images: [{ src: '/media/tipos-de-midia/banca-horizontal.jpg' }],
+  },
+  {
+    name: 'Banca Vertical',
+    tech: 'Digital',
+    images: [{ src: '/media/tipos-de-midia/banca-vertical.jpg' }],
+  },
+  {
+    name: 'Totem (Shoppings)',
+    tech: 'Digital',
+    images: [{ src: '/media/tipos-de-midia/totem.jpg' }],
+  },
   { name: 'Empena (Shoppings)', tech: 'Digital' },
-  { name: 'Mega Banner (Shoppings)', tech: 'Digital' },
-  { name: 'Topo de Prédio', tech: 'Digital / Estático' },
+  {
+    name: 'Mega Banner (Shoppings)',
+    tech: 'Digital',
+    images: [{ src: '/media/tipos-de-midia/mega-banner.jpg' }],
+  },
+  {
+    name: 'Topo de Prédio',
+    tech: 'Digital / Estático',
+    images: [
+      { src: '/media/tipos-de-midia/topo-de-predio-digital.jpg', label: 'Digital' },
+      { src: '/media/tipos-de-midia/topo-de-predio-estatico.jpg', label: 'Estático' },
+    ],
+  },
   { name: 'Billboard', tech: 'Estático / Digital' },
-  { name: 'Bike Mídia', tech: 'Mídia Móvel: trio bikes sequenciais / estático' },
-  { name: 'Bus Mídia', tech: 'Estático' },
+  {
+    name: 'Bike Mídia',
+    tech: 'Mídia Móvel: trio bikes sequenciais / estático',
+    images: [{ src: '/media/tipos-de-midia/bike-midia.jpg' }],
+  },
+  {
+    name: 'Bus Mídia',
+    tech: 'Estático',
+    images: [{ src: '/media/tipos-de-midia/busdoor.jpeg' }],
+  },
 ]
 
 const DESCRIPTION =
@@ -65,18 +130,7 @@ export default async function SolucoesPage() {
       <main>
         <Breadcrumb items={[{ label: 'Soluções' }]} />
 
-        <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
-          <div className="wrap">
-            <div className="eyebrow reveal">Núcleo comercial · PR + SC</div>
-            <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Soluções.
-            </h1>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Comece por onde faz sentido para você: pelo que nos diferencia, pela praça onde
-              sua marca precisa aparecer ou direto pelo formato que você já tem em mente.
-            </p>
-          </div>
-        </section>
+        <SolucoesHero />
 
         <Diferenciais num="01" moreHref="/solucoes/diferenciais" />
 
@@ -95,13 +149,18 @@ export default async function SolucoesPage() {
               Uma rede contínua nos dois estados onde o Sul se movimenta. Escolha a praça e a
               gente mostra o que existe nela.
             </p>
-            <div className="reveal mb-10 grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-3">
-              <div className="eyebrow text-orange">Presença</div>
-              <p className="m-0 max-w-[68ch] text-[15.5px] leading-relaxed text-ink-soft">
-                Estamos presentes em Curitiba, Região Metropolitana, Litoral do Paraná,
-                Joinville, Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo,
-                visibilidade e impacto real.
-              </p>
+            <div className="reveal mb-10 grid grid-cols-[1fr_1fr] items-center gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
+              <div className="grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-3">
+                <div className="eyebrow text-orange">Presença</div>
+                <p className="m-0 max-w-[68ch] text-[15.5px] leading-relaxed text-ink-soft">
+                  Estamos presentes em Curitiba, Região Metropolitana, Litoral do Paraná,
+                  Joinville, Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo,
+                  visibilidade e impacto real.
+                </p>
+              </div>
+              <div className="w-full max-tab:mx-auto max-tab:max-w-[420px]">
+                <CoverageMap locations={locations} />
+              </div>
             </div>
             <div className="grid grid-cols-5 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
               {locations.map((loc) => (
@@ -155,17 +214,7 @@ export default async function SolucoesPage() {
             <p className="reveal mb-6 max-w-[54ch] text-lg text-ink-soft">
               Variações físicas e visuais dos nossos produtos.
             </p>
-            <ul className="m-0 flex flex-wrap gap-2 p-0">
-              {FORMATOS.map((f) => (
-                <li
-                  className="reveal rounded-full border border-line px-4 py-2 text-[13.5px] font-bold text-ink-soft"
-                  key={f.name}
-                >
-                  {f.name}{' '}
-                  <span className="font-normal text-ink-soft/70">({f.tech})</span>
-                </li>
-              ))}
-            </ul>
+            <FormatosGallery formatos={FORMATOS} />
             <p className="reveal mt-6 max-w-[62ch] text-[14.5px] leading-relaxed text-ink-soft">
               Cada formato foi desenvolvido para unir estética, impacto e performance,
               adaptando-se a diferentes contextos urbanos e objetivos de marca.

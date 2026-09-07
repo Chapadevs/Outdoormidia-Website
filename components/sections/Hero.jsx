@@ -33,7 +33,7 @@ export default function Hero() {
         <h1 className="display text-center text-[clamp(30px,5vw,78px)] [text-shadow:0_2px_18px_rgba(22,17,13,0.45)] max-mob:text-ink max-mob:[text-shadow:none]">
           <strong className="font-extrabold text-orange">Toda Hora</strong>, em Todo Lugar.
         </h1>
-        <p className="mx-auto mt-6 max-w-[70ch] text-center text-[17px] leading-relaxed text-white/[.92] [text-shadow:0_1px_12px_rgba(22,17,13,0.5)] max-mob:mt-4 max-mob:text-left max-mob:text-base max-mob:text-ink-soft max-mob:[text-shadow:none]">
+        <p className="mx-auto mt-6 max-w-[70ch] text-center text-[19px] font-medium leading-relaxed text-white [text-shadow:0_2px_16px_rgba(22,17,13,0.75)] max-mob:mt-4 max-mob:text-left max-mob:text-base max-mob:font-normal max-mob:text-ink-soft max-mob:[text-shadow:none]">
           Não escolhemos apenas onde sua marca aparece, mas onde ela precisa estar. Planejamos
           região, formato e período com base em fluxo e audiência real: do outdoor clássico ao
           DOOH, nas regiões e rodovias que ligam o Paraná a Santa Catarina.

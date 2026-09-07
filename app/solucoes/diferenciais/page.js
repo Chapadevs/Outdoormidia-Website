@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import CoverMedia from '@/components/ui/CoverMedia'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
 import NovaCampanha from '@/components/sections/NovaCampanha'
@@ -59,6 +60,16 @@ export default function DiferenciaisPage() {
                   href={d.href}
                   key={d.slug}
                 >
+                  {(d.image || d.cardVideo) && (
+                    <CoverMedia
+                      alt={d.imageAlt}
+                      label={d.title}
+                      ratio="16/9"
+                      sizes="(max-width: 560px) 86vw, (max-width: 980px) 44vw, 340px"
+                      src={d.image}
+                      video={d.cardVideo}
+                    />
+                  )}
                   <span className="display text-[30px] leading-none text-orange">{d.num}</span>
                   <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
                     {d.title}

@@ -277,7 +277,8 @@ export default async function DiferencialPage({ params }) {
               <ul className="m-0 grid list-none grid-cols-2 gap-x-[38px] p-0 max-tab:grid-cols-1">
                 {relatorio.itens.map((item) => (
                   <li className="reveal border-t border-line py-[22px]" key={item.title}>
-                    <h3 className="m-0 text-[17px] font-extrabold leading-tight text-ink">
+                    <item.Icone size={24} className="text-orange" />
+                    <h3 className="m-0 mt-3 text-[17px] font-extrabold leading-tight text-ink">
                       {item.title}
                     </h3>
                     <p className="m-0 mt-2 text-[15.5px] leading-relaxed text-ink-soft">
@@ -312,6 +313,7 @@ export default async function DiferencialPage({ params }) {
                     }`}
                     key={dado.label}
                   >
+                    <dado.Icone size={24} className="mb-4 text-orange" />
                     <div className="display text-[clamp(38px,5vw,64px)] leading-[0.9] text-orange">
                       {dado.n}
                     </div>
@@ -340,6 +342,9 @@ export default async function DiferencialPage({ params }) {
                     {paragrafo}
                   </p>
                 ))}
+                <Link className="btn btn-ghost self-start" href="/privacidade">
+                  Conferir política de privacidade
+                </Link>
               </div>
             </div>
           </section>

@@ -236,7 +236,7 @@ export default function DiagnosticoQuiz() {
                           className="range-nota"
                         />
                         <div className="mt-2 flex min-h-4 justify-between gap-3 max-mob:mt-1.5 max-mob:gap-2">
-                          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-orange max-mob:tracking-[0.08em]">
+                          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink max-mob:tracking-[0.08em]">
                             {rotuloDaNota(notas[i])}
                           </span>
                           <span className="text-[11px] uppercase tracking-[0.14em] text-ink-soft/45 max-mob:hidden">

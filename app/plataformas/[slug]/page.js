@@ -8,6 +8,7 @@ import CoverMedia from '@/components/ui/CoverMedia'
 import FormatSpecCard from '@/components/ui/FormatSpecCard'
 import BigNumbers from '@/components/ui/BigNumbers'
 import AtivoCard from '@/components/ui/AtivoCard'
+import MapaRodovias from '@/components/ui/MapaRodovias'
 import PlatformFaq from '@/components/sections/PlatformFaq'
 import Process from '@/components/sections/Process'
 import NovaCampanha from '@/components/sections/NovaCampanha'
@@ -70,7 +71,12 @@ export default async function PlatformPage({ params }) {
   const numBlocos = platform.blocos?.length > 0 ? proximo() : null
   const numAtivos = ativos.length > 0 ? proximo() : null
   const numPassos = platform.passos?.length > 0 ? proximo() : null
-  const numFormatos = proximo()
+  // Produtos e Formatos dividem uma seção só. `semFormatos` desliga o lado do
+  // diagrama sem tocar no dos produtos: é o caso de Rodovias, onde o painel é
+  // sob demanda e proporção fixa mentiria sobre o que a plataforma entrega.
+  const mostraFormatos = produtos.length > 0 || !platform.semFormatos
+  const numFormatos = mostraFormatos ? proximo() : null
+  const numMapa = platform.mapaRede ? proximo() : null
   const numCases = cases.length > 0 ? proximo() : null
   const numFaq = proximo()
   const numProcesso = proximo()
@@ -83,20 +89,7 @@ export default async function PlatformPage({ params }) {
           items={[{ label: 'Plataformas', href: '/plataformas' }, { label: platform.name }]}
         />
 
-        <section className="relative overflow-hidden pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
-          {platform.slug === 'aeroporto' && (
-            <>
-              <video
-                autoPlay
-                className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-45"
-                loop
-                muted
-                playsInline
-                src="/media/aeroporto-midia.mp4"
-              />
-              <div className="pointer-events-none absolute inset-0 -z-10 bg-paper/40" />
-            </>
-          )}
+        <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="grid grid-cols-[1fr_1fr] items-center gap-[50px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <div>
@@ -113,6 +106,7 @@ export default async function PlatformPage({ params }) {
                 priority
                 sizes="(max-width: 980px) 100vw, 50vw"
                 src={platform.image}
+                video={platform.video}
               />
             </div>
 
@@ -230,31 +224,48 @@ export default async function PlatformPage({ params }) {
 
         {/* Produtos substituem o diagrama de proporções onde existem: o handoff
             trocou a lista de formatos pelos cards de produto. Onde a plataforma
-            ainda não tem produto de catálogo (Aeroporto e Rodovias), o diagrama
-            continua sendo o que descreve o formato. */}
-        <section className="border-t border-line py-[90px] max-mob:py-[60px]">
-          <div className="wrap">
-            {produtos.length > 0 ? (
-              <>
-                <SectionHeading num={numFormatos} title="Produtos" className="reveal mb-[34px]" />
-                <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
-                  {produtos.map((produto) => (
-                    <ProdutoCard
-                      key={produto.slug}
-                      produto={produto}
-                      tecnologiaPadrao={platform.tecnologiaPadrao}
-                    />
-                  ))}
-                </div>
-              </>
-            ) : (
-              <>
-                <SectionHeading num={numFormatos} title="Formatos" className="reveal mb-[34px]" />
-                <FormatSpecCard formats={platform.formats} />
-              </>
-            )}
-          </div>
-        </section>
+            ainda não tem produto de catálogo (Aeroporto), o diagrama continua
+            sendo o que descreve o formato. Rodovias não tem nenhum dos dois:
+            marcada com `semFormatos`, ela pula a seção inteira. */}
+        {mostraFormatos && (
+          <section className="border-t border-line py-[90px] max-mob:py-[60px]">
+            <div className="wrap">
+              {produtos.length > 0 ? (
+                <>
+                  <SectionHeading num={numFormatos} title="Produtos" className="reveal mb-[34px]" />
+                  <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
+                    {produtos.map((produto) => (
+                      <ProdutoCard
+                        key={produto.slug}
+                        produto={produto}
+                        tecnologiaPadrao={platform.tecnologiaPadrao}
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <SectionHeading num={numFormatos} title="Formatos" className="reveal mb-[34px]" />
+                  <FormatSpecCard formats={platform.formats} />
+                </>
+              )}
+            </div>
+          </section>
+        )}
+
+        {platform.mapaRede && (
+          <section className="border-t border-line py-[90px] max-mob:py-[60px]">
+            <div className="wrap">
+              <SectionHeading num={numMapa} title="Mapa da rede" className="reveal mb-[34px]" />
+              <p className="reveal mb-8 max-w-[62ch] text-[15.5px] leading-relaxed text-ink-soft">
+                Os corredores que a rede percorre entre Ponta Grossa e Florianópolis, passando
+                pelo litoral do Paraná e por Joinville. O painel é construído sob demanda, no
+                ponto que a campanha pedir dentro desses trajetos.
+              </p>
+              <MapaRodovias />
+            </div>
+          </section>
+        )}
 
         {cases.length > 0 && (
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">

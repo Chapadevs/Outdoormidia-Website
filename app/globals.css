@@ -99,6 +99,17 @@
       transform: translate3d(-6%, -8%, 0) scale(1.2);
     }
   }
+
+  /* Tracinhos correndo sobre a via, no mapa da rede de Rodovias. O passo do
+     dash é 24 (2 de traço, 22 de vão) e o deslocamento é múltiplo dele, senão o
+     ciclo dá um salto visível ao reiniciar. */
+  --animate-fluxo-via: fluxo-via 2.6s linear infinite;
+
+  @keyframes fluxo-via {
+    to {
+      stroke-dashoffset: -96;
+    }
+  }
 }
 
 @theme inline {
@@ -476,5 +487,9 @@
   :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal),
   :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal)::after {
     transition-duration: 1ms;
+  }
+  /* a via continua desenhada, só para de correr */
+  .fluxo-via {
+    animation: none;
   }
 }

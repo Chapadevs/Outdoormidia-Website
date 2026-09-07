@@ -88,6 +88,7 @@ export default function GovernancaPage() {
                   className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
                   key={p.slug}
                 >
+                  <p.Icone size={24} className="text-orange" />
                   <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
                     {p.title}
                   </h2>

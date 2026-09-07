@@ -1,3 +1,4 @@
+import { Images } from 'lucide-react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -87,11 +88,17 @@ export default function PlataformasPage() {
               {/* A contagem sai de `lib/produtos.js`, não da mão: o handoff fala
                   em 22 produtos e enumera menos que isso (ver pendências). Número
                   derivado nunca diverge do que a página realmente lista. */}
-              <p className="reveal m-0 max-w-[58ch] text-lg text-ink-soft">
-                A plataforma define o ambiente que sua marca ocupa. O formato define o tamanho, a
-                proporção e o tipo de peça que vai no ar. São {PRODUTOS.length} produtos de
-                catálogo, e cada plataforma trabalha com um recorte deles.
-              </p>
+              <div>
+                <p className="reveal m-0 max-w-[58ch] text-lg text-ink-soft">
+                  A plataforma define o ambiente que sua marca ocupa. O formato define o
+                  tamanho, a proporção e o tipo de peça que vai no ar. São {PRODUTOS.length}{' '}
+                  produtos de catálogo, e cada plataforma trabalha com um recorte deles.
+                </p>
+                <a className="btn btn-ghost reveal mt-7" href="/solucoes#tipos-de-midia">
+                  <Images size={20} />
+                  Ver tipos de mídia
+                </a>
+              </div>
               <div className="ticks reveal rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
                 <h3 className="m-0 text-[19px] font-extrabold leading-tight text-ink">
                   Como ler os nomes
