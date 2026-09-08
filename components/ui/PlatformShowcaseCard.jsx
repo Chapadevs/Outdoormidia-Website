@@ -65,7 +65,7 @@ export default function PlatformShowcaseCard({ p }) {
           {/* O card de mobile é um tile 4/5 de altura fixa: o texto do documento
               não cabe inteiro nele. Corta em 3 linhas aqui e vai completo
               na página da plataforma. */}
-          <p className="m-0 mt-3.5 max-w-[40ch] text-[15.5px] leading-normal text-white/85 max-mob:line-clamp-3">
+          <p className="m-0 mt-3.5 max-w-[40ch] text-[15.5px] font-semibold leading-normal text-white/95 max-mob:line-clamp-3">
             {p.short}
           </p>
         </div>

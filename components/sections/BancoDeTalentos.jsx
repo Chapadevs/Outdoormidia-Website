@@ -1,4 +1,4 @@
-import { Image as ImageIcon } from 'lucide-react'
+import Image from 'next/image'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { EMPRESA } from '@/lib/empresa'
 import { MAILTO_RH, TALENTOS_FORM_URL } from '@/lib/constants'
@@ -71,15 +71,14 @@ export default function BancoDeTalentos({ num = '02' }) {
               </p>
             </div>
 
-            {/* TODO(Imagine): foto do time OM na rua (instalação, produção ou
-                escritório). Enquanto faltar, o painel fica no estado vazio. */}
-            <div className="relative min-h-[320px] border-l border-white/10 bg-white/[.03] max-tab:min-h-[200px] max-tab:border-l-0 max-tab:border-t">
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-10 text-center">
-                <ImageIcon size={24} className="text-white/25" />
-                <span className="max-w-[28ch] text-[12.5px] font-medium leading-relaxed text-white/35">
-                  Foto do time OM na rua: instalação, produção ou escritório
-                </span>
-              </div>
+            <div className="relative min-h-[320px] border-l border-white/10 max-tab:min-h-[200px] max-tab:border-l-0 max-tab:border-t">
+              <Image
+                src="/media/trabalhe-conosco/time-outdoormidia.webp"
+                alt="Time da Outdoormídia"
+                fill
+                sizes="(max-width: 980px) 100vw, 50vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

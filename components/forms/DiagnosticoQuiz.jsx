@@ -9,7 +9,6 @@ import {
   degrauDoScore,
   gruposDePerguntas,
   pontoMaisFragil,
-  rotuloDaNota,
 } from '@/lib/diagnostico'
 import { enviarLead } from '@/lib/leads/enviarLead'
 import { waDiagnostico, waDiagnosticoFragil, waLink } from '@/lib/whatsapp'
@@ -208,9 +207,15 @@ export default function DiagnosticoQuiz() {
                       </div>
 
                       <div className="min-w-0">
-                        <div className="mb-2 flex justify-between gap-3 text-[10px] font-bold uppercase leading-tight tracking-[0.14em] text-ink-soft/60 max-mob:mb-1.5 max-mob:gap-2 max-mob:tracking-[0.08em]">
-                          <span>{minimo}</span>
-                          <span className="text-right">{maximo}</span>
+                        <div className="mb-2 flex justify-between gap-3 text-[10px] font-bold uppercase leading-tight tracking-[0.14em] max-mob:mb-1.5 max-mob:gap-2 max-mob:tracking-[0.08em]">
+                          <span className={respondida && valor <= 5 ? 'text-ink' : 'text-ink-soft/60'}>
+                            {minimo}
+                          </span>
+                          <span
+                            className={`text-right ${respondida && valor > 5 ? 'text-ink' : 'text-ink-soft/60'}`}
+                          >
+                            {maximo}
+                          </span>
                         </div>
                         <input
                           id={`pergunta-${i}`}
@@ -235,14 +240,6 @@ export default function DiagnosticoQuiz() {
                           onBlur={() => fecharPergunta(i)}
                           className="range-nota"
                         />
-                        <div className="mt-2 flex min-h-4 justify-between gap-3 max-mob:mt-1.5 max-mob:gap-2">
-                          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink max-mob:tracking-[0.08em]">
-                            {rotuloDaNota(notas[i])}
-                          </span>
-                          <span className="text-[11px] uppercase tracking-[0.14em] text-ink-soft/45 max-mob:hidden">
-                            0 a 10
-                          </span>
-                        </div>
                       </div>
 
                       <div className="text-right max-mob:self-center">

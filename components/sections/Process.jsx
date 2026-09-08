@@ -96,7 +96,7 @@ export default function Process({ num, title = 'Gestão 360 OM' }) {
         </p>
       </div>
 
-      <div className="relative -mt-[7vh] h-[300vh] max-tab:mt-0 max-tab:h-auto" ref={pistaRef}>
+      <div className="relative h-[300vh] max-tab:h-auto" ref={pistaRef}>
         <div className="sticky top-0 flex h-screen flex-col justify-center max-tab:static max-tab:h-auto max-tab:py-16">
           <div className="wrap w-full">
             <div className="mx-auto grid max-w-[1040px] grid-cols-3 max-tab:max-w-none max-tab:grid-cols-1">
@@ -114,7 +114,7 @@ export default function Process({ num, title = 'Gestão 360 OM' }) {
 
                   <div
                     className={`flex flex-col items-center transition-opacity duration-700 ease-out max-tab:items-start ${
-                      ligada(i) ? 'opacity-100' : 'opacity-0'
+                      ligada(i) ? 'opacity-100' : 'opacity-30'
                     }`}
                   >
                     <span

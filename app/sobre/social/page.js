@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -50,32 +51,46 @@ export default function SocialPage() {
               ética pessoal e profissional como base da transformação social, enfrentando a
               cultura da corrupção e defendendo um mercado justo.
             </p>
-            <div className="reveal flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
-              <p className="m-0">
-                Não é ação pontual nem campanha institucional. É compromisso contínuo com
-                integridade e coerência nas relações internas e externas, incorporado à nossa
-                cultura organizacional e orientando decisões, comportamentos e iniciativas.
-              </p>
-              <p className="m-0">
-                Para quem contrata mídia exterior, isso tem efeito prático: a mesma régua que
-                aplicamos internamente é a que rege o contrato, a negociação e o que prometemos
-                na rua.
-              </p>
+            <div className="grid grid-cols-[1fr_auto] items-start gap-[34px] max-tab:grid-cols-1">
+              <div>
+                <div className="flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
+                  <p className="m-0">
+                    Não é ação pontual nem campanha institucional. É compromisso contínuo com
+                    integridade e coerência nas relações internas e externas, incorporado à
+                    nossa cultura organizacional e orientando decisões, comportamentos e
+                    iniciativas.
+                  </p>
+                  <p className="m-0">
+                    Para quem contrata mídia exterior, isso tem efeito prático: a mesma régua
+                    que aplicamos internamente é a que rege o contrato, a negociação e o que
+                    prometemos na rua.
+                  </p>
+                </div>
+                <a
+                  className="group mt-7 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange"
+                  href="https://corajosamenteeticos.com.br"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Conheça o movimento
+                  <span
+                    aria-hidden
+                    className="text-base transition-transform duration-200 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </a>
+              </div>
+              <div className="relative aspect-square w-40 shrink-0 overflow-hidden rounded-[16px] border border-line max-tab:w-28">
+                <Image
+                  src="/media/social/corajosamente-eticos.webp"
+                  alt="Selo do movimento Corajosamente Éticos"
+                  fill
+                  sizes="160px"
+                  className="object-cover"
+                />
+              </div>
             </div>
-            <a
-              className="group reveal mt-7 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange"
-              href="https://corajosamenteeticos.com.br"
-              rel="noreferrer"
-              target="_blank"
-            >
-              Conheça o movimento
-              <span
-                aria-hidden
-                className="text-base transition-transform duration-200 group-hover:translate-x-1"
-              >
-                →
-              </span>
-            </a>
           </div>
         </section>
 
@@ -83,9 +98,9 @@ export default function SocialPage() {
           <div className="wrap">
             <SectionHeading num="02" title="Loja OM do Bem" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 items-start gap-[34px] max-tab:grid-cols-1">
-              {/* TODO(Imagine): ecobag de lona reaproveitada, ou a loja montada. */}
               <CoverMedia
-                src=""
+                src="/media/social/loja-om-do-bem.webp"
+                alt="Prateleiras da Loja OM do Bem, com ecobags feitas de lona reaproveitada"
                 label="Loja OM do Bem"
                 ratio="16/10"
                 sizes="(max-width: 980px) 100vw, 50vw"
@@ -114,22 +129,32 @@ export default function SocialPage() {
               </div>
             </div>
 
-            <div className="ticks reveal mt-[34px] rounded-[16px] border border-line bg-white p-10 max-mob:p-7">
-              <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                Caminho do Renascer
-              </h3>
-              <div className="mt-4 flex max-w-[62ch] flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-                <p className="m-0">
-                  Fundada em 2009 por voluntários da própria comunidade, a Caminho do Renascer
-                  acolhe crianças, adolescentes e famílias em situação de vulnerabilidade no
-                  bairro Campo Comprido, em Curitiba.
-                </p>
-                <p className="m-0">
-                  Grande parte dessas famílias vive em condições precárias na área de
-                  preservação da bacia do Rio Barigui, sem infraestrutura adequada e exposta a
-                  risco de alagamento e insalubridade, com presença pública ainda pontual. É
-                  onde o resultado da Loja chega.
-                </p>
+            <div className="ticks reveal mt-[34px] overflow-hidden rounded-[16px] border border-line bg-white">
+              <CoverMedia
+                src="/media/social/caminho-do-renascer.webp"
+                alt="Crianças acolhidas pela ONG Caminho do Renascer"
+                label="Caminho do Renascer"
+                ratio="16/9"
+                sizes="(max-width: 980px) 100vw, 800px"
+                className="rounded-none border-0"
+              />
+              <div className="border-t border-line p-10 max-mob:p-7">
+                <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
+                  Caminho do Renascer
+                </h3>
+                <div className="mt-4 flex max-w-[62ch] flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
+                  <p className="m-0">
+                    Fundada em 2009 por voluntários da própria comunidade, a Caminho do Renascer
+                    acolhe crianças, adolescentes e famílias em situação de vulnerabilidade no
+                    bairro Campo Comprido, em Curitiba.
+                  </p>
+                  <p className="m-0">
+                    Grande parte dessas famílias vive em condições precárias na área de
+                    preservação da bacia do Rio Barigui, sem infraestrutura adequada e exposta a
+                    risco de alagamento e insalubridade, com presença pública ainda pontual. É
+                    onde o resultado da Loja chega.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -165,10 +190,9 @@ export default function SocialPage() {
               definido pela capacidade de gerar valor.
             </p>
             <article className="ticks reveal grid grid-cols-2 items-start gap-[34px] rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
-              {/* TODO(Imagine): estrutura na Praça Pet Batel, de preferência com o
-                  botão de emergência. */}
               <CoverMedia
-                src=""
+                src="/media/social/midia-regenerativa-praca-pet.webp"
+                alt="Poste da Praça Pet Batel com câmera de monitoramento e botão de emergência da Muralha Digital"
                 label="Mídia Regenerativa"
                 ratio="16/10"
                 sizes="(max-width: 980px) 100vw, 50vw"
