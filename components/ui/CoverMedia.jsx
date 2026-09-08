@@ -27,6 +27,7 @@ export default function CoverMedia({
   sizes,
   priority = false,
   className = '',
+  videoDeferido = false,
 }) {
   const base = `relative w-full overflow-hidden rounded-[16px] border border-line ${RATIOS[ratio]}`
 
@@ -34,16 +35,21 @@ export default function CoverMedia({
   // se fossem, o vídeo é o dado mais completo. É decorativo porque a mesma
   // informação já está no texto ao lado do card.
   if (video) {
+    // `videoDeferido` entrega a fonte em `data-src` e sem `autoPlay`: dentro do
+    // coverflow contínuo quem baixa e quem dá o play é o carrossel, e só no
+    // card que está passando pelo centro. Fora dele o vídeo toca como sempre.
     return (
       <div className={`${base} ${className}`}>
         <video
           aria-hidden="true"
-          autoPlay
+          autoPlay={!videoDeferido}
           className="absolute inset-0 size-full object-cover"
+          data-src={videoDeferido ? video : undefined}
           loop
           muted
           playsInline
-          src={video}
+          preload={videoDeferido ? 'none' : undefined}
+          src={videoDeferido ? undefined : video}
         />
       </div>
     )

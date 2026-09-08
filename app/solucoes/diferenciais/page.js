@@ -1,8 +1,7 @@
-import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import CoverMedia from '@/components/ui/CoverMedia'
+import DiferencialCard from '@/components/ui/DiferencialCard'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
 import NovaCampanha from '@/components/sections/NovaCampanha'
@@ -55,31 +54,12 @@ export default function DiferenciaisPage() {
             <SectionHeading num="01" title="Os diferenciais" className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
               {DIFERENCIAIS.map((d) => (
-                <Link
-                  className="ticks reveal flex flex-col gap-4 rounded-[16px] border border-line bg-white p-7 text-ink transition-colors duration-200 hover:border-orange max-mob:p-6"
-                  href={d.href}
-                  key={d.slug}
-                >
-                  {(d.image || d.cardVideo) && (
-                    <CoverMedia
-                      alt={d.imageAlt}
-                      label={d.title}
-                      ratio="16/9"
-                      sizes="(max-width: 560px) 86vw, (max-width: 980px) 44vw, 340px"
-                      src={d.image}
-                      video={d.cardVideo}
-                    />
-                  )}
-                  <span className="display text-[30px] leading-none text-orange">{d.num}</span>
-                  <h2 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                    {d.title}
-                  </h2>
-                  {d.tagline && <span className="eyebrow -mt-2 text-orange">{d.tagline}</span>}
-                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{d.text}</p>
-                  <span className="mt-auto pt-5 text-sm font-bold text-orange">
-                    {d.cardCta ?? 'Ver diferencial'} →
-                  </span>
-                </Link>
+                <div className="reveal" key={d.slug}>
+                  <DiferencialCard
+                    d={d}
+                    sizes="(max-width: 560px) 86vw, (max-width: 980px) 44vw, 340px"
+                  />
+                </div>
               ))}
             </div>
           </div>

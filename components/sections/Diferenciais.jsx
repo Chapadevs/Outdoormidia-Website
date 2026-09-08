@@ -1,15 +1,22 @@
-'use client'
-import { useState } from 'react'
 import Link from 'next/link'
-import CoverMedia from '@/components/ui/CoverMedia'
+import CarrosselContinuo from '@/components/ui/CarrosselContinuo'
+import DiferencialCard from '@/components/ui/DiferencialCard'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { DIFERENCIAIS } from '@/lib/diferenciais'
 
-export default function Diferenciais({ num, moreHref }) {
-  const [ativo, setAtivo] = useState(0)
+// A altura é declarada aqui e não no card porque quem conhece a caixa é a
+// seção: o coverflow posiciona os cards em absoluto, então a pista precisa da
+// mesma medida que eles. Os seis sobem com a mesma altura de propósito, senão
+// o card do meio muda de tamanho a cada giro.
+const ALTURA = 'h-[520px] max-mob:h-[500px]'
 
+export default function Diferenciais({ num, moreHref }) {
   return (
-    <section className="py-[110px] max-mob:py-[72px]" id="diferenciais">
+    // `overflow-clip` pela mesma razão do carrossel de plataformas: `hidden`
+    // faria da seção uma caixa rolável, e o navegador a arrastaria na
+    // horizontal para trazer à vista o card que o Tab focou do outro lado do
+    // círculo.
+    <section className="overflow-clip py-[110px] max-mob:py-[72px]" id="diferenciais">
       <div className="wrap">
         <div className="reveal mb-[34px] flex items-start justify-between gap-10 max-tab:flex-col max-tab:gap-4">
           <SectionHeading num={num} title="Diferenciais" className="flex-1 max-tab:w-full" />
@@ -27,114 +34,30 @@ export default function Diferenciais({ num, moreHref }) {
             )}
           </div>
         </div>
+      </div>
 
-        <div className="reveal grid grid-cols-[minmax(240px,320px)_1fr] items-start gap-x-14 gap-y-8 rounded-[16px] bg-ink p-10 max-tab:grid-cols-1 max-mob:gap-x-0 max-mob:p-6">
-          <div className="flex min-w-0 flex-col" role="tablist">
-            {DIFERENCIAIS.map((item, i) => (
-              <button
-                aria-controls={`painel-${item.slug}`}
-                aria-selected={i === ativo}
-                className={`relative flex w-full cursor-pointer items-center gap-4 border-b border-white/10 py-3.5 pl-4 text-left transition-colors duration-200 ${
-                  i === ativo ? 'text-white' : 'text-white/55 hover:text-white/85'
-                }`}
-                id={`aba-${item.slug}`}
-                key={item.slug}
-                onClick={() => setAtivo(i)}
-                role="tab"
-                type="button"
-              >
-                {i === ativo && (
-                  <span className="absolute left-0 top-1/2 h-[18px] w-[3px] -translate-y-1/2 rounded-full bg-orange"></span>
-                )}
-                <span className="font-display text-[12px] tracking-[0.12em] text-white/40">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-pretty text-[15px] font-semibold leading-snug tracking-[-0.005em]">
-                  {item.title}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          <div className="grid min-w-0">
-            {DIFERENCIAIS.map((item, i) => {
-              const atual = i === ativo
-              const cards = item.oQueE?.cards ?? []
-              const temCapa = Boolean(item.image || item.cardVideo)
-
-              return (
-                <div
-                  aria-hidden={!atual}
-                  aria-labelledby={`aba-${item.slug}`}
-                  className={`col-start-1 row-start-1 flex min-w-0 flex-col gap-4 ${atual ? '' : 'invisible'}`}
-                  id={`painel-${item.slug}`}
-                  inert={!atual}
-                  key={item.slug}
-                  role="tabpanel"
-                >
-                  {item.tagline && (
-                    <span
-                      className={`eyebrow text-orange ${atual ? 'animate-tagline-troca motion-reduce:animate-none' : ''}`}
-                      key={`${atual ? 'on' : 'off'}-tagline`}
-                    >
-                      {item.tagline}
-                    </span>
-                  )}
-                  <h3
-                    className={`m-0 text-balance text-[clamp(26px,3vw,38px)] font-extrabold leading-[1.06] tracking-[-0.025em] text-white ${atual ? 'animate-titulo-troca [animation-delay:70ms] motion-reduce:animate-none' : ''}`}
-                    key={`${atual ? 'on' : 'off'}-titulo`}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="m-0 max-w-[52ch] text-pretty text-[clamp(16px,1.35vw,17.5px)] leading-relaxed text-white/70">
-                    {item.intro}
-                  </p>
-
-                  {/* Só a capa do painel aberto é montada: as seis ficam no
-                      mesmo lugar da grade, e montar todas faria a home baixar
-                      cinco imagens invisíveis e dar play num vídeo escondido.
-                      Sem foto nem vídeo, nada entra no lugar, pela mesma razão
-                      de sempre: painel bege vazio é pior que capa nenhuma. */}
-                  {atual && temCapa && (
-                    <CoverMedia
-                      alt={item.imageAlt}
-                      className="mt-1"
-                      label={item.title}
-                      ratio="16/7"
-                      sizes="(max-width: 980px) 92vw, 760px"
-                      src={item.image}
-                      video={item.cardVideo}
-                    />
-                  )}
-
-                  {cards.length > 0 && (
-                    <div className="mt-3 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-8 gap-y-3.5 border-t border-white/12 pt-6">
-                      {cards.map((card) => (
-                        <div className="flex items-baseline gap-3" key={card.title}>
-                          <span className="h-[5px] w-[5px] flex-none rounded-full bg-orange"></span>
-                          <span className="text-pretty text-[15px] font-semibold leading-snug text-white">
-                            {card.title}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* `cardCta` existe nos diferenciais que não têm página
-                      própria e entregam o leitor na plataforma ou na seção que
-                      já os abriga: ali "Ver diferencial" mentiria sobre o
-                      destino do clique. */}
-                  <Link
-                    className="mt-2 text-sm font-bold text-orange transition-colors duration-150 hover:text-white"
-                    href={item.href}
-                  >
-                    {item.cardCta ?? 'Ver diferencial'} →
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+      {/* Mesma fita das plataformas: gira sozinha, para com o ponteiro em cima
+          e não tem ponta em nenhum dos lados. Os seis diferenciais não têm
+          ordem de leitura, então não há começo que a fileira de bolinhas
+          pudesse anunciar. */}
+      <div className="reveal">
+        <CarrosselContinuo
+          alturaClasse={ALTURA}
+          gap={22}
+          label="Diferenciais Outdoormídia"
+          velocidade={0.055}
+          width="min(360px,78vw)"
+        >
+          {DIFERENCIAIS.map((d) => (
+            <div className={ALTURA} key={d.slug}>
+              <DiferencialCard
+                d={d}
+                sizes="(max-width: 560px) 78vw, 360px"
+                videoDeferido
+              />
+            </div>
+          ))}
+        </CarrosselContinuo>
       </div>
     </section>
   )

@@ -98,6 +98,9 @@ export default function PlataformasPage() {
                   <Images size={20} />
                   Ver tipos de mídia
                 </a>
+                <p className="reveal m-0 mt-3 text-[13.5px] text-ink-soft/85">
+                  Clique nos botões para ver as fotos de cada formato.
+                </p>
               </div>
               <div className="ticks reveal rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
                 <h3 className="m-0 text-[19px] font-extrabold leading-tight text-ink">

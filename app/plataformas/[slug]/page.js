@@ -22,6 +22,14 @@ import { listTags } from '@/lib/tags/tags'
 
 export const revalidate = 300
 
+// `**negrito**` é o único realce que o texto dos passos do Sob Demanda usa,
+// mesmo padrão de components/ui/Accordion.jsx.
+function comDestaque(texto) {
+  return texto
+    .split(/\*\*(.+?)\*\*/g)
+    .map((parte, i) => (i % 2 ? <strong className="font-bold text-ink" key={i}>{parte}</strong> : parte))
+}
+
 // Sem credenciais do Firestore (ex.: build no CI), a página sai sem os cases —
 // a regeneração (ISR) preenche em runtime, onde as credenciais existem.
 async function fetchCases(slug) {
@@ -112,18 +120,37 @@ export default async function PlatformPage({ params }) {
 
             {platform.quando?.length > 0 && (
               <div className="reveal mt-[70px] max-mob:mt-12">
+                {platform.quandoKicker && (
+                  <p className="m-0 mb-2 text-[17px] font-extrabold text-ink">
+                    {platform.quandoKicker}
+                  </p>
+                )}
                 <h2 className="m-0 text-[clamp(21px,2.2vw,27px)] font-extrabold leading-tight tracking-[-0.01em] text-ink">
                   Quando essa plataforma é a escolha certa
                 </h2>
-                <ul className="m-0 mt-6 grid list-none grid-cols-3 gap-[18px] p-0 max-tab:grid-cols-1">
-                  {platform.quando.map((item) => (
-                    <li
-                      className="ticks rounded-[16px] border border-line bg-white p-6 text-[15.5px] leading-relaxed text-ink-soft max-mob:p-5"
-                      key={item}
-                    >
-                      {item}
-                    </li>
-                  ))}
+                <ul
+                  className={`m-0 mt-6 grid list-none gap-[18px] p-0 max-tab:grid-cols-1 ${
+                    typeof platform.quando[0] === 'string' ? 'grid-cols-3' : 'grid-cols-2'
+                  }`}
+                >
+                  {platform.quando.map((item) => {
+                    const isCard = typeof item !== 'string'
+                    return (
+                      <li
+                        className="ticks rounded-[16px] border border-line bg-white p-6 text-[15.5px] leading-relaxed text-ink-soft max-mob:p-5"
+                        key={isCard ? item.title : item}
+                      >
+                        {isCard ? (
+                          <>
+                            <p className="m-0 mb-2 font-extrabold text-ink">{item.title}</p>
+                            <p className="m-0">{item.text}</p>
+                          </>
+                        ) : (
+                          item
+                        )}
+                      </li>
+                    )
+                  })}
                 </ul>
               </div>
             )}
@@ -195,28 +222,41 @@ export default async function PlatformPage({ params }) {
                 title="Como funciona o Sob Demanda"
                 className="reveal mb-[34px]"
               />
-              <ol className="m-0 grid list-none grid-cols-4 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
+              <ol className="m-0 grid list-none grid-cols-3 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
                 {platform.passos.map((passo, i) => (
                   <li
                     className="ticks reveal flex flex-col rounded-[16px] border border-line bg-white p-6 max-mob:p-5"
                     key={passo.title}
                   >
-                    <span className="display text-[30px] leading-none text-orange">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
+                    <div className="flex items-center justify-between">
+                      <span className="display text-[30px] leading-none text-orange">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      {passo.Icone && <passo.Icone size={24} className="text-orange" />}
+                    </div>
                     <h3 className="m-0 mt-5 text-[17px] font-extrabold leading-tight text-ink">
                       {passo.title}
                     </h3>
                     <p className="m-0 mt-3 text-[14.5px] leading-relaxed text-ink-soft">
-                      {passo.text}
+                      {comDestaque(passo.text)}
                     </p>
                   </li>
                 ))}
               </ol>
-              {platform.passosApoio && (
-                <p className="reveal mt-8 max-w-[62ch] text-[15.5px] leading-relaxed text-ink-soft">
-                  {platform.passosApoio}
-                </p>
+              {platform.passosFases?.length > 0 && (
+                <div className="mt-8 grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
+                  {platform.passosFases.map((fase) => (
+                    <div
+                      className="reveal rounded-[16px] border border-line bg-bone p-6 max-mob:p-5"
+                      key={fase.title}
+                    >
+                      <span className="eyebrow text-orange">{fase.title}</span>
+                      <p className="m-0 mt-2 text-[14.5px] leading-relaxed text-ink-soft">
+                        {fase.text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </section>

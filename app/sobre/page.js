@@ -25,13 +25,11 @@ const PRACAS = [
   'Rodovias PR-SC',
 ]
 
-// TODO(Imagine): falta uma imagem por compromisso (`image`, 16/9, ≥1600px, com
-// `imageAlt` descrevendo a cena). Sem ela o card fica como está hoje, só texto.
 const COMPROMISSO = [
   {
     href: '/sobre/ambiental',
-    image: null,
-    imageAlt: null,
+    image: '/media/sobre-nos/ambiental.webp',
+    imageAlt: 'Painel de LED da Outdoormídia integrado a um jardim vertical na fachada',
     eyebrow: 'Compromisso · Ambiental',
     title: 'Ambiental',
     text: 'Painel iluminado gasta energia e lona vira resíduo. Por isso convertemos as faces para LED, damos outro destino à lona e devolvemos em mobiliário urbano o que ocupamos da cidade.',
@@ -39,8 +37,8 @@ const COMPROMISSO = [
   },
   {
     href: '/sobre/social',
-    image: null,
-    imageAlt: null,
+    image: '/media/sobre-nos/social.webp',
+    imageAlt: 'Poste de mobiliário urbano da Outdoormídia com câmera de monitoramento 24h',
     eyebrow: 'Compromisso · Social',
     title: 'Social',
     text: 'Integramos o Corajosamente Éticos, doamos a lona que sai da face para virar renda na Loja OM do Bem e assinamos a primeira Mídia Regenerativa de Curitiba.',
@@ -48,8 +46,8 @@ const COMPROMISSO = [
   },
   {
     href: '/sobre/governanca',
-    image: null,
-    imageAlt: null,
+    image: '/media/sobre-nos/governanca.webp',
+    imageAlt: 'Retrato de Halisson Pontarola, CEO da Outdoormídia',
     eyebrow: 'Compromisso · Governança',
     title: 'Governança',
     text: 'Ponto irregular é problema que respinga no anunciante. Todos os nossos são licenciados, com exclusividade em contrato e um nome respondendo por cada linha dele.',

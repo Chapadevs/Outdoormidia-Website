@@ -48,11 +48,8 @@ export default function GovernancaPage() {
             <SectionHeading num="01" title="Quem responde" className="reveal mb-[34px]" />
             <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] items-start gap-[44px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <figure className="reveal m-0">
-                {/* TODO(cliente): retrato profissional do Halisson Pontarola, fundo
-                    neutro, meio corpo, olhar para a câmera. Não serve recorte de foto
-                    de evento nem imagem de palco. */}
                 <CoverMedia
-                  src=""
+                  src="/media/governanca/halisson-pontarola.png"
                   label="Halisson Pontarola"
                   ratio="16/10"
                   sizes="(max-width: 980px) 100vw, 40vw"

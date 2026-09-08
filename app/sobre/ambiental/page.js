@@ -131,10 +131,43 @@ export default function AmbientalPage() {
           </div>
         </section>
 
-        <section className="pb-[110px] max-mob:pb-[72px]" id="operacao">
+        <section className="pb-[110px] max-mob:pb-[72px]" id="doacao-instituto-kopher">
           <div className="wrap">
             <SectionHeading
               num="03"
+              title="Doação de lixo eletrônico ao Instituto Kópher"
+              className="reveal mb-[34px]"
+            />
+            <div className="ticks reveal grid grid-cols-[280px_1fr] gap-10 rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
+              <CoverMedia
+                src="/media/ambiental/Logo-instituto-Kopher.jpeg"
+                alt="Logo do Instituto Kópher"
+                ratio="2/1"
+                sizes="(max-width: 980px) 100vw, 280px"
+                className="self-start"
+              />
+              <div className="flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
+                <p className="m-0">
+                  Realizamos a doação de equipamentos eletroeletrônicos obsoletos ao Instituto
+                  Kópher, organização sem fins lucrativos que há nove anos atua na promoção do
+                  bem-estar da comunidade, unindo responsabilidade ambiental e inclusão social.
+                </p>
+                <p className="m-0">
+                  A doação apoia diretamente o Programa Resgate, iniciativa pioneira do
+                  instituto voltada à manufatura reversa de resíduos eletrônicos. O projeto
+                  promove a capacitação de pessoas em situação de vulnerabilidade, especialmente
+                  em comunidades terapêuticas, contribuindo com sua reintegração familiar e
+                  profissional.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-[110px] max-mob:pb-[72px]" id="operacao">
+          <div className="wrap">
+            <SectionHeading
+              num="04"
               title="Como a operação reduz impacto"
               className="reveal mb-[34px]"
             />
