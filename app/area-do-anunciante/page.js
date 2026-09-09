@@ -1,17 +1,19 @@
 import Link from 'next/link'
-import { CircleQuestionMark, Gauge, Presentation, Zap } from 'lucide-react'
+import { CircleQuestionMark, Gauge, Lightbulb, Presentation, Zap } from 'lucide-react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import { FAQS } from '@/lib/faq'
+import { PRATICAS } from '@/lib/melhoresPraticas'
 import { WA_ANUNCIANTE, waLink } from '@/lib/whatsapp'
 
 const DESCRIPTION =
-  'Diagnóstico de presença, Sua marca no OOH e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
+  'Diagnóstico de presença, Sua marca no OOH, Melhores práticas e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
 
-// A ordem não muda: as duas ferramentas interativas primeiro, o FAQ depois.
+// A ordem não muda: as duas ferramentas interativas primeiro, depois os dois
+// conteúdos de leitura, Melhores práticas e FAQ.
 //
 // O card 02 é o mais perigoso da página. A ferramenta aplica logo ou peça
 // pronta sobre a foto real do painel, e nada além disso: não há tabela de preço
@@ -35,6 +37,16 @@ const FERRAMENTAS = [
     title: 'Sua marca no OOH',
     text: 'Escolha a praça e o formato, suba a sua logo ou a peça pronta, e veja a sua marca aplicada no painel real. Baixe a imagem e mande para quem decide.',
     cta: 'Ver minha marca no painel',
+  },
+  {
+    // O kicker segue o padrão dos cards de Diagnóstico e FAQ, que já trazem
+    // número. A contagem é derivada de PRATICAS, para não divergir da página.
+    href: '/area-do-anunciante/melhores-praticas',
+    Icone: Lightbulb,
+    eyebrow: `Conteúdo · ${PRATICAS.length} práticas`,
+    title: 'Melhores práticas',
+    text: 'Oito decisões que separam a campanha que funciona da campanha que só aparece. Nenhuma delas depende de orçamento grande, todas dependem de escolher antes de comprar.',
+    cta: 'Ver as práticas',
   },
   {
     // O checklist pedia "18 perguntas", contagem anterior à revisão do FAQ de
@@ -70,11 +82,13 @@ export default function AnunciantePage() {
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            {/* A contagem é a da grade, e a grade tem três cards desde a saída
-                de Melhores Práticas. A faixa de Mídia Programática logo abaixo
-                não entra na conta: ela é frente comercial, não ferramenta de
-                autoatendimento, e é justamente por isso que não virou card. */}
-            <div className="eyebrow reveal">Autoatendimento · 3 ferramentas</div>
+            {/* A contagem é a da grade, derivada dela para não divergir. A
+                faixa de Mídia Programática logo abaixo não entra na conta: ela
+                é frente comercial, não ferramenta de autoatendimento, e é
+                justamente por isso que não virou card. */}
+            <div className="eyebrow reveal">
+              Autoatendimento · {FERRAMENTAS.length} ferramentas
+            </div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               Área do
               <br />
