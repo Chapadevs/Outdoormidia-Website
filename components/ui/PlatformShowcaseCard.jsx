@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 
 // Card do coverflow contínuo de plataformas: vídeo ou foto de fundo, véu
 // laranja e texto sobre ele. Compartilhado entre a home (`PlatformsCarousel`)

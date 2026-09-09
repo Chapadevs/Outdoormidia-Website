@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { useRouter } from 'next/navigation'
 import HeaderShell from '@/components/layout/HeaderShell'
 import Breadcrumb from '@/components/ui/Breadcrumb'

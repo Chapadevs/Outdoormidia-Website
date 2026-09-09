@@ -1,12 +1,11 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 import Logo from '@/components/ui/Logo'
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher'
+import { Link, usePathname } from '@/i18n/navigation'
 import { NAV } from '@/lib/nav'
-import { WA_HEADER, waLink } from '@/lib/whatsapp'
-
-const LANGS = ['PT', 'EN', 'ES', '中文']
+import { comIdioma, WA_HEADER, waLink } from '@/lib/whatsapp'
 
 const MENU_ID = 'menu-principal'
 
@@ -20,10 +19,12 @@ const COMPACT_QUERY = '(max-width: 980px)'
 // `inert` tira os links do fluxo de foco enquanto está fechado.
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [lang, setLang] = useState('PT')
   const [compact, setCompact] = useState(false)
   const [hubsAbertos, setHubsAbertos] = useState({})
   const pathname = usePathname()
+  const locale = useLocale()
+  const t = useTranslations('Header')
+  const tNav = useTranslations('Nav')
   const headerRef = useRef(null)
 
   useEffect(() => {
@@ -74,7 +75,7 @@ export default function Header() {
       <div className="wrap flex h-[74px] items-center gap-[30px] max-lap:gap-4 max-mob:h-16">
         <button
           className="flex h-9 w-9 cursor-pointer flex-col items-center justify-center gap-[5px]"
-          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-label={menuOpen ? t('fecharMenu') : t('abrirMenu')}
           aria-expanded={menuOpen}
           aria-controls={MENU_ID}
           onClick={() => setMenuOpen((o) => !o)}
@@ -103,7 +104,7 @@ export default function Header() {
             href="/#nova-campanha"
             className="btn btn-on-orange max-mob:px-4 max-mob:py-3 max-mob:text-[13px]"
           >
-            Quero Anunciar
+            {t('queroAnunciar')}
           </Link>
         </div>
       </div>
@@ -147,7 +148,7 @@ export default function Header() {
                             isActive(item.href) ? 'text-white' : 'text-white/85'
                           }`}
                         >
-                          {item.label}
+                          {tNav(item.key)}
                           <span
                             aria-hidden
                             className="translate-x-[-6px] text-[15px] opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 motion-reduce:transition-none max-tab:hidden"
@@ -161,7 +162,11 @@ export default function Header() {
                             type="button"
                             aria-expanded={aberto}
                             aria-controls={painelId}
-                            aria-label={`${aberto ? 'Recolher' : 'Expandir'} ${item.label}`}
+                            aria-label={
+                              aberto
+                                ? t('recolher', { secao: tNav(item.key) })
+                                : t('expandir', { secao: tNav(item.key) })
+                            }
                             onClick={() =>
                               setHubsAbertos((atual) => ({ ...atual, [item.href]: !aberto }))
                             }
@@ -204,7 +209,7 @@ export default function Header() {
                                     isActive(child.href) ? 'text-white' : 'text-white/70'
                                   }`}
                                 >
-                                  {child.label}
+                                  {tNav(child.key)}
                                 </Link>
                               ))}
                             </div>
@@ -222,21 +227,16 @@ export default function Header() {
                   menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
                 }`}
               >
-                <div className="flex gap-2.5 text-xs font-bold tracking-[0.04em]">
-                  {LANGS.map((l) => (
-                    <button
-                      key={l}
-                      className={`cursor-pointer transition-colors duration-150 ${
-                        l === lang ? 'text-white' : 'text-white/55'
-                      }`}
-                      onClick={() => setLang(l)}
-                    >
-                      {l}
-                    </button>
-                  ))}
-                </div>
-                <a href={waLink(WA_HEADER)} className="eyebrow text-white hover:underline">
-                  Falar com o comercial →
+                <LanguageSwitcher
+                  className="text-xs font-bold tracking-[0.04em]"
+                  ativo="text-white"
+                  inativo="text-white/55"
+                />
+                <a
+                  href={waLink(comIdioma(WA_HEADER, locale))}
+                  className="eyebrow text-white hover:underline"
+                >
+                  {t('falarComercial')}
                 </a>
               </div>
             </div>

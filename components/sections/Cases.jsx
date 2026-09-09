@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'

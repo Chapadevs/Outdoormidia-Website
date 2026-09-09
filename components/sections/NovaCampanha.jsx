@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { ChevronRight, Target, Zap } from 'lucide-react'
 import QualifierForm from '@/components/forms/QualifierForm'
 import { WA_ATENDIMENTO_AGORA, waLink } from '@/lib/whatsapp'

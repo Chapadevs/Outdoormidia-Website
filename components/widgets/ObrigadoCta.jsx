@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useSyncExternalStore } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { CHAVE_BRIEFING, MAILTO_RH } from '@/lib/constants'
 import { WA_OBRIGADO, waBriefing, waLink } from '@/lib/whatsapp'
 

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import CoverMedia from '@/components/ui/CoverMedia'
 
 // Card do diferencial: capa, título, tagline e a linha do card. É a

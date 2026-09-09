@@ -1,0 +1,48 @@
+{
+  "Site": {
+    "titulo": "Outdoormídia: Out of Home en el Sur de Brasil",
+    "descricao": "Líder en medios exteriores en Paraná y Santa Catarina desde hace 67 años. Pantallas digitales, frontlight, carreteras, aeropuerto, centros comerciales y más.",
+    "descricaoCurta": "Líder en medios exteriores en Paraná y Santa Catarina."
+  },
+  "Nav": {
+    "sobre": "Sobre nosotros",
+    "ambiental": "Ambiental",
+    "social": "Social",
+    "governanca": "Gobernanza",
+    "trabalheConosco": "Trabaje con nosotros",
+    "solucoes": "Soluciones",
+    "diferenciais": "Diferenciales",
+    "regioesCobertura": "Regiones / Cobertura",
+    "plataformas": "Plataformas",
+    "projetosIconicos": "Proyectos Icónicos",
+    "areaDoAnunciante": "Área del anunciante",
+    "diagnostico": "Diagnóstico de presencia",
+    "suaMarcaNoOoh": "Su marca en OOH",
+    "melhoresPraticas": "Mejores prácticas",
+    "programatica": "Medios Programáticos",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "cases": "Casos",
+    "artigos": "Artículos",
+    "podcast": "Podcast"
+  },
+  "Header": {
+    "abrirMenu": "Abrir menú",
+    "fecharMenu": "Cerrar menú",
+    "expandir": "Expandir {secao}",
+    "recolher": "Contraer {secao}",
+    "queroAnunciar": "Quiero anunciar",
+    "falarComercial": "Hablar con ventas →",
+    "idioma": "Idioma"
+  },
+  "Footer": {
+    "visaoGeral": "Visión general",
+    "contato": "Contacto",
+    "termosDeUso": "Términos de Uso",
+    "conferirLgpd": "Privacidad (LGPD)",
+    "novaCampanha": "Nueva campaña →",
+    "tagline": "Out of Home en el Sur de Brasil desde hace 67 años. Su marca donde está la gente.",
+    "curitiba": "Curitiba",
+    "santaCatarina": "Santa Catarina"
+  }
+}

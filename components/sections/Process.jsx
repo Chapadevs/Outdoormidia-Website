@@ -1,7 +1,7 @@
 'use client'
 
 import { MapPinned, MonitorCheck, PencilRuler } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { useEffect, useRef, useState } from 'react'
 import SectionHeading from '@/components/ui/SectionHeading'
 import ScrollToButton from '@/components/widgets/ScrollToButton'
