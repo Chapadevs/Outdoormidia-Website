@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 
 export default function SectionHeading({ title, href, rule = true, className = '' }) {
   return (

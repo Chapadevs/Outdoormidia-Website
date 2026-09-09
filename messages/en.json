@@ -1,0 +1,48 @@
+{
+  "Site": {
+    "titulo": "Outdoormídia: Out of Home in Southern Brazil",
+    "descricao": "The leading out-of-home media company in Paraná and Santa Catarina for 67 years. Digital billboards, frontlight, highways, airport, malls and more.",
+    "descricaoCurta": "The leading out-of-home media company in Paraná and Santa Catarina."
+  },
+  "Nav": {
+    "sobre": "About us",
+    "ambiental": "Environmental",
+    "social": "Social",
+    "governanca": "Governance",
+    "trabalheConosco": "Careers",
+    "solucoes": "Solutions",
+    "diferenciais": "Differentiators",
+    "regioesCobertura": "Regions / Coverage",
+    "plataformas": "Platforms",
+    "projetosIconicos": "Iconic Projects",
+    "areaDoAnunciante": "Advertiser area",
+    "diagnostico": "Brand presence diagnostic",
+    "suaMarcaNoOoh": "Your brand in OOH",
+    "melhoresPraticas": "Best practices",
+    "programatica": "Programmatic Media",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "cases": "Case studies",
+    "artigos": "Articles",
+    "podcast": "Podcast"
+  },
+  "Header": {
+    "abrirMenu": "Open menu",
+    "fecharMenu": "Close menu",
+    "expandir": "Expand {secao}",
+    "recolher": "Collapse {secao}",
+    "queroAnunciar": "Advertise with us",
+    "falarComercial": "Talk to sales →",
+    "idioma": "Language"
+  },
+  "Footer": {
+    "visaoGeral": "Overview",
+    "contato": "Contact",
+    "termosDeUso": "Terms of Use",
+    "conferirLgpd": "Privacy (LGPD)",
+    "novaCampanha": "New campaign →",
+    "tagline": "Out of Home in Southern Brazil for 67 years. Your brand where people are.",
+    "curitiba": "Curitiba",
+    "santaCatarina": "Santa Catarina"
+  }
+}

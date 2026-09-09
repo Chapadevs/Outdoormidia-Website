@@ -1,0 +1,48 @@
+{
+  "Site": {
+    "titulo": "Outdoormídia：巴西南部户外广告",
+    "descricao": "深耕巴拉那州与圣卡塔琳娜州户外媒体 67 年。数字大屏、灯箱广告、公路、机场、购物中心等多种媒体形式。",
+    "descricaoCurta": "巴拉那州与圣卡塔琳娜州领先的户外媒体公司。"
+  },
+  "Nav": {
+    "sobre": "关于我们",
+    "ambiental": "环境",
+    "social": "社会",
+    "governanca": "治理",
+    "trabalheConosco": "加入我们",
+    "solucoes": "解决方案",
+    "diferenciais": "核心优势",
+    "regioesCobertura": "区域与覆盖",
+    "plataformas": "媒体平台",
+    "projetosIconicos": "标志性项目",
+    "areaDoAnunciante": "广告主专区",
+    "diagnostico": "品牌存在感诊断",
+    "suaMarcaNoOoh": "您的品牌在户外",
+    "melhoresPraticas": "最佳实践",
+    "programatica": "程序化媒体",
+    "faq": "常见问题",
+    "blog": "博客",
+    "cases": "案例",
+    "artigos": "文章",
+    "podcast": "播客"
+  },
+  "Header": {
+    "abrirMenu": "打开菜单",
+    "fecharMenu": "关闭菜单",
+    "expandir": "展开{secao}",
+    "recolher": "收起{secao}",
+    "queroAnunciar": "我要投放广告",
+    "falarComercial": "联系销售 →",
+    "idioma": "语言"
+  },
+  "Footer": {
+    "visaoGeral": "总览",
+    "contato": "联系方式",
+    "termosDeUso": "使用条款",
+    "conferirLgpd": "隐私政策（LGPD）",
+    "novaCampanha": "新活动 →",
+    "tagline": "深耕巴西南部户外广告 67 年。让您的品牌出现在人群所在之处。",
+    "curitiba": "库里蒂巴",
+    "santaCatarina": "圣卡塔琳娜州"
+  }
+}

@@ -1,5 +1,7 @@
-import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import Logo from '@/components/ui/Logo'
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher'
+import { Link } from '@/i18n/navigation'
 import { EMPRESA } from '@/lib/empresa'
 import { NAV } from '@/lib/nav'
 
@@ -8,19 +10,26 @@ import { NAV } from '@/lib/nav'
 const HUBS = NAV.filter((item) => item.children)
 const SOLTOS = NAV.filter((item) => !item.children)
 
-const COLUNAS = HUBS.map((hub, i) => ({
-  title: hub.label,
-  links: [
-    { label: 'Visão geral', href: hub.href },
-    ...hub.children,
-    ...(i === 0 ? SOLTOS : []),
-  ],
-}))
+// Os rótulos vêm do namespace Nav no idioma ativo, então as colunas são
+// montadas dentro do componente e não mais no escopo do módulo.
+function montarColunas(t, tNav) {
+  const rotular = (item) => ({ label: tNav(item.key), href: item.href })
+
+  return HUBS.map((hub, i) => ({
+    key: hub.key,
+    title: tNav(hub.key),
+    links: [
+      { label: t('visaoGeral'), href: hub.href },
+      ...hub.children.map(rotular),
+      ...(i === 0 ? SOLTOS.map(rotular) : []),
+    ],
+  }))
+}
 
 // A privacidade sai da lista e vira botão na mesma linha: é o único item legal
 // que o visitante procura por conta própria, e link de 12px na barra do rodapé
 // não se acha. O rótulo diz LGPD porque é o termo com que ele chega.
-const LEGAIS = [{ label: 'Termos de Uso', href: '/termos' }]
+const LEGAIS = [{ key: 'termosDeUso', href: '/termos' }]
 
 // TODO(cliente): confirmar os perfis de Youtube e Facebook — os dois foram
 // montados a partir do handle do Instagram e ainda não foram verificados.
@@ -50,7 +59,11 @@ const SOCIAIS = [
   },
 ]
 
-export default function Footer() {
+export default async function Footer() {
+  const t = await getTranslations('Footer')
+  const tNav = await getTranslations('Nav')
+  const colunas = montarColunas(t, tNav)
+
   return (
     <footer className="bg-paper pb-[38px] pt-[70px] text-ink-soft max-mob:pb-8 max-mob:pt-14">
       <div className="wrap">
@@ -58,14 +71,14 @@ export default function Footer() {
           <div className="max-tab:col-span-full max-xs:col-span-1">
             <Logo className="bg-ink" />
             <p className="mt-[18px] max-w-[32ch] text-[14.5px]">
-              Out of Home no Sul do Brasil há 67 anos. Sua marca onde as pessoas estão.
+              {t('tagline')}
             </p>
             <Link className="btn btn-ghost mt-6" href="/#nova-campanha">
-              Nova campanha →
+              {t('novaCampanha')}
             </Link>
           </div>
-          {COLUNAS.map((col) => (
-            <div key={col.title}>
+          {colunas.map((col) => (
+            <div key={col.key}>
               <h4 className="m-0 mb-[18px] text-xs font-bold uppercase tracking-[0.14em] text-ink">
                 {col.title}
               </h4>
@@ -75,27 +88,27 @@ export default function Footer() {
                   href={l.href}
                   className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
                 >
-                  {l.label}
+                  {t(l.key)}
                 </Link>
               ))}
             </div>
           ))}
           <div>
             <h4 className="m-0 mb-[18px] text-xs font-bold uppercase tracking-[0.14em] text-ink">
-              Contato
+              {t('contato')}
             </h4>
             <a
               href={`tel:${EMPRESA.telefone}`}
               className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
             >
-              {EMPRESA.telefoneExibicao} · Curitiba
+              {EMPRESA.telefoneExibicao} · {t('curitiba')}
             </a>
             {EMPRESA.telefoneSc && (
               <a
                 href={`tel:${EMPRESA.telefoneSc}`}
                 className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
               >
-                {EMPRESA.telefoneScExibicao} · Santa Catarina
+                {EMPRESA.telefoneScExibicao} · {t('santaCatarina')}
               </a>
             )}
             <a
@@ -149,7 +162,7 @@ export default function Footer() {
               className="btn btn-ghost px-[18px] py-[9px] text-[11px] tracking-[0.06em]"
               href="/privacidade"
             >
-              Conferir LGPD
+              {t('conferirLgpd')}
             </Link>
             {LEGAIS.map((l) => (
               <Link
@@ -161,7 +174,11 @@ export default function Footer() {
               </Link>
             ))}
           </span>
-          <span>PT · EN · ES · 中文</span>
+          <LanguageSwitcher
+            className="items-center uppercase tracking-[0.06em]"
+            ativo="text-ink"
+            inativo="hover:text-ink"
+          />
         </div>
       </div>
     </footer>

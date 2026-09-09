@@ -1,0 +1,48 @@
+{
+  "Site": {
+    "titulo": "Outdoormídia: Out of Home no Sul do Brasil",
+    "descricao": "Líder em mídia exterior no Paraná e Santa Catarina há 67 anos. Outdoor digital, frontlight, rodovias, aeroporto, shoppings e muito mais.",
+    "descricaoCurta": "Líder em mídia exterior no Paraná e Santa Catarina."
+  },
+  "Nav": {
+    "sobre": "Sobre nós",
+    "ambiental": "Ambiental",
+    "social": "Social",
+    "governanca": "Governança",
+    "trabalheConosco": "Trabalhe conosco",
+    "solucoes": "Soluções",
+    "diferenciais": "Diferenciais",
+    "regioesCobertura": "Regiões / Cobertura",
+    "plataformas": "Plataformas",
+    "projetosIconicos": "Projetos Icônicos",
+    "areaDoAnunciante": "Área do anunciante",
+    "diagnostico": "Diagnóstico de presença",
+    "suaMarcaNoOoh": "Sua marca no OOH",
+    "melhoresPraticas": "Melhores práticas",
+    "programatica": "Mídia Programática",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "cases": "Cases",
+    "artigos": "Artigos",
+    "podcast": "Podcast"
+  },
+  "Header": {
+    "abrirMenu": "Abrir menu",
+    "fecharMenu": "Fechar menu",
+    "expandir": "Expandir {secao}",
+    "recolher": "Recolher {secao}",
+    "queroAnunciar": "Quero Anunciar",
+    "falarComercial": "Falar com o comercial →",
+    "idioma": "Idioma"
+  },
+  "Footer": {
+    "visaoGeral": "Visão geral",
+    "contato": "Contato",
+    "termosDeUso": "Termos de Uso",
+    "conferirLgpd": "Conferir LGPD",
+    "novaCampanha": "Nova campanha →",
+    "tagline": "Out of Home no Sul do Brasil há 67 anos. Sua marca onde as pessoas estão.",
+    "curitiba": "Curitiba",
+    "santaCatarina": "Santa Catarina"
+  }
+}

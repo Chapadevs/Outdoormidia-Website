@@ -130,8 +130,12 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-poppins), system-ui, sans-serif;
-  --font-display: var(--font-poppins), sans-serif;
+  /* A Poppins é carregada só com o subset latino e não tem um glifo Han. O
+     unicode-range dela faz o navegador pular direto para a próxima da pilha
+     nos caracteres chineses, então a fonte de sistema entra sem baixar byte
+     nenhum e sem penalizar as rotas latinas. */
+  --font-sans: var(--font-poppins), 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif;
+  --font-display: var(--font-poppins), 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
 }
 
 @layer base {
@@ -186,6 +190,19 @@
   }
   .eyebrow b {
     @apply text-orange;
+  }
+
+  /* Os dois primitivos acima assumem alfabeto latino e quebram em chinês:
+     uppercase não faz nada em Han (o script não tem caixa), o leading de
+     0.86 corta ascendente e descendente nos títulos de até 92px, e o
+     tracking de 0.22em faz um eyebrow curto parecer espaçado por engano.
+
+     O seletor casa com o lang="zh-Hans" que o layout de locale emite. */
+  :lang(zh) .display {
+    @apply normal-case leading-[1.15] tracking-normal;
+  }
+  :lang(zh) .eyebrow {
+    @apply normal-case tracking-[0.08em];
   }
 
   /* Radial Reveal — regra do design system: o estado de hover de todo botão

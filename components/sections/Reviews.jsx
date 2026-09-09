@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Coverflow from '@/components/ui/Coverflow'
 import SectionHeading from '@/components/ui/SectionHeading'
 

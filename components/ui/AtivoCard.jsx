@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import CoverMedia from '@/components/ui/CoverMedia'
 
 // Componente C7 do handoff: a anatomia fixa do card de ativo. Kicker em caixa

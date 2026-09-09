@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import SectionHeading from '@/components/ui/SectionHeading'
 import PostCard from '@/components/blog/PostCard'
 import { listPublishedPosts } from '@/lib/blog/posts'
