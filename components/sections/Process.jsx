@@ -37,10 +37,14 @@ const ENTRADA_DO_FECHO = 0.78
 // a ocupar; o conteúdo não muda de uma página para a outra.
 //
 // O trilho fica preso na tela enquanto a página rola: o progresso da rolagem
-// dentro da pista acende as etapas uma a uma. Abaixo de 980px o trilho não
-// existe (não há largura para três colunas), a seção vira lista empilhada e
-// todas as etapas nascem acesas.
-export default function Process({ num, title = 'Gestão 360 OM' }) {
+// dentro da pista traz as etapas uma a uma. Etapa que ainda não chegou fica
+// invisível, não esmaecida: as três entram em sequência, e a 02 e a 03 só
+// aparecem depois da anterior. A entrada é só opacidade, nunca deslocamento: a
+// coluna já ocupa o lugar dela no grid desde o começo, e as três precisam ficar
+// na mesma linha o tempo todo. Abaixo de 980px o trilho não existe (não há
+// largura para três colunas) e a seção vira lista empilhada, com a mesma
+// sequência medida pela linha de gatilho.
+export default function Process({ title = 'Gestão 360 OM' }) {
   const pistaRef = useRef(null)
   // null enquanto não houve medição (SSR e sem JS): nesse estado tudo nasce aceso.
   const [progresso, setProgresso] = useState(null)
@@ -88,7 +92,7 @@ export default function Process({ num, title = 'Gestão 360 OM' }) {
   return (
     <section className="bg-bone pb-[110px] max-mob:pb-[72px]" id="processo">
       <div className="wrap pt-[110px] text-center max-mob:pt-[72px]">
-        <SectionHeading className="reveal mb-4 justify-center" num={num} rule={false} title={title} />
+        <SectionHeading className="reveal mb-4 justify-center" rule={false} title={title} />
         <p className="reveal mb-4 text-lg text-ink-soft">Do objetivo à notoriedade</p>
         <p className="reveal mx-auto max-w-[72ch] text-ink-soft">
           Você diz o objetivo, para quem e onde precisa aparecer. A Outdoormídia cruza região,
@@ -96,7 +100,7 @@ export default function Process({ num, title = 'Gestão 360 OM' }) {
         </p>
       </div>
 
-      <div className="relative h-[300vh] max-tab:h-auto" ref={pistaRef}>
+      <div className="relative h-[190vh] max-tab:h-auto" ref={pistaRef}>
         <div className="sticky top-0 flex h-screen flex-col justify-center max-tab:static max-tab:h-auto max-tab:py-16">
           <div className="wrap w-full">
             <div className="mx-auto grid max-w-[1040px] grid-cols-3 max-tab:max-w-none max-tab:grid-cols-1">
@@ -113,8 +117,8 @@ export default function Process({ num, title = 'Gestão 360 OM' }) {
                   ></div>
 
                   <div
-                    className={`flex flex-col items-center transition-opacity duration-700 ease-out max-tab:items-start ${
-                      ligada(i) ? 'opacity-100' : 'opacity-30'
+                    className={`flex flex-col items-center transition-opacity duration-500 ease-out max-tab:items-start ${
+                      ligada(i) ? 'opacity-100' : 'pointer-events-none opacity-0'
                     }`}
                   >
                     <span
@@ -159,7 +163,7 @@ export default function Process({ num, title = 'Gestão 360 OM' }) {
             </div>
 
             <div
-              className={`mt-[72px] text-center transition-all duration-700 ease-out max-tab:mt-4 ${
+              className={`mt-[72px] text-center transition-all duration-500 ease-out max-tab:mt-4 ${
                 fechoVisivel
                   ? 'translate-y-0 opacity-100'
                   : 'pointer-events-none translate-y-10 opacity-0'

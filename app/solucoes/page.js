@@ -3,7 +3,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
-import CoverageMap from '@/components/ui/CoverageMap'
+import MapaCobertura from '@/components/ui/MapaCobertura'
 import Diferenciais from '@/components/sections/Diferenciais'
 import Platforms from '@/components/sections/Platforms'
 import SolucoesHero from '@/components/sections/SolucoesHero'
@@ -132,12 +132,12 @@ export default async function SolucoesPage() {
 
         <SolucoesHero />
 
-        <Diferenciais num="01" moreHref="/solucoes/diferenciais" />
+        <Diferenciais moreHref="/solucoes/diferenciais" />
 
         <section className="py-[110px] max-mob:py-[72px]" id="regioes">
           <div className="wrap">
             <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-              <SectionHeading num="02" title="Regiões" className="flex-1" />
+              <SectionHeading title="Regiões" className="flex-1" />
               <Link
                 className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
                 href="/solucoes/regioes-cobertura"
@@ -158,8 +158,8 @@ export default async function SolucoesPage() {
                   visibilidade e impacto real.
                 </p>
               </div>
-              <div className="w-full max-tab:mx-auto max-tab:max-w-[420px]">
-                <CoverageMap locations={locations} />
+              <div className="w-full max-tab:mx-auto max-tab:max-w-[520px]">
+                <MapaCobertura />
               </div>
             </div>
             <div className="grid grid-cols-5 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
@@ -189,7 +189,7 @@ export default async function SolucoesPage() {
 
         <section className="py-[110px] max-mob:py-[72px]" id="tipos-de-midia">
           <div className="wrap">
-            <SectionHeading num="03" title="Tipos de mídia" className="reveal mb-[34px]" />
+            <SectionHeading title="Tipos de mídia" className="reveal mb-[34px]" />
             <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">
               Tecnologia e dinâmica da exposição: escolha entre o alcance programável do digital
               e a presença contínua do estático.
@@ -227,7 +227,7 @@ export default async function SolucoesPage() {
           </div>
         </section>
 
-        <Platforms num="04" />
+        <Platforms />
 
         <NovaCampanha />
       </main>

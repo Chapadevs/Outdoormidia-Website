@@ -62,13 +62,13 @@ export default async function RegioesPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <CoverageExplorer locations={locations} num="01" mapaEstatico />
+            <CoverageExplorer />
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="02" title="Regiões atendidas" className="reveal mb-[34px]" />
+            <SectionHeading title="Regiões atendidas" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               Cada região com as plataformas disponíveis nela. Não achou a sua cidade? Fale com o
               time: a rede cresce por demanda.

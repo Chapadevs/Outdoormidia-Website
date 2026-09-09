@@ -55,11 +55,11 @@ export default async function AdminTagsPage({ params }) {
 
         <div className="flex flex-col gap-12">
           <div>
-            <SectionHeading num="01" title="Grupos" className="mb-[34px]" />
+            <SectionHeading title="Grupos" className="mb-[34px]" />
             <TagGroupManager scope={scope} groups={groups} />
           </div>
           <div>
-            <SectionHeading num="02" title="Tags" className="mb-[34px]" />
+            <SectionHeading title="Tags" className="mb-[34px]" />
             <TagManager scope={scope} groups={groups} tags={tags} />
           </div>
         </div>

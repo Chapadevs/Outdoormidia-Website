@@ -67,7 +67,7 @@ export default function NotFound() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Para onde ir" className="reveal mb-[34px]" />
+            <SectionHeading title="Para onde ir" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
               {ROTAS.map((r) => (
                 <Link

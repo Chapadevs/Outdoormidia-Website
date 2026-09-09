@@ -69,7 +69,7 @@ export default function PlataformasPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Plataformas" className="reveal mb-5" />
+            <SectionHeading title="Plataformas" className="reveal mb-5" />
             <PlatformsCatalog plataformas={PLATFORMS_LISTAGEM} />
           </div>
         </section>
@@ -80,7 +80,6 @@ export default function PlataformasPage() {
         >
           <div className="wrap">
             <SectionHeading
-              num="02"
               title="Plataforma é onde. Formato é como."
               className="reveal mb-[34px]"
             />

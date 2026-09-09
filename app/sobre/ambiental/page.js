@@ -8,7 +8,7 @@ import NovaCampanha from '@/components/sections/NovaCampanha'
 import { AMBIENTAL_PRATICAS, AMBIENTAL_REALIDADE } from '@/lib/esg'
 
 const DESCRIPTION =
-  'Praça de Carregamento Elétrico, Praça Pet Batel e Jardim Vertical, o ciclo da lona e as práticas que reduzem o impacto da operação: a frente ambiental da Outdoormídia no Paraná e em Santa Catarina.'
+  'Praça de Carregamento Elétrico, Praça de Conveniência Batel e Jardim Vertical, o ciclo da lona e as práticas que reduzem o impacto da operação: a frente ambiental da Outdoormídia no Paraná e em Santa Catarina.'
 
 export const metadata = {
   title: 'Ambiental | Outdoormídia',
@@ -49,7 +49,7 @@ export default function AmbientalPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="realidade">
           <div className="wrap">
-            <SectionHeading num="01" title="O que já é realidade" className="reveal mb-[34px]" />
+            <SectionHeading title="O que já é realidade" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               Não falamos de intenção ambiental. Falamos de estrutura entregue, com endereço,
               manutenção por nossa conta e uso público diário. Cada projeto abaixo é um ativo
@@ -94,7 +94,7 @@ export default function AmbientalPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="ciclo-da-lona">
           <div className="wrap">
-            <SectionHeading num="02" title="O ciclo da lona" className="reveal mb-[34px]" />
+            <SectionHeading title="O ciclo da lona" className="reveal mb-[34px]" />
             <div className="ticks reveal rounded-[16px] border border-line bg-white p-10 max-mob:p-7">
               <h2 className="m-0 max-w-[24ch] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
                 A lona sai da face e volta como produto.
@@ -134,7 +134,6 @@ export default function AmbientalPage() {
         <section className="pb-[110px] max-mob:pb-[72px]" id="doacao-instituto-kopher">
           <div className="wrap">
             <SectionHeading
-              num="03"
               title="Doação de lixo eletrônico ao Instituto Kópher"
               className="reveal mb-[34px]"
             />
@@ -167,7 +166,6 @@ export default function AmbientalPage() {
         <section className="pb-[110px] max-mob:pb-[72px]" id="operacao">
           <div className="wrap">
             <SectionHeading
-              num="04"
               title="Como a operação reduz impacto"
               className="reveal mb-[34px]"
             />

@@ -24,11 +24,7 @@ export default function FaqCategorias() {
       {grupos.map((grupo, i) => (
         <section className="pb-[110px] max-mob:pb-[72px]" key={grupo.categoria}>
           <div className="wrap">
-            <SectionHeading
-              num={String(i + 1).padStart(2, '0')}
-              title={grupo.categoria}
-              className="reveal mb-[34px]"
-            />
+            <SectionHeading title={grupo.categoria} className="reveal mb-[34px]" />
             <Accordion
               items={grupo.itens}
               idPrefix={`faq-${i}`}

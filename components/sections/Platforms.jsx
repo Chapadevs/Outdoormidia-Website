@@ -5,13 +5,13 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
 import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
-export default function Platforms({ num = '02' }) {
+export default function Platforms() {
   const [openSlug, setOpenSlug] = useState(null)
 
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="plataformas">
       <div className="wrap">
-        <SectionHeading num={num} title="Plataformas" href="/plataformas" className="reveal mb-[34px]" />
+        <SectionHeading title="Plataformas" href="/plataformas" className="reveal mb-[34px]" />
         <div className="reveal border-t border-ink">
           {PLATFORMS_LISTAGEM.map((p) => {
             const isOpen = openSlug === p.slug
@@ -23,20 +23,13 @@ export default function Platforms({ num = '02' }) {
                   aria-expanded={isOpen}
                   onClick={() => setOpenSlug(isOpen ? null : p.slug)}
                 >
-                  <div className="relative grid grid-cols-[64px_1fr_auto_54px] items-center gap-6 overflow-hidden px-2 py-[26px] max-mob:grid-cols-[40px_1fr_34px] max-mob:gap-3.5 max-mob:px-1 max-mob:py-[22px]">
+                  <div className="relative grid grid-cols-[1fr_auto_54px] items-center gap-6 overflow-hidden px-2 py-[26px] max-mob:grid-cols-[1fr_34px] max-mob:gap-3.5 max-mob:px-1 max-mob:py-[22px]">
                     <span
                       aria-hidden
                       className={`absolute inset-0 z-[1] bg-orange transition-transform duration-[320ms] ease-[cubic-bezier(.2,.7,.2,1)] ${
                         isOpen ? 'translate-y-0' : 'translate-y-[101%] group-hover:translate-y-0 group-focus-visible:translate-y-0'
                       }`}
                     ></span>
-                    <span
-                      className={`relative z-[2] font-display text-xl transition-colors duration-[250ms] ${
-                        isOpen ? 'text-white/65' : 'text-ink-soft group-hover:text-white/65 group-focus-visible:text-white/65'
-                      }`}
-                    >
-                      {p.num}
-                    </span>
                     <span
                       className={`relative z-[2] text-[clamp(26px,4vw,50px)] font-extrabold leading-none tracking-[-0.02em] transition-colors duration-[250ms] ${
                         isOpen ? 'text-white' : 'group-hover:text-white group-focus-visible:text-white'

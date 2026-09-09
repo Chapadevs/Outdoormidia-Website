@@ -7,25 +7,42 @@ import SectionHeading from '@/components/ui/SectionHeading'
 
 // Depoimentos reais, na redação oficial do cliente (COPY_SITE).
 //
-// TODO(cliente): confirmar a autorização de uso de nome, cargo e marca dos três
+// TODO(cliente): confirmar a autorização de uso de nome, cargo e marca dos sete
 // depoentes antes de publicar — são pessoas e empresas identificáveis.
 //
-// Os três vídeos entraram em `public/media/cases-videos/`, nomeados pelo
-// depoente. A duração medida de cada arquivo bate exata com a que o card já
+// Os sete vídeos entraram em `public/media/cases-videos/`, nomeados pelo
+// depoente. A duração dos três primeiros bate exata com a que o card já
 // declarava (Claro 00:45 · Diretor Verbal 01:00 · Cia do Pastel 01:27),
-// confirmando o pareamento.
+// confirmando o pareamento; a dos quatro novos (Confeitaria Didé, Dra. Gabriele,
+// Rayan Chemite, Felipe/Expo MotorHome) foi medida com `ffprobe` direto do
+// arquivo, sem cartela de duração para conferir contra.
 //
 // `capa` é um frame extraído do próprio vídeo (`ffmpeg -ss … scale=600:-1`,
 // arquivo `<nome>-capa.webp` ao lado do `.mp4`), não uma foto separada do
-// cliente: os três vídeos trazem legenda queimada do início ao fim, sem
-// nenhum trecho limpo, então o frame escolhido é o de melhor enquadramento
-// (olhos abertos, sem cartela de abertura) com a legenda mais curta possível
-// naquele instante — ela fica escondida sob o gradiente e a citação do
-// próprio card. Trocar por capa oficial do cliente é upgrade, não bloqueio.
+// cliente: os vídeos trazem legenda queimada do início ao fim, sem nenhum
+// trecho limpo, então o frame escolhido é o de melhor enquadramento (olhos
+// abertos, sem cartela de abertura) com a legenda mais curta possível naquele
+// instante — ela fica escondida sob o gradiente e a citação do próprio card.
+// Trocar por capa oficial do cliente é upgrade, não bloqueio.
+//
+// As citações dos quatro novos vieram da legenda queimada no próprio vídeo
+// (transcrita quadro a quadro, não ouvida), por isso são a fala literal, sem
+// paráfrase. Cargo e nome de Rayan Chemite (Afinco Imóveis) e da Dra. Gabriele
+// Andrioli (Andrioli Estética) vêm de uma cartela de identificação que aparece
+// no próprio vídeo; a de Felipe (Expo MotorHome) só dá o primeiro nome e o
+// cargo, sem sobrenome. O vídeo da Confeitaria Didé não traz cartela nenhuma:
+// TODO(cliente) confirmar o nome e o cargo de quem fala, hoje só identificado
+// pelo nome do negócio.
+//
+// Dois vídeos que chegaram junto (`campanha-lacta.mp4`, `campanha-select.mp4`,
+// ainda com o nome original em `public/media/cases-videos/`) não entraram aqui:
+// são reels de case (motion graphics + drone, números de impacto), sem
+// depoimento pessoal — não têm quem citar nem quem nomear. Servem para uma
+// futura seção de cases em vídeo, não para "O que dizem".
 //
 // TODO(cliente): o card do Auto Shopping Curitiba cita um case que ainda não
 // tem página (/cases/[slug] não existe, só a listagem). Enquanto não existir, o
-// contexto entra como texto, sem link.
+// contexto entra como texto, sem link. Mesma situação para o de Expo MotorHome.
 //
 // O card 03 não é citação: é título editorial, e por isso vem sem aspas e sem o
 // glifo de abertura. Entre aspas e com o nome embaixo viraria fala fabricada.
@@ -55,6 +72,42 @@ const REVIEWS = [
     duracao: '01:27',
     video: '/media/cases-videos/cia-do-pastel.mp4',
     capa: '/media/cases-videos/cia-do-pastel-capa.webp',
+  },
+  {
+    quote:
+      'Foi absurdo a quantidade de pessoas que vieram através do outdoor. As pessoas falavam: “Eu vi a sua no outdoor, que legal seu trabalho, né?”',
+    name: 'Confeitaria Didé',
+    role: 'Cliente Outdoormídia',
+    duracao: '00:58',
+    video: '/media/cases-videos/confeitaria-dide.mp4',
+    capa: '/media/cases-videos/confeitaria-dide-capa.webp',
+  },
+  {
+    quote:
+      'Eu percebi uma diferença: as pessoas mandavam mensagem, “Nossa, Gabi estava passando em tal lugar e eu vi você”.',
+    name: 'Dra. Gabriele Andrioli',
+    role: 'Proprietária · Andrioli Estética',
+    duracao: '00:42',
+    video: '/media/cases-videos/dra-gabriele-andrioli.mp4',
+    capa: '/media/cases-videos/dra-gabriele-andrioli-capa.webp',
+  },
+  {
+    quote: 'Indicaria com certeza! Foi uma experiência extraordinária.',
+    name: 'Rayan Chemite',
+    role: 'Afinco Imóveis',
+    duracao: '00:45',
+    video: '/media/cases-videos/rayan-chemite-afinco.mp4',
+    capa: '/media/cases-videos/rayan-chemite-afinco-capa.webp',
+  },
+  {
+    quote:
+      'Essas estratégias trazem um público qualificado pro evento. O público vai encontrar aqui o que procura.',
+    name: 'Felipe',
+    role: 'Coordenador de Marketing · Expo MotorHome',
+    contexto: 'Feira Expo MotorHome · Expotrade',
+    duracao: '01:29',
+    video: '/media/cases-videos/expo-motorhome.mp4',
+    capa: '/media/cases-videos/expo-motorhome-capa.webp',
   },
 ]
 

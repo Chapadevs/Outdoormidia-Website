@@ -21,9 +21,8 @@ const SLIDES = ICONICOS.map((i) => ({
 // setas que já troca tagline/foto aqui — era a seção "As três linhas"
 // (LinhaTabs), com uma navegação Green/Regenerativo/Elegancy própria que
 // repetia a desta faixa.
-export default function Iconicos({ num = '01', linkTitulo = true, comAtivos = false }) {
+export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
   const [active, setActive] = useState(0)
-  const item = ICONICOS[active]
 
   const go = (i) => setActive(((i % ICONICOS.length) + ICONICOS.length) % ICONICOS.length)
 
@@ -49,17 +48,8 @@ export default function Iconicos({ num = '01', linkTitulo = true, comAtivos = fa
       >
         <AuroraField />
 
-        {/* número gigante da vez — assinatura visual da faixa, atrás do conteúdo */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-[.2em] -right-[.05em] z-[1] select-none text-[clamp(200px,30vw,460px)] font-extrabold leading-[.8] tracking-[-0.05em] text-white/15"
-        >
-          {item.num}
-        </span>
-
         <div className="wrap relative z-[2]">
           <div className="reveal flex items-center gap-3.5">
-            <span className="font-display text-[15px] text-white/75">{num}</span>
             <h2 className="m-0 text-[clamp(28px,4.4vw,54px)] font-extrabold leading-none tracking-[-0.02em]">
               {linkTitulo ? (
                 <Link
@@ -145,14 +135,13 @@ export default function Iconicos({ num = '01', linkTitulo = true, comAtivos = fa
           <div className="grid grid-cols-3 border-t border-white/40 max-mob:grid-cols-1">
             {ICONICOS.map((i, index) => (
               <button
-                className={`-mt-px flex cursor-pointer items-baseline gap-3.5 border-0 border-t-[3px] bg-transparent pb-[34px] pt-[30px] text-left font-sans transition-[color,border-color] duration-200 max-mob:py-6 ${
+                className={`-mt-px flex cursor-pointer items-baseline border-0 border-t-[3px] bg-transparent pb-[34px] pt-[30px] text-left font-sans transition-[color,border-color] duration-200 max-mob:py-6 ${
                   index === active ? 'border-t-white text-white' : 'border-t-transparent text-white/65'
                 }`}
                 key={i.slug}
                 onClick={() => setActive(index)}
                 type="button"
               >
-                <span className="text-[13px] font-semibold">{i.num}</span>
                 <span className="text-[clamp(20px,2vw,30px)] font-extrabold leading-none tracking-[-0.02em]">
                   {i.name}
                 </span>

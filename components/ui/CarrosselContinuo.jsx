@@ -26,6 +26,12 @@ import { Children, useEffect, useRef } from 'react'
 // centro) e só anexa o `src` quando o card se aproxima, lendo o `data-src` que
 // quem chama deixa no elemento. Sem isso os seis vídeos da home baixam e
 // decodificam ao mesmo tempo, e nenhuma otimização de transform salva os frames.
+//
+// Pausar, porém, não devolve nada: o elemento pausado continua segurando o
+// decodificador e os buffers, e o navegador tem um teto pequeno deles — passar
+// do teto derruba tudo para decodificação em software. Por isso o card que se
+// afasta do centro (e a seção inteira, quando sai da tela) solta a fonte de
+// verdade, e volta a carregá-la pelo `data-src` ao se aproximar de novo.
 
 const suavizar = (t) => t * t * (3 - 2 * t)
 
@@ -65,10 +71,28 @@ const COLA = 9
 // Teto do arremesso, em cards por segundo.
 const ARREMESSO = 5
 
-// Distância (em cards) em que o vídeo do card começa a baixar e em que ele
-// toca. Fora da segunda faixa o vídeo fica pausado no frame em que parou.
+// Distância (em cards) em que o vídeo do card começa a baixar, em que ele toca,
+// e em que ele devolve o decodificador. Pausar não basta: um <video> pausado
+// segue segurando um decodificador e os buffers de frame, e o navegador tem um
+// teto pequeno deles. Passando do teto ele cai para decodificação em software,
+// que é de onde vinha a travada com os seis vídeos da home todos vivos ao mesmo
+// tempo. A folga entre CARREGA e DESCARREGA é histerese: sem ela o card na
+// fronteira soltaria e recarregaria a fonte a cada frame.
 const CARREGA_VIDEO = 2
 const TOCA_VIDEO = 0.85
+const DESCARREGA_VIDEO = 3
+
+// Tempo fora da tela antes de soltar as fontes. A seção volta a carregar sozinha
+// ao reaparecer; o atraso existe para que passar raspando pela borda (ou uma
+// rolagem que vai e volta) não fique criando e destruindo decodificador.
+const SOLTAR_APOS = 1200
+
+// Piso da deriva, em cards/s. Abaixo disto a velocidade vira zero em vez de
+// continuar decaindo para sempre: a exponencial nunca chega a zero, e sem o
+// piso a fita seguia repintando os nove cards a cada frame por segundos depois
+// de o ponteiro pousar nela, movendo frações de nanômetro. Com o piso, `pos`
+// para de mudar e o laço passa a sair antes de tocar no DOM.
+const PARADA = 1e-4
 
 export default function CarrosselContinuo({
   alturaClasse = '',
@@ -144,6 +168,24 @@ export default function CarrosselContinuo({
       s.limite = Math.max(1.8, Math.min(n / 2 - 0.5, meio / s.passo + 1.5))
     }
 
+    // Devolve o decodificador ao navegador. `removeAttribute` sozinho não basta:
+    // é o `load()` seguinte que faz o elemento voltar a NETWORK_EMPTY e liberar
+    // os buffers. O `data-src` fica onde está, e é por ele que o card recarrega
+    // quando voltar a se aproximar do centro.
+    const soltarVideo = (i) => {
+      const video = videos[i]
+      if (!video || !carregados[i]) return
+      carregados[i] = false
+      tocando[i] = false
+      video.pause()
+      video.removeAttribute('src')
+      video.load()
+    }
+
+    const soltarVideos = () => {
+      for (let i = 0; i < videos.length; i++) soltarVideo(i)
+    }
+
     const pintar = () => {
       const { pos, passo, largura, limite } = s
       const inicioFade = Math.max(0.9, limite - 1.2)
@@ -155,7 +197,7 @@ export default function CarrosselContinuo({
 
         const video = videos[i]
         if (video) {
-          if (!carregados[i] && ad < CARREGA_VIDEO && video.dataset.src) {
+          if (!carregados[i] && s.naTela && ad < CARREGA_VIDEO && video.dataset.src) {
             carregados[i] = true
             // `preload` sobe junto: com "none" o arquivo só começaria a baixar
             // no play, e o card chegaria ao centro em branco. Assim ele tem a
@@ -163,6 +205,8 @@ export default function CarrosselContinuo({
             // frame antes de rodar.
             video.preload = 'auto'
             video.src = video.dataset.src
+          } else if (carregados[i] && ad > DESCARREGA_VIDEO) {
+            soltarVideo(i)
           }
           const tocar = carregados[i] && ad < TOCA_VIDEO && s.naTela
           if (tocar !== tocando[i]) {
@@ -260,10 +304,17 @@ export default function CarrosselContinuo({
       } else {
         const desejada = s.pausado || semMovimento ? 0 : velocidade
         s.v += (desejada - s.v) * (1 - Math.exp(-ATRITO * dt))
-        s.pos += s.v * dt
-        // Só aqui: com um alvo em curso, normalizar `pos` o deixaria do outro
-        // lado do círculo e a chegada daria a volta.
-        s.pos = ((s.pos % n) + n) % n
+        // Sem o piso a fita parada nunca chega a velocidade zero, e `pos` seguia
+        // mudando na décima quinta casa: `pintar()` rodava a cada frame para
+        // reescrever nove transformações idênticas. Zerar aqui é o que faz a
+        // promessa valer, e a fita pousada custar mesmo nada.
+        if (desejada === 0 && Math.abs(s.v) < PARADA) s.v = 0
+        if (s.v !== 0) {
+          s.pos += s.v * dt
+          // Só aqui: com um alvo em curso, normalizar `pos` o deixaria do outro
+          // lado do círculo e a chegada daria a volta.
+          s.pos = ((s.pos % n) + n) % n
+        }
       }
 
       if (s.pos === posPintada) return
@@ -271,12 +322,20 @@ export default function CarrosselContinuo({
       pintar()
     }
 
+    let soltarEm = 0
+
     const ligar = () => {
+      clearTimeout(soltarEm)
+      // Força a pintura do frame seguinte: ao voltar para a tela os vídeos
+      // precisam ser reanexados e recomeçar mesmo com a fita parada onde
+      // estava. Fica acima da guarda do `raf` porque o laço já pode estar
+      // rodando quando a seção reaparece (é o caso da primeira entrada, em que
+      // o `IntersectionObserver` responde depois da montagem, e o de quem
+      // navega com `prefers-reduced-motion`, onde a fita não anda sozinha e
+      // `pos` nunca mudaria para disparar a pintura).
+      posPintada = NaN
       if (raf) return
       ultimo = 0
-      // Força a pintura do primeiro frame: ao voltar para a tela os vídeos
-      // precisam recomeçar mesmo com a fita parada onde estava.
-      posPintada = NaN
       raf = requestAnimationFrame(frame)
     }
 
@@ -291,6 +350,11 @@ export default function CarrosselContinuo({
           tocando[i] = false
         }
       }
+      // Fora da tela (ou com a aba escondida) nenhum vídeo desta seção precisa
+      // de decodificador. Sem isto os seis da home seguiam vivos pelo resto da
+      // página, disputando o teto de decodificadores com o que viesse depois.
+      clearTimeout(soltarEm)
+      soltarEm = setTimeout(soltarVideos, SOLTAR_APOS)
     }
 
     medir()
@@ -338,6 +402,8 @@ export default function CarrosselContinuo({
 
     return () => {
       desligar()
+      clearTimeout(soltarEm)
+      soltarVideos()
       observadorTela.disconnect()
       observadorTamanho.disconnect()
       document.removeEventListener('visibilitychange', aoTrocarAba)

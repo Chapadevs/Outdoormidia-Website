@@ -60,7 +60,7 @@ export default async function ArtigosPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Últimos artigos" className="reveal mb-[34px]" />
+            <SectionHeading title="Últimos artigos" className="reveal mb-[34px]" />
             {posts.length === 0 ? (
               <p className="reveal text-lg text-ink-soft">
                 Ainda não há artigos publicados. Volte em breve.

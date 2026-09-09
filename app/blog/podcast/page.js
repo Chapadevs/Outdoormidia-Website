@@ -42,7 +42,7 @@ export default function PodcastPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Episódios" className="reveal mb-[34px]" />
+            <SectionHeading title="Episódios" className="reveal mb-[34px]" />
 
             <ul className="m-0 grid list-none grid-cols-3 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
               {EPISODIOS.map((ep) => (

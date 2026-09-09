@@ -8,7 +8,7 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import Institutional from '@/components/sections/Institutional'
 import Process from '@/components/sections/Process'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { MARCOS } from '@/lib/sobre'
+import LinhaDoTempo from '@/components/sections/LinhaDoTempo'
 
 // TODO(Imagine): falta a imagem de capa do topo da página. Enquanto for `null`
 // a capa não é renderizada — painel bege vazio ocupando a primeira dobra é pior
@@ -146,44 +146,13 @@ export default function SobrePage() {
 
         <Institutional />
 
-        <section className="py-[110px] max-mob:py-[72px]" id="linha-do-tempo">
-          <div className="wrap">
-            <SectionHeading num="01" title="Linha do tempo" className="reveal mb-[34px]" />
-            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              O que mudou desde a primeira face na rua, e o que não mudou.
-            </p>
-            <ol className="m-0 grid list-none grid-cols-4 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
-              {MARCOS.map((m) => (
-                <li
-                  className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-6"
-                  key={m.ano}
-                >
-                  {m.image && (
-                    <CoverMedia
-                      alt={m.imageAlt}
-                      className="-mx-1 mb-1"
-                      label={m.ano}
-                      ratio="16/9"
-                      sizes="(max-width: 980px) 100vw, 300px"
-                      src={m.image}
-                    />
-                  )}
-                  <span className="display text-[30px] leading-none text-orange">{m.ano}</span>
-                  <h3 className="m-0 text-[17px] font-extrabold leading-tight text-ink">
-                    {m.title}
-                  </h3>
-                  <p className="m-0 text-[14.5px] leading-relaxed text-ink-soft">{m.text}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+        <LinhaDoTempo />
 
-        <Process num="02" title="Por que a Outdoormídia" />
+        <Process title="Por que a Outdoormídia" />
 
         <section className="py-[110px] max-mob:py-[72px]" id="compromisso">
           <div className="wrap">
-            <SectionHeading num="03" title="Nosso compromisso" className="reveal mb-[34px]" />
+            <SectionHeading title="Nosso compromisso" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               Ocupar a rua por 67 anos cria obrigação com ela. O que fazemos com os resíduos, o
               que devolvemos para a cidade e o que assinamos em contrato.

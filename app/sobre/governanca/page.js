@@ -45,7 +45,7 @@ export default function GovernancaPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="quem-responde">
           <div className="wrap">
-            <SectionHeading num="01" title="Quem responde" className="reveal mb-[34px]" />
+            <SectionHeading title="Quem responde" className="reveal mb-[34px]" />
             <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] items-start gap-[44px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <figure className="reveal m-0">
                 <CoverMedia
@@ -78,7 +78,7 @@ export default function GovernancaPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="estrutura">
           <div className="wrap">
-            <SectionHeading num="02" title="Estrutura e compliance" className="reveal mb-[34px]" />
+            <SectionHeading title="Estrutura e compliance" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
               {GOV_PILARES.map((p) => (
                 <div

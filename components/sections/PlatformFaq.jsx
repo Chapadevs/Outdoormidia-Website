@@ -4,12 +4,12 @@ import Accordion from '@/components/ui/Accordion'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { waFaqPlataforma, waLink } from '@/lib/whatsapp'
 
-export default function PlatformFaq({ faqs, num = '', platformName }) {
+export default function PlatformFaq({ faqs, platformName }) {
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
     <div>
-      <SectionHeading num={num} title="Perguntas frequentes" rule={false} className="mb-6" />
+      <SectionHeading title="Perguntas frequentes" rule={false} className="mb-6" />
       <Accordion
         items={faqs}
         idPrefix="faq-plataforma"

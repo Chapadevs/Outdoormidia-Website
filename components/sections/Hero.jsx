@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 
 const VIDEO_SRC = '/media/video-hero.mp4'
 
 export default function Hero() {
   const [loadVideo, setLoadVideo] = useState(false)
+  const videoRef = useRef(null)
 
   // O vídeo é decorativo e pesa 18 MB. Só recebe o `src` depois do load da
   // página, o que o tira do carregamento inicial — até lá o fundo cobre a área.
@@ -21,6 +22,36 @@ export default function Hero() {
     window.addEventListener('load', onLoad)
     return () => window.removeEventListener('load', onLoad)
   }, [])
+
+  // O hero fica no topo, mas o vídeo é `autoPlay loop`: sem isto ele seguia
+  // decodificando 1080p durante a visita inteira, muito depois de ter saído da
+  // tela, disputando decodificador e thread de composição com os carrosséis
+  // logo abaixo. Ninguém o vê pausado, porque ele só pausa fora de tela.
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    let naTela = true
+    const sincronizar = () => {
+      if (naTela && !document.hidden) video.play()?.catch(() => {})
+      else video.pause()
+    }
+
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        naTela = entrada.isIntersecting
+        sincronizar()
+      },
+      { rootMargin: '120px 0px' }
+    )
+    observador.observe(video)
+    document.addEventListener('visibilitychange', sincronizar)
+
+    return () => {
+      observador.disconnect()
+      document.removeEventListener('visibilitychange', sincronizar)
+    }
+  }, [loadVideo])
 
   return (
     // Até 560px o vídeo sai do fundo e vira um bloco 16/9 no fluxo, acima do
@@ -52,6 +83,7 @@ export default function Hero() {
       </div>
 
       <video
+        ref={videoRef}
         className="pointer-events-none absolute inset-0 h-full w-full object-cover max-mob:static max-mob:order-1 max-mob:mx-5 max-mob:aspect-video max-mob:h-auto max-mob:w-auto max-mob:rounded-[16px]"
         src={loadVideo ? VIDEO_SRC : undefined}
         autoPlay

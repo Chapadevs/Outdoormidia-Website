@@ -19,11 +19,11 @@ const PILARES = [
   },
 ]
 
-export default function Culture({ num = '01' }) {
+export default function Culture() {
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="cultura">
       <div className="wrap">
-        <SectionHeading num={num} title="Por que a Outdoormídia" className="reveal mb-[34px]" />
+        <SectionHeading title="Por que a Outdoormídia" className="reveal mb-[34px]" />
         {/* "A cidade inteira vê" vive só no hero da página: aparecia aqui e no
             card 1 também, e a repetição gastava o argumento. */}
         <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">

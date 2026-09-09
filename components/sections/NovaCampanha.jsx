@@ -10,25 +10,29 @@ import { WA_ATENDIMENTO_AGORA, waLink } from '@/lib/whatsapp'
 //
 // A ordem é de estratégia, o tamanho é de conversão: o Diagnóstico abre a seção
 // como faixa fina justamente para não roubar o clique do formulário, que é o
-// card dominante. A porta de baixo é card menor.
+// card dominante. A porta de baixo fecha a seção na mesma faixa fina: sozinha
+// desde a saída da Mídia Programática, ela era meio card preto ocupando meia
+// largura, com o nome longe da linha de intenção e um vão morto no meio. Como
+// faixa ela emoldura o formulário em vez de disputar com ele, e as duas portas
+// passam a ter a mesma anatomia, uma acima e uma abaixo do card branco.
 //
 // O preto do card de Atendimento rápido é a única exceção autorizada à paleta.
 //
 // Ícones no mapa da Imagine Concept (claude/icones-nova-campanha.md). Aqui eles
 // herdam o branco do texto em vez do laranja da regra: as portas ficam sobre
-// laranja ou sobre o preto do card 03, e laranja sobre laranja some. O laranja
-// da regra vale dentro do card branco do formulário.
+// laranja ou sobre o preto do card de atendimento, e laranja sobre laranja
+// some. O laranja da regra vale dentro do card branco do formulário.
 //
 // Anatomia de cada porta, na ordem do checklist: ícone em quadrado claro
-// arredondado, numeração, nome em destaque, linha de intenção abaixo e chevron
+// arredondado, nome em destaque, linha de intenção abaixo e chevron
 // circular à direita. O chevron é a seta da linha de intenção promovida a
 // elemento — por isso ela não termina mais em "→", que ficaria duplicado.
 
-const CARD_MENOR =
-  'group flex flex-col gap-3 rounded-[16px] border p-7 transition-colors duration-200 max-mob:p-6'
+const FAIXA =
+  'group flex min-h-14 flex-wrap items-center gap-x-4 gap-y-1.5 rounded-full border px-5 py-2.5 transition-colors duration-200 max-mob:rounded-[16px] max-mob:px-4'
 
-// Quadrado claro do ícone e chevron: o mesmo desenho nas três portas, só o tom
-// muda entre o fundo laranja e o preto do card 03.
+// Quadrado claro do ícone e chevron: o mesmo desenho nas duas portas, só o tom
+// muda entre o fundo laranja e o preto da faixa de atendimento.
 const ICONE_QUADRADO = 'grid shrink-0 place-items-center rounded-[10px] bg-white/15'
 const CHEVRON = 'grid size-9 shrink-0 place-items-center rounded-full border border-white/35 transition-colors duration-200 group-hover:border-white'
 
@@ -56,13 +60,12 @@ export default function NovaCampanha({ contexto = '' }) {
         </div>
 
         <Link
-          className="reveal group mt-11 flex min-h-14 flex-wrap items-center gap-x-4 gap-y-1.5 rounded-full border border-white/35 bg-white/10 px-5 py-2.5 transition-colors duration-200 hover:border-white hover:bg-white/[.18] max-mob:rounded-[16px] max-mob:px-4"
+          className={`reveal ${FAIXA} mt-11 border-white/35 bg-white/10 hover:border-white hover:bg-white/[.18]`}
           href="/area-do-anunciante/diagnostico-de-presenca"
         >
           <span className={`${ICONE_QUADRADO} size-9`}>
             <Target size={20} />
           </span>
-          <span className="eyebrow text-white/70">01</span>
           <span className="text-[17px] font-extrabold leading-tight">Diagnóstico de Presença</span>
           <span className="ml-auto text-[14.5px] text-white/[.92] max-mob:ml-0">
             Quero uma curadoria da presença da minha marca
@@ -78,30 +81,27 @@ export default function NovaCampanha({ contexto = '' }) {
           <QualifierForm contexto={contexto} />
         </div>
 
-        <div className="mt-5 max-w-[600px]">
-          <a
-            className={`${CARD_MENOR} border-ink bg-ink hover:border-ink/70 hover:bg-ink/85`}
-            href={waLink(WA_ATENDIMENTO_AGORA)}
-          >
-            <span className={`${ICONE_QUADRADO} relative size-10 bg-white/10`}>
-              <Image alt="" className="size-6" height={24} src="/media/icone-whatsapp.png" width={24} />
-              <span
-                aria-hidden="true"
-                className="absolute -bottom-1 -right-1 grid size-4 place-items-center rounded-full bg-orange"
-              >
-                <Zap className="fill-white text-white" size={10} />
-              </span>
+        <a
+          className={`reveal ${FAIXA} mt-5 border-ink bg-ink hover:border-ink/70 hover:bg-ink/85`}
+          href={waLink(WA_ATENDIMENTO_AGORA)}
+        >
+          <span className={`${ICONE_QUADRADO} relative size-9 bg-white/10`}>
+            <Image alt="" className="size-5" height={20} src="/media/icone-whatsapp.png" width={20} />
+            <span
+              aria-hidden="true"
+              className="absolute -bottom-1 -right-1 grid size-4 place-items-center rounded-full bg-orange"
+            >
+              <Zap className="fill-white text-white" size={10} />
             </span>
-            <span className="eyebrow text-white/55">03</span>
-            <span className="text-[21px] font-extrabold leading-tight">Atendimento rápido</span>
-            <span className="mt-auto flex items-center justify-between gap-4 pt-4">
-              <span className="text-[14.5px] text-white/[.85]">Quero atendimento agora</span>
-              <span aria-hidden="true" className={CHEVRON}>
-                <ChevronRight size={18} />
-              </span>
-            </span>
-          </a>
-        </div>
+          </span>
+          <span className="text-[17px] font-extrabold leading-tight">Atendimento rápido</span>
+          <span className="ml-auto text-[14.5px] text-white/[.92] max-mob:ml-0">
+            Quero atendimento agora
+          </span>
+          <span aria-hidden="true" className={CHEVRON}>
+            <ChevronRight size={18} />
+          </span>
+        </a>
       </div>
     </section>
   )

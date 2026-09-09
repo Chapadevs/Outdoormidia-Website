@@ -16,11 +16,11 @@ const SELOS = [
   '175 telas digitais',
 ]
 
-export default function BancoDeTalentos({ num = '02' }) {
+export default function BancoDeTalentos() {
   return (
     <section className="py-[110px] pt-0 max-mob:py-[72px] max-mob:pt-0" id="candidatura">
       <div className="wrap">
-        <SectionHeading num={num} title="Banco de talentos" className="reveal mb-[34px]" />
+        <SectionHeading title="Banco de talentos" className="reveal mb-[34px]" />
 
         <div className="reveal overflow-hidden rounded-[16px] border-t-4 border-orange bg-ink">
           <div className="grid grid-cols-2 max-tab:grid-cols-1">

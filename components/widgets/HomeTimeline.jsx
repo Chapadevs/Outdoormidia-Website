@@ -32,10 +32,16 @@ export default function HomeTimeline() {
   const toposRef = useRef([])
   const docRef = useRef(1)
   const rafRef = useRef(0)
+  // A altura do preenchimento é escrita direto no elemento, fora do React. Ela
+  // muda em todo frame de rolagem, e como estado obrigava o trilho inteiro (os
+  // onze botões, com estilo inline em cada um) a reconciliar 60 vezes por
+  // segundo enquanto a página rola — bem em cima da rolagem que traz os
+  // carrosséis para a tela. As outras três leituras são discretas: só mudam ao
+  // trocar de seção, e aí o React re-renderiza uma vez, como deve.
+  const preenchimentoRef = useRef(null)
   const [itens, setItens] = useState([])
   const [ativo, setAtivo] = useState(0)
   const [fundo, setFundo] = useState(0)
-  const [preenchido, setPreenchido] = useState(0)
   const [hover, setHover] = useState(-1)
   const [visivel, setVisivel] = useState(false)
   const [noRodape, setNoRodape] = useState(false)
@@ -61,10 +67,12 @@ export default function HomeTimeline() {
     let j = 0
     for (let k = 0; k < n; k++) if (meio >= topos[k] - 2) j = k
 
+    if (preenchimentoRef.current) {
+      preenchimentoRef.current.style.height = `${Math.min(100, Math.max(0, fill))}%`
+    }
     setNoRodape(y + vh >= rodapeRef.current)
     setAtivo(i)
     setFundo(j)
-    setPreenchido(Math.min(100, Math.max(0, fill)))
   }, [])
 
   useEffect(() => {
@@ -113,6 +121,12 @@ export default function HomeTimeline() {
     }
   }, [atualizar])
 
+  // O trilho só entra no DOM depois de `visivel` e dos itens medidos, então a
+  // primeira escrita imperativa da altura acontece aqui, quando o ref existe.
+  useEffect(() => {
+    if (visivel && itens.length > 1) atualizar()
+  }, [atualizar, itens.length, visivel])
+
   if (!visivel || itens.length < 2) return null
 
   const inv = itens[fundo]?.inv
@@ -142,9 +156,13 @@ export default function HomeTimeline() {
           className="absolute inset-y-[9px] left-0 w-px transition-colors duration-300"
           style={{ background: trilho }}
         >
+          {/* `height` fica fora do objeto de estilo de propósito: quem escreve
+              é `atualizar`, e o que o React não conhece ele não sobrescreve na
+              re-renderização seguinte. */}
           <span
-            className="absolute inset-x-0 top-0 transition-[height,background] duration-150 ease-linear"
-            style={{ height: `${preenchido}%`, background: destaque }}
+            className="absolute inset-x-0 top-0 transition-[background] duration-150 ease-linear"
+            ref={preenchimentoRef}
+            style={{ background: destaque }}
           />
         </span>
 

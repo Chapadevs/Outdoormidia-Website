@@ -55,16 +55,6 @@ export default async function IconicoPage({ params }) {
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
   const outros = getOutrosIconicos(slug)
 
-  // Cases é condicional (só quando há), então a numeração é contada na ordem em
-  // que as seções aparecem, para não abrir buraco.
-  let contador = 0
-  const proximo = () => String(++contador).padStart(2, '0')
-  const numOQueE = proximo()
-  const numAtivos = proximo()
-  const numCases = cases.length > 0 ? proximo() : null
-  const numFaq = proximo()
-  const numOutros = proximo()
-
   return (
     <>
       <Header />
@@ -96,8 +86,7 @@ export default async function IconicoPage({ params }) {
                 </div>
               </div>
               <div className={`${CARD} reveal`}>
-                <span className="display text-[30px] leading-none text-orange">{iconico.num}</span>
-                <p className="m-0 mt-4 text-[15.5px] leading-relaxed text-ink-soft">{aside.text}</p>
+                <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{aside.text}</p>
                 <div className="mt-[22px] border-t border-line pt-[18px] text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-soft">
                   {aside.footer}
                 </div>
@@ -108,7 +97,7 @@ export default async function IconicoPage({ params }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num={numOQueE} title="O que é" className="reveal mb-[34px]" />
+            <SectionHeading title="O que é" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">{oQueE.lead}</p>
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
               {oQueE.cards.map((card) => (
@@ -128,7 +117,7 @@ export default async function IconicoPage({ params }) {
             vez só e aparece nas duas rotas. */}
         <section className="scroll-mt-24 bg-bone py-[110px] max-mob:py-[72px]" id="ativos">
           <div className="wrap">
-            <SectionHeading num={numAtivos} title="Na rua hoje" className="reveal mb-[34px]" />
+            <SectionHeading title="Na rua hoje" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[58ch] text-lg text-ink-soft">{iconico.frase}</p>
             <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
               {ativos.map((ativo) => (
@@ -145,7 +134,7 @@ export default async function IconicoPage({ params }) {
         {cases.length > 0 && (
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
-              <SectionHeading num={numCases} title="Cases" className="reveal mb-[34px]" />
+              <SectionHeading title="Cases" className="reveal mb-[34px]" />
               <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
                 {cases.map((caseItem) => (
                   <div className="reveal flex" key={caseItem.id}>
@@ -168,14 +157,14 @@ export default async function IconicoPage({ params }) {
 
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
-            <PlatformFaq faqs={iconico.faqs} num={numFaq} platformName={iconico.name} />
+            <PlatformFaq faqs={iconico.faqs} platformName={iconico.name} />
           </div>
         </section>
 
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
             <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-              <SectionHeading num={numOutros} title="Os outros dois" className="flex-1" />
+              <SectionHeading title="Os outros dois" className="flex-1" />
               <Link
                 className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
                 href="/plataformas/projetos-iconicos"
@@ -191,7 +180,7 @@ export default async function IconicoPage({ params }) {
                   key={outro.slug}
                 >
                   <span className="text-[11.5px] font-bold uppercase tracking-[0.12em] text-orange">
-                    {outro.num} · {outro.tagline}
+                    {outro.tagline}
                   </span>
                   <h3 className="m-0 text-[19px] font-extrabold leading-tight">{outro.name}</h3>
                   <p className="m-0 text-[13.5px] leading-snug text-ink-soft">{outro.short}</p>

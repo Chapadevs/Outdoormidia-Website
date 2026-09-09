@@ -45,15 +45,15 @@ export default function SocialPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="corajosamente-eticos">
           <div className="wrap">
-            <SectionHeading num="01" title="Corajosamente Éticos" className="reveal mb-[34px]" />
-            <p className="reveal mb-6 max-w-[62ch] text-lg text-ink-soft">
-              A Outdoormídia integra o Corajosamente Éticos, movimento global que promove a
-              ética pessoal e profissional como base da transformação social, enfrentando a
-              cultura da corrupção e defendendo um mercado justo.
-            </p>
-            <div className="grid grid-cols-[1fr_auto] items-start gap-[34px] max-tab:grid-cols-1">
+            <SectionHeading title="Corajosamente Éticos" className="reveal mb-[34px]" />
+            <div className="reveal grid grid-cols-[minmax(0,1fr)_minmax(200px,240px)] items-center gap-[54px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <div>
-                <div className="flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
+                <p className="mb-6 text-lg text-ink-soft">
+                  A Outdoormídia integra o Corajosamente Éticos, movimento global que promove
+                  a ética pessoal e profissional como base da transformação social,
+                  enfrentando a cultura da corrupção e defendendo um mercado justo.
+                </p>
+                <div className="flex flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
                   <p className="m-0">
                     Não é ação pontual nem campanha institucional. É compromisso contínuo com
                     integridade e coerência nas relações internas e externas, incorporado à
@@ -81,12 +81,12 @@ export default function SocialPage() {
                   </span>
                 </a>
               </div>
-              <div className="relative aspect-square w-40 shrink-0 overflow-hidden rounded-[16px] border border-line max-tab:w-28">
+              <div className="relative aspect-square w-full overflow-hidden rounded-[16px] border border-line max-tab:w-[200px]">
                 <Image
                   src="/media/social/corajosamente-eticos.webp"
                   alt="Selo do movimento Corajosamente Éticos"
                   fill
-                  sizes="160px"
+                  sizes="240px"
                   className="object-cover"
                 />
               </div>
@@ -96,7 +96,7 @@ export default function SocialPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="loja-om-do-bem">
           <div className="wrap">
-            <SectionHeading num="02" title="Loja OM do Bem" className="reveal mb-[34px]" />
+            <SectionHeading title="Loja OM do Bem" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 items-start gap-[34px] max-tab:grid-cols-1">
               <CoverMedia
                 src="/media/social/loja-om-do-bem.webp"
@@ -129,16 +129,16 @@ export default function SocialPage() {
               </div>
             </div>
 
-            <div className="ticks reveal mt-[34px] overflow-hidden rounded-[16px] border border-line bg-white">
+            <div className="ticks reveal mt-[34px] max-w-[820px] overflow-hidden rounded-[16px] border border-line bg-white">
               <CoverMedia
                 src="/media/social/caminho-do-renascer.webp"
                 alt="Crianças acolhidas pela ONG Caminho do Renascer"
                 label="Caminho do Renascer"
                 ratio="16/9"
-                sizes="(max-width: 980px) 100vw, 800px"
+                sizes="(max-width: 980px) 100vw, 820px"
                 className="rounded-none border-0"
               />
-              <div className="border-t border-line p-10 max-mob:p-7">
+              <div className="p-10 max-mob:p-7">
                 <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
                   Caminho do Renascer
                 </h3>
@@ -181,7 +181,6 @@ export default function SocialPage() {
         <section className="pb-[110px] max-mob:pb-[72px]" id="rede-a-servico-da-cidade">
           <div className="wrap">
             <SectionHeading
-              num="03"
               title="A rede a serviço da cidade"
               className="reveal mb-[34px]"
             />
@@ -192,7 +191,7 @@ export default function SocialPage() {
             <article className="ticks reveal grid grid-cols-2 items-start gap-[34px] rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
               <CoverMedia
                 src="/media/social/midia-regenerativa-praca-pet.webp"
-                alt="Poste da Praça Pet Batel com câmera de monitoramento e botão de emergência da Muralha Digital"
+                alt="Poste da Praça de Conveniência Batel com câmera de monitoramento e botão de emergência da Muralha Digital"
                 label="Mídia Regenerativa"
                 ratio="16/10"
                 sizes="(max-width: 980px) 100vw, 50vw"
@@ -204,7 +203,7 @@ export default function SocialPage() {
                 </h2>
                 <div className="mt-5 flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
                   <p className="m-0">
-                    Praça Pet Batel. O primeiro ativo de mídia exterior conectado à Muralha
+                    Praça de Conveniência Batel. O primeiro ativo de mídia exterior conectado à Muralha
                     Digital de Curitiba, o sistema de monitoramento e inteligência urbana da
                     cidade.
                   </p>

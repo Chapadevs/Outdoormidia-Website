@@ -51,11 +51,18 @@ function TituloPlataformas() {
     // resize, e o laço de rolagem só lê `scrollY`. Medir com
     // `getBoundingClientRect` a cada frame obriga o navegador a recalcular o
     // layout da página inteira no meio do frame, e o carrossel logo abaixo
-    // pagava a conta em frames perdidos. A escrita de `padding-top` também
-    // refaz o layout, então ela só acontece quando a coluna de fato troca de
-    // altura: onze vezes na subida, nenhuma nos demais frames.
+    // pagava a conta em frames perdidos.
+    //
+    // Quem sobe é `transform`, não mais `padding-top`. A escrita em si já
+    // acontecia uma vez por coluna, mas `padding-top` é propriedade de layout:
+    // a transição de 800ms que ela dispara refaz o layout e a pintura das onze
+    // colunas a cada frame enquanto corre, e as onze são escalonadas ao longo
+    // da mesma rolagem que traz o carrossel para a tela. Eram dois segundos de
+    // layout na thread principal em cima do primeiro giro da fita, justamente
+    // onde o travamento aparecia. `translateY` faz o mesmo percurso no
+    // compositor, sem tocar no layout.
     const colunas = Array.from(linhaRef.current?.querySelectorAll('[data-letra]') ?? [])
-    const alturas = LETRAS.map(() => null)
+    const posicoes = LETRAS.map(() => null)
 
     const medir = () => {
       const linha = linhaRef.current
@@ -69,11 +76,10 @@ function TituloPlataformas() {
       if (t0Ref.current === undefined) t0Ref.current = Math.min(bruto, 0.9)
       const t = Math.min(Math.max((bruto - t0Ref.current) / (1 - t0Ref.current), 0), 1)
       colunas.forEach((el, i) => {
-        const alto = LETRAS[i].alto
-        const destino = t > limiaresRef.current[i] ? alto : alto + 54
-        if (alturas[i] === destino) return
-        alturas[i] = destino
-        el.style.paddingTop = `${destino}px`
+        const destino = t > limiaresRef.current[i] ? 0 : 54
+        if (posicoes[i] === destino) return
+        posicoes[i] = destino
+        el.style.transform = `translateY(${destino}px)`
       })
     }
 
@@ -99,18 +105,23 @@ function TituloPlataformas() {
   }, [])
 
   return (
+    // `box-content` + `pt-5 -mt-5` abrem 20px de folga acima das letras sem
+    // mexer em altura nem em posição: a altura declarada segue sendo a da
+    // caixa de conteúdo e a margem negativa devolve o padding. A folga existe
+    // porque o `overflow-hidden` é quem corta a haste que desce 54px na
+    // entrada, e sem ela cortaria também os 10px que a letra sobe no hover.
     <h2
       aria-label="Plataformas"
-      className="m-0 flex h-[clamp(178px,17vw,224px)] items-stretch justify-center gap-0.5 px-6 font-normal"
+      className="mx-0 -mt-5 mb-0 box-content flex h-[clamp(178px,17vw,224px)] items-stretch justify-center gap-0.5 overflow-hidden px-6 pt-5 font-normal"
       ref={linhaRef}
     >
       {LETRAS.map(({ letra, alto, aceso }, i) => (
         <span
           aria-hidden="true"
-          className="group flex flex-col items-stretch transition-[padding-top] duration-[800ms] ease-[cubic-bezier(.2,.7,.2,1)]"
+          className="group flex flex-col items-stretch transition-transform duration-[800ms] ease-[cubic-bezier(.2,.7,.2,1)]"
           data-letra={i}
           key={i}
-          style={{ paddingTop: alto + 54 }}
+          style={{ paddingTop: alto, transform: 'translateY(54px)' }}
         >
           <span className="text-center text-[clamp(38px,7vw,100px)] font-extrabold leading-[0.92] tracking-[-0.02em] text-ink transition-transform duration-300 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:-translate-y-2.5 group-hover:text-orange">
             {letra}
