@@ -266,6 +266,14 @@ export default async function PlatformPage({ params }) {
                   ))}
                 </div>
               )}
+              {platform.passosVideo && (
+                <CoverMedia
+                  className="reveal mt-8"
+                  label="Sob Demanda"
+                  ratio="16/9"
+                  video={platform.passosVideo}
+                />
+              )}
             </div>
           </section>
         )}

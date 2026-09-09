@@ -31,9 +31,10 @@ const nextConfig = {
   // OOH. As URLs antigas estão indexadas e no material impresso: seguem vivas
   // aqui.
   //
-  // Mídia Kit (depois Guia do Anunciante, depois Melhores Práticas) saiu do
-  // site. Os três nomes chegaram a ser publicados, então as três URLs caem no
-  // hub da área do anunciante em vez de 404.
+  // Mídia Kit e Guia do Anunciante foram os dois nomes anteriores da página de
+  // Melhores Práticas, e os dois chegaram a ser publicados: as URLs antigas
+  // caem na página atual. O nome Mídia Kit não aparece em lugar nenhum do
+  // site, e o material segue sob demanda do comercial, nunca como download.
   async redirects() {
     return [
       {
@@ -48,17 +49,12 @@ const nextConfig = {
       },
       {
         source: '/anunciante/midia-kit',
-        destination: '/area-do-anunciante',
+        destination: '/area-do-anunciante/melhores-praticas',
         permanent: true,
       },
       {
         source: '/area-do-anunciante/guia-do-anunciante',
-        destination: '/area-do-anunciante',
-        permanent: true,
-      },
-      {
-        source: '/area-do-anunciante/melhores-praticas',
-        destination: '/area-do-anunciante',
+        destination: '/area-do-anunciante/melhores-praticas',
         permanent: true,
       },
       {
