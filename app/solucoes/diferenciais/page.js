@@ -51,7 +51,7 @@ export default function DiferenciaisPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Os diferenciais" className="reveal mb-[34px]" />
+            <SectionHeading title="Os diferenciais" className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
               {DIFERENCIAIS.map((d) => (
                 <div className="reveal" key={d.slug}>
@@ -67,7 +67,7 @@ export default function DiferenciaisPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="02" title="A prova" className="reveal mb-[34px]" />
+            <SectionHeading title="A prova" className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
               Nenhum dos números acima depende de confiança: todos são medidos e podem ser
               conferidos com o nosso time.

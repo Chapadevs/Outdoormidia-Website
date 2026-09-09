@@ -62,7 +62,7 @@ export default function DiagnosticoDePresencaPage() {
               priority
               ratio="16/9"
               sizes="(max-width: 1280px) 100vw, 1280px"
-              src="/media/hero-diagnostico.jpeg"
+              src="/media/hero-diagnostico.png"
             />
           </div>
         </section>

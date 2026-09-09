@@ -69,7 +69,7 @@ export default async function BlogPage() {
         {destaque && (
           <section className="pb-[110px] max-mob:pb-[72px]">
             <div className="wrap">
-              <SectionHeading num="01" title="Em destaque" className="reveal mb-[34px]" />
+              <SectionHeading title="Em destaque" className="reveal mb-[34px]" />
               <Link
                 href={`/blog/${destaque.slug}`}
                 className="ticks reveal group grid grid-cols-[1.1fr_1fr] items-stretch overflow-hidden rounded-[16px] border border-line bg-white transition-colors duration-200 hover:border-orange max-tab:grid-cols-1"
@@ -111,7 +111,6 @@ export default async function BlogPage() {
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
             <SectionHeading
-              num={destaque ? '02' : '01'}
               title="Por onde começar"
               className="reveal mb-[34px]"
             />

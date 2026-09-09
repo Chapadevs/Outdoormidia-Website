@@ -8,17 +8,11 @@ const PIN_R = 11
 const PIN_CORE_R = 4
 const HIT = 64
 
-// `estatico` desliga toda a interação do mapa: nenhum hover, nenhum clique e
-// nenhum tooltip. Os marcadores continuam, como posição, e param de se
-// comportar como botão. É assim que /solucoes/regioes-cobertura usa o mapa,
-// onde quem responde o que existe em cada região é a lista da seção 02.
-export default function CoverageMap({
-  locations,
-  editable = false,
-  onMapClick,
-  draft = null,
-  estatico = false,
-}) {
+// O mapa de praças do admin, e só dele: quem desenha a cobertura no site é o
+// MapaCobertura, que tem geometria própria e não depende da coleção
+// `locations`. Aqui o que importa é clicar no mapa para posicionar o marcador
+// de uma localidade nova, que é o que o LocationsManager precisa.
+export default function CoverageMap({ locations, editable = false, onMapClick, draft = null }) {
   const containerRef = useRef(null)
   const pathRefs = useRef({})
   const [activeId, setActiveId] = useState(null)
@@ -48,7 +42,7 @@ export default function CoverageMap({
     }
   }, [])
 
-  const shownId = estatico ? null : hoverId || activeId
+  const shownId = hoverId || activeId
   const shown = locations.find((l) => l.id === shownId)
   const shownPos = shown ? projectToMap(shown.lat, shown.lng) : null
   const draftPos = draft ? projectToMap(draft.lat, draft.lng) : null
@@ -91,11 +85,7 @@ export default function CoverageMap({
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="relative"
-      onMouseMove={estatico ? undefined : handlePointerMove}
-    >
+    <div ref={containerRef} className="relative" onMouseMove={handlePointerMove}>
       <svg
         viewBox={`0 0 ${MAP_W} ${MAP_H}`}
         className="block h-auto w-full"
@@ -117,17 +107,11 @@ export default function CoverageMap({
             stroke="var(--color-paper)"
             strokeWidth="3"
             strokeLinejoin="round"
-            className={
-              estatico ? 'pointer-events-none' : editable ? 'cursor-crosshair' : 'cursor-pointer'
-            }
+            className={editable ? 'cursor-crosshair' : 'cursor-pointer'}
             style={{ transition: 'fill 150ms ease' }}
-            onMouseEnter={estatico ? undefined : () => setHoverStateId(s.id)}
-            onMouseLeave={estatico ? undefined : () => setHoverStateId(null)}
-            onClick={
-              estatico
-                ? undefined
-                : (e) => (editable ? handleEditClick(e) : handleStateSelect(e, s))
-            }
+            onMouseEnter={() => setHoverStateId(s.id)}
+            onMouseLeave={() => setHoverStateId(null)}
+            onClick={(e) => (editable ? handleEditClick(e) : handleStateSelect(e, s))}
           />
         ))}
         {STATES.map((s) => (
@@ -148,18 +132,6 @@ export default function CoverageMap({
 
         {locations.map((loc) => {
           const { x, y } = projectToMap(loc.lat, loc.lng)
-          if (estatico) {
-            return (
-              <g key={loc.id} transform={`translate(${x} ${y})`} className="pointer-events-none">
-                <circle
-                  r={PIN_R}
-                  fill="var(--color-paper)"
-                  stroke="var(--color-orange)"
-                  strokeWidth="2.5"
-                />
-              </g>
-            )
-          }
           const on = shownId === loc.id
           return (
             <g

@@ -71,23 +71,10 @@ export default async function PlatformPage({ params }) {
   const ativos = (platform.ativos ?? []).map(getAtivoBySlug).filter(Boolean)
   const produtos = getProdutosPorPlataforma(platform.slug)
 
-  // Quase toda seção é condicional, porque depende de dado que pode não ter
-  // vindo do cliente. A numeração é contada na ordem em que as seções
-  // sobrevivem, para não abrir buraco entre 01 e 03.
-  let contador = 0
-  const proximo = () => String(++contador).padStart(2, '0')
-  const numBlocos = platform.blocos?.length > 0 ? proximo() : null
-  const numAtivos = ativos.length > 0 ? proximo() : null
-  const numPassos = platform.passos?.length > 0 ? proximo() : null
   // Produtos e Formatos dividem uma seção só. `semFormatos` desliga o lado do
   // diagrama sem tocar no dos produtos: é o caso de Rodovias, onde o painel é
   // sob demanda e proporção fixa mentiria sobre o que a plataforma entrega.
   const mostraFormatos = produtos.length > 0 || !platform.semFormatos
-  const numFormatos = mostraFormatos ? proximo() : null
-  const numMapa = platform.mapaRede ? proximo() : null
-  const numCases = cases.length > 0 ? proximo() : null
-  const numFaq = proximo()
-  const numProcesso = proximo()
 
   return (
     <>
@@ -107,11 +94,15 @@ export default async function PlatformPage({ params }) {
                 </h1>
                 <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">{platform.intro}</p>
               </div>
+              {/* A peça recortada é retrato: sem teto de largura ela abriria um
+                  hero de mais de 800px de altura na coluna de 1fr. */}
               <CoverMedia
                 alt={platform.imageAlt}
-                className="reveal"
+                className={`reveal ${platform.imageRecorte ? 'mx-auto max-w-[420px]' : ''}`}
                 label={platform.name}
                 priority
+                ratio={platform.imageRatio}
+                recorte={platform.imageRecorte}
                 sizes="(max-width: 980px) 100vw, 50vw"
                 src={platform.image}
                 video={platform.video}
@@ -158,6 +149,25 @@ export default async function PlatformPage({ params }) {
             {/* Componente C1: só sobe onde há número validado. Sem `bignumbers`
                 a página fica sem o quadro, em vez de exibir um dado inventado. */}
             <BigNumbers className="reveal mt-[54px]" stats={platform.bignumbers} />
+
+            {/* Faixa de fotos sem título: as peças continuam a leitura do hero, e
+                um cabeçalho aqui anunciaria uma seção que o texto do cliente não
+                tem. Só Digital Signage traz `galeria` hoje. */}
+            {platform.galeria?.length > 0 && (
+              <div className="reveal mx-auto mt-[54px] grid max-w-[880px] grid-cols-2 gap-[18px] max-mob:mt-10 max-mob:max-w-[420px] max-mob:grid-cols-1">
+                {platform.galeria.map((foto) => (
+                  <CoverMedia
+                    alt={foto.alt}
+                    key={foto.src}
+                    label={platform.name}
+                    ratio="3/4"
+                    recorte
+                    sizes="(max-width: 980px) 100vw, 50vw"
+                    src={foto.src}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -165,7 +175,6 @@ export default async function PlatformPage({ params }) {
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
               <SectionHeading
-                num={numBlocos}
                 title={platform.blocosTitle}
                 className="reveal mb-[34px]"
               />
@@ -204,7 +213,7 @@ export default async function PlatformPage({ params }) {
         {ativos.length > 0 && (
           <section className="border-t border-line bg-bone py-[90px] max-mob:py-[60px]">
             <div className="wrap">
-              <SectionHeading num={numAtivos} title="Ativos em destaque" className="reveal mb-[34px]" />
+              <SectionHeading title="Ativos em destaque" className="reveal mb-[34px]" />
               <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
                 {ativos.map((ativo) => (
                   <AtivoCard ativo={ativo} key={ativo.slug} />
@@ -218,7 +227,6 @@ export default async function PlatformPage({ params }) {
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
               <SectionHeading
-                num={numPassos}
                 title="Como funciona o Sob Demanda"
                 className="reveal mb-[34px]"
               />
@@ -272,7 +280,7 @@ export default async function PlatformPage({ params }) {
             <div className="wrap">
               {produtos.length > 0 ? (
                 <>
-                  <SectionHeading num={numFormatos} title="Produtos" className="reveal mb-[34px]" />
+                  <SectionHeading title="Produtos" className="reveal mb-[34px]" />
                   <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
                     {produtos.map((produto) => (
                       <ProdutoCard
@@ -285,7 +293,7 @@ export default async function PlatformPage({ params }) {
                 </>
               ) : (
                 <>
-                  <SectionHeading num={numFormatos} title="Formatos" className="reveal mb-[34px]" />
+                  <SectionHeading title="Formatos" className="reveal mb-[34px]" />
                   <FormatSpecCard formats={platform.formats} />
                 </>
               )}
@@ -296,7 +304,7 @@ export default async function PlatformPage({ params }) {
         {platform.mapaRede && (
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
-              <SectionHeading num={numMapa} title="Mapa da rede" className="reveal mb-[34px]" />
+              <SectionHeading title="Mapa da rede" className="reveal mb-[34px]" />
               <p className="reveal mb-8 max-w-[62ch] text-[15.5px] leading-relaxed text-ink-soft">
                 Os corredores que a rede percorre entre Ponta Grossa e Florianópolis, passando
                 pelo litoral do Paraná e por Joinville. O painel é construído sob demanda, no
@@ -310,7 +318,7 @@ export default async function PlatformPage({ params }) {
         {cases.length > 0 && (
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
-              <SectionHeading num={numCases} title="Cases" className="reveal mb-[34px]" />
+              <SectionHeading title="Cases" className="reveal mb-[34px]" />
               <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
                 {cases.map((caseItem) => (
                   <div className="reveal flex" key={caseItem.id}>
@@ -333,11 +341,11 @@ export default async function PlatformPage({ params }) {
 
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
-            <PlatformFaq faqs={platform.faqs} num={numFaq} platformName={platform.name} />
+            <PlatformFaq faqs={platform.faqs} platformName={platform.name} />
           </div>
         </section>
 
-        <Process num={numProcesso} title="Como contratar" />
+        <Process title="Como contratar" />
 
         <NovaCampanha contexto={platform.name} />
       </main>

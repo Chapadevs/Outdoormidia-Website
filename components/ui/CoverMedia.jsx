@@ -12,6 +12,7 @@ const RATIOS = {
   '16/9': 'aspect-[16/9]',
   '16/7': 'aspect-[16/7]',
   '9/16': 'aspect-[9/16]',
+  '3/4': 'aspect-[3/4]',
   // As fotos dos ativos icônicos vêm em 2:1 do acervo do cliente. Recortar para
   // 16/9 cortaria justamente o céu e a base da estrutura, que é o que mostra a
   // altura do painel na via.
@@ -28,8 +29,16 @@ export default function CoverMedia({
   priority = false,
   className = '',
   videoDeferido = false,
+  recorte = false,
 }) {
-  const base = `relative w-full overflow-hidden rounded-[16px] border border-line ${RATIOS[ratio]}`
+  // `recorte` é a peça que já chega recortada, com fundo transparente e a
+  // própria curva desenhada na imagem (as três de Digital Signage). Ela não entra
+  // em moldura: borda e canto arredondado desenhariam um segundo contorno em
+  // volta do primeiro, e `object-cover` cortaria justamente a curva. Fica
+  // contida na caixa, sobre o fundo da seção.
+  const base = `relative w-full overflow-hidden ${
+    recorte ? '' : 'rounded-[16px] border border-line'
+  } ${RATIOS[ratio]}`
 
   // Vídeo tem prioridade sobre imagem: as duas nunca são passadas juntas, mas
   // se fossem, o vídeo é o dado mais completo. É decorativo porque a mesma
@@ -68,7 +77,7 @@ export default function CoverMedia({
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover"
+          className={recorte ? 'object-contain' : 'object-cover'}
         />
       </div>
     )

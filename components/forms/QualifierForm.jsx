@@ -299,7 +299,6 @@ export default function QualifierForm({ contexto = '' }) {
   return (
     <div className="ticks reveal w-full rounded-[16px] border border-line bg-white p-[38px] text-ink shadow-[0_28px_56px_-28px_rgba(22,17,13,.55)] max-mob:p-7">
       <div className="mb-6 flex items-center gap-3.5">
-        <span className="eyebrow text-orange">02</span>
         <span className="eyebrow text-ink-soft">Formulário</span>
         <span className="h-px flex-1 bg-line"></span>
       </div>

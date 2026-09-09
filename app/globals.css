@@ -110,6 +110,23 @@
       stroke-dashoffset: -96;
     }
   }
+
+  /* Seta que convida a rolar, no topo da linha do tempo. A seção fica presa na
+     tela enquanto os quatro marcos entram, e sem a dica o visitante não sabe
+     que a rolagem é o que move a onda. */
+  --animate-desce-dica: desce-dica 1.8s ease-in-out infinite;
+
+  @keyframes desce-dica {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(7px);
+    }
+  }
 }
 
 @theme inline {

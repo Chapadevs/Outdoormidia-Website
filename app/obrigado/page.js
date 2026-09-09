@@ -55,7 +55,7 @@ export default async function ObrigadoPage({ searchParams }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Próximos passos" className="reveal mb-[34px]" />
+            <SectionHeading title="Próximos passos" className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
               {conteudo.passos.map((p) => (
                 <div
@@ -75,7 +75,7 @@ export default async function ObrigadoPage({ searchParams }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="02" title="Enquanto isso" className="reveal mb-[34px]" />
+            <SectionHeading title="Enquanto isso" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
               {SUGESTOES.map((s) => (
                 <Link

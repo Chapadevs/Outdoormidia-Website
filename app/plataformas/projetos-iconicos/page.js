@@ -73,7 +73,7 @@ export default function ProjetosIconicosPage() {
                   label="Projetos Icônicos"
                   priority
                   ratio="16/9"
-                  video="/media/cases-videos/video-iconicos.mp4"
+                  video="/media/plataformas/video-iconicos.mp4"
                 />
                 <div className="ticks reveal rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
                   <p className="m-0 text-[15px] leading-relaxed text-ink-soft">
@@ -89,9 +89,9 @@ export default function ProjetosIconicosPage() {
           </div>
         </section>
 
-        <Iconicos comAtivos linkTitulo={false} num="01" />
+        <Iconicos comAtivos linkTitulo={false} />
 
-        <Process num="02" title="Como contratar" />
+        <Process title="Como contratar" />
 
         <NovaCampanha contexto="Projetos Icônicos" />
       </main>

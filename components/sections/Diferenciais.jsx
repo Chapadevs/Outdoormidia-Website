@@ -10,7 +10,7 @@ import { DIFERENCIAIS } from '@/lib/diferenciais'
 // o card do meio muda de tamanho a cada giro.
 const ALTURA = 'h-[520px] max-mob:h-[500px]'
 
-export default function Diferenciais({ num, moreHref }) {
+export default function Diferenciais({ moreHref }) {
   return (
     // `overflow-clip` pela mesma razão do carrossel de plataformas: `hidden`
     // faria da seção uma caixa rolável, e o navegador a arrastaria na
@@ -19,7 +19,7 @@ export default function Diferenciais({ num, moreHref }) {
     <section className="overflow-clip py-[110px] max-mob:py-[72px]" id="diferenciais">
       <div className="wrap">
         <div className="reveal mb-[34px] flex items-start justify-between gap-10 max-tab:flex-col max-tab:gap-4">
-          <SectionHeading num={num} title="Diferenciais" className="flex-1 max-tab:w-full" />
+          <SectionHeading title="Diferenciais" className="flex-1 max-tab:w-full" />
           <div className="flex w-[34ch] flex-col gap-2 max-tab:w-full">
             <p className="m-0 text-pretty text-lg leading-snug text-ink-soft">
               O que separa uma campanha que a cidade vê de uma que passa despercebida.

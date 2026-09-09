@@ -56,9 +56,7 @@ export default function PlatformShowcaseCard({ p }) {
               {p.marcador}
             </span>
           )}
-          <div className="eyebrow text-white">
-            {p.num} · {p.desc}
-          </div>
+          <div className="eyebrow text-white">{p.desc}</div>
           <h3 className="m-0 mt-3 text-[clamp(26px,2.6vw,42px)] font-extrabold leading-none tracking-[-0.02em] text-white">
             {p.name}
           </h3>

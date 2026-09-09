@@ -16,6 +16,17 @@ import { waDiferencial, waLink } from '@/lib/whatsapp'
 
 const CARD = 'ticks rounded-[16px] border border-line bg-white p-7 max-mob:p-6'
 
+// Escala de seção do template. O degrau de tablet não existia: entre 980px e
+// 560px a página caía de 110px direto para 72px, justamente na faixa em que os
+// grids já tinham virado uma ou duas colunas e o vão entre seções passava a
+// ficar maior que o bloco de texto que ele separa.
+const SECAO = 'pb-[110px] max-tab:pb-[92px] max-mob:pb-[72px]'
+const SECAO_Y = 'py-[110px] max-tab:py-[92px] max-mob:py-[72px]'
+const TITULO_SECAO = 'reveal mb-[34px] max-tab:mb-[30px] max-mob:mb-6'
+// Texto de abertura de seção: 18px é chamada no desktop e vira corpo comum no
+// telefone, onde o body já cai para 16px.
+const LEAD = 'reveal max-w-[62ch] text-lg text-ink-soft max-mob:text-[17px]'
+
 // Só os diferenciais com página própria geram rota. Os que viram âncora para a
 // plataforma ou para a seção da home aparecem como card, e o teaser de "Outros
 // diferenciais" leva o leitor até lá pelo `href` deles.
@@ -72,9 +83,16 @@ export default async function DiferencialPage({ params }) {
   // texto do card da home; sem ele os dois continuam sendo o mesmo `intro`.
   const textoHero = diferencial.subtitulo ?? diferencial.intro
 
-  // A numeração acompanha as seções que sobraram, para não abrir buraco.
-  let secao = 0
-  const proximoNum = () => String(++secao).padStart(2, '0')
+  // O mesmo hero veste headings de 11 a 25 caracteres. No teto de 92px cabe
+  // cerca de 21 caracteres na largura do .wrap: acima disso a linha encosta na
+  // borda entre 1150px e 1300px, faixa em que a fonte já está no teto e o
+  // container não cresce mais. Heading longo entra num degrau menor, que fecha
+  // em uma linha a partir de ~1120px e em duas abaixo disso, sem sangrar para
+  // fora do container em nenhuma largura.
+  const heroFontSize =
+    diferencial.heading.length > 21
+      ? 'text-[clamp(34px,8vw,76px)]'
+      : 'text-[clamp(44px,7vw,92px)]'
 
   return (
     <>
@@ -88,7 +106,7 @@ export default async function DiferencialPage({ params }) {
           ]}
         />
 
-        <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
+        <section className="pb-[70px] pt-[54px] max-tab:pb-[58px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div
               className={
@@ -98,23 +116,29 @@ export default async function DiferencialPage({ params }) {
               }
             >
               <div>
-                <div className="eyebrow reveal">
-                  Diferencial <b className="text-orange">{diferencial.num}</b> · Soluções
-                </div>
-                <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
+                <div className="eyebrow reveal">Diferencial · Soluções</div>
+                <h1
+                  className={`display reveal mt-[18px] text-balance text-ink max-mob:mt-3.5 ${heroFontSize}`}
+                >
                   {diferencial.heading}
                 </h1>
-                <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{textoHero}</p>
+                <p className={`${LEAD} mt-6 max-mob:mt-[18px]`}>{textoHero}</p>
                 {/* `semCta` é decisão de copy, não falta de conteúdo: onde os
                     botões saíram, o subtítulo é o único lugar da página em que a
                     tese aparece escrita. */}
                 {!diferencial.semCta && (
-                  <div className="reveal mt-[30px] flex flex-wrap gap-3">
-                    <a href={waLink(waDiferencial(diferencial.title))} className="btn btn-fill">
+                  <div className="reveal mt-[30px] flex flex-wrap gap-3 max-mob:mt-6">
+                    <a
+                      href={waLink(waDiferencial(diferencial.title))}
+                      className="btn btn-fill max-mob:whitespace-normal max-mob:text-center"
+                    >
                       {diferencial.ctaLabel}
                     </a>
                     {ctaSecundario ? (
-                      <Link href={ctaSecundario.href} className="btn btn-ghost">
+                      <Link
+                        href={ctaSecundario.href}
+                        className="btn btn-ghost max-mob:whitespace-normal max-mob:text-center"
+                      >
                         {ctaSecundario.label} →
                       </Link>
                     ) : (
@@ -129,10 +153,7 @@ export default async function DiferencialPage({ params }) {
               </div>
               {aside && (
                 <div className={`${CARD} reveal`}>
-                  <span className="display text-[30px] leading-none text-orange">
-                    {diferencial.num}
-                  </span>
-                  <p className="m-0 mt-4 text-[15.5px] leading-relaxed text-ink-soft">
+                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
                     {aside.text}
                   </p>
                   {aside.footer && (
@@ -159,10 +180,12 @@ export default async function DiferencialPage({ params }) {
         </section>
 
         {leadOQueE && (
-          <section className="pb-[110px] max-mob:pb-[72px]">
+          <section className={SECAO}>
             <div className="wrap">
-              <SectionHeading num={proximoNum()} title="O que é" className="reveal mb-[34px]" />
-              <div className="reveal mb-[54px] flex max-w-[62ch] flex-col gap-5 text-lg text-ink-soft">
+              <SectionHeading title="O que é" className={TITULO_SECAO} />
+              <div
+                className={`${LEAD} mb-[54px] flex flex-col gap-5 max-tab:mb-[42px] max-mob:mb-8 max-mob:gap-4`}
+              >
                 {leadOQueE.map((paragrafo) => (
                   <p className="m-0" key={paragrafo}>
                     {paragrafo}
@@ -176,13 +199,13 @@ export default async function DiferencialPage({ params }) {
                   label={diferencial.title}
                   ratio="16/7"
                   sizes="100vw"
-                  className="reveal mb-[54px]"
+                  className="reveal mb-[54px] max-tab:mb-[42px] max-mob:mb-8"
                 />
               )}
               {oQueE.cards && (
                 <>
                   {oQueE.cardsTitle && (
-                    <h2 className="reveal mb-[26px] text-[21px] font-extrabold leading-tight text-ink">
+                    <h2 className="reveal mb-[26px] text-[21px] font-extrabold leading-tight text-ink max-mob:mb-5">
                       {oQueE.cardsTitle}
                     </h2>
                   )}
@@ -208,14 +231,13 @@ export default async function DiferencialPage({ params }) {
             parágrafos não sustentam uma seção inteira e o conteúdo já está dito
             no hero. */}
         {monitoramento?.video && (
-          <section className="pb-[110px] max-mob:pb-[72px]">
+          <section className={SECAO}>
             <div className="wrap">
               <SectionHeading
-                num={proximoNum()}
                 title={monitoramento.title}
-                className="reveal mb-[34px]"
+                className={TITULO_SECAO}
               />
-              <div className="reveal mb-[38px] flex max-w-[62ch] flex-col gap-5 text-lg text-ink-soft">
+              <div className={`${LEAD} mb-[38px] flex flex-col gap-5 max-mob:mb-7 max-mob:gap-4`}>
                 {monitoramento.paragrafos.map((paragrafo) => (
                   <p className="m-0" key={paragrafo}>
                     {paragrafo}
@@ -223,7 +245,7 @@ export default async function DiferencialPage({ params }) {
                 ))}
               </div>
               <video
-                className="reveal w-full rounded-[16px] border border-line"
+                className="reveal block aspect-video w-full rounded-[16px] border border-line bg-bone object-cover"
                 src={monitoramento.video}
                 autoPlay
                 muted
@@ -232,7 +254,7 @@ export default async function DiferencialPage({ params }) {
                 controls
               />
               {monitoramento.imagens?.length > 0 && (
-                <div className="mt-[18px] grid grid-cols-4 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
+                <div className="mt-[18px] grid grid-cols-4 gap-[18px] max-tab:grid-cols-2 max-mob:mt-3.5 max-mob:grid-cols-1">
                   {monitoramento.imagens.map((imagem) => (
                     <CoverMedia
                       key={imagem}
@@ -251,16 +273,13 @@ export default async function DiferencialPage({ params }) {
         )}
 
         {relatorio && (
-          <section className="pb-[110px] max-mob:pb-[72px]">
+          <section className={SECAO}>
             <div className="wrap">
               <SectionHeading
-                num={proximoNum()}
                 title={relatorio.title}
-                className="reveal mb-[34px]"
+                className={TITULO_SECAO}
               />
-              <p className="reveal mb-[38px] max-w-[62ch] text-lg text-ink-soft">
-                {relatorio.lead}
-              </p>
+              <p className={`${LEAD} mb-[38px] max-mob:mb-7`}>{relatorio.lead}</p>
               {relatorio.image && (
                 <CoverMedia
                   src={relatorio.image}
@@ -268,15 +287,15 @@ export default async function DiferencialPage({ params }) {
                   label={relatorio.title}
                   ratio="16/9"
                   sizes="100vw"
-                  className="reveal mb-[38px]"
+                  className="reveal mb-[38px] max-mob:mb-7"
                 />
               )}
               {/* Lista, não card: são oito itens de vocabulário de mídia, e em
                   card eles competiriam entre si em vez de serem lidos em
                   sequência. */}
-              <ul className="m-0 grid list-none grid-cols-2 gap-x-[38px] p-0 max-tab:grid-cols-1">
+              <ul className="m-0 grid list-none grid-cols-2 gap-x-[38px] p-0 max-lap:gap-x-[26px] max-tab:grid-cols-1">
                 {relatorio.itens.map((item) => (
-                  <li className="reveal border-t border-line py-[22px]" key={item.title}>
+                  <li className="reveal border-t border-line py-[22px] max-mob:py-[18px]" key={item.title}>
                     <item.Icone size={24} className="text-orange" />
                     <h3 className="m-0 mt-3 text-[17px] font-extrabold leading-tight text-ink">
                       {item.title}
@@ -287,7 +306,7 @@ export default async function DiferencialPage({ params }) {
                   </li>
                 ))}
               </ul>
-              <p className="reveal mt-[38px] max-w-[62ch] text-lg font-semibold text-ink">
+              <p className="reveal mt-[38px] max-w-[62ch] text-lg font-semibold text-ink max-mob:mt-7 max-mob:text-[17px]">
                 {relatorio.fechamento}
               </p>
             </div>
@@ -295,20 +314,16 @@ export default async function DiferencialPage({ params }) {
         )}
 
         {leitura && (
-          <section className="pb-[110px] max-mob:pb-[72px]">
+          <section className={SECAO}>
             <div className="wrap">
-              <SectionHeading
-                num={proximoNum()}
-                title={leitura.title}
-                className="reveal mb-[34px]"
-              />
+              <SectionHeading title={leitura.title} className={TITULO_SECAO} />
               {/* O período apurado vive na abertura e não sai dali: número de
                   audiência sem período declarado é o que a página combate. */}
-              <p className="reveal mb-[38px] max-w-[62ch] text-lg text-ink-soft">{leitura.lead}</p>
+              <p className={`${LEAD} mb-[38px] max-mob:mb-7`}>{leitura.lead}</p>
               <div className="reveal grid grid-cols-2 gap-px overflow-hidden rounded-[16px] border border-line bg-line max-mob:grid-cols-1">
                 {leitura.dados.map((dado, i) => (
                   <div
-                    className={`bg-white px-7 py-[38px] max-mob:px-[22px] max-mob:py-[26px] ${
+                    className={`bg-white px-7 py-[38px] max-tab:px-6 max-tab:py-[30px] max-mob:px-[22px] max-mob:py-[26px] ${
                       i === 0 ? 'col-span-2 max-mob:col-span-1' : ''
                     }`}
                     key={dado.label}
@@ -328,21 +343,23 @@ export default async function DiferencialPage({ params }) {
         )}
 
         {privacidade && (
-          <section className="pb-[110px] max-mob:pb-[72px]">
+          <section className={SECAO}>
             <div className="wrap">
               <SectionHeading
-                num={proximoNum()}
                 title={privacidade.title}
-                className="reveal mb-[34px]"
+                className={TITULO_SECAO}
               />
               {/* Bloco curto, sem card e sem ícone. */}
-              <div className="reveal flex max-w-[62ch] flex-col gap-5 text-lg text-ink-soft">
+              <div className={`${LEAD} flex flex-col gap-5 max-mob:gap-4`}>
                 {privacidade.paragrafos.map((paragrafo) => (
                   <p className="m-0" key={paragrafo}>
                     {paragrafo}
                   </p>
                 ))}
-                <Link className="btn btn-ghost self-start" href="/privacidade">
+                <Link
+                  className="btn btn-ghost mt-1 self-start max-mob:whitespace-normal max-mob:text-center"
+                  href="/privacidade"
+                >
                   Conferir política de privacidade
                 </Link>
               </div>
@@ -351,24 +368,24 @@ export default async function DiferencialPage({ params }) {
         )}
 
         {prova && (
-          <section className="bg-bone py-[110px] max-mob:py-[72px]">
+          <section className={`bg-bone ${SECAO_Y}`}>
             <div className="wrap">
-              <SectionHeading num={proximoNum()} title="A prova" className="reveal mb-[34px]" />
-              <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">{prova.lead}</p>
+              <SectionHeading title="A prova" className={TITULO_SECAO} />
+              <p className={`${LEAD} mb-[54px] max-w-[54ch] max-tab:mb-[42px] max-mob:mb-8`}>
+                {prova.lead}
+              </p>
               <StatGrid stats={prova.stats} size="md" className="reveal" />
             </div>
           </section>
         )}
 
         {aplicacao && (
-        <section className="py-[110px] max-mob:py-[72px]" id="aplicacao">
+        <section className={SECAO_Y} id="aplicacao">
           <div className="wrap">
-            <SectionHeading
-              num={proximoNum()}
-              title="Aplicação prática"
-              className="reveal mb-[34px]"
-            />
-            <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">{aplicacao.lead}</p>
+            <SectionHeading title="Aplicação prática" className={TITULO_SECAO} />
+            <p className={`${LEAD} mb-[54px] max-w-[54ch] max-tab:mb-[42px] max-mob:mb-8`}>
+              {aplicacao.lead}
+            </p>
 
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
               {aplicacao.steps.map((step) => (
@@ -455,9 +472,9 @@ export default async function DiferencialPage({ params }) {
         )}
 
         {comparativo && (
-          <section className="pb-[110px] max-mob:pb-[72px]" id="comparacao">
+          <section className={SECAO} id="comparacao">
             <div className="wrap">
-              <SectionHeading num={proximoNum()} title="Comparação" className="reveal mb-[34px]" />
+              <SectionHeading title="Comparação" className={TITULO_SECAO} />
               <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
                 {[comparativo.amador, comparativo.especialista].map((lado) => (
                   <article className={`${CARD} reveal flex flex-col gap-4`} key={lado.label}>
@@ -484,12 +501,15 @@ export default async function DiferencialPage({ params }) {
           </section>
         )}
 
-        <section className="pb-[110px] max-mob:pb-[72px]">
+        <section className={SECAO}>
           <div className="wrap">
-            <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-              <SectionHeading num={proximoNum()} title="Outros diferenciais" className="flex-1" />
+            <div className="reveal mb-[34px] flex items-end justify-between gap-5 max-tab:mb-[30px] max-mob:mb-6 max-mob:flex-col max-mob:items-start max-mob:gap-3.5">
+              <SectionHeading
+                title="Outros diferenciais"
+                className="flex-1 max-mob:w-full"
+              />
               <Link
-                className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
+                className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange max-mob:self-start"
                 href="/solucoes/diferenciais"
               >
                 Ver todos →
@@ -502,9 +522,6 @@ export default async function DiferencialPage({ params }) {
                   href={outro.href}
                   key={outro.slug}
                 >
-                  <span className="text-[11.5px] font-bold uppercase tracking-[0.12em] text-orange">
-                    {outro.num}
-                  </span>
                   <h3 className="m-0 text-[19px] font-extrabold leading-tight">{outro.title}</h3>
                   {/* `text` é o texto canônico do hub, o mesmo que monta o card
                       na home e na listagem: o teaser não diverge do hub. */}

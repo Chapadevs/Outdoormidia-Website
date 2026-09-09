@@ -59,7 +59,7 @@ export default async function CasesPage() {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading num="01" title="Todos os cases" className="reveal mb-[34px]" />
+            <SectionHeading title="Todos os cases" className="reveal mb-[34px]" />
             <CasesExplorer cases={cases} tags={tags} groups={groups} />
           </div>
         </section>
