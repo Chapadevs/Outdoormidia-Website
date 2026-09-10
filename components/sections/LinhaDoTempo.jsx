@@ -1,13 +1,14 @@
 'use client'
 
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { useTranslations } from 'next-intl'
+
+import { useEffect, useRef, useState } from 'react'
 import CoverMedia from '@/components/ui/CoverMedia'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { MARCOS } from '@/lib/sobre'
 
-// A onda é desenhada para os quatro marcos de MARCOS: pico, vale, pico, vale.
-// Cada nó fica em cima do traçado e o texto cai do lado oposto à curva, para não
-// cobrir a linha. Entrando um quinto marco, a curva e NOS mudam juntos.
+// A onda é desenhada para os quatro marcos: pico, vale, pico, vale. Cada nó fica
+// em cima do traçado e o texto cai do lado oposto à curva, para não cobrir a
+// linha. Entrando um quinto marco, a curva e NOS mudam juntos.
 //
 // O palco tem viewBox fixo e o container a mesma proporção, então o SVG preenche
 // exato e nada distorce. Tudo o que é posição vira porcentagem desse viewBox: a
@@ -21,80 +22,100 @@ const ONDA =
   'C 573 350, 667 210, 760 210 C 853 210, 947 350, 1040 350 ' +
   'C 1100 350, 1120 280, 1180 280'
 
+// `traco` é onde o nó fica ao longo do caminho, na mesma escala do dash: o marco
+// acende quando a linha chega nele, e não numa contagem paralela que pode
+// divergir do desenho.
 const NOS = [
-  { cx: 200, cy: 210 },
-  { cx: 480, cy: 350 },
-  { cx: 760, cy: 210 },
-  { cx: 1040, cy: 350 },
+  { cx: 200, cy: 210, traco: 0.13 },
+  { cx: 480, cy: 350, traco: 0.38 },
+  { cx: 760, cy: 210, traco: 0.62 },
+  { cx: 1040, cy: 350, traco: 0.87 },
 ]
 
-// pathLength="1" reescala o traçado para 1: o dash passa a ser fração do
-// caminho, sem precisar medir o comprimento real no navegador. Cada parada
-// desenha um pouco além do nó que acabou de acender, para a linha chegar antes
-// da foto e não sair dela.
-const DESENHO = [0.04, 0.3, 0.53, 0.77, 1]
-
-// Onde cada marco acende dentro do trilho de rolagem. A faixa de leitura é o
-// miolo da tela (o rootMargin corta 45% em cima e embaixo), então a parada é o
-// ponto em que o sentinela cruza o centro.
-const PARADAS = ['14%', '38%', '61%', '84%']
+// Toco que já nasce desenhado, para a linha não começar do nada. O resto do
+// caminho é consumido pela rolagem.
+const TOCO = 0.04
 
 const pc = (v, total) => `${(v / total) * 100}%`
 
-// A preferência por menos movimento é estado de fora do React, então entra por
-// useSyncExternalStore: lida no render, sem setState dentro do efeito. No
-// servidor não há matchMedia, e o snapshot é o caso comum (com movimento).
-const CONSULTA_MOVIMENTO = '(prefers-reduced-motion: reduce)'
-const assinarMovimento = (avisar) => {
-  const mq = window.matchMedia(CONSULTA_MOVIMENTO)
-  mq.addEventListener('change', avisar)
-  return () => mq.removeEventListener('change', avisar)
-}
-const lerMovimento = () => window.matchMedia(CONSULTA_MOVIMENTO).matches
-const semMovimentoNoServidor = () => false
-
-export default function LinhaDoTempo() {
-  const [revelados, setRevelados] = useState(0)
-  const sentinelas = useRef([])
-  const semMovimento = useSyncExternalStore(
-    assinarMovimento,
-    lerMovimento,
-    semMovimentoNoServidor
-  )
+export default function LinhaDoTempo({ marcos }) {
+  const t = useTranslations('LinhaDoTempo')
+  const pistaRef = useRef(null)
+  const tracoRef = useRef(null)
+  // null enquanto não houve medição (SSR e sem JS): nesse estado tudo nasce
+  // aceso, como em Process. É o que mantém o texto dos quatro no documento para
+  // busca e leitor de tela mesmo sem JS.
+  const [acesos, setAcesos] = useState(null)
 
   useEffect(() => {
-    // Sem movimento os quatro já entram acesos e o trilho encolhe para uma tela
-    // (motion-reduce:h-screen), senão sobrariam três telas de rolagem sem nada
-    // acontecendo. Nada a observar nesse caso.
-    if (semMovimento) return
+    const daOnda = window.matchMedia('(min-width: 981px)')
+    const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let frame = 0
 
-    const passou = new Array(NOS.length).fill(false)
-    const observer = new IntersectionObserver(
-      (entradas) => {
-        for (const e of entradas) {
-          const i = Number(e.target.dataset.marco)
-          // `top < 0` mantém o marco aceso depois que ele sobe e sai da faixa:
-          // sem isso a onda apagaria de trás para frente ao continuar rolando.
-          passou[i] = e.isIntersecting || e.boundingClientRect.top < 0
-        }
-        setRevelados(passou.filter(Boolean).length)
-      },
-      { rootMargin: '-45% 0px -45% 0px' }
-    )
+    const medir = () => {
+      frame = 0
+      const pista = pistaRef.current
+      if (!pista) return
 
-    for (const el of sentinelas.current) if (el) observer.observe(el)
-    return () => observer.disconnect()
-  }, [semMovimento])
+      // Abaixo de 980px quem aparece é a lista empilhada, e com menos movimento
+      // o trilho encolhe para uma tela (motion-reduce:h-screen). Nos dois casos
+      // não há rolagem para medir: tudo fica aceso e a linha, inteira.
+      if (!daOnda.matches || semMovimento.matches) {
+        if (tracoRef.current) tracoRef.current.style.strokeDashoffset = '0'
+        setAcesos(null)
+        return
+      }
 
-  const acesos = semMovimento ? NOS.length : revelados
-  const desenho = DESENHO[Math.min(acesos, DESENHO.length - 1)]
+      const { top, height } = pista.getBoundingClientRect()
+      // No trilho preso, o avanço é a rolagem já consumida dentro da pista —
+      // a mesma conta de Process. Medir a posição absoluta a cada frame é o que
+      // torna isto imune a rolagem rápida: não existe faixa estreita para o
+      // gatilho pular, que era o defeito dos sentinelas com IntersectionObserver
+      // (rolagem de trackpad passa dos 72px da faixa entre dois frames, o
+      // observer não reporta mudança de estado e o marco nunca acendia).
+      const curso = height - window.innerHeight
+      const avanco = curso > 0 ? Math.min(Math.max(-top / curso, 0), 1) : 1
+      const desenho = TOCO + avanco * (1 - TOCO)
+
+      // A linha muda em todo frame de rolagem, então ela é escrita direto no
+      // elemento: como estado do React, os quatro nós e os quatro textos
+      // reconciliariam 60 vezes por segundo. O que o React conhece é só a
+      // contagem de acesos, que muda quatro vezes na rolagem inteira.
+      if (tracoRef.current) tracoRef.current.style.strokeDashoffset = String(1 - desenho)
+
+      let n = 0
+      while (n < NOS.length && desenho >= NOS[n].traco) n++
+      setAcesos((anterior) => (anterior === n ? anterior : n))
+    }
+
+    const agendar = () => {
+      if (!frame) frame = requestAnimationFrame(medir)
+    }
+
+    medir()
+    daOnda.addEventListener('change', agendar)
+    semMovimento.addEventListener('change', agendar)
+    window.addEventListener('scroll', agendar, { passive: true })
+    window.addEventListener('resize', agendar)
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      daOnda.removeEventListener('change', agendar)
+      semMovimento.removeEventListener('change', agendar)
+      window.removeEventListener('scroll', agendar)
+      window.removeEventListener('resize', agendar)
+    }
+  }, [])
+
+  const todos = acesos === null
+  const daOndaMarcos = marcos.slice(0, NOS.length)
 
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="linha-do-tempo">
       <div className="wrap">
         <SectionHeading className="reveal mb-[34px]" title="Linha do tempo" />
         <p className="reveal max-w-[54ch] text-lg text-ink-soft">
-          O que mudou desde a primeira face na rua, e o que não mudou.
+          {t('lead')}
         </p>
         <div className="reveal mt-8 flex items-center gap-3 text-ink-soft max-tab:hidden">
           <svg
@@ -112,27 +133,18 @@ export default function LinhaDoTempo() {
             <path d="M12 4v14" />
             <path d="M6 13l6 6 6-6" />
           </svg>
-          <span className="eyebrow">Role para percorrer</span>
+          <span className="eyebrow">{t('role')}</span>
         </div>
       </div>
 
-      {/* Trilho de rolagem: o palco fica preso no meio da tela enquanto os
-          quatro sentinelas passam por ele. */}
-      <div className="relative mt-10 h-[340vh] max-tab:hidden motion-reduce:h-screen">
-        {PARADAS.map((top, i) => (
-          <div
-            aria-hidden="true"
-            className="absolute left-0 size-px"
-            data-marco={i}
-            key={top}
-            ref={(el) => {
-              sentinelas.current[i] = el
-            }}
-            style={{ top }}
-          />
-        ))}
-
-        <div className="sticky top-0 flex h-screen items-center">
+      {/* Trilho de rolagem: o palco fica preso na tela enquanto a pista é
+          consumida. O padding do topo é a altura do Header, que também é
+          sticky e passaria por cima do palco. */}
+      <div
+        className="relative mt-10 h-[240vh] max-tab:hidden motion-reduce:h-screen"
+        ref={pistaRef}
+      >
+        <div className="sticky top-0 flex h-screen items-center pt-[74px]">
           <div className="wrap">
             <ol
               className="relative m-0 list-none p-0"
@@ -150,24 +162,30 @@ export default function LinhaDoTempo() {
                   strokeLinecap="round"
                   strokeWidth="9"
                 />
+                {/* pathLength="1" reescala o traçado para 1: o dash passa a ser
+                    fração do caminho, sem medir o comprimento no navegador. Sem
+                    transição de propósito — quem move o dash é a rolagem, e uma
+                    transição de 900ms ficaria correndo atrás dela.
+                    `strokeDashoffset` não entra no JSX: o que o React conhece
+                    ele reescreve na re-renderização seguinte, e apagaria o valor
+                    que `medir` acabou de gravar pelo ref. Sem ele o dash nasce
+                    em 0, que é a linha inteira — o estado certo para SSR e para
+                    quem está sem JS. */}
                 <path
                   className="stroke-orange"
                   d={ONDA}
                   fill="none"
                   pathLength="1"
+                  ref={tracoRef}
                   strokeDasharray="1"
                   strokeLinecap="round"
                   strokeWidth="9"
-                  style={{
-                    strokeDashoffset: 1 - desenho,
-                    transition: 'stroke-dashoffset 900ms cubic-bezier(.4,0,.2,1)',
-                  }}
                 />
               </svg>
 
-              {MARCOS.slice(0, NOS.length).map((m, i) => {
+              {daOndaMarcos.map((m, i) => {
                 const { cx, cy } = NOS[i]
-                const aceso = i < acesos
+                const aceso = todos || i < acesos
                 // Pico: a curva sobe, o texto desce. Vale: o contrário. É o que
                 // mantém o texto sempre do lado livre do traçado.
                 const pico = cy < ALTURA / 2
@@ -259,7 +277,7 @@ export default function LinhaDoTempo() {
           mesma de antes, com o mesmo conteúdo. */}
       <div className="wrap">
         <ol className="m-0 mt-10 hidden list-none grid-cols-2 gap-[18px] p-0 max-tab:grid max-mob:grid-cols-1">
-          {MARCOS.map((m) => (
+          {marcos.map((m) => (
             <li
               className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-6"
               key={m.ano}

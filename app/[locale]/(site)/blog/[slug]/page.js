@@ -1,4 +1,6 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -15,18 +17,19 @@ import { setRequestLocale } from 'next-intl/server'
 export const revalidate = 300
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params
+  const { locale, slug } = await params
   const post = await getPublishedPostBySlug(slug)
   if (!post) return { title: 'Post não encontrado | Outdoormídia' }
 
   return {
     title: `${post.title} | Outdoormídia`,
     description: post.excerpt,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: alternatesDe(`/blog/${post.slug}`, locale),
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      locale: 'pt_BR',
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
       type: 'article',
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,

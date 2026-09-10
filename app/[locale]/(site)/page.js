@@ -3,6 +3,7 @@ import Ticker from '@/components/sections/Ticker'
 import Institutional from '@/components/sections/Institutional'
 import Diferenciais from '@/components/sections/Diferenciais'
 import PlatformsCarousel from '@/components/sections/PlatformsCarousel'
+import { getPlatformsListagem } from '@/lib/platforms'
 import Cases from '@/components/sections/Cases'
 import Process from '@/components/sections/Process'
 import Reviews from '@/components/sections/Reviews'
@@ -10,6 +11,7 @@ import BlogTeaser from '@/components/sections/BlogTeaser'
 import Coverage from '@/components/sections/Coverage'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import Faq from '@/components/sections/Faq'
+import { getFaqsHome } from '@/lib/faq'
 import HomeTimeline from '@/components/widgets/HomeTimeline'
 import { setRequestLocale } from 'next-intl/server'
 
@@ -27,14 +29,14 @@ export default async function Home({ params }) {
         <Ticker />
         <Institutional />
         <Diferenciais />
-        <PlatformsCarousel />
+        <PlatformsCarousel plataformas={getPlatformsListagem(locale)} />
         <Coverage />
         <Reviews />
         <Cases />
         <Process />
         <NovaCampanha />
         <BlogTeaser />
-        <Faq />
+        <Faq items={getFaqsHome(locale)} />
       </div>
     </>
   )

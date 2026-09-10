@@ -1,63 +1,67 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { AMBIENTAL_PRATICAS, AMBIENTAL_REALIDADE } from '@/lib/esg'
-import { setRequestLocale } from 'next-intl/server'
+import { getAmbientalPraticas, getAmbientalRealidade } from '@/lib/esg'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Praça de Carregamento Elétrico, Praça de Conveniência Batel e Jardim Vertical, o ciclo da lona e as práticas que reduzem o impacto da operação: a frente ambiental da Outdoormídia no Paraná e em Santa Catarina.'
 
-export const metadata = {
-  title: 'Ambiental | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/sobre/ambiental' },
-  // TODO(Imagine): remover o `robots` quando a foto da Praça de Carregamento
-  // Elétrico existir. É o único item que bloqueia a publicação da página —
-  // sem ela a seção 01 não sustenta o peso que ganhou.
-  robots: { index: false, follow: true },
-  openGraph: {
-    title: 'Ambiental | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+// TODO(Imagine): remover o `robots` quando a foto da Praça de Carregamento
+// Elétrico existir. É o único item que bloqueia a publicação da página —
+// sem ela a seção 01 não sustenta o peso que ganhou.
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('ambiental.titulo')
+  const descricao = t('ambiental.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/sobre/ambiental', locale),
+    robots: { index: false, follow: true },
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function AmbientalPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'AmbientalPage' })
+  const tNav = await getTranslations({ locale, namespace: 'Nav' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Sobre nós', href: '/sobre' }, { label: 'Ambiental' }]} />
+        <Breadcrumb items={[{ label: tNav('sobre'), href: '/sobre' }, { label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Sobre nós · Ambiental</div>
+            <div className="eyebrow reveal">{t('eyebrow')}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Ambiental.
+              {t('h1')}
             </h1>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Ocupar a cidade por 67 anos cria obrigação com ela. Nossa resposta não é
-              relatório: são praças entregues, painéis vivos e lona que volta como produto.
-              Mídia exterior que devolve na prática para o espaço que ela ocupa.
-            </p>
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{t('lead')}</p>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="realidade">
           <div className="wrap">
-            <SectionHeading title="O que já é realidade" className="reveal mb-[34px]" />
+            <SectionHeading title={t('realidadeTitulo')} className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              Não falamos de intenção ambiental. Falamos de estrutura entregue, com endereço,
-              manutenção por nossa conta e uso público diário. Cada projeto abaixo é um ativo
-              de mídia exterior que a cidade usa mesmo quando não está olhando para a marca.
+              {t('realidadeLead')}
             </p>
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
-              {AMBIENTAL_REALIDADE.map((p) => (
+              {getAmbientalRealidade(locale).map((p) => (
                 <article
                   className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
                   key={p.slug}
@@ -86,97 +90,79 @@ export default async function AmbientalPage({ params }) {
               ))}
             </div>
             <p className="reveal mt-[34px] max-w-[70ch] text-[15.5px] leading-relaxed text-ink-soft">
-              Todos integram a carteira <strong className="font-extrabold text-ink">Gentileza
-              Urbana</strong>, que reúne ainda o MUB Garden, primeiro mobiliário urbano digital
-              de Curitiba com jardim vivo, o Jardim Digital e as demais praças pet da cidade.
+              {t('realidadeNotaAntes')}
+              <strong className="font-extrabold text-ink">{t('realidadeNotaMarca')}</strong>
+              {t('realidadeNotaDepois')}
             </p>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="ciclo-da-lona">
           <div className="wrap">
-            <SectionHeading title="O ciclo da lona" className="reveal mb-[34px]" />
-            <div className="ticks reveal rounded-[16px] border border-line bg-white p-10 max-mob:p-7">
-              <h2 className="m-0 max-w-[24ch] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
-                A lona sai da face e volta como produto.
-              </h2>
-              <div className="mt-6 flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
-                <p className="m-0">
-                  Toda campanha impressa termina com uma lona retirada. O destino padrão do
-                  setor é o aterro. O nosso não é.
-                </p>
-                <p className="m-0">
-                  A Outdoormídia doa, sem custo, as lonas publicitárias que já cumpriram o
-                  ciclo de exibição. Costureiras capacitadas transformam o material em ecobags
-                  e outros produtos, gerando renda e tirando o resíduo de circulação. Economia
-                  circular com processo verificável, não com selo comprado.
-                </p>
-                <p className="m-0">
-                  A iniciativa faz parte do programa Corajosamente Éticos, e todo o resultado é
-                  destinado a projeto social parceiro.
-                </p>
-              </div>
-              <Link
-                className="group mt-7 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange"
-                href="/sobre/social"
-              >
-                Conheça o programa completo
-                <span
-                  aria-hidden
-                  className="text-base transition-transform duration-200 group-hover:translate-x-1"
+            <SectionHeading title={t('cicloTitulo')} className="reveal mb-[34px]" />
+            <div className="ticks reveal grid grid-cols-[1fr_1.15fr] items-center gap-10 rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
+              <CoverMedia video="/media/ambiental/ciclo-da-lona.mp4" ratio="16/9" />
+              <div>
+                <h2 className="m-0 max-w-[24ch] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
+                  {t('cicloH2')}
+                </h2>
+                <div className="mt-6 flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
+                  <p className="m-0">{t('cicloP1')}</p>
+                  <p className="m-0">{t('cicloP2')}</p>
+                  <p className="m-0">{t('cicloP3')}</p>
+                </div>
+                <Link
+                  className="group mt-7 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange"
+                  href="/sobre/social"
                 >
-                  →
-                </span>
-              </Link>
+                  {t('cicloCta')}
+                  <span
+                    aria-hidden
+                    className="text-base transition-transform duration-200 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="doacao-instituto-kopher">
           <div className="wrap">
-            <SectionHeading
-              title="Doação de lixo eletrônico ao Instituto Kópher"
-              className="reveal mb-[34px]"
-            />
+            <SectionHeading title={t('kopherTitulo')} className="reveal mb-[34px]" />
             <div className="ticks reveal grid grid-cols-[280px_1fr] gap-10 rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
               <CoverMedia
                 src="/media/ambiental/Logo-instituto-Kopher.jpeg"
-                alt="Logo do Instituto Kópher"
+                alt={t('kopherLogoAlt')}
                 ratio="2/1"
                 sizes="(max-width: 980px) 100vw, 280px"
                 className="self-start"
               />
               <div className="flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
-                <p className="m-0">
-                  Realizamos a doação de equipamentos eletroeletrônicos obsoletos ao Instituto
-                  Kópher, organização sem fins lucrativos que há nove anos atua na promoção do
-                  bem-estar da comunidade, unindo responsabilidade ambiental e inclusão social.
-                </p>
-                <p className="m-0">
-                  A doação apoia diretamente o Programa Resgate, iniciativa pioneira do
-                  instituto voltada à manufatura reversa de resíduos eletrônicos. O projeto
-                  promove a capacitação de pessoas em situação de vulnerabilidade, especialmente
-                  em comunidades terapêuticas, contribuindo com sua reintegração familiar e
-                  profissional.
-                </p>
+                <p className="m-0">{t('kopherP1')}</p>
+                <p className="m-0">{t('kopherP2')}</p>
               </div>
             </div>
+            <CoverMedia
+              src="/media/ambiental/certificado-kopher.png"
+              alt={t('kopherCertificadoAlt')}
+              ratio="16/9"
+              sizes="(max-width: 980px) 100vw, 640px"
+              className="reveal mt-8 max-w-[640px] bg-bone"
+              recorte
+            />
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="operacao">
           <div className="wrap">
-            <SectionHeading
-              title="Como a operação reduz impacto"
-              className="reveal mb-[34px]"
-            />
+            <SectionHeading title={t('operacaoTitulo')} className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              Painel iluminado consome energia e face impressa gera resíduo. São duas contas
-              que a mídia exterior paga todo mês, e que a nossa operação trata como decisão
-              técnica, não como discurso.
+              {t('operacaoLead')}
             </p>
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
-              {AMBIENTAL_PRATICAS.map((p) => (
+              {getAmbientalPraticas(locale).map((p) => (
                 <div
                   className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
                   key={p.slug}

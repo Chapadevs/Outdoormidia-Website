@@ -1,4 +1,6 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import CoverMedia from '@/components/ui/CoverMedia'
 import PracaChips from '@/components/ui/PracaChips'
@@ -7,139 +9,104 @@ import Institutional from '@/components/sections/Institutional'
 import Process from '@/components/sections/Process'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import LinhaDoTempo from '@/components/sections/LinhaDoTempo'
-import { setRequestLocale } from 'next-intl/server'
+import { getMarcos } from '@/lib/sobre'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-// TODO(Imagine): falta a imagem de capa do topo da página. Enquanto for `null`
-// a capa não é renderizada — painel bege vazio ocupando a primeira dobra é pior
-// que capa nenhuma.
-const CAPA = null
+// A capa do topo é a mesma foto da sede que abre o Banco de Talentos: o time
+// reunido na frente do prédio. O arquivo é 2000x1125, 16/9 exato, então a capa
+// sobe nessa proporção e nada é cortado — em 16/7 o corte cairia justamente nos
+// pés de quem está agachado na ponta direita.
+const CAPA = { src: '/media/trabalhe-conosco/time-outdoormidia.webp' }
 
-const PRACAS = [
-  'Curitiba',
-  'Região Metropolitana',
-  'Litoral do Paraná',
-  'Joinville',
-  'Itajaí',
-  'Balneário Camboriú',
-  'Rodovias PR-SC',
-]
+// `**negrito**` é o único realce que os parágrafos de "Sobre a OM" usam, mesmo
+// padrão de components/ui/Accordion.jsx. O realce vive dentro da mensagem, e não
+// no JSX, porque a palavra destacada muda de posição em cada idioma.
+function comDestaque(texto) {
+  return texto
+    .split(/\*\*(.+?)\*\*/g)
+    .map((parte, i) => (i % 2 ? <strong className="font-bold text-ink" key={i}>{parte}</strong> : parte))
+}
+
+// A lista de praças e o texto dos cards vivem em messages/*.json: aqui fica
+// só a estrutura que não se traduz.
 
 const COMPROMISSO = [
-  {
-    href: '/sobre/ambiental',
-    image: '/media/sobre-nos/ambiental.webp',
-    imageAlt: 'Painel de LED da Outdoormídia integrado a um jardim vertical na fachada',
-    eyebrow: 'Compromisso · Ambiental',
-    title: 'Ambiental',
-    text: 'Painel iluminado gasta energia e lona vira resíduo. Por isso convertemos as faces para LED, damos outro destino à lona e devolvemos em mobiliário urbano o que ocupamos da cidade.',
-    cta: 'Ver o que já é realidade',
-  },
-  {
-    href: '/sobre/social',
-    image: '/media/sobre-nos/social.webp',
-    imageAlt: 'Poste de mobiliário urbano da Outdoormídia com câmera de monitoramento 24h',
-    eyebrow: 'Compromisso · Social',
-    title: 'Social',
-    text: 'Integramos o Corajosamente Éticos, doamos a lona que sai da face para virar renda na Loja OM do Bem e assinamos a primeira Mídia Regenerativa de Curitiba.',
-    cta: 'Ver iniciativas',
-  },
-  {
-    href: '/sobre/governanca',
-    image: '/media/sobre-nos/governanca.webp',
-    imageAlt: 'Retrato de Halisson Pontarola, CEO da Outdoormídia',
-    eyebrow: 'Compromisso · Governança',
-    title: 'Governança',
-    text: 'Ponto irregular é problema que respinga no anunciante. Todos os nossos são licenciados, com exclusividade em contrato e um nome respondendo por cada linha dele.',
-    cta: 'Ver como operamos',
-  },
+  { href: '/sobre/ambiental', image: '/media/sobre-nos/ambiental.webp' },
+  { href: '/sobre/social', image: '/media/sobre-nos/social.webp' },
+  { href: '/sobre/governanca', image: '/media/sobre-nos/governanca.webp' },
 ]
 
-const DESCRIPTION =
-  'A Outdoormídia coloca marcas nas ruas do Paraná e de Santa Catarina desde 1959: 67 anos de operação própria em mídia exterior, do outdoor impresso ao painel de LED.'
 
-export const metadata = {
-  title: 'Sobre nós | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/sobre' },
-  openGraph: {
-    title: 'Sobre nós | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('sobre.titulo')
+  const descricao = t('sobre.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/sobre', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function SobrePage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'SobrePage' })
+
+  // O texto de cada card entra por posição sobre a estrutura de COMPROMISSO.
+  const compromisso = COMPROMISSO.map((c, i) => ({ ...c, ...t.raw('compromisso')[i] }))
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Sobre nós' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Desde 1959 · PR + SC</div>
+            <div className="eyebrow reveal">{t('eyebrow')}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Sobre nós.
+              {t('h1')}
             </h1>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Nove plataformas de mídia exterior no Paraná e em Santa Catarina, operadas de ponta
-              a ponta pela nossa equipe. Da negociação à instalação, quem promete é quem executa.
-            </p>
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{t('lead')}</p>
 
             {CAPA && (
               <CoverMedia
-                alt={CAPA.alt}
+                alt={t('capaAlt')}
                 className="reveal mt-[54px]"
-                ratio="16/7"
+                priority
+                ratio="16/9"
                 sizes="(max-width: 1280px) 100vw, 1216px"
                 src={CAPA.src}
               />
             )}
 
             <div className="reveal mt-[54px] grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
-              <div className="eyebrow text-orange">Sobre a OM</div>
+              <div className="eyebrow text-orange">{t('sobreOmLabel')}</div>
               <div className="flex max-w-[68ch] flex-col gap-5 text-[15.5px] leading-relaxed text-ink-soft">
-                <p className="m-0">
-                  Tudo começou em 1959, nas margens das rodovias do Paraná, com um balde de cola,
-                  papel e uma ideia na cabeça. O Sr. Euclides Aristides Farias não vendia mídia
-                  exterior. Ele colava sonhos em painéis de papel, conectando mensagens ao
-                  movimento de quem cruzava as estradas.
-                </p>
-                <p className="m-0">
-                  Ao lado de seu genro, Hamilton Pontarola, transformou talento em visão e visão
-                  em negócio. Assim nasceu a Outdoormídia.
-                </p>
-                <p className="m-0">
-                  De uma pequena empresa familiar em Curitiba, viramos referência em Out of Home
-                  no Sul do Brasil. Crescemos acompanhando o movimento das ruas, das cidades, da
-                  tecnologia e, principalmente, das pessoas.
-                </p>
-                <p className="m-0">
-                  São 67 anos e nove plataformas integradas de OOH e DOOH: a única operação do
-                  Paraná com esse alcance. Do outdoor impresso ao painel de LED, unimos
-                  estratégia, tecnologia e inteligência de audiência para colocar sua marca onde
-                  ela precisa ser vista.
-                </p>
-                <p className="m-0">
-                  Mas essa transformação não aconteceu sozinha. Ela foi construída com cada
-                  cliente que acreditou que dava para fazer diferente, e com um time que faz isso
-                  acontecer todos os dias, com paixão, técnica e visão de futuro.
-                </p>
+                <p className="m-0">{comDestaque(t('sobreOmP1'))}</p>
+                <p className="m-0">{comDestaque(t('sobreOmP2'))}</p>
+                <p className="m-0">{comDestaque(t('sobreOmP3'))}</p>
+                <p className="m-0">{comDestaque(t('sobreOmP4'))}</p>
+                <p className="m-0">{comDestaque(t('sobreOmP5'))}</p>
               </div>
             </div>
 
             <div className="reveal mt-[54px] grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
-              <div className="eyebrow text-orange">Presença</div>
+              <div className="eyebrow text-orange">{t('presencaLabel')}</div>
               <div className="flex max-w-[68ch] flex-col gap-5">
                 <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
-                  Estamos presentes em Curitiba, Região Metropolitana, Litoral do Paraná,
-                  Joinville, Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo,
-                  visibilidade e impacto real.
+                  {t('presencaTexto')}
                 </p>
-                <PracaChips pracas={PRACAS} />
+                <PracaChips pracas={t.raw('pracas')} />
               </div>
             </div>
           </div>
@@ -147,19 +114,18 @@ export default async function SobrePage({ params }) {
 
         <Institutional />
 
-        <LinhaDoTempo />
+        <LinhaDoTempo marcos={getMarcos(locale)} />
 
-        <Process title="Por que a Outdoormídia" />
+        <Process title={t('processTitulo')} />
 
         <section className="py-[110px] max-mob:py-[72px]" id="compromisso">
           <div className="wrap">
-            <SectionHeading title="Nosso compromisso" className="reveal mb-[34px]" />
+            <SectionHeading title={t('compromissoTitulo')} className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              Ocupar a rua por 67 anos cria obrigação com ela. O que fazemos com os resíduos, o
-              que devolvemos para a cidade e o que assinamos em contrato.
+              {t('compromissoLead')}
             </p>
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
-              {COMPROMISSO.map((c) => (
+              {compromisso.map((c) => (
                 <Link
                   className="ticks reveal group flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
                   href={c.href}
@@ -200,15 +166,14 @@ export default async function SobrePage({ params }) {
             <div className="ticks reveal flex items-center justify-between gap-8 rounded-[16px] border border-line bg-bone p-10 max-mob:flex-col max-mob:items-start max-mob:gap-5 max-mob:p-7">
               <div>
                 <h2 className="m-0 text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
-                  Quer fazer parte do time OM?
+                  {t('timeTitulo')}
                 </h2>
                 <p className="mt-3 max-w-[52ch] text-[15.5px] leading-relaxed text-ink-soft">
-                  Toda campanha que a cidade vê passou pela mão de alguém aqui. Se você quer que o
-                  seu trabalho apareça na rua, deixe seu currículo no nosso banco de talentos.
+                  {t('timeTexto')}
                 </p>
               </div>
               <Link href="/trabalhe-conosco" className="btn btn-ghost whitespace-nowrap">
-                Trabalhe conosco
+                {t('timeCta')}
               </Link>
             </div>
           </div>

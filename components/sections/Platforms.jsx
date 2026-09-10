@@ -3,9 +3,8 @@ import { useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
-import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
-export default function Platforms() {
+export default function Platforms({ plataformas }) {
   const [openSlug, setOpenSlug] = useState(null)
 
   return (
@@ -13,7 +12,7 @@ export default function Platforms() {
       <div className="wrap">
         <SectionHeading title="Plataformas" href="/plataformas" className="reveal mb-[34px]" />
         <div className="reveal border-t border-ink">
-          {PLATFORMS_LISTAGEM.map((p) => {
+          {plataformas.map((p) => {
             const isOpen = openSlug === p.slug
             return (
               <div className="border-b border-line" key={p.slug}>

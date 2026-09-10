@@ -1,21 +1,29 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import LegalDoc from '@/components/ui/LegalDoc'
-import { ATUALIZADO_EM, CONTATO_TERMOS, TERMOS } from '@/lib/legal'
-import { setRequestLocale } from 'next-intl/server'
+import { ATUALIZADO_EM, getContatoTermos, getTermos } from '@/lib/legal'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'As regras de uso do site da Outdoormídia: propriedade do conteúdo, materiais para download, caráter estimativo do simulador e do diagnóstico, e limites de responsabilidade.'
 
-export const metadata = {
-  title: 'Termos de Uso | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/termos' },
-  openGraph: {
-    title: 'Termos de Uso | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('termos.titulo')
+  const descricao = t('termos.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/termos', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function TermosPage({ params }) {
@@ -43,7 +51,7 @@ export default async function TermosPage({ params }) {
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
-          <LegalDoc atualizadoEm={ATUALIZADO_EM} contato={CONTATO_TERMOS} secoes={TERMOS} />
+          <LegalDoc atualizadoEm={ATUALIZADO_EM} contato={getContatoTermos(locale)} secoes={getTermos(locale)} />
         </section>
       </main>
     </>

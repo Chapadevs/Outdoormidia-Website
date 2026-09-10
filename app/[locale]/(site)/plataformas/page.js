@@ -1,78 +1,85 @@
 import { Images } from 'lucide-react'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import BigNumbers from '@/components/ui/BigNumbers'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import PlatformsCatalog from '@/components/sections/PlatformsCatalog'
-import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
+import { getPlatformsListagem } from '@/lib/platforms'
 import { PRODUTOS } from '@/lib/produtos'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 
-const DESCRIPTION =
-  'Conheça as plataformas de mídia exterior da Outdoormídia: do outdoor digital ao MUB, mais os Projetos Icônicos, cobrindo Paraná e Santa Catarina.'
 
-// Os quatro números da marca, iguais aos da home. A contagem de plataformas é
-// derivada da própria listagem para nunca divergir do que a grade mostra.
-const NUMEROS = [
-  { n: String(PLATFORMS_LISTAGEM.length), label: 'Plataformas' },
-  { n: '175', label: 'Telas digitais' },
-  { n: '+530 mi', label: 'Impactos por mês' },
-  { n: '67', label: 'Anos de operação' },
-]
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('plataformas.titulo')
+  const descricao = t('plataformas.descricao')
 
-export const metadata = {
-  title: 'Plataformas | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/plataformas' },
-  openGraph: {
-    title: 'Plataformas | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/plataformas', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function PlataformasPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
 
+  const plataformas = getPlatformsListagem(locale)
+  const t = await getTranslations({ locale, namespace: 'PlataformasPage' })
+  const tNav = await getTranslations({ locale, namespace: 'Nav' })
+
+  // Os quatro números da marca, iguais aos da home. A contagem de plataformas é
+  // derivada da própria listagem para nunca divergir do que a grade mostra, e
+  // por isso o quadro é montado aqui dentro, onde a listagem já existe.
+  const numeros = [
+    { n: String(plataformas.length), label: t('numeros.plataformas') },
+    { n: '175', label: t('numeros.telas') },
+    { n: '+530 mi', label: t('numeros.impactos') },
+    { n: '67', label: t('numeros.anos') },
+  ]
+
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Plataformas' }]} />
+        <Breadcrumb items={[{ label: tNav('plataformas') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">
-              Catálogo · {PLATFORMS_LISTAGEM.length} plataformas
-            </div>
+            <div className="eyebrow reveal">{t('eyebrow', { n: plataformas.length })}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Plataformas.
+              {t('h1')}
             </h1>
             <p className="reveal mt-6 max-w-[64ch] text-lg text-ink-soft">
-              Nenhuma campanha se resolve com um formato só. São {PLATFORMS_LISTAGEM.length}{' '}
-              plataformas que se combinam conforme o público que você precisa alcançar, do LED de
-              alta circulação ao mobiliário urbano de bairro, cobrindo Paraná e Santa Catarina.
-              Abrindo a lista, os Projetos Icônicos: estruturas de assinatura desenhadas ponto a
-              ponto.
+              {t('lead', { n: plataformas.length })}
             </p>
             <div className="reveal mt-8 flex flex-wrap gap-3">
               <a className="btn btn-fill" href="#nova-campanha">
-                Planejar campanha
+                {t('ctaPlanejar')}
               </a>
               <a className="btn btn-ghost" href="#formatos">
-                Ver formatos
+                {t('ctaFormatos')}
               </a>
             </div>
-            <BigNumbers className="reveal mt-[64px]" stats={NUMEROS} />
+            <BigNumbers className="reveal mt-[64px]" stats={numeros} />
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="Plataformas" className="reveal mb-5" />
-            <PlatformsCatalog plataformas={PLATFORMS_LISTAGEM} />
+            <SectionHeading title={tNav('plataformas')} className="reveal mb-5" />
+            <PlatformsCatalog plataformas={plataformas} />
           </div>
         </section>
 
@@ -81,35 +88,29 @@ export default async function PlataformasPage({ params }) {
           id="formatos"
         >
           <div className="wrap">
-            <SectionHeading
-              title="Plataforma é onde. Formato é como."
-              className="reveal mb-[34px]"
-            />
+            <SectionHeading title={t('formatosTitulo')} className="reveal mb-[34px]" />
             <div className="grid grid-cols-[1.1fr_0.9fr] items-start gap-[50px] max-tab:grid-cols-1 max-tab:gap-8">
               {/* A contagem sai de `lib/produtos.js`, não da mão: o handoff fala
                   em 22 produtos e enumera menos que isso (ver pendências). Número
                   derivado nunca diverge do que a página realmente lista. */}
               <div>
                 <p className="reveal m-0 max-w-[58ch] text-lg text-ink-soft">
-                  A plataforma define o ambiente que sua marca ocupa. O formato define o
-                  tamanho, a proporção e o tipo de peça que vai no ar. São {PRODUTOS.length}{' '}
-                  produtos de catálogo, e cada plataforma trabalha com um recorte deles.
+                  {t('formatosTexto', { n: PRODUTOS.length })}
                 </p>
                 <Link className="btn btn-ghost reveal mt-7" href="/solucoes#tipos-de-midia">
                   <Images size={20} />
-                  Ver tipos de mídia
+                  {t('verTiposDeMidia')}
                 </Link>
                 <p className="reveal m-0 mt-3 text-[13.5px] text-ink-soft/85">
-                  Clique nos botões para ver as fotos de cada formato.
+                  {t('cliqueFotos')}
                 </p>
               </div>
               <div className="ticks reveal rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
                 <h3 className="m-0 text-[19px] font-extrabold leading-tight text-ink">
-                  Como ler os nomes
+                  {t('comoLerTitulo')}
                 </h3>
                 <p className="m-0 mt-4 text-[15.5px] leading-relaxed text-ink-soft">
-                  Top é vertical, o mesmo enquadramento de um reel. Poster é horizontal, o mesmo
-                  enquadramento de um vídeo. Tudo que começa com Super tem o dobro do tamanho.
+                  {t('comoLerTexto')}
                 </p>
               </div>
             </div>

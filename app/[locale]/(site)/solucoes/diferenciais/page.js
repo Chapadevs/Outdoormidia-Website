@@ -1,13 +1,13 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import DiferencialCard from '@/components/ui/DiferencialCard'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { DIFERENCIAIS } from '@/lib/diferenciais'
-import { setRequestLocale } from 'next-intl/server'
+import { getDiferenciais } from '@/lib/diferenciais'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Face única, o Aeroporto Square, audiência mensurada, mídia regenerativa, circuitos MUB por nicho e a Gestão 360 OM: o que separa uma campanha que a cidade vê de uma que passa despercebida.'
 
 const PROVA = [
   { n: '+530M', label: 'Impactos por mês' },
@@ -16,16 +16,24 @@ const PROVA = [
   { n: '6', label: 'Circuitos MUB' },
 ]
 
-export const metadata = {
-  title: 'Diferenciais | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/solucoes/diferenciais' },
-  openGraph: {
-    title: 'Diferenciais | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('diferenciais.titulo')
+  const descricao = t('diferenciais.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/solucoes/diferenciais', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function DiferenciaisPage({ params }) {
@@ -39,7 +47,7 @@ export default async function DiferenciaisPage({ params }) {
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Soluções · {DIFERENCIAIS.length} diferenciais</div>
+            <div className="eyebrow reveal">Soluções · {getDiferenciais(locale).length} diferenciais</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               Diferenciais.
             </h1>
@@ -54,7 +62,7 @@ export default async function DiferenciaisPage({ params }) {
           <div className="wrap">
             <SectionHeading title="Os diferenciais" className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
-              {DIFERENCIAIS.map((d) => (
+              {getDiferenciais(locale).map((d) => (
                 <div className="reveal" key={d.slug}>
                   <DiferencialCard
                     d={d}

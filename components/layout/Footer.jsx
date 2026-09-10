@@ -88,7 +88,7 @@ export default async function Footer() {
                   href={l.href}
                   className="mb-[11px] block text-[14.5px] text-ink-soft transition-colors duration-150 hover:text-ink"
                 >
-                  {t(l.key)}
+                  {l.label}
                 </Link>
               ))}
             </div>
@@ -170,7 +170,7 @@ export default async function Footer() {
                 href={l.href}
                 className="transition-colors duration-150 hover:text-ink"
               >
-                {l.label}
+                {t(l.key)}
               </Link>
             ))}
           </span>

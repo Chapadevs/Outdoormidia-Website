@@ -1,24 +1,32 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CasesExplorer from '@/components/cases/CasesExplorer'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
 import { listTagGroups } from '@/lib/tags/groups'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Cases de mídia Out of Home da Outdoormídia: campanhas em outdoor, LED, MUB, aeroporto e projetos icônicos no Paraná e em Santa Catarina.'
 
-export const metadata = {
-  title: 'Cases | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/cases' },
-  openGraph: {
-    title: 'Cases | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('cases.titulo')
+  const descricao = t('cases.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/cases', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export const revalidate = 300

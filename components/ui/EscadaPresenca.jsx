@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { DEGRAUS } from '@/lib/diagnostico'
+import { useLocale } from 'next-intl'
+import { getDegraus } from '@/lib/diagnostico'
 
 // A Escada da Presença nos dois estados previstos na copy: neutro (bloco
 // educativo, antes das perguntas) e aceso (resultado, com o degrau da pessoa
@@ -20,6 +21,8 @@ import { DEGRAUS } from '@/lib/diagnostico'
 const ATRASO_DEGRAU = 0.1
 
 export default function EscadaPresenca({ ativo = null, className = '' }) {
+  const locale = useLocale()
+  const DEGRAUS = getDegraus(locale)
   const neutro = ativo === null
   const [visivel, setVisivel] = useState(false)
   const ref = useRef(null)

@@ -1,23 +1,31 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import FaqCategorias from '@/components/sections/FaqCategorias'
+import { getCategoriasFaq, getFaqs } from '@/lib/faq'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import FaqJsonLd from '@/components/widgets/FaqJsonLd'
-import { FAQS } from '@/lib/faq'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Dúvidas sobre anunciar em mídia exterior no Paraná e em Santa Catarina: praças, formatos, medição de resultados, exclusividade do ponto e como pedir uma proposta.'
 
-export const metadata = {
-  title: 'FAQ | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/area-do-anunciante/faq' },
-  openGraph: {
-    title: 'FAQ | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('faq.titulo')
+  const descricao = t('faq.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/area-do-anunciante/faq', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function FaqPage({ params }) {
@@ -26,7 +34,7 @@ export default async function FaqPage({ params }) {
 
   return (
     <>
-      <FaqJsonLd faqs={FAQS} />
+      <FaqJsonLd faqs={getFaqs(locale)} />
       <main>
         <Breadcrumb
           items={[{ label: 'Área do anunciante', href: '/area-do-anunciante' }, { label: 'FAQ' }]}
@@ -47,7 +55,7 @@ export default async function FaqPage({ params }) {
           </div>
         </section>
 
-        <FaqCategorias />
+        <FaqCategorias faqs={getFaqs(locale)} categorias={getCategoriasFaq(locale)} />
 
         <NovaCampanha />
       </main>

@@ -1,14 +1,16 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import MapaCobertura from '@/components/ui/MapaCobertura'
 import Diferenciais from '@/components/sections/Diferenciais'
-import Platforms from '@/components/sections/Platforms'
+import PlatformsCarousel from '@/components/sections/PlatformsCarousel'
+import { getPlatformsListagem } from '@/lib/platforms'
 import SolucoesHero from '@/components/sections/SolucoesHero'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import FormatosGallery from '@/components/sections/FormatosGallery'
-import { getLocations } from '@/lib/locations'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 const TIPOS_MIDIA = [
   {
@@ -103,19 +105,25 @@ const FORMATOS = [
   },
 ]
 
-const DESCRIPTION =
-  'Tudo o que a Outdoormídia coloca na rua: os diferenciais que sustentam a operação, as praças de PR e SC, as 8 plataformas de mídia exterior e os projetos icônicos.'
 
-export const metadata = {
-  title: 'Soluções | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/solucoes' },
-  openGraph: {
-    title: 'Soluções | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('solucoes.titulo')
+  const descricao = t('solucoes.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/solucoes', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export const revalidate = 3600
@@ -123,8 +131,6 @@ export const revalidate = 3600
 export default async function SolucoesPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
-
-  const locations = await getLocations()
 
   return (
     <>
@@ -150,7 +156,7 @@ export default async function SolucoesPage({ params }) {
               Uma rede contínua nos dois estados onde o Sul se movimenta. Escolha a praça e a
               gente mostra o que existe nela.
             </p>
-            <div className="reveal mb-10 grid grid-cols-[1fr_1fr] items-center gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
+            <div className="reveal grid grid-cols-[1fr_1fr] items-center gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
               <div className="grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-3">
                 <div className="eyebrow text-orange">Presença</div>
                 <p className="m-0 max-w-[68ch] text-[15.5px] leading-relaxed text-ink-soft">
@@ -162,28 +168,6 @@ export default async function SolucoesPage({ params }) {
               <div className="w-full max-tab:mx-auto max-tab:max-w-[520px]">
                 <MapaCobertura />
               </div>
-            </div>
-            <div className="grid grid-cols-5 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
-              {locations.map((loc) => (
-                <Link
-                  className="ticks reveal flex flex-col gap-2.5 rounded-[16px] border border-line bg-white p-6 transition-colors duration-200 hover:border-orange"
-                  href="/solucoes/regioes-cobertura"
-                  key={loc.id}
-                >
-                  {loc.formats?.length > 0 && (
-                    <span className="text-[11.5px] font-bold uppercase tracking-[0.12em] text-orange">
-                      {loc.formats.length}{' '}
-                      {loc.formats.length === 1 ? 'plataforma' : 'plataformas'}
-                    </span>
-                  )}
-                  <h3 className="m-0 text-[19px] font-extrabold leading-[1.15] text-ink">
-                    {loc.name}
-                  </h3>
-                  {loc.desc && (
-                    <p className="m-0 text-[13.5px] leading-[1.45] text-ink-soft">{loc.desc}</p>
-                  )}
-                </Link>
-              ))}
             </div>
           </div>
         </section>
@@ -228,7 +212,7 @@ export default async function SolucoesPage({ params }) {
           </div>
         </section>
 
-        <Platforms />
+        <PlatformsCarousel plataformas={getPlatformsListagem(locale)} />
 
         <NovaCampanha />
       </main>

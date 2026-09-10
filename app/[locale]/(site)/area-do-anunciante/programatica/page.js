@@ -1,28 +1,38 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import ProgramaticaBlocos from '@/components/sections/ProgramaticaBlocos'
-import { DADO_MERCADO, MODELOS, SSPS } from '@/lib/programatica'
+import { getDadoMercado, getModelos } from '@/lib/programatica'
 import { WA_PROGRAMATICA_AGENCIA, waLinkOrigem } from '@/lib/whatsapp'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'O inventário da Outdoormídia está conectado às principais SSPs do mercado: compre as telas da nossa operação pela DSP que a sua agência ou trading desk já usa.'
 
-export const metadata = {
-  title: 'Mídia Programática | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/area-do-anunciante/programatica' },
-  openGraph: {
-    title: 'Mídia Programática | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('programatica.titulo')
+  const descricao = t('programatica.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/area-do-anunciante/programatica', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function ProgramaticaPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const dadoMercado = getDadoMercado(locale)
+  const modelos = getModelos(locale)
 
   return (
     <>
@@ -59,57 +69,14 @@ export default async function ProgramaticaPage({ params }) {
             {/* Credencial de canal, e credencial se lê de passagem: linha de
                 texto, nunca card com número grande. A fonte anda junto com o
                 dado, sempre. */}
-            {DADO_MERCADO.publicado && (
+            {dadoMercado.publicado && (
               <div className="reveal mt-9 max-w-[62ch] border-l-2 border-orange pl-5">
                 <p className="m-0 text-[17px] leading-relaxed text-white/[.92]">
-                  {DADO_MERCADO.texto}
+                  {dadoMercado.texto}
                 </p>
-                <p className="m-0 mt-2.5 text-[13px] text-white/60">{DADO_MERCADO.fonte}</p>
+                <p className="m-0 mt-2.5 text-[13px] text-white/60">{dadoMercado.fonte}</p>
               </div>
             )}
-          </div>
-        </section>
-
-        {/* Bloco mais importante da página, e por isso o primeiro: é a única
-            coisa aqui que a concorrência regional não diz sem provar. */}
-        <section className="py-[110px] max-tab:py-[92px] max-mob:py-[72px]">
-          <div className="wrap">
-            <div className="eyebrow reveal">Conexões ativas</div>
-            <h2 className="reveal m-0 mt-3.5 max-w-[20ch] text-balance text-[clamp(28px,4.4vw,54px)] font-extrabold leading-none tracking-[-0.02em] text-ink">
-              A Outdoormídia está plugada nestas SSPs.
-            </h2>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Nosso inventário está conectado às principais SSPs do mercado, que recebem e
-              processam as demandas vindas de trading desks e DSPs. Se a sua operação já
-              compra por uma delas, as nossas telas já estão ao seu alcance.
-            </p>
-
-            {/* Lista de texto com destaque tipográfico enquanto a autorização de
-                uso das logos não sai. O bloco não sai da página em hipótese
-                alguma; o que muda é a forma. */}
-            <div className="mt-11 grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
-              {SSPS.map((grupo) => (
-                <div
-                  className="ticks reveal rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
-                  key={grupo.titulo}
-                >
-                  <span className="eyebrow">{grupo.titulo}</span>
-                  <ul className="m-0 mt-5 flex list-none flex-wrap gap-x-3 gap-y-2.5 p-0">
-                    {grupo.nomes.map((nome) => (
-                      <li
-                        className="rounded-full border border-line px-4 py-2 text-[16px] font-extrabold leading-none text-ink"
-                        key={nome}
-                      >
-                        {nome}
-                      </li>
-                    ))}
-                  </ul>
-                  {grupo.nota && (
-                    <p className="m-0 mt-5 text-[14px] text-ink-soft">{grupo.nota}</p>
-                  )}
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -121,7 +88,7 @@ export default async function ProgramaticaPage({ params }) {
             </h2>
 
             <div className="mt-11 grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
-              {MODELOS.map((modelo) => (
+              {modelos.map((modelo) => (
                 <div
                   className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
                   key={modelo.sigla}

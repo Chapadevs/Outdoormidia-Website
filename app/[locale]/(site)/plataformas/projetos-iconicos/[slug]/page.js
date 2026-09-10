@@ -1,4 +1,6 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -6,7 +8,7 @@ import AtivoCard from '@/components/ui/AtivoCard'
 import PlatformFaq from '@/components/sections/PlatformFaq'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import CaseCard from '@/components/cases/CaseCard'
-import { ICONICOS, getIconicoBySlug, getOutrosIconicos } from '@/lib/iconicos'
+import { ICONICOS, getIconicoBySlugLocale, getOutrosIconicosLocale } from '@/lib/iconicos'
 import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
 import { waIconico, waLink } from '@/lib/whatsapp'
@@ -31,16 +33,17 @@ async function fetchCases(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params
-  const iconico = getIconicoBySlug(slug)
+  const { locale, slug } = await params
+  const iconico = getIconicoBySlugLocale(slug, locale)
   if (!iconico) return { title: 'Projeto não encontrado | Outdoormídia' }
 
   const title = `${iconico.name} | Projetos Icônicos | Outdoormídia`
   return {
     title,
     description: iconico.intro,
-    alternates: { canonical: `/plataformas/projetos-iconicos/${iconico.slug}` },
-    openGraph: { title, description: iconico.intro, locale: 'pt_BR', type: 'website' },
+    alternates: alternatesDe(`/plataformas/projetos-iconicos/${iconico.slug}`, locale),
+    openGraph: { title, description: iconico.intro, locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]), type: 'website' },
   }
 }
 
@@ -48,13 +51,13 @@ export default async function IconicoPage({ params }) {
   const { locale, slug } = await params
   setRequestLocale(locale)
   
-  const iconico = getIconicoBySlug(slug)
+  const iconico = getIconicoBySlugLocale(slug, locale)
   if (!iconico) notFound()
 
   const { aside, oQueE, ativos } = iconico
   const [cases, tags] = await fetchCases(iconico.slug)
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
-  const outros = getOutrosIconicos(slug)
+  const outros = getOutrosIconicosLocale(slug, locale)
 
   return (
     <>

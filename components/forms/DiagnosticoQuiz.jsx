@@ -2,22 +2,27 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import EscadaPresenca from '@/components/ui/EscadaPresenca'
+import { useLocale } from 'next-intl'
 import {
-  ESCALA,
   NOTA_MAXIMA,
   PERGUNTAS,
   degrauDoScore,
+  getEscala,
+  getPerguntas,
   gruposDePerguntas,
   pontoMaisFragil,
 } from '@/lib/diagnostico'
 import { enviarLead } from '@/lib/leads/enviarLead'
 import { waDiagnostico, waDiagnosticoFragil, waLink } from '@/lib/whatsapp'
 
-const GRUPOS = gruposDePerguntas()
 const SEM_NOTAS = PERGUNTAS.map(() => null)
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function DiagnosticoQuiz() {
+  const locale = useLocale()
+  const GRUPOS = gruposDePerguntas(locale)
+  const ESCALA = getEscala(locale)
+  const PERGUNTAS_L = getPerguntas(locale)
   const [notas, setNotas] = useState(SEM_NOTAS)
   const [concluido, setConcluido] = useState(false)
   const [email, setEmail] = useState('')
@@ -34,11 +39,11 @@ export default function DiagnosticoQuiz() {
   // Soma crua: 10 perguntas de 0 a 10 fecham os 100 pontos das faixas, sem
   // normalização e sem regra de três.
   const score = notas.reduce((total, n) => total + (n ?? 0), 0)
-  const degrau = degrauDoScore(score)
+  const degrau = degrauDoScore(score, locale)
   const degrauLabel = `Degrau ${degrau.n} · ${degrau.nome}`
   const mostrarResultado = concluido && completo
   const maisFragil = pontoMaisFragil(notas)
-  const fragil = maisFragil === -1 ? null : PERGUNTAS[maisFragil]
+  const fragil = maisFragil === -1 ? null : PERGUNTAS_L[maisFragil]
 
   useEffect(() => {
     if (mostrarResultado) {

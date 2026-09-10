@@ -1,13 +1,13 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import CoverMedia from '@/components/ui/CoverMedia'
 import BigNumbers from '@/components/ui/BigNumbers'
 import Iconicos from '@/components/sections/Iconicos'
 import Process from '@/components/sections/Process'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Estruturas de assinatura da Outdoormídia: esquinas digitais em 3D, painéis híbridos, jardins vivos e requalificação urbana em Curitiba e Joinville.'
 
 // Os quatro números do handoff. Os dois de impacto são por ativo, não somados:
 // somar impacto de painéis diferentes produziria um número que ninguém apurou.
@@ -18,21 +18,30 @@ const NUMEROS = [
   { n: '800 mil', label: 'Impactos/mês no Distrito de Mídia' },
 ]
 
-export const metadata = {
-  title: 'Projetos Icônicos | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/plataformas/projetos-iconicos' },
-  openGraph: {
-    title: 'Projetos Icônicos | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('projetosIconicos.titulo')
+  const descricao = t('projetosIconicos.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/plataformas/projetos-iconicos', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function ProjetosIconicosPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const tProcess = await getTranslations({ locale, namespace: 'Process' })
 
   return (
     <>
@@ -92,7 +101,7 @@ export default async function ProjetosIconicosPage({ params }) {
 
         <Iconicos comAtivos linkTitulo={false} />
 
-        <Process title="Como contratar" />
+        <Process title={tProcess('tituloComoContratar')} />
 
         <NovaCampanha contexto="Projetos Icônicos" />
       </main>

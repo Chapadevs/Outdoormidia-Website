@@ -1,4 +1,6 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import { CircleQuestionMark, Gauge, Lightbulb, Presentation, Zap } from 'lucide-react'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -6,10 +8,8 @@ import NovaCampanha from '@/components/sections/NovaCampanha'
 import { FAQS } from '@/lib/faq'
 import { PRATICAS } from '@/lib/melhoresPraticas'
 import { WA_ANUNCIANTE, waLink } from '@/lib/whatsapp'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Diagnóstico de presença, Sua marca no OOH, Melhores práticas e FAQ: as ferramentas para você resolver sozinho antes de falar com o comercial.'
 
 // A ordem não muda: as duas ferramentas interativas primeiro, depois os dois
 // conteúdos de leitura, Melhores práticas e FAQ.
@@ -60,16 +60,24 @@ const FERRAMENTAS = [
   },
 ]
 
-export const metadata = {
-  title: 'Área do anunciante | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/area-do-anunciante' },
-  openGraph: {
-    title: 'Área do anunciante | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('areaDoAnunciante.titulo')
+  const descricao = t('areaDoAnunciante.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/area-do-anunciante', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function AnunciantePage({ params }) {

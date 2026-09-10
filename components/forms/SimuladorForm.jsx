@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react'
 import {
-  PERIODOS,
   estimarCampanha,
   formatarImpactos,
   formatarMoeda,
@@ -10,7 +9,7 @@ import { waLink, waSimulador } from '@/lib/whatsapp'
 
 const FACES = [1, 2, 4, 8]
 
-export default function SimuladorForm({ locations, platforms }) {
+export default function SimuladorForm({ locations, platforms, periodos }) {
   const [escolha, setEscolha] = useState({
     pracaId: '',
     plataformaSlug: '',
@@ -21,7 +20,7 @@ export default function SimuladorForm({ locations, platforms }) {
   const estimativa = estimarCampanha(escolha)
   const praca = locations.find((l) => l.id === escolha.pracaId)
   const plataforma = platforms.find((p) => p.slug === escolha.plataformaSlug)
-  const periodo = PERIODOS.find((p) => p.slug === escolha.periodoSlug)
+  const periodo = periodos.find((p) => p.slug === escolha.periodoSlug)
 
   function alterar(campo, valor) {
     setEscolha((atual) => ({ ...atual, [campo]: valor }))
@@ -70,7 +69,7 @@ export default function SimuladorForm({ locations, platforms }) {
             onChange={(e) => alterar('periodoSlug', e.target.value)}
           >
             <option value="">Escolha o período</option>
-            {PERIODOS.map((p) => (
+            {periodos.map((p) => (
               <option key={p.slug} value={p.slug}>
                 {p.label}
               </option>

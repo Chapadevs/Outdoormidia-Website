@@ -1,46 +1,52 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Image from 'next/image'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Corajosamente Éticos, Loja OM do Bem e Mídia Regenerativa: os valores, a economia circular da lona e o primeiro ativo de mídia exterior conectado à Muralha Digital de Curitiba.'
 
-export const metadata = {
-  title: 'Social | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/sobre/social' },
-  openGraph: {
-    title: 'Social | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('social.titulo')
+  const descricao = t('social.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/sobre/social', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function SocialPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'SocialPage' })
+  const tNav = await getTranslations({ locale, namespace: 'Nav' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Sobre nós', href: '/sobre' }, { label: 'Social' }]} />
+        <Breadcrumb items={[{ label: tNav('sobre'), href: '/sobre' }, { label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Sobre nós · Social</div>
+            <div className="eyebrow reveal">{t('eyebrow')}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Social.
+              {t('h1')}
             </h1>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              A Outdoormídia entende que liderança de mercado não se constrói apenas com
-              inovação, tecnologia e presença urbana. Ela também se sustenta por meio de
-              valores claros, coerência e responsabilidade institucional.
-            </p>
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{t('lead')}</p>
           </div>
         </section>
 
@@ -49,23 +55,10 @@ export default async function SocialPage({ params }) {
             <SectionHeading title="Corajosamente Éticos" className="reveal mb-[34px]" />
             <div className="reveal grid grid-cols-[minmax(0,1fr)_minmax(200px,240px)] items-center gap-[54px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <div>
-                <p className="mb-6 text-lg text-ink-soft">
-                  A Outdoormídia integra o Corajosamente Éticos, movimento global que promove
-                  a ética pessoal e profissional como base da transformação social,
-                  enfrentando a cultura da corrupção e defendendo um mercado justo.
-                </p>
+                <p className="mb-6 text-lg text-ink-soft">{t('eticosP1')}</p>
                 <div className="flex flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
-                  <p className="m-0">
-                    Não é ação pontual nem campanha institucional. É compromisso contínuo com
-                    integridade e coerência nas relações internas e externas, incorporado à
-                    nossa cultura organizacional e orientando decisões, comportamentos e
-                    iniciativas.
-                  </p>
-                  <p className="m-0">
-                    Para quem contrata mídia exterior, isso tem efeito prático: a mesma régua
-                    que aplicamos internamente é a que rege o contrato, a negociação e o que
-                    prometemos na rua.
-                  </p>
+                  <p className="m-0">{t('eticosP2')}</p>
+                  <p className="m-0">{t('eticosP3')}</p>
                 </div>
                 <a
                   className="group mt-7 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange"
@@ -73,7 +66,7 @@ export default async function SocialPage({ params }) {
                   rel="noreferrer"
                   target="_blank"
                 >
-                  Conheça o movimento
+                  {t('eticosCta')}
                   <span
                     aria-hidden
                     className="text-base transition-transform duration-200 group-hover:translate-x-1"
@@ -85,7 +78,7 @@ export default async function SocialPage({ params }) {
               <div className="relative aspect-square w-full overflow-hidden rounded-[16px] border border-line max-tab:w-[200px]">
                 <Image
                   src="/media/social/corajosamente-eticos.webp"
-                  alt="Selo do movimento Corajosamente Éticos"
+                  alt={t('eticosAlt')}
                   fill
                   sizes="240px"
                   className="object-cover"
@@ -100,8 +93,8 @@ export default async function SocialPage({ params }) {
             <SectionHeading title="Loja OM do Bem" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 items-start gap-[34px] max-tab:grid-cols-1">
               <CoverMedia
-                src="/media/social/loja-om-do-bem.webp"
-                alt="Prateleiras da Loja OM do Bem, com ecobags feitas de lona reaproveitada"
+                src="/media/social/loja-om.webp"
+                alt={t('lojaAlt')}
                 label="Loja OM do Bem"
                 ratio="16/10"
                 sizes="(max-width: 980px) 100vw, 50vw"
@@ -109,23 +102,12 @@ export default async function SocialPage({ params }) {
               />
               <div>
                 <h2 className="reveal m-0 max-w-[22ch] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
-                  A lona que sai da face vira renda.
+                  {t('lojaH2')}
                 </h2>
                 <div className="reveal mt-6 flex flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
-                  <p className="m-0">
-                    A Loja OM do Bem é a iniciativa prática dentro do Corajosamente Éticos. Ela
-                    materializa o compromisso da Outdoormídia com responsabilidade social,
-                    economia circular e engajamento interno.
-                  </p>
-                  <p className="m-0">
-                    Doamos, sem custo, as lonas publicitárias que já cumpriram seu ciclo de
-                    exibição. Costureiras capacitadas transformam o material em ecobags e
-                    outros produtos, gerando renda e tirando resíduo de circulação. Esses itens
-                    são vendidos na Loja, junto de snacks e produtos rotativos.
-                  </p>
-                  <p className="m-0">
-                    Todo o lucro é destinado integralmente à ONG Caminho do Renascer.
-                  </p>
+                  <p className="m-0">{t('lojaP1')}</p>
+                  <p className="m-0">{t('lojaP2')}</p>
+                  <p className="m-0">{t('lojaP3')}</p>
                 </div>
               </div>
             </div>
@@ -133,7 +115,7 @@ export default async function SocialPage({ params }) {
             <div className="ticks reveal mt-[34px] max-w-[820px] overflow-hidden rounded-[16px] border border-line bg-white">
               <CoverMedia
                 src="/media/social/caminho-do-renascer.webp"
-                alt="Crianças acolhidas pela ONG Caminho do Renascer"
+                alt={t('renascerAlt')}
                 label="Caminho do Renascer"
                 ratio="16/9"
                 sizes="(max-width: 980px) 100vw, 820px"
@@ -144,31 +126,42 @@ export default async function SocialPage({ params }) {
                   Caminho do Renascer
                 </h3>
                 <div className="mt-4 flex max-w-[62ch] flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-                  <p className="m-0">
-                    Fundada em 2009 por voluntários da própria comunidade, a Caminho do Renascer
-                    acolhe crianças, adolescentes e famílias em situação de vulnerabilidade no
-                    bairro Campo Comprido, em Curitiba.
-                  </p>
-                  <p className="m-0">
-                    Grande parte dessas famílias vive em condições precárias na área de
-                    preservação da bacia do Rio Barigui, sem infraestrutura adequada e exposta a
-                    risco de alagamento e insalubridade, com presença pública ainda pontual. É
-                    onde o resultado da Loja chega.
-                  </p>
+                  <p className="m-0">{t('renascerP1')}</p>
+                  <p className="m-0">{t('renascerP2')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="ticks reveal mt-[34px] max-w-[820px] overflow-hidden rounded-[16px] border border-line bg-white">
+              <div className="grid grid-cols-[minmax(0,220px)_minmax(0,1fr)] gap-8 p-10 max-tab:grid-cols-1 max-mob:p-7">
+                <CoverMedia
+                  src="/media/social/doacao-tampinhas.webp"
+                  alt={t('tampinhasAlt')}
+                  label={t('tampinhasTitulo')}
+                  ratio="3/4"
+                  sizes="(max-width: 980px) 100vw, 220px"
+                />
+                <div>
+                  <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
+                    {t('tampinhasTitulo')}
+                  </h3>
+                  <div className="mt-4 flex max-w-[62ch] flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
+                    <p className="m-0">{t('tampinhasP1')}</p>
+                    <p className="m-0">{t('tampinhasP2')}</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             <p className="reveal mt-[34px] max-w-[70ch] text-[15.5px] leading-relaxed text-ink-soft">
-              A Loja OM do Bem não é produto comercial nem plataforma de mídia. Não integra o
-              portfólio OOH. É uma ação de cultura e ética corporativa.
+              {t('lojaNota')}
             </p>
 
             <Link
               className="group reveal mt-6 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange"
               href="/sobre/ambiental"
             >
-              Veja o ciclo completo da lona
+              {t('lojaCta')}
               <span
                 aria-hidden
                 className="text-base transition-transform duration-200 group-hover:translate-x-1"
@@ -181,50 +174,28 @@ export default async function SocialPage({ params }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]" id="rede-a-servico-da-cidade">
           <div className="wrap">
-            <SectionHeading
-              title="A rede a serviço da cidade"
-              className="reveal mb-[34px]"
-            />
+            <SectionHeading title={t('redeTitulo')} className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              O futuro do OOH não será definido pela capacidade de gerar visibilidade. Será
-              definido pela capacidade de gerar valor.
+              {t('redeLead')}
             </p>
             <article className="ticks reveal grid grid-cols-2 items-start gap-[34px] rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
               <CoverMedia
                 src="/media/social/midia-regenerativa-praca-pet.webp"
-                alt="Poste da Praça de Conveniência Batel com câmera de monitoramento e botão de emergência da Muralha Digital"
-                label="Mídia Regenerativa"
+                alt={t('regAlt')}
+                label={t('regLabel')}
                 ratio="16/10"
                 sizes="(max-width: 980px) 100vw, 50vw"
               />
               <div>
-                <span className="eyebrow">Pioneirismo · Segurança urbana</span>
+                <span className="eyebrow">{t('regEyebrow')}</span>
                 <h2 className="mt-3 text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
-                  Mídia Regenerativa
+                  {t('regLabel')}
                 </h2>
                 <div className="mt-5 flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-                  <p className="m-0">
-                    Praça de Conveniência Batel. O primeiro ativo de mídia exterior conectado à Muralha
-                    Digital de Curitiba, o sistema de monitoramento e inteligência urbana da
-                    cidade.
-                  </p>
-                  <p className="m-0">
-                    A estrutura continua cumprindo sua função de conectar marcas e pessoas, mas
-                    passa a contribuir também para a segurança pública e a qualidade do espaço
-                    urbano. São monitoramento integrado à Muralha Digital e um botão de
-                    emergência instalado para apoio em situações de vulnerabilidade, em um dos
-                    espaços de convivência mais usados da cidade.
-                  </p>
-                  <p className="m-0">
-                    Somos pioneiros na integração entre mídia exterior e segurança urbana em
-                    Curitiba. Em um mercado que discute ESG e cidades inteligentes, esta é a
-                    diferença entre ocupar um espaço e qualificar um espaço.
-                  </p>
-                  <p className="m-0">
-                    Para o anunciante, é a chance de estar em uma estrutura que a cidade
-                    reconhece como útil. Presença urbana também é responsabilidade urbana, e a
-                    melhor comunicação é a que deixa legado.
-                  </p>
+                  <p className="m-0">{t('regP1')}</p>
+                  <p className="m-0">{t('regP2')}</p>
+                  <p className="m-0">{t('regP3')}</p>
+                  <p className="m-0">{t('regP4')}</p>
                 </div>
               </div>
             </article>

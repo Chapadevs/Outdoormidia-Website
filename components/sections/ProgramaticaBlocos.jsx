@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { FLUXO, GLOSSARIO } from '@/lib/programatica'
+import { useLocale } from 'next-intl'
+import { getFluxo, getGlossario } from '@/lib/programatica'
 
 // Os dois blocos longos de /area-do-anunciante/programatica, fechados por
 // padrão desde a revisão de 08/09: quem opera programática não precisa dos seis
@@ -18,6 +19,9 @@ const CABECALHO =
   'flex w-full cursor-pointer items-center justify-between gap-5 py-[22px] text-left transition-colors duration-150 hover:text-orange'
 
 export default function ProgramaticaBlocos() {
+  const locale = useLocale()
+  const FLUXO = getFluxo(locale)
+  const GLOSSARIO = getGlossario(locale)
   const [fluxoAberto, setFluxoAberto] = useState(false)
   const [glossarioAberto, setGlossarioAberto] = useState(false)
   const verbeteAlvo = useRef(null)
@@ -47,7 +51,9 @@ export default function ProgramaticaBlocos() {
       cancelAnimationFrame(frame)
       window.removeEventListener('hashchange', aplicarHash)
     }
-  }, [])
+    // GLOSSARIO é memoizado por locale em porLocale: a referência só muda se o
+    // idioma mudar, e aí o efeito precisa mesmo reler os verbetes.
+  }, [GLOSSARIO])
 
   // O painel só tem altura no frame seguinte ao que abre, então a rolagem
   // espera o estado virar layout.

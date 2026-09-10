@@ -1,23 +1,32 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import SimuladorForm from '@/components/forms/SimuladorForm'
+import { getPeriodos } from '@/lib/simulador'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import { getLocations } from '@/lib/locations'
-import { PLATFORMS } from '@/lib/platforms'
-import { setRequestLocale } from 'next-intl/server'
+import { getPlatforms } from '@/lib/platforms'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Escolha praça, plataforma e período e veja quantos impactos a sua campanha de mídia exterior pode gerar no Paraná e em Santa Catarina.'
 
-export const metadata = {
-  title: 'Sua marca no OOH | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/area-do-anunciante/sua-marca-no-ooh' },
-  openGraph: {
-    title: 'Sua marca no OOH | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('suaMarcaNoOoh.titulo')
+  const descricao = t('suaMarcaNoOoh.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/area-do-anunciante/sua-marca-no-ooh', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export const revalidate = 3600
@@ -26,10 +35,10 @@ export default async function SimuladorPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  const locations = await getLocations()
+  const locations = await getLocations(locale)
   // `semEstimativa` fica de fora: painel sob medida não tem CPM nem alcance de
   // tabela, e sem o filtro ele cairia no impacto padrão do simulador.
-  const platforms = PLATFORMS.filter((p) => !p.semEstimativa).map(({ slug, name }) => ({
+  const platforms = getPlatforms(locale).filter((p) => !p.semEstimativa).map(({ slug, name }) => ({
     slug,
     name,
   }))
@@ -61,7 +70,7 @@ export default async function SimuladorPage({ params }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SimuladorForm locations={locations} platforms={platforms} />
+            <SimuladorForm locations={locations} platforms={platforms} periodos={getPeriodos(locale)} />
           </div>
         </section>
 
