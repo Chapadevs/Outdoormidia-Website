@@ -2,7 +2,8 @@ import { Link } from '@/i18n/navigation'
 import CarrosselContinuo from '@/components/ui/CarrosselContinuo'
 import DiferencialCard from '@/components/ui/DiferencialCard'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { DIFERENCIAIS } from '@/lib/diferenciais'
+import { getLocale } from 'next-intl/server'
+import { getDiferenciais } from '@/lib/diferenciais'
 
 // A altura é declarada aqui e não no card porque quem conhece a caixa é a
 // seção: o coverflow posiciona os cards em absoluto, então a pista precisa da
@@ -10,7 +11,9 @@ import { DIFERENCIAIS } from '@/lib/diferenciais'
 // o card do meio muda de tamanho a cada giro.
 const ALTURA = 'h-[520px] max-mob:h-[500px]'
 
-export default function Diferenciais({ moreHref }) {
+export default async function Diferenciais({ moreHref }) {
+  const DIFERENCIAIS = getDiferenciais(await getLocale())
+
   return (
     // `overflow-clip` pela mesma razão do carrossel de plataformas: `hidden`
     // faria da seção uma caixa rolável, e o navegador a arrastaria na

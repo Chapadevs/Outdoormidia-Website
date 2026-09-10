@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useTranslations } from 'next-intl'
 import CarrosselContinuo from '@/components/ui/CarrosselContinuo'
 import PlatformShowcaseCard from '@/components/ui/PlatformShowcaseCard'
-import { PLATFORMS_LISTAGEM } from '@/lib/platforms'
 
 // 11 colunas soletram "Plataformas" como um letreiro de postes luminosos: cada
 // uma sobe até a própria altura de descanso (`alto`) quando a seção entra na
@@ -144,7 +144,8 @@ function TituloPlataformas() {
   )
 }
 
-export default function PlatformsCarousel() {
+export default function PlatformsCarousel({ plataformas }) {
+  const t = useTranslations('PlatformsCarousel')
   return (
     // `overflow-clip` e não `overflow-hidden`: o segundo faz da seção um
     // contêiner rolável, e o navegador rolaria essa caixa na horizontal para
@@ -154,8 +155,12 @@ export default function PlatformsCarousel() {
       {/* A abertura enquadra a amplitude do portfólio, e é ela que justifica
           nove plataformas em vez de uma: Front Light é aparecer, Projetos
           Icônicos é ser impossível de ignorar. */}
-      <p className="reveal mx-auto mb-[22px] max-w-[52ch] px-8 text-center text-lg text-ink-soft max-mob:px-5">
-        Algumas campanhas precisam aparecer. Outras precisam ser impossíveis de ignorar.
+      <p className="reveal mx-auto mb-[22px] max-w-[52ch] px-8 text-center text-lg font-bold text-ink max-mob:px-5">
+        {t('tituloA')}
+        <span className="text-orange">{t('tituloDestaque1')}</span>
+        {t('tituloB')}
+        <span className="text-orange">{t('tituloDestaque2')}</span>
+        {t('tituloC')}
       </p>
 
       <TituloPlataformas />
@@ -174,11 +179,11 @@ export default function PlatformsCarousel() {
         <CarrosselContinuo
           alturaClasse="h-[calc(var(--cw)*0.5625)] max-mob:h-[calc(var(--cw)*1.25)]"
           gap={26}
-          label="Plataformas Outdoormídia"
+          label={t('carrosselLabel')}
           velocidade={0.055}
           width="min(820px,74vw)"
         >
-          {PLATFORMS_LISTAGEM.map((p) => (
+          {plataformas.map((p) => (
             <PlatformShowcaseCard key={p.slug} p={p} />
           ))}
         </CarrosselContinuo>

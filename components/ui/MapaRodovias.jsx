@@ -1,9 +1,9 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import {
   BRS,
-  CORREDORES,
   ESCALA,
   ETIQUETAS,
   NORTE,
@@ -12,6 +12,7 @@ import {
   SETAS,
   VIEW_H,
   VIEW_W,
+  getCorredores,
 } from '@/lib/mapaRodovias'
 
 /*
@@ -29,6 +30,9 @@ const VERDE_PLACA = '#1B8A3A'
 const SETA = 'M-6.5,-5.5 L6.5,0 L-6.5,5.5 Z'
 
 export default function MapaRodovias({ className = '' }) {
+  const locale = useLocale()
+  const t = useTranslations('MapaRodovias')
+  const CORREDORES = getCorredores(locale)
   const [hover, setHover] = useState(null)
   const [br, setBr] = useState(null)
 
@@ -41,7 +45,8 @@ export default function MapaRodovias({ className = '' }) {
       }
     }
     return mapa
-  }, [])
+    // CORREDORES é memoizado por locale: a referência só muda com o idioma.
+  }, [CORREDORES])
 
   const deCorredores = (lista, noExtra) => ({
     corredores: new Set(lista.map((c) => c.id)),
@@ -54,7 +59,7 @@ export default function MapaRodovias({ className = '' }) {
     if (hover) return hover
     if (br) return deCorredores(CORREDORES.filter((c) => c.br === br))
     return null
-  }, [hover, br])
+  }, [hover, br, CORREDORES])
 
   const viaAcesa = (id) => !foco || foco.corredores.has(id)
   const noAceso = (id) => !foco || foco.nos.has(id)
@@ -89,11 +94,11 @@ export default function MapaRodovias({ className = '' }) {
         <div className="reveal grid gap-6 border-t border-line pt-7 max-tab:order-3 max-tab:w-full max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-5">
           <Grupo titulo="Pontos">
             <Item amostra={<Polo />}>Cidade polo</Item>
-            <Item amostra={<Secundaria />}>Cidade no corredor</Item>
-            <Item amostra={<Apoio />}>Ponto de apoio</Item>
+            <Item amostra={<Secundaria />}>{t('legendaCidade')}</Item>
+            <Item amostra={<Apoio />}>{t('legendaApoio')}</Item>
           </Grupo>
           <Grupo titulo="Vias">
-            <Item amostra={<Via />}>Corredor rodoviário</Item>
+            <Item amostra={<Via />}>{t('legendaCorredor')}</Item>
             <Item amostra={<Sentido />}>Sentido do fluxo</Item>
           </Grupo>
         </div>
@@ -102,7 +107,7 @@ export default function MapaRodovias({ className = '' }) {
       <div className="min-w-0 flex-1 max-tab:order-2 max-tab:w-full">
         <div className="reveal mx-auto max-w-[820px] rounded-[16px] border border-line bg-paper p-2">
           <svg
-            aria-label="Mapa dos corredores rodoviários atendidos entre o Paraná e Santa Catarina"
+            aria-label={t('mapaAlt')}
             className="block h-auto w-full font-display"
             role="img"
             viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
@@ -292,7 +297,7 @@ export default function MapaRodovias({ className = '' }) {
         </div>
 
         <p className="reveal mt-4 text-[13px] leading-relaxed text-ink-soft">
-          O marcador de São Paulo indica distância, não cobertura.
+          {t('notaSaoPaulo')}
         </p>
       </div>
     </div>

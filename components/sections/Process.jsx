@@ -3,28 +3,15 @@
 import { MapPinned, MonitorCheck, PencilRuler } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import SectionHeading from '@/components/ui/SectionHeading'
 import ScrollToButton from '@/components/widgets/ScrollToButton'
 
-const ETAPAS = [
-  {
-    num: '01',
-    title: 'Planejamento',
-    Icone: MapPinned,
-    text: 'Objetivo e região definidos, plataformas e pontos selecionados, audiência lida e proposta de mídia montada.',
-  },
-  {
-    num: '02',
-    title: 'Produção',
-    Icone: PencilRuler,
-    text: 'Especificação por formato, adequação do criativo ao ponto e preparo dos materiais, estáticos ou digitais.',
-  },
-  {
-    num: '03',
-    title: 'Veiculação e dados',
-    Icone: MonitorCheck,
-    text: 'Instalação ou upload, conferência, monitoramento e entrega dos dados de audiência do período.',
-  },
+// Só o ícone e o número da etapa vivem aqui: o texto vem das mensagens.
+const ETAPAS_BASE = [
+  { num: '01', Icone: MapPinned },
+  { num: '02', Icone: PencilRuler },
+  { num: '03', Icone: MonitorCheck },
 ]
 
 // Ponto da pista em que o fecho entra, depois da terceira etapa já acesa. O que
@@ -44,7 +31,9 @@ const ENTRADA_DO_FECHO = 0.78
 // na mesma linha o tempo todo. Abaixo de 980px o trilho não existe (não há
 // largura para três colunas) e a seção vira lista empilhada, com a mesma
 // sequência medida pela linha de gatilho.
-export default function Process({ title = 'Gestão 360 OM' }) {
+export default function Process({ title }) {
+  const t = useTranslations('Process')
+  const ETAPAS = ETAPAS_BASE.map((e, i) => ({ ...e, ...t.raw('etapas')[i] }))
   const pistaRef = useRef(null)
   // null enquanto não houve medição (SSR e sem JS): nesse estado tudo nasce aceso.
   const [progresso, setProgresso] = useState(null)
@@ -92,11 +81,14 @@ export default function Process({ title = 'Gestão 360 OM' }) {
   return (
     <section className="bg-bone pb-[110px] max-mob:pb-[72px]" id="processo">
       <div className="wrap pt-[110px] text-center max-mob:pt-[72px]">
-        <SectionHeading className="reveal mb-4 justify-center" rule={false} title={title} />
+        <SectionHeading
+          className="reveal mb-4 justify-center"
+          rule={false}
+          title={title ?? t('tituloPadrao')}
+        />
         <p className="reveal mb-4 text-lg text-ink-soft">Do objetivo à notoriedade</p>
         <p className="reveal mx-auto max-w-[72ch] text-ink-soft">
-          Você diz o objetivo, para quem e onde precisa aparecer. A Outdoormídia cruza região,
-          fluxo, formato, audiência e investimento para montar o melhor caminho da campanha.
+          {t('lead')}
         </p>
       </div>
 
@@ -170,20 +162,19 @@ export default function Process({ title = 'Gestão 360 OM' }) {
               }`}
             >
               <p className="mx-auto max-w-[70ch] text-ink-soft">
-                Em projetos de painel exclusivo, o Gestão 360 OM inclui ainda consultoria legal de
-                licenciamento e instalação completa.{' '}
+                {t('fechoAntes')}{' '}
                 <Link
                   className="font-bold text-orange transition-colors duration-150 hover:text-ink"
                   href="/plataformas/digital-signage"
                 >
-                  Saiba mais
+                  {t('fechoLink')}
                 </Link>
                 .
               </p>
 
               <div className="mt-9">
                 <ScrollToButton className="btn btn-ghost" targetId="nova-campanha">
-                  Quero anunciar
+                  {t('cta')}
                 </ScrollToButton>
               </div>
             </div>

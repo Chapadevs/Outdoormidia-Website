@@ -1,4 +1,6 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -7,8 +9,8 @@ import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import {
   DIFERENCIAIS_COM_PAGINA,
-  getDiferencialBySlug,
-  getOutrosDiferenciais,
+  getDiferencialBySlugLocale,
+  getOutrosDiferenciaisLocale,
 } from '@/lib/diferenciais'
 import { waDiferencial, waLink } from '@/lib/whatsapp'
 import { setRequestLocale } from 'next-intl/server'
@@ -34,8 +36,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params
-  const diferencial = getDiferencialBySlug(slug)
+  const { locale, slug } = await params
+  const diferencial = getDiferencialBySlugLocale(slug, locale)
   if (!diferencial) return { title: 'Diferencial não encontrado | Outdoormídia' }
 
   // `seo` só existe onde o documento de copy fechou title e description
@@ -45,8 +47,9 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical: `/solucoes/diferenciais/${diferencial.slug}` },
-    openGraph: { title, description, locale: 'pt_BR', type: 'website' },
+    alternates: alternatesDe(`/solucoes/diferenciais/${diferencial.slug}`, locale),
+    openGraph: { title, description, locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]), type: 'website' },
   }
 }
 
@@ -54,7 +57,7 @@ export default async function DiferencialPage({ params }) {
   const { locale, slug } = await params
   setRequestLocale(locale)
   
-  const diferencial = getDiferencialBySlug(slug)
+  const diferencial = getDiferencialBySlugLocale(slug, locale)
   if (!diferencial) notFound()
 
   const {
@@ -76,7 +79,7 @@ export default async function DiferencialPage({ params }) {
   // é o esquema de blocos que fecha a "Aplicação prática", a nova é a de foto
   // Amador/Especialista, que vive em seção própria.
   const { comparativo: comparativoBlocos, miniCase } = aplicacao ?? {}
-  const outros = getOutrosDiferenciais(slug)
+  const outros = getOutrosDiferenciaisLocale(slug, locale)
   // "O que é" depende do `lead`: um `oQueE` só com `cards` existe para alimentar
   // os marcadores do card na home, sem abrir a seção na página dedicada.
   const leadOQueE = oQueE?.lead ? (Array.isArray(oQueE.lead) ? oQueE.lead : [oQueE.lead]) : null

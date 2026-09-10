@@ -1,24 +1,32 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import PostsExplorer from '@/components/blog/PostsExplorer'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { listPublishedPosts } from '@/lib/blog/posts'
 import { listTags } from '@/lib/tags/tags'
 import { listTagGroups } from '@/lib/tags/groups'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Artigos sobre mídia Out of Home no Sul do Brasil: outdoor, painéis de LED, MUB, aeroporto e estratégias para sua marca ocupar as ruas.'
 
-export const metadata = {
-  title: 'Artigos | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/blog/artigos' },
-  openGraph: {
-    title: 'Artigos | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('artigos.titulo')
+  const descricao = t('artigos.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/blog/artigos', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export const revalidate = 300

@@ -1,28 +1,38 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import SectionHeading from '@/components/ui/SectionHeading'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { PODCAST, EPISODIOS } from '@/lib/podcast'
-import { setRequestLocale } from 'next-intl/server'
+import { PODCAST, getPodcast, getEpisodios } from '@/lib/podcast'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Rua Principal, o podcast da Outdoormídia: conversas sobre marcas, cidades e mídia Out of Home no Paraná e em Santa Catarina.'
 
-export const metadata = {
-  title: 'Podcast | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/blog/podcast' },
-  openGraph: {
-    title: 'Podcast | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
-  robots: { index: false, follow: true },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('podcast.titulo')
+  const descricao = t('podcast.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/blog/podcast', locale),
+    robots: { index: false, follow: true },
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function PodcastPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const podcast = getPodcast(locale)
+  const episodios = getEpisodios(locale)
 
   return (
     <>
@@ -37,7 +47,7 @@ export default async function PodcastPage({ params }) {
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               Podcast.
             </h1>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{PODCAST.text}</p>
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{podcast.text}</p>
           </div>
         </section>
 
@@ -46,7 +56,7 @@ export default async function PodcastPage({ params }) {
             <SectionHeading title="Episódios" className="reveal mb-[34px]" />
 
             <ul className="m-0 grid list-none grid-cols-3 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
-              {EPISODIOS.map((ep) => (
+              {episodios.map((ep) => (
                 <li
                   key={ep.slug}
                   className="ticks reveal flex flex-col gap-4 rounded-[16px] border border-line bg-white p-9 max-mob:p-7"
@@ -87,7 +97,7 @@ export default async function PodcastPage({ params }) {
             </ul>
 
             <p className="reveal mt-9 max-w-[62ch] text-[15px] leading-relaxed text-ink-soft">
-              {PODCAST.tagline} Os episódios entram aqui assim que forem gravados, e também
+              {podcast.tagline} Os episódios entram aqui assim que forem gravados, e também
               nas plataformas de áudio.
             </p>
           </div>

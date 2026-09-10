@@ -1,26 +1,34 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import ObrigadoCta from '@/components/widgets/ObrigadoCta'
-import { ORIGENS, SUGESTOES } from '@/lib/obrigado'
-import { setRequestLocale } from 'next-intl/server'
+import { getOrigens, getSugestoes } from '@/lib/obrigado'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Recebemos a sua solicitação. Nosso time comercial retorna em até 1 dia útil com praças, formatos e valores.'
 
-export const metadata = {
-  title: 'Obrigado | Outdoormídia',
-  description: DESCRIPTION,
-  // Tela de confirmação não vai ao índice: só faz sentido para quem acabou de
-  // enviar um formulário. Por isso também fica fora de lib/seo.js.
-  robots: { index: false, follow: true },
-  alternates: { canonical: '/obrigado' },
-  openGraph: {
-    title: 'Obrigado | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+// Tela de confirmação não vai ao índice: só faz sentido para quem acabou de
+// enviar um formulário. Por isso também fica fora de lib/seo.js.
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('obrigado.titulo')
+  const descricao = t('obrigado.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/obrigado', locale),
+    robots: { index: false, follow: true },
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function ObrigadoPage({ params, searchParams }) {
@@ -28,7 +36,8 @@ export default async function ObrigadoPage({ params, searchParams }) {
   setRequestLocale(locale)
 
   const { origem } = await searchParams
-  const conteudo = ORIGENS[origem] ?? ORIGENS.padrao
+  const origens = getOrigens(locale)
+  const conteudo = origens[origem] ?? origens.padrao
 
   return (
     <>
@@ -78,7 +87,7 @@ export default async function ObrigadoPage({ params, searchParams }) {
           <div className="wrap">
             <SectionHeading title="Enquanto isso" className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
-              {SUGESTOES.map((s) => (
+              {getSugestoes(locale).map((s) => (
                 <Link
                   className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
                   href={s.href}

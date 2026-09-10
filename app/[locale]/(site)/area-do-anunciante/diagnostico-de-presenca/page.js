@@ -1,25 +1,33 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import CoverMedia from '@/components/ui/CoverMedia'
 import EscadaPresenca from '@/components/ui/EscadaPresenca'
 import DiagnosticoQuiz from '@/components/forms/DiagnosticoQuiz'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 const HERO_ALT =
   'A teoria da Escada da Presença: pessoa subindo cinco degraus de concreto, nomeados existência, descoberta, reconhecimento, preferência e referência, até um outdoor iluminado da Outdoormídia no topo.'
 
-const DESCRIPTION =
-  'Responda 10 perguntas em um minuto e descubra em qual dos cinco degraus da Escada da Presença a sua marca está hoje, e o que fazer para subir.'
 
-export const metadata = {
-  title: 'Diagnóstico de Presença de Marca | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/area-do-anunciante/diagnostico-de-presenca' },
-  openGraph: {
-    title: 'Diagnóstico de Presença de Marca | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('diagnostico.titulo')
+  const descricao = t('diagnostico.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/area-do-anunciante/diagnostico-de-presenca', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function DiagnosticoDePresencaPage({ params }) {

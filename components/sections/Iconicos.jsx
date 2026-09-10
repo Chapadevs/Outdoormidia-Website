@@ -5,15 +5,8 @@ import { useEffect, useState } from 'react'
 import AtivoCard from '@/components/ui/AtivoCard'
 import AuroraField from '@/components/ui/AuroraField'
 import SlideStage from '@/components/ui/SlideStage'
-import { ICONICOS } from '@/lib/iconicos'
-
-// O palco só entra se os três projetos tiverem foto: ele é indexado pelo mesmo
-// `active` das abas, e um projeto sem imagem desalinharia aba e imagem.
-const TODOS_COM_FOTO = ICONICOS.every((i) => i.image)
-const SLIDES = ICONICOS.map((i) => ({
-  src: i.image,
-  alt: i.imageAlt || `${i.name}: ${i.tagline}`,
-}))
+import { useLocale } from 'next-intl'
+import { getIconicos } from '@/lib/iconicos'
 
 // `linkTitulo` desliga o link do h2: dentro de /plataformas/projetos-iconicos
 // ele apontaria para a própria página. `comAtivos` liga o grid de ativos de
@@ -22,6 +15,17 @@ const SLIDES = ICONICOS.map((i) => ({
 // (LinhaTabs), com uma navegação Green/Regenerativo/Elegancy própria que
 // repetia a desta faixa.
 export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
+  const locale = useLocale()
+  const ICONICOS = getIconicos(locale)
+
+  // O palco só entra se os três projetos tiverem foto: ele é indexado pelo
+  // mesmo `active` das abas, e um projeto sem imagem desalinharia aba e imagem.
+  const TODOS_COM_FOTO = ICONICOS.every((i) => i.image)
+  const SLIDES = ICONICOS.map((i) => ({
+    src: i.image,
+    alt: i.imageAlt || `${i.name}: ${i.tagline}`,
+  }))
+
   const [active, setActive] = useState(0)
 
   const go = (i) => setActive(((i % ICONICOS.length) + ICONICOS.length) % ICONICOS.length)
@@ -38,7 +42,8 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
     daHash()
     window.addEventListener('hashchange', daHash)
     return () => window.removeEventListener('hashchange', daHash)
-  }, [])
+    // ICONICOS é memoizado por locale: a referência só muda com o idioma.
+  }, [ICONICOS])
 
   return (
     <>

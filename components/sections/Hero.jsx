@@ -1,11 +1,13 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 
-const VIDEO_SRC = '/media/video-hero.mp4'
+const VIDEO_SRC = '/media/home/hero-home.mp4'
 
 export default function Hero() {
+  const t = useTranslations('Hero')
   const [loadVideo, setLoadVideo] = useState(false)
   const videoRef = useRef(null)
 
@@ -62,22 +64,21 @@ export default function Hero() {
     <section id="inicio" className="relative h-[min(100svh,56.25vw)] min-h-[560px] w-full overflow-hidden bg-ink max-mob:flex max-mob:h-auto max-mob:min-h-0 max-mob:flex-col max-mob:gap-5 max-mob:bg-paper max-mob:pb-[40px] max-mob:pt-[32px]">
       <div className="wrap absolute inset-x-0 top-0 z-10 pt-[48px] max-mob:static max-mob:order-2 max-mob:pt-0">
         <h1 className="display text-center text-[clamp(30px,5vw,78px)] [text-shadow:0_2px_18px_rgba(22,17,13,0.45)] max-mob:text-ink max-mob:[text-shadow:none]">
-          <strong className="font-extrabold text-orange">Toda Hora</strong>, em Todo Lugar.
+          <strong className="font-extrabold text-orange">{t('tituloForte')}</strong>
+          {t('tituloResto')}
         </h1>
         <p className="mx-auto mt-6 max-w-[70ch] text-center text-[19px] font-medium leading-relaxed text-white [text-shadow:0_2px_16px_rgba(22,17,13,0.75)] max-mob:mt-4 max-mob:text-left max-mob:text-base max-mob:font-normal max-mob:text-ink-soft max-mob:[text-shadow:none]">
-          Não escolhemos apenas onde sua marca aparece, mas onde ela precisa estar. Planejamos
-          região, formato e período com base em fluxo e audiência real: do outdoor clássico ao
-          DOOH, nas regiões e rodovias que ligam o Paraná a Santa Catarina.
+          {t('lead')}
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3 max-mob:mt-6 max-mob:flex-col max-mob:flex-nowrap max-mob:items-stretch">
           <Link className="btn btn-fill max-mob:w-full max-mob:justify-center" href="/#nova-campanha">
-            Planejar Campanha
+            {t('ctaPlanejar')}
           </Link>
           <Link
             className="btn max-mob:w-full max-mob:justify-center max-mob:border-ink max-mob:text-ink max-mob:[--rr-fill:var(--color-ink)] max-mob:hover:text-white"
             href="/#plataformas"
           >
-            Ver Plataformas
+            {t('ctaPlataformas')}
           </Link>
         </div>
       </div>

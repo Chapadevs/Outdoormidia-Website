@@ -2,17 +2,16 @@
 import { useState } from 'react'
 import Accordion from '@/components/ui/Accordion'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { CATEGORIAS_FAQ, FAQS } from '@/lib/faq'
 import { waFaqPage, waLink } from '@/lib/whatsapp'
 
 // Uma pergunta aberta por vez em toda a página — o estado guarda a categoria e o
 // índice dentro dela, porque o link de WhatsApp leva a pergunta em foco.
-export default function FaqCategorias() {
-  const [aberta, setAberta] = useState({ categoria: CATEGORIAS_FAQ[0], index: 0 })
+export default function FaqCategorias({ faqs, categorias }) {
+  const [aberta, setAberta] = useState({ categoria: categorias[0], index: 0 })
 
-  const grupos = CATEGORIAS_FAQ.map((categoria) => ({
+  const grupos = categorias.map((categoria) => ({
     categoria,
-    itens: FAQS.filter((f) => f.categoria === categoria),
+    itens: faqs.filter((f) => f.categoria === categoria),
   })).filter((g) => g.itens.length > 0)
 
   const emFoco = grupos

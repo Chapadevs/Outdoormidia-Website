@@ -44,5 +44,418 @@
     "tagline": "Out of Home en el Sur de Brasil desde hace 67 años. Su marca donde está la gente.",
     "curitiba": "Curitiba",
     "santaCatarina": "Santa Catarina"
+  },
+  "Meta": {
+    "sobre": {
+      "titulo": "Sobre nosotros | Outdoormídia",
+      "descricao": "Outdoormídia pone marcas en las calles de Paraná y de Santa Catarina desde 1959: 67 años de operación propia en medios exteriores, del outdoor impreso al panel de LED."
+    },
+    "ambiental": {
+      "titulo": "Ambiental | Outdoormídia",
+      "descricao": "Plaza de Carga Eléctrica, Plaza de Conveniencia Batel y Jardín Vertical, el ciclo de la lona y las prácticas que reducen el impacto de la operación: el frente ambiental de Outdoormídia en Paraná y en Santa Catarina."
+    },
+    "social": {
+      "titulo": "Social | Outdoormídia",
+      "descricao": "Corajosamente Éticos, Loja OM do Bem y Medios Regenerativos: los valores, la economía circular de la lona y el primer activo de medios exteriores conectado a la Muralha Digital de Curitiba."
+    },
+    "governanca": {
+      "titulo": "Gobernanza | Outdoormídia",
+      "descricao": "Quién responde por la empresa, licencias de los puntos, exclusividad en contrato, tratamiento de datos de audiencia y conducta comercial: cómo opera Outdoormídia y qué entrega por escrito."
+    },
+    "trabalheConosco": {
+      "titulo": "Trabaja con nosotros | Outdoormídia",
+      "descricao": "Forma parte de la empresa que ocupa las calles del Sur de Brasil desde 1959. Regístrate en el banco de talentos de Outdoormídia y entérate cuando se abra una vacante en tu área."
+    },
+    "solucoes": {
+      "titulo": "Soluciones | Outdoormídia",
+      "descricao": "Todo lo que Outdoormídia pone en la calle: los diferenciales que sostienen la operación, las plazas de Paraná y Santa Catarina, las 8 plataformas de medios exteriores y los proyectos icónicos."
+    },
+    "diferenciais": {
+      "titulo": "Diferenciales | Outdoormídia",
+      "descricao": "Face Única, el Aeroporto Square, audiencia medida, medios regenerativos, circuitos MUB por nicho y la Gestão 360 OM: lo que separa una campaña que la ciudad ve de una que pasa desapercibida."
+    },
+    "regioesCobertura": {
+      "titulo": "Dónde anunciamos: Curitiba, Litoral, Joinville, Itajaí y Balneário | Outdoormídia",
+      "descricao": "Medios exteriores en Curitiba, Región Metropolitana, Litoral de Paraná, Joinville, Itajaí, Balneário Camboriú y en las carreteras que unen Paraná y Santa Catarina."
+    },
+    "plataformas": {
+      "titulo": "Plataformas | Outdoormídia",
+      "descricao": "Conoce las plataformas de medios exteriores de Outdoormídia: del outdoor digital al mobiliario urbano, más los Proyectos Icónicos, cubriendo Paraná y Santa Catarina."
+    },
+    "projetosIconicos": {
+      "titulo": "Proyectos Icónicos | Outdoormídia",
+      "descricao": "Estructuras de autor de Outdoormídia: esquinas digitales en 3D, paneles híbridos, jardines vivos y requalificación urbana en Curitiba y Joinville."
+    },
+    "areaDoAnunciante": {
+      "titulo": "Área del anunciante | Outdoormídia",
+      "descricao": "Diagnóstico de presencia, Tu marca en OOH, Mejores prácticas y FAQ: las herramientas para resolverlo por tu cuenta antes de hablar con el comercial."
+    },
+    "diagnostico": {
+      "titulo": "Diagnóstico de Presencia de Marca | Outdoormídia",
+      "descricao": "Responde 10 preguntas en un minuto y descubre en cuál de los cinco escalones de la Escalera de la Presencia está tu marca hoy, y qué hacer para subir."
+    },
+    "suaMarcaNoOoh": {
+      "titulo": "Tu marca en OOH | Outdoormídia",
+      "descricao": "Elige plaza, plataforma y período y mira cuántos impactos puede generar tu campaña de medios exteriores en Paraná y en Santa Catarina."
+    },
+    "melhoresPraticas": {
+      "titulo": "Cómo planificar una campaña de medios exteriores: 8 prácticas | Outdoormídia",
+      "descricao": "Ocho decisiones que separan la campaña que funciona de la que solo aparece. Cómo elegir plaza, formato, período y momento antes de comprar medios exteriores."
+    },
+    "programatica": {
+      "titulo": "Medios Programáticos | Outdoormídia",
+      "descricao": "El inventario de Outdoormídia está conectado a las principales SSP del mercado: compra las pantallas de nuestra operación por la DSP que tu agencia o trading desk ya usa."
+    },
+    "faq": {
+      "titulo": "FAQ | Outdoormídia",
+      "descricao": "Dudas sobre anunciar en medios exteriores en Paraná y en Santa Catarina: plazas, formatos, medición de resultados, exclusividad del punto y cómo pedir una propuesta."
+    },
+    "blog": {
+      "titulo": "Blog | Outdoormídia",
+      "descricao": "Contenido Out of Home de Outdoormídia: cases de campañas reales en Paraná y en Santa Catarina y artículos sobre medios exteriores, audiencia y formatos."
+    },
+    "artigos": {
+      "titulo": "Artículos | Outdoormídia",
+      "descricao": "Artículos sobre medios Out of Home en el Sur de Brasil: outdoor, paneles de LED, mobiliario urbano, aeropuerto y estrategias para que tu marca ocupe las calles."
+    },
+    "podcast": {
+      "titulo": "Podcast | Outdoormídia",
+      "descricao": "Rua Principal, el podcast de Outdoormídia: conversaciones sobre marcas, ciudades y medios Out of Home en Paraná y en Santa Catarina."
+    },
+    "cases": {
+      "titulo": "Cases | Outdoormídia",
+      "descricao": "Cases de medios Out of Home de Outdoormídia: campañas en outdoor, LED, mobiliario urbano, aeropuerto y proyectos icónicos en Paraná y en Santa Catarina."
+    },
+    "proposta": {
+      "titulo": "Solicitar Propuesta | Outdoormídia",
+      "descricao": "Completa el briefing y recibe una propuesta de medios exteriores a medida en hasta 1 día hábil."
+    },
+    "obrigado": {
+      "titulo": "Gracias | Outdoormídia",
+      "descricao": "Recibimos tu solicitud. Nuestro equipo comercial responde en hasta 1 día hábil con plazas, formatos y valores."
+    },
+    "privacidade": {
+      "titulo": "Política de Privacidad | Outdoormídia",
+      "descricao": "Cómo Outdoormídia recopila, usa y protege los datos de quien entra en contacto por el sitio: finalidades, bases legales de la LGPD, plazos de guarda y cómo ejercer tus derechos."
+    },
+    "termos": {
+      "titulo": "Términos de Uso | Outdoormídia",
+      "descricao": "Las reglas de uso del sitio de Outdoormídia: propiedad del contenido, materiales para descarga, carácter estimativo del simulador y del diagnóstico, y límites de responsabilidad."
+    }
+  },
+  "PlataformasPage": {
+    "eyebrow": "Catálogo · {n} plataformas",
+    "h1": "Plataformas.",
+    "lead": "Ninguna campaña se resuelve con un solo formato. Son {n} plataformas que se combinan según el público que necesitas alcanzar, del LED de alta circulación al mobiliario urbano de barrio, cubriendo Paraná y Santa Catarina. Abriendo la lista, los Proyectos Icónicos: estructuras de autor diseñadas punto a punto.",
+    "ctaPlanejar": "Planificar campaña",
+    "ctaFormatos": "Ver formatos",
+    "numeros": {
+      "plataformas": "Plataformas",
+      "telas": "Pantallas digitales",
+      "impactos": "Impactos por mes",
+      "anos": "Años de operación"
+    },
+    "formatosTitulo": "La plataforma es dónde. El formato es cómo.",
+    "formatosTexto": "La plataforma define el ambiente que ocupa tu marca. El formato define el tamaño, la proporción y el tipo de pieza que sale al aire. Son {n} productos de catálogo, y cada plataforma trabaja con un recorte de ellos.",
+    "verTiposDeMidia": "Ver tipos de medios",
+    "cliqueFotos": "Haz clic en los botones para ver las fotos de cada formato.",
+    "comoLerTitulo": "Cómo leer los nombres",
+    "comoLerTexto": "Top es vertical, el mismo encuadre de un reel. Poster es horizontal, el mismo encuadre de un video. Todo lo que empieza con Super tiene el doble del tamaño."
+  },
+  "SocialPage": {
+    "breadcrumb": "Social",
+    "eyebrow": "Sobre nosotros · Social",
+    "h1": "Social.",
+    "lead": "Outdoormídia entiende que el liderazgo de mercado no se construye solo con innovación, tecnología y presencia urbana. También se sostiene por medio de valores claros, coherencia y responsabilidad institucional.",
+    "eticosP1": "Outdoormídia integra Corajosamente Éticos, movimiento global que promueve la ética personal y profesional como base de la transformación social, enfrentando la cultura de la corrupción y defendiendo un mercado justo.",
+    "eticosP2": "No es una acción puntual ni una campaña institucional. Es un compromiso continuo con la integridad y la coherencia en las relaciones internas y externas, incorporado a nuestra cultura organizacional y orientando decisiones, comportamientos e iniciativas.",
+    "eticosP3": "Para quien contrata medios exteriores, eso tiene un efecto práctico: la misma vara que aplicamos internamente es la que rige el contrato, la negociación y lo que prometemos en la calle.",
+    "eticosCta": "Conoce el movimiento",
+    "eticosAlt": "Sello del movimiento Corajosamente Éticos",
+    "lojaAlt": "Estantes de la Loja OM do Bem, con ecobolsas hechas de lona reaprovechada",
+    "lojaH2": "La lona que sale de la cara se vuelve ingreso.",
+    "lojaP1": "La Loja OM do Bem es la iniciativa práctica dentro de Corajosamente Éticos. Materializa el compromiso de Outdoormídia con la responsabilidad social, la economía circular y el compromiso interno.",
+    "lojaP2": "Donamos, sin costo, las lonas publicitarias que ya cumplieron su ciclo de exhibición. Costureras capacitadas transforman el material en ecobolsas y otros productos, generando ingresos y sacando residuos de circulación. Esos artículos se venden en la Loja, junto a snacks y productos rotativos.",
+    "lojaP3": "Todo el lucro se destina íntegramente a la ONG Caminho do Renascer.",
+    "renascerAlt": "Niños acogidos por la ONG Caminho do Renascer",
+    "renascerP1": "Fundada en 2009 por voluntarios de la propia comunidad, Caminho do Renascer acoge a niños, adolescentes y familias en situación de vulnerabilidad en el barrio Campo Comprido, en Curitiba.",
+    "renascerP2": "Gran parte de esas familias vive en condiciones precarias en el área de preservación de la cuenca del río Barigui, sin infraestructura adecuada y expuesta a riesgo de inundación e insalubridad, con presencia pública aún puntual. Es ahí donde llega el resultado de la Loja.",
+    "tampinhasTitulo": "Recolección de tapitas",
+    "tampinhasAlt": "Tapitas plásticas de colores recolectadas en la recepción de Outdoormídia",
+    "tampinhasP1": "En la recepción de la sede, colaboradores y visitantes separan las tapitas plásticas en vez de descartarlas junto con la basura común. El punto de recolección queda al lado de la propia marca de la empresa, abierto a cualquier persona que pase por ahí.",
+    "tampinhasP2": "El material sigue a reciclaje, sacando de circulación un residuo pequeño y constante, pero que se acumula rápido. Es la misma lógica detrás de la lona que se vuelve ecobolsa: dar destino correcto a lo que el día a día produce, antes de que se vuelva vertedero.",
+    "lojaNota": "La Loja OM do Bem no es un producto comercial ni una plataforma de medios. No integra el portafolio OOH. Es una acción de cultura y ética corporativa.",
+    "lojaCta": "Mira el ciclo completo de la lona",
+    "redeTitulo": "La red al servicio de la ciudad",
+    "redeLead": "El futuro del OOH no se definirá por la capacidad de generar visibilidad. Se definirá por la capacidad de generar valor.",
+    "regAlt": "Poste de la Plaza de Conveniencia Batel con cámara de monitoreo y botón de emergencia de la Muralha Digital",
+    "regLabel": "Medios Regenerativos",
+    "regEyebrow": "Pionerismo · Seguridad urbana",
+    "regP1": "Plaza de Conveniencia Batel. El primer activo de medios exteriores conectado a la Muralha Digital de Curitiba, el sistema de monitoreo e inteligencia urbana de la ciudad.",
+    "regP2": "La estructura sigue cumpliendo su función de conectar marcas y personas, pero pasa a contribuir también a la seguridad pública y a la calidad del espacio urbano. Son monitoreo integrado a la Muralha Digital y un botón de emergencia instalado para apoyo en situaciones de vulnerabilidad, en uno de los espacios de convivencia más usados de la ciudad.",
+    "regP3": "Somos pioneros en la integración entre medios exteriores y seguridad urbana en Curitiba. En un mercado que discute ESG y ciudades inteligentes, esta es la diferencia entre ocupar un espacio y calificar un espacio.",
+    "regP4": "Para el anunciante, es la oportunidad de estar en una estructura que la ciudad reconoce como útil. La presencia urbana también es responsabilidad urbana, y la mejor comunicación es la que deja legado."
+  },
+  "AmbientalPage": {
+    "breadcrumb": "Ambiental",
+    "eyebrow": "Sobre nosotros · Ambiental",
+    "h1": "Ambiental.",
+    "lead": "Ocupar la ciudad durante 67 años crea una obligación con ella. Nuestra respuesta no es un informe: son plazas entregadas, paneles vivos y lona que vuelve como producto. Medios exteriores que devuelven en la práctica al espacio que ocupan.",
+    "realidadeTitulo": "Lo que ya es realidad",
+    "realidadeLead": "No hablamos de intención ambiental. Hablamos de estructura entregada, con dirección, mantenimiento por nuestra cuenta y uso público diario. Cada proyecto de abajo es un activo de medios exteriores que la ciudad usa incluso cuando no está mirando la marca.",
+    "realidadeNotaAntes": "Todos integran la cartera ",
+    "realidadeNotaMarca": "Medios Regenerativos",
+    "realidadeNotaDepois": ", que reúne además el MUB Garden, primer mobiliario urbano digital de Curitiba con jardín vivo, el Jardim Digital y las demás plazas pet de la ciudad.",
+    "cicloTitulo": "El ciclo de la lona",
+    "cicloH2": "La lona sale de la cara y vuelve como producto.",
+    "cicloP1": "Toda campaña impresa termina con una lona retirada. El destino estándar del sector es el vertedero. El nuestro no.",
+    "cicloP2": "Outdoormídia dona, sin costo, las lonas publicitarias que ya cumplieron el ciclo de exhibición. Costureras capacitadas transforman el material en ecobolsas y otros productos, generando ingresos y sacando el residuo de circulación. Economía circular con proceso verificable, no con sello comprado.",
+    "cicloP3": "La iniciativa forma parte del programa Corajosamente Éticos, y todo el resultado se destina a un proyecto social socio.",
+    "cicloCta": "Conoce el programa completo",
+    "kopherTitulo": "Donación de residuos electrónicos al Instituto Kópher",
+    "kopherLogoAlt": "Logo del Instituto Kópher",
+    "kopherP1": "Realizamos la donación de equipos electroelectrónicos obsoletos al Instituto Kópher, organización sin fines de lucro que hace nueve años actúa en la promoción del bienestar de la comunidad, uniendo responsabilidad ambiental e inclusión social.",
+    "kopherP2": "La donación apoya directamente al Programa Resgate, iniciativa pionera del instituto orientada a la manufactura inversa de residuos electrónicos. El proyecto promueve la capacitación de personas en situación de vulnerabilidad, especialmente en comunidades terapéuticas, contribuyendo con su reintegración familiar y profesional.",
+    "kopherCertificadoAlt": "Certificado de donación del Instituto Kópher",
+    "operacaoTitulo": "Cómo la operación reduce impacto",
+    "operacaoLead": "Un panel iluminado consume energía y una cara impresa genera residuo. Son dos cuentas que los medios exteriores pagan todos los meses, y que nuestra operación trata como decisión técnica, no como discurso."
+  },
+  "GovernancaPage": {
+    "breadcrumb": "Gobernanza",
+    "eyebrow": "Sobre nosotros · Gobernanza",
+    "h1": "Gobernanza.",
+    "lead": "Aprobar una compra de medios exteriores exige saber con qué licencia opera el punto, qué está escrito en el contrato y quién firma por él. En una empresa familiar de capital cerrado, esa última respuesta tiene nombre y apellido.",
+    "quemTitulo": "Quién responde",
+    "ceoLegenda": "Halisson Pontarola, CEO",
+    "ceoP1": "La reputación en medios exteriores no se construye durante la campaña. Se construye en lo que ocurre después de ella.",
+    "ceoP2": "Son 67 años de operación familiar. El punto instalado hoy sigue siendo nuestro dentro de diez años, y el anunciante atendido también. Eso cambia cómo se negocia, qué se promete y qué se rehúsa hacer.",
+    "ceoP3": "Halisson Pontarola es CEO del Grupo Outdoormídia, actuando hace más de 30 años al frente de la compañía y liderando la transformación del sector de medios exteriores en Brasil.",
+    "ceoP4": "Administrador de empresas, posee un MBA en Marketing con extensión por la Penn State University, especialización en Gestión Empresarial por la FGV, formación como Master Coach por la SBC y maestría en Teología. Su formación ejecutiva incluye además Liderazgo Avanzado por el Haggai Institute, gestión de empresas familiares por la EBC y certificación como consejero por la Fundação Dom Cabral.",
+    "ceoP5": "Conferencista, mentor y consejero de empresarios, es fundador de la Mentoria 10+1, donde actúa en el desarrollo de líderes y emprendedores, con foco en soluciones de conflictos en el ambiente corporativo familiar y crecimiento sostenible de pequeñas y medianas empresas. Es también autor del libro Meu Pequeno Grande Negócio, obra orientada al fortalecimiento de la gestión, el liderazgo y la sucesión empresarial.",
+    "ceoP6": "Con más de tres décadas de experiencia práctica, Halisson construyó un liderazgo marcado por estrategia, valores y desarrollo humano, ayudando a empresas familiares a evolucionar con gobernanza, claridad y visión de futuro.",
+    "ceoP7": "Actualmente, también es Director-Presidente de la Central de Outdoor, entidad nacional que representa y desarrolla el mercado de medios exteriores en Brasil.",
+    "estruturaTitulo": "Estructura y compliance",
+    "docTitulo": "¿Necesitas un documento ahora?",
+    "docTexto": "Certificado para registro de proveedor, minuta de contrato o dato registral para licitación. Dinos qué exige tu proceso y lo enviamos.",
+    "docCta": "Solicitar documento"
+  },
+  "SobrePage": {
+    "breadcrumb": "Sobre nosotros",
+    "eyebrow": "Desde 1959 · PR + SC",
+    "h1": "Sobre nosotros.",
+    "lead": "Nueve plataformas de medios exteriores en Paraná y en Santa Catarina, operadas de punta a punta por nuestro equipo. De la negociación a la instalación, quien promete es quien ejecuta.",
+    "capaAlt": "Equipo de Outdoormídia reunido frente a la sede, en Curitiba",
+    "sobreOmLabel": "Sobre la OM",
+    "sobreOmP1": "Todo empezó en **1959**, a las orillas de las carreteras de Paraná, con un balde de pegamento, papel y una idea en la cabeza. El Sr. Euclides Aristides Farias no vendía medios exteriores. Pegaba sueños en paneles de papel, conectando mensajes al movimiento de quien cruzaba las rutas.",
+    "sobreOmP2": "Junto a su yerno, Hamilton Pontarola, transformó talento en visión y visión en negocio. Así nació **Outdoormídia**.",
+    "sobreOmP3": "De una pequeña empresa familiar en Curitiba, nos volvimos referencia en **Out of Home en el Sur de Brasil**. Crecimos acompañando el movimiento de las calles, de las ciudades, de la tecnología y, principalmente, de las personas.",
+    "sobreOmP4": "Son 67 años y nueve plataformas integradas de **OOH y DOOH**: la única operación de Paraná con ese alcance. Del outdoor impreso al panel de LED, unimos estrategia, tecnología e inteligencia de audiencia para **colocar tu marca donde necesita ser vista**.",
+    "sobreOmP5": "Pero esa transformación no ocurrió sola. Fue construida con cada cliente que creyó que se podía hacer diferente, y con un equipo que lo hace realidad todos los días, con **pasión, técnica y visión de futuro**.",
+    "presencaLabel": "Presencia",
+    "presencaTexto": "Estamos presentes en Curitiba, Región Metropolitana, Litoral de Paraná, Joinville, Itajaí y Balneário Camboriú, siempre en los puntos de mayor flujo, visibilidad e impacto real.",
+    "pracas": [
+      "Curitiba",
+      "Región Metropolitana",
+      "Litoral de Paraná",
+      "Joinville",
+      "Itajaí",
+      "Balneário Camboriú",
+      "Carreteras PR-SC"
+    ],
+    "processTitulo": "Por qué Outdoormídia",
+    "compromissoTitulo": "Nuestro compromiso",
+    "compromissoLead": "Ocupar la calle durante 67 años crea una obligación con ella. Lo que hacemos con los residuos, lo que devolvemos a la ciudad y lo que firmamos en contrato.",
+    "compromisso": [
+      {
+        "imageAlt": "Panel de LED de Outdoormídia integrado a un jardín vertical en la fachada",
+        "eyebrow": "Compromiso · Ambiental",
+        "title": "Ambiental",
+        "text": "Un panel iluminado gasta energía y la lona se vuelve residuo. Por eso convertimos las caras a LED, damos otro destino a la lona y devolvemos en mobiliario urbano lo que ocupamos de la ciudad.",
+        "cta": "Ver lo que ya es realidad"
+      },
+      {
+        "imageAlt": "Poste de mobiliario urbano de Outdoormídia con cámara de monitoreo 24h",
+        "eyebrow": "Compromiso · Social",
+        "title": "Social",
+        "text": "Integramos Corajosamente Éticos, donamos la lona que sale de la cara para volverse ingreso en la Loja OM do Bem y firmamos el primer activo de Medios Regenerativos de Curitiba.",
+        "cta": "Ver iniciativas"
+      },
+      {
+        "imageAlt": "Retrato de Halisson Pontarola, CEO de Outdoormídia",
+        "eyebrow": "Compromiso · Gobernanza",
+        "title": "Gobernanza",
+        "text": "Un punto irregular es un problema que salpica al anunciante. Todos los nuestros están licenciados, con exclusividad en contrato y un nombre respondiendo por cada línea de él.",
+        "cta": "Ver cómo operamos"
+      }
+    ],
+    "timeTitulo": "¿Quieres formar parte del equipo OM?",
+    "timeTexto": "Toda campaña que la ciudad ve pasó por la mano de alguien aquí. Si quieres que tu trabajo aparezca en la calle, deja tu currículum en nuestro banco de talentos.",
+    "timeCta": "Trabaja con nosotros"
+  },
+  "Hero": {
+    "tituloForte": "Toda Hora",
+    "tituloResto": ", en Todo Lugar.",
+    "lead": "No elegimos solamente dónde aparece tu marca, sino dónde necesita estar. Planificamos región, formato y período con base en flujo y audiencia real: del outdoor clásico al DOOH, en las regiones y carreteras que unen Paraná a Santa Catarina.",
+    "ctaPlanejar": "Planificar Campaña",
+    "ctaPlataformas": "Ver Plataformas"
+  },
+  "Institutional": {
+    "eyebrow": "Desde 1959 · PR + SC",
+    "tituloA": "Referencia ayer.",
+    "tituloB": "Innovación hoy.",
+    "p1Antes": "Son ",
+    "p1Anos": "67 años",
+    "p1Meio": " colocando marcas donde la ciudad pasa: de Curitiba al Litoral, de las carreteras a Santa Catarina. Mientras el mercado descubre los ",
+    "p1Ooh": "Medios Out of Home",
+    "p1Depois": ", Outdoormídia ayudó a construirlos.",
+    "p2": "Cada punto de nuestra cobertura se elige estratégicamente antes de volverse impacto, y es esa lectura de ciudad, construida década tras década, la que transforma los medios OOH en resultado de campaña."
+  },
+  "Process": {
+    "tituloPadrao": "Gestão 360 OM",
+    "lead": "Tú dices el objetivo, para quién y dónde necesitas aparecer. Outdoormídia cruza región, flujo, formato, audiencia e inversión para armar el mejor camino de la campaña.",
+    "etapas": [
+      {
+        "title": "Planificación",
+        "text": "Objetivo y región definidos, plataformas y puntos seleccionados, audiencia leída y propuesta de medios armada."
+      },
+      {
+        "title": "Producción",
+        "text": "Especificación por formato, adecuación del creativo al punto y preparación de los materiales, estáticos o digitales."
+      },
+      {
+        "title": "Difusión y datos",
+        "text": "Instalación o carga, verificación, monitoreo y entrega de los datos de audiencia del período."
+      }
+    ],
+    "fechoAntes": "En proyectos de panel exclusivo, el Gestão 360 OM incluye además consultoría legal de licenciamiento e instalación completa.",
+    "fechoLink": "Saber más",
+    "cta": "Quiero anunciar",
+    "tituloComoContratar": "Cómo contratar"
+  },
+  "Culture": {
+    "titulo": "Por qué Outdoormídia",
+    "lead": "Somos la empresa que coloca marcas en las calles de Paraná y de Santa Catarina desde 1959. Del outdoor impreso al panel de LED, quien entra en el equipo OM trabaja con el medio que más impacta los centros urbanos."
+  },
+  "PlatformsCarousel": {
+    "tituloA": "Algunas campañas necesitan ",
+    "tituloDestaque1": "aparecer",
+    "tituloB": ". Otras necesitan ser ",
+    "tituloDestaque2": "imposibles de ignorar",
+    "tituloC": ".",
+    "carrosselLabel": "Plataformas Outdoormídia"
+  },
+  "Reviews": {
+    "titulo": "Qué dicen",
+    "subtitulo": "Historias de éxito en la práctica",
+    "lead": "De quien anuncia por primera vez a quien gestiona grandes marcas, la experiencia de quien ya puso su mensaje en las calles del Sur de Brasil.",
+    "carrosselLabel": "Testimonios de clientes",
+    "fechar": "Cerrar"
+  },
+  "NovaCampanha": {
+    "kicker": "Nueva campaña",
+    "tituloA": "¿Cómo prefieres",
+    "tituloB": "empezar?",
+    "lead": "Tú entiendes de tu negocio. Nosotros entendemos de colocar tu marca en los lugares correctos.",
+    "diagnosticoNome": "Diagnóstico de Presencia",
+    "diagnosticoIntencao": "Quiero una lectura de la presencia de mi marca",
+    "programaticaNome": "Medios Programáticos",
+    "programaticaIntencao": "Quiero ver los espacios disponibles",
+    "atendimentoNome": "Atención rápida",
+    "atendimentoIntencao": "Quiero atención ahora"
+  },
+  "CoverageExplorer": {
+    "tituloA": "No basta con estar",
+    "tituloB": "en la ciudad.",
+    "tituloC": "Hay que estar",
+    "tituloDestaque": "trayecto",
+    "tituloD": "de tu público.",
+    "lead": "Outdoormídia está en Curitiba, Región Metropolitana, Litoral de Paraná, Joinville, Itajaí y Balneário Camboriú, siempre en los puntos de mayor flujo, visibilidad e impacto real. Del Batel al litoral, de las carreteras a las playas de Santa Catarina, tu marca acompaña el trayecto del público en los dos estados.",
+    "resposta": "Respuesta el mismo día hábil",
+    "eyebrowPadrao": "Cobertura",
+    "tituloAntesDestaque": "en el ",
+    "cta": "Consultar disponibilidad"
+  },
+  "BancoDeTalentos": {
+    "tituloA": "Entra en el",
+    "tituloB": "banco de talentos.",
+    "lead": "No tenemos una vacante abierta para todo perfil todo el tiempo. Deja tus datos en nuestro banco de talentos: cuando se abra una en tu área, tu registro es de los primeros en ser consultados.",
+    "cta": "Enviar currículum",
+    "label": "Banco de talentos",
+    "fotoAlt": "Equipo de Outdoormídia",
+    "cadastroAberto": "Registro abierto",
+    "seloDesde": "Desde {ano}",
+    "seloPlataformas": "{n} plataformas",
+    "seloTelas": "175 pantallas digitales",
+    "ctaFormulario": "Completar registro →",
+    "prefereAntes": "¿Prefieres mandar el currículum directo?"
+  },
+  "BlogTeaser": {
+    "lead": "Ideas, datos y estrategias de medios exteriores para colocar tu marca en las calles de Paraná y de Santa Catarina.",
+    "vazio": "Todavía no hay artículos publicados. Vuelve pronto."
+  },
+  "SolucoesHero": {
+    "eyebrow": "Núcleo comercial · PR + SC",
+    "h1": "Soluciones.",
+    "lead": "Empieza por donde tenga sentido para ti: por lo que nos diferencia, por la plaza donde tu marca necesita aparecer o directo por el formato que ya tienes en mente."
+  },
+  "LinhaDoTempo": {
+    "lead": "Qué cambió desde la primera cara en la calle, y qué no cambió.",
+    "role": "Desplázate para recorrer"
+  },
+  "Iconicos": {
+    "titulo": "Icónicos",
+    "eyebrow": "Fuera del catálogo",
+    "proximo": "Próximo proyecto"
+  },
+  "MapaCobertura": {
+    "legendaCombinada": "combina medios urbanos y carreteras",
+    "legendaUrbana": "Medios urbanos",
+    "mapaAlt": "Mapa de cobertura de Outdoormídia en Paraná y en Santa Catarina",
+    "filtrarPor": "Filtrar por categoría",
+    "todaARede": "Toda la red",
+    "legendaRodovias": "Plataforma Carreteras",
+    "legendaSemCobertura": "Sin cobertura",
+    "switchRodovias": "Carreteras",
+    "switchNomes": "Todos los nombres",
+    "geralKicker": "Paraná y Santa Catarina",
+    "geralTitulo": "Dónde aparece tu marca",
+    "geralNota": "Cuatro regiones urbanas y seis corredores viales. Toca o pasa el mouse para explorar.",
+    "notaRod": "Alcance por la carretera: {siglas}. Sin medios urbanos en esta ciudad.",
+    "notaUrbanaComCor": "Medios urbanos. También atravesada por {siglas}.",
+    "notaUrbana": "Medios urbanos.",
+    "regioes": {
+      "cwb": {
+        "nome": "Curitiba y Región Metropolitana",
+        "kicker": "Medios urbanos · Paraná",
+        "nota": "Doce municipios, del centro de Curitiba al anillo metropolitano."
+      },
+      "joi": {
+        "nome": "Joinville",
+        "kicker": "Medios urbanos · Santa Catarina",
+        "nota": "Mayor ciudad catarinense y polo industrial del norte del estado."
+      },
+      "itj": {
+        "nome": "Itajaí",
+        "kicker": "Medios urbanos · Santa Catarina",
+        "nota": "Puerto, logística y circulación constante todo el año."
+      },
+      "bcm": {
+        "nome": "Balneário Camboriú",
+        "kicker": "Medios urbanos · Santa Catarina",
+        "nota": "Turismo de alto nivel y población flotante en temporada."
+      },
+      "rod": {
+        "nome": "Carreteras",
+        "kicker": "Plataforma Carreteras",
+        "nota": "Seis corredores entre Paraná y Santa Catarina. La marca acompaña el trayecto, sin medios urbanos en estas ciudades."
+      }
+    }
+  },
+  "MapaRodovias": {
+    "legendaCidade": "Ciudad en el corredor",
+    "legendaApoio": "Punto de apoyo",
+    "legendaCorredor": "Corredor vial",
+    "notaSaoPaulo": "El marcador de São Paulo indica distancia, no cobertura.",
+    "mapaAlt": "Mapa de los corredores viales atendidos entre Paraná y Santa Catarina"
   }
 }

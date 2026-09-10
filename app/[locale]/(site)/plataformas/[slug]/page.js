@@ -1,4 +1,6 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -12,12 +14,12 @@ import Process from '@/components/sections/Process'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import CaseCard from '@/components/cases/CaseCard'
 import ProdutoCard from '@/components/ui/ProdutoCard'
-import { getPlatformBySlug } from '@/lib/platforms'
-import { getAtivoBySlug } from '@/lib/iconicos'
-import { getProdutosPorPlataforma } from '@/lib/produtos'
+import { getPlatformBySlugLocale } from '@/lib/platforms'
+import { getAtivoBySlugLocale } from '@/lib/iconicos'
+import { getProdutosPorPlataformaLocale } from '@/lib/produtos'
 import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 export const revalidate = 300
 
@@ -40,18 +42,19 @@ async function fetchCases(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params
-  const platform = getPlatformBySlug(slug)
+  const { locale, slug } = await params
+  const platform = getPlatformBySlugLocale(slug, locale)
   if (!platform) return { title: 'Plataforma não encontrada | Outdoormídia' }
 
   return {
     title: `${platform.name} | Outdoormídia`,
     description: platform.intro,
-    alternates: { canonical: `/plataformas/${platform.slug}` },
+    alternates: alternatesDe(`/plataformas/${platform.slug}`, locale),
     openGraph: {
       title: `${platform.name} | Outdoormídia`,
       description: platform.intro,
-      locale: 'pt_BR',
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
       type: 'website',
     },
   }
@@ -60,8 +63,9 @@ export async function generateMetadata({ params }) {
 export default async function PlatformPage({ params }) {
   const { locale, slug } = await params
   setRequestLocale(locale)
+  const tProcess = await getTranslations({ locale, namespace: 'Process' })
 
-  const platform = getPlatformBySlug(slug)
+  const platform = getPlatformBySlugLocale(slug, locale)
   if (!platform) notFound()
 
   const [cases, tags] = await fetchCases(platform.slug)
@@ -69,8 +73,8 @@ export default async function PlatformPage({ params }) {
 
   // Os ativos nomeados vêm dos Icônicos pelo slug: a plataforma guarda a
   // referência, nunca uma segunda cópia do texto (regra C8 do handoff).
-  const ativos = (platform.ativos ?? []).map(getAtivoBySlug).filter(Boolean)
-  const produtos = getProdutosPorPlataforma(platform.slug)
+  const ativos = (platform.ativos ?? []).map((slugAtivo) => getAtivoBySlugLocale(slugAtivo, locale)).filter(Boolean)
+  const produtos = getProdutosPorPlataformaLocale(platform.slug, locale)
 
   // Produtos e Formatos dividem uma seção só. `semFormatos` desliga o lado do
   // diagrama sem tocar no dos produtos: é o caso de Rodovias, onde o painel é
@@ -347,13 +351,31 @@ export default async function PlatformPage({ params }) {
           </section>
         )}
 
+        {/* Cartaz pronto do cliente, com título e fundo já desenhados na peça:
+            sobe sem SectionHeading, que duplicaria o título da imagem. Só
+            Digital Signage traz `clientesImage` hoje. */}
+        {platform.clientesImage && (
+          <section className="border-t border-line py-[90px] max-mob:py-[60px]">
+            <div className="wrap">
+              <CoverMedia
+                alt={platform.clientesImageAlt}
+                className="reveal mx-auto max-w-[960px]"
+                label={platform.name}
+                ratio="16/9"
+                sizes="(max-width: 980px) 100vw, 960px"
+                src={platform.clientesImage}
+              />
+            </div>
+          </section>
+        )}
+
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
             <PlatformFaq faqs={platform.faqs} platformName={platform.name} />
           </div>
         </section>
 
-        <Process title="Como contratar" />
+        <Process title={tProcess('tituloComoContratar')} />
 
         <NovaCampanha contexto={platform.name} />
       </main>

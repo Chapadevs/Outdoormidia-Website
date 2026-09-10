@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
-import Coverflow from '@/components/ui/Coverflow'
+import CarrosselContinuo from '@/components/ui/CarrosselContinuo'
 import SectionHeading from '@/components/ui/SectionHeading'
 
 // Depoimentos reais, na redação oficial do cliente (COPY_SITE).
@@ -111,6 +112,15 @@ const REVIEWS = [
   },
 ]
 
+// A altura é declarada aqui, e não no card, porque quem conhece a caixa é a
+// seção: o coverflow contínuo posiciona os cards em absoluto, então a pista
+// precisa da mesma medida que eles. Os sete sobem com a mesma altura de
+// propósito, senão o card do meio mudaria de tamanho a cada giro. A conta é a
+// capa 9:16 na largura máxima (290px), mais o respiro e a legenda de nome,
+// cargo e contexto; abaixo de 380px a capa encolhe junto com a largura e a
+// pista acompanha.
+const ALTURA = 'h-[600px] max-xs:h-[560px]'
+
 function Play() {
   return (
     <span
@@ -125,6 +135,7 @@ function Play() {
 }
 
 export default function Reviews() {
+  const t = useTranslations('Reviews')
   const [aberto, setAberto] = useState(null)
 
   useEffect(() => {
@@ -139,35 +150,41 @@ export default function Reviews() {
   }, [aberto])
 
   return (
-    <section className="pb-[110px] pt-[48px] max-mob:pb-[72px] max-mob:pt-[32px]" id="depoimentos">
+    <section
+      className="overflow-clip pb-[110px] pt-[48px] max-mob:pb-[72px] max-mob:pt-[32px]"
+      id="depoimentos"
+    >
       {/* Composição centralizada: sem a linha do `SectionHeading`, que só faz
-          sentido puxando o olho para a direita. O "Arraste →" saiu junto — era
-          um elemento à direita brigando com o eixo central, e o cursor de
-          arrasto mais os dots já dizem que a faixa anda. */}
+          sentido puxando o olho para a direita. O "Arraste →" saiu junto: era
+          um elemento à direita brigando com o eixo central, e a fita já anda
+          sozinha, o que dispensa qualquer aviso de que ela anda. */}
       <div className="wrap text-center">
-        <SectionHeading className="reveal justify-center" rule={false} title="O que dizem" />
-        <p className="eyebrow reveal mt-4 text-orange">Histórias de sucesso na prática</p>
+        <SectionHeading className="reveal justify-center" rule={false} title={t('titulo')} />
+        <p className="eyebrow reveal mt-4 text-orange">{t('subtitulo')}</p>
         <p className="reveal mx-auto mb-9 mt-3 max-w-[46ch] text-base text-ink-soft">
-          De quem anuncia pela primeira vez a quem gerencia grandes marcas, a experiência de quem já
-          colocou sua mensagem nas ruas do Sul do Brasil.
+          {t('lead')}
         </p>
       </div>
-      <div className="wrap">
-        <Coverflow
-          // Abre no card 02: é o único com case associado, e é o depoimento
-          // mais forte dos três.
+      {/* Mesma fita das plataformas e dos diferenciais: gira sozinha, para com
+          o ponteiro em cima e não tem ponta em nenhum dos lados. Fora do
+          `.wrap` porque a pista mede a própria largura para saber quantos
+          cards cabem de cada lado do centro. */}
+      <div className="reveal">
+        <CarrosselContinuo
+          alturaClasse={ALTURA}
+          // Abre no depoimento do Guilherme Heimbecher (Claro): é o que o
+          // cliente pediu no centro, e é o mais forte da fita.
           gap={22}
-          inicial={1}
-          label="Depoimentos de clientes"
-          labels={REVIEWS.map((r) => r.name)}
-          rotulo="depoimento"
+          inicial={0}
+          label={t('carrosselLabel')}
+          velocidade={0.055}
           width="clamp(228px,70vw,290px)"
         >
           {REVIEWS.map((r) => {
             const texto = r.quote ? `“${r.quote}”` : r.titulo
 
             return (
-              <figure className="m-0 flex w-full flex-col gap-4" key={r.name}>
+              <figure className={`m-0 flex w-full flex-col gap-4 ${ALTURA}`} key={r.name}>
                 <div className="ticks group relative aspect-[9/16] w-full overflow-hidden rounded-[16px] border border-line bg-bone">
                   {r.capa ? (
                     <Image
@@ -222,7 +239,7 @@ export default function Reviews() {
               </figure>
             )
           })}
-        </Coverflow>
+        </CarrosselContinuo>
       </div>
       <div className="wrap">
         <div className="reveal mt-9 flex justify-center">
@@ -241,7 +258,7 @@ export default function Reviews() {
           role="dialog"
         >
           <button
-            aria-label="Fechar"
+            aria-label={t('fechar')}
             className="absolute right-6 top-6 grid size-11 cursor-pointer place-items-center rounded-full border border-white/40 text-[22px] text-white transition-colors duration-150 hover:bg-white hover:text-ink"
             onClick={() => setAberto(null)}
             type="button"

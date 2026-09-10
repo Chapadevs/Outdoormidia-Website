@@ -185,6 +185,15 @@
     @apply font-display font-normal uppercase leading-[0.86] tracking-[0.005em] text-white;
   }
 
+  /* Título de página em bold, a pedido do cliente. O peso entra por
+     `h1.display` e não dentro do primitivo: `.display` também veste número
+     grande, resultado do simulador e título de card, que seguem em 400.
+     Como todo h1 do site (os 42) usa `.display`, este é o ponto único de
+     troca, e um hero novo já nasce em bold. */
+  h1.display {
+    @apply font-bold;
+  }
+
   .eyebrow {
     @apply text-xs font-bold uppercase tracking-[0.22em] text-ink-soft;
   }

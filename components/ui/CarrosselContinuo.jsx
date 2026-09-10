@@ -5,8 +5,8 @@ import { Children, useEffect, useRef } from 'react'
 // Coverflow contínuo: a fita não tem começo nem fim, e gira sozinha enquanto a
 // seção está na tela.
 //
-// É outro componente que o `Coverflow` (que segue em Reviews, onde a ordem dos
-// depoimentos importa e a leitura é de um por vez). Aqui não existe scroll
+// É outro componente que o `Coverflow`, hoje sem call site: os depoimentos
+// passaram para cá em 09/09/2026, por pedido do cliente. Aqui não existe scroll
 // nativo, nem scroll-snap, nem cópias do conjunto no DOM: cada item aparece uma
 // única vez e a posição do carrossel é um número contínuo (`pos`, medido em
 // larguras de card) que o laço de animação incrementa. Quem decide onde cada

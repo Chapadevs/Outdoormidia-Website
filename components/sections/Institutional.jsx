@@ -1,47 +1,45 @@
-import ImageFlip from '@/components/ui/ImageFlip'
 import StatGrid from '@/components/ui/StatGrid'
-import { NUMEROS_MARCA } from '@/lib/numeros'
+import { getLocale, getTranslations } from 'next-intl/server'
+import { getNumerosMarca } from '@/lib/numeros'
 
-const IMAGE_SIZES = '(max-width: 980px) 100vw, 620px'
+const VIDEO_SRC = '/media/home/video-institucional.mp4'
 
-const FOTOS = [
-  {
-    src: '/media/OM-Foto.jpeg',
-    alt: 'Painel digital vertical da Outdoormídia em avenida no fim de tarde, exibindo campanha da Budweiser para a Copa do Mundo FIFA 2026',
-  },
-  {
-    src: '/media/hero-billboard.webp',
-    alt: 'Outdoor da Outdoormídia ao entardecer com a mensagem "Toda hora, em todo lugar"',
-  },
-]
-
-export default function Institutional() {
+export default async function Institutional() {
+  const locale = await getLocale()
+  const t = await getTranslations('Institutional')
   return (
     <section className="bg-bone py-[110px] max-mob:py-[72px]" id="institucional">
       <div className="wrap">
         <div className="grid grid-cols-[1fr_1.15fr] items-center gap-[64px] max-tab:grid-cols-1 max-tab:gap-9">
           <div>
-            <p className="eyebrow reveal mb-5 text-sm">Desde 1959 · PR + SC</p>
+            <p className="eyebrow reveal mb-5 text-sm">{t('eyebrow')}</p>
             <h2 className="reveal m-0 text-[clamp(30px,4.4vw,54px)] font-extrabold leading-[1.04] tracking-[-0.02em] text-ink">
-              Referência ontem. <span className="text-orange">Inovação hoje.</span>
+              {t('tituloA')} <span className="text-orange">{t('tituloB')}</span>
             </h2>
             <p className="reveal mt-6 max-w-[46ch] text-lg leading-relaxed text-ink-soft max-mob:text-base">
-              São <strong className="font-bold text-orange">67 anos</strong> colocando marcas onde a
-              cidade passa: de Curitiba ao Litoral, das rodovias a Santa Catarina. Enquanto o mercado
-              descobre <strong className="font-bold">Mídia Out Of Home</strong>, a Outdoormídia
-              ajudou a construí-la.
+              {t('p1Antes')}
+              <strong className="font-bold text-orange">{t('p1Anos')}</strong>
+              {t('p1Meio')}
+              <strong className="font-bold">{t('p1Ooh')}</strong>
+              {t('p1Depois')}
             </p>
             <p className="reveal mt-4 max-w-[46ch] text-lg leading-relaxed text-ink-soft max-mob:text-base">
-              Cada ponto da nossa cobertura é escolhido estrategicamente antes de virar impacto, e é
-              essa leitura de cidade, construída década após década, que transforma mídia OOH em
-              resultado de campanha.
+              {t('p2')}
             </p>
           </div>
 
-          <ImageFlip images={FOTOS} ratio="16/9" sizes={IMAGE_SIZES} className="reveal" />
+          <video
+            className="reveal ticks aspect-[16/9] w-full rounded-[16px] border border-line object-cover"
+            src={VIDEO_SRC}
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          />
         </div>
 
-        <StatGrid className="reveal mt-[72px] max-mob:mt-12" size="md" stats={NUMEROS_MARCA} />
+        <StatGrid className="reveal mt-[72px] max-mob:mt-12" size="md" stats={getNumerosMarca(locale)} />
       </div>
     </section>
   )

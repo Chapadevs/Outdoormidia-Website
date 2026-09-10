@@ -1,4 +1,6 @@
 import { Link } from '@/i18n/navigation'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
@@ -7,22 +9,28 @@ import { listPublishedPosts } from '@/lib/blog/posts'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { readingTimeLabel } from '@/lib/blog/readingTime'
 import { DATA_LONGA } from '@/lib/format'
-import { PODCAST, EPISODIOS } from '@/lib/podcast'
-import { setRequestLocale } from 'next-intl/server'
+import { getPodcast, getEpisodios } from '@/lib/podcast'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Conteúdo Out of Home da Outdoormídia: cases de campanhas reais no Paraná e em Santa Catarina e artigos sobre mídia exterior, audiência e formatos.'
 
-export const metadata = {
-  title: 'Blog | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/blog' },
-  openGraph: {
-    title: 'Blog | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('blog.titulo')
+  const descricao = t('blog.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/blog', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export const revalidate = 300
@@ -42,6 +50,8 @@ async function fetchContent() {
 export default async function BlogPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const podcast = getPodcast(locale)
+  const episodios = getEpisodios(locale)
 
   const [posts, cases] = await fetchContent()
 
@@ -195,10 +205,10 @@ export default async function BlogPage({ params }) {
                     Podcast
                   </h3>
                   <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-ink-soft">
-                    {PODCAST.tagline} Conversas com quem decide onde uma marca aparece.
+                    {podcast.tagline} Conversas com quem decide onde uma marca aparece.
                   </p>
                   <ul className="m-0 mt-6 flex list-none flex-col gap-2 border-t border-line p-0 pt-5">
-                    {EPISODIOS.slice(0, 3).map((ep) => (
+                    {episodios.slice(0, 3).map((ep) => (
                       <li className="truncate text-[14px] font-semibold text-ink-soft" key={ep.slug}>
                         • {ep.title}
                       </li>

@@ -1,21 +1,29 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import Culture from '@/components/sections/Culture'
 import BancoDeTalentos from '@/components/sections/BancoDeTalentos'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Faça parte da empresa que ocupa as ruas do Sul do Brasil desde 1959. Cadastre-se no banco de talentos da Outdoormídia e seja avisado quando abrir uma vaga na sua área.'
 
-export const metadata = {
-  title: 'Trabalhe Conosco | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/trabalhe-conosco' },
-  openGraph: {
-    title: 'Trabalhe Conosco | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('trabalheConosco.titulo')
+  const descricao = t('trabalheConosco.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/trabalhe-conosco', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function TrabalheConoscoPage({ params }) {

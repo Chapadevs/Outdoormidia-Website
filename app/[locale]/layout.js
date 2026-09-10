@@ -57,17 +57,33 @@ export default async function LocaleLayout({ children, params }) {
   // toda page que deve continuar estática.
   setRequestLocale(locale)
 
-  // Só o chrome vai para o cliente. Mandar o objeto inteiro colocaria todas as
-  // mensagens do site no payload RSC de cada página.
-  const { Header, Footer, Nav } = await getMessages()
+  // Só o que componente de cliente lê vai para o cliente. Mandar o objeto
+  // inteiro colocaria todas as mensagens do site no payload RSC de cada página.
+  //
+  // Ao marcar um componente novo com 'use client' e usar useTranslations nele,
+  // o namespace dele precisa entrar nesta lista: sem isso o texto some em
+  // runtime, porque a mensagem nunca chega ao browser.
+  const mensagens = await getMessages()
+  const chrome = {
+    Header: mensagens.Header,
+    Footer: mensagens.Footer,
+    Nav: mensagens.Nav,
+    Hero: mensagens.Hero,
+    PlatformsCarousel: mensagens.PlatformsCarousel,
+    Process: mensagens.Process,
+    Reviews: mensagens.Reviews,
+    LinhaDoTempo: mensagens.LinhaDoTempo,
+    MapaCobertura: mensagens.MapaCobertura,
+    MapaRodovias: mensagens.MapaRodovias,
+  }
 
   return (
     <html lang={TAG_HTML[locale]} className={poppins.variable}>
       <head>
-        <JsonLd />
+        <JsonLd locale={locale} />
       </head>
       <body>
-        <NextIntlClientProvider locale={locale} messages={{ Header, Footer, Nav }}>
+        <NextIntlClientProvider locale={locale} messages={chrome}>
           {children}
           <WhatsAppButton />
           <RevealObserver />

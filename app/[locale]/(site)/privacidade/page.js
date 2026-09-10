@@ -1,21 +1,29 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import { LOCALES, TAG_OG } from '@/i18n/routing'
+import { alternatesDe } from '@/lib/seo'
 import LegalDoc from '@/components/ui/LegalDoc'
-import { ATUALIZADO_EM, CONTATO_PRIVACIDADE, PRIVACIDADE } from '@/lib/legal'
-import { setRequestLocale } from 'next-intl/server'
+import { ATUALIZADO_EM, getContatoPrivacidade, getPrivacidade } from '@/lib/legal'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const DESCRIPTION =
-  'Como a Outdoormídia coleta, usa e protege os dados de quem entra em contato pelo site: finalidades, bases legais da LGPD, prazos de guarda e como exercer os seus direitos.'
 
-export const metadata = {
-  title: 'Política de Privacidade | Outdoormídia',
-  description: DESCRIPTION,
-  alternates: { canonical: '/privacidade' },
-  openGraph: {
-    title: 'Política de Privacidade | Outdoormídia',
-    description: DESCRIPTION,
-    locale: 'pt_BR',
-    type: 'website',
-  },
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const titulo = t('privacidade.titulo')
+  const descricao = t('privacidade.descricao')
+
+  return {
+    title: titulo,
+    description: descricao,
+    alternates: alternatesDe('/privacidade', locale),
+    openGraph: {
+      title: titulo,
+      description: descricao,
+      locale: TAG_OG[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
+      type: 'website',
+    },
+  }
 }
 
 export default async function PrivacidadePage({ params }) {
@@ -51,8 +59,8 @@ export default async function PrivacidadePage({ params }) {
         <section className="pb-[110px] max-mob:pb-[72px]">
           <LegalDoc
             atualizadoEm={ATUALIZADO_EM}
-            contato={CONTATO_PRIVACIDADE}
-            secoes={PRIVACIDADE}
+            contato={getContatoPrivacidade(locale)}
+            secoes={getPrivacidade(locale)}
           />
         </section>
       </main>

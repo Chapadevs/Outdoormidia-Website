@@ -1,5 +1,6 @@
 import { SITE_URL } from '@/lib/constants'
-import { EMPRESA } from '@/lib/empresa'
+import { EMPRESA, getEmpresa } from '@/lib/empresa'
+import { TAG_HTML } from '@/i18n/routing'
 
 // Structured data da empresa, instalado uma vez em app/layout.js — vale para o
 // site inteiro. É o que permite ao Google montar o painel de conhecimento e o
@@ -31,15 +32,15 @@ function openingHours(horarios) {
   }))
 }
 
-function localBusiness() {
+function localBusiness(empresa) {
   return {
     '@type': 'LocalBusiness',
     '@id': ID_NEGOCIO,
     name: EMPRESA.nome,
     legalName: EMPRESA.razaoSocial,
     taxID: EMPRESA.cnpj,
-    description: EMPRESA.descricao,
-    slogan: EMPRESA.slogan,
+    description: empresa.descricao,
+    slogan: empresa.slogan,
     url: SITE_URL,
     image: `${SITE_URL}/media/OM-Foto.jpeg`,
     telephone: [EMPRESA.telefone, EMPRESA.telefoneSc].filter(Boolean),
@@ -81,19 +82,23 @@ function localBusiness() {
 
 // Nó mínimo de WebSite: amarra o domínio à empresa, para o motor não tratar
 // site e negócio como duas entidades soltas.
-function webSite() {
+function webSite(locale) {
   return {
     '@type': 'WebSite',
     '@id': `${SITE_URL}/#site`,
     url: SITE_URL,
     name: EMPRESA.nome,
-    inLanguage: 'pt-BR',
+    inLanguage: TAG_HTML[locale] ?? TAG_HTML.pt,
     publisher: { '@id': ID_NEGOCIO },
   }
 }
 
-export default function JsonLd() {
-  const graph = { '@context': 'https://schema.org', '@graph': [localBusiness(), webSite()] }
+export default function JsonLd({ locale = 'pt' }) {
+  const empresa = getEmpresa(locale)
+  const graph = {
+    '@context': 'https://schema.org',
+    '@graph': [localBusiness(empresa), webSite(locale)],
+  }
 
   return (
     <script

@@ -2,13 +2,14 @@
 
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Check } from 'lucide-react'
+import { useLocale, useTranslations } from 'next-intl'
 import {
-  CORREDORES,
   MAPA_H,
   MAPA_W,
   MUNICIPIOS,
   ROTULOS_ESTADO,
   UF_PATHS,
+  getCorredores,
 } from '@/lib/mapaCobertura'
 
 /*
@@ -29,44 +30,14 @@ import {
 // de virar uma cor nova: é o mesmo tom, diluído até virar fundo.
 const SEM_COBERTURA = 'color-mix(in srgb, var(--color-orange) 18%, white)'
 
-const REGIOES = {
-  cwb: {
-    nome: 'Curitiba e Região Metropolitana',
-    tipo: 'urbana',
-    kicker: 'Mídia urbana · Paraná',
-    nota: 'Doze municípios, do centro de Curitiba ao anel metropolitano.',
-  },
-  joi: {
-    nome: 'Joinville',
-    tipo: 'urbana',
-    kicker: 'Mídia urbana · Santa Catarina',
-    nota: 'Maior cidade catarinense e polo industrial do norte do estado.',
-  },
-  itj: {
-    nome: 'Itajaí',
-    tipo: 'urbana',
-    kicker: 'Mídia urbana · Santa Catarina',
-    nota: 'Porto, logística e circulação constante o ano inteiro.',
-  },
-  bcm: {
-    nome: 'Balneário Camboriú',
-    tipo: 'urbana',
-    kicker: 'Mídia urbana · Santa Catarina',
-    nota: 'Turismo de alto padrão e população flutuante na temporada.',
-  },
-  rod: {
-    nome: 'Rodovias',
-    tipo: 'rodovia',
-    kicker: 'Plataforma Rodovias',
-    nota: 'Seis corredores entre o Paraná e Santa Catarina. A marca acompanha o trajeto, sem mídia urbana nestas cidades.',
-  },
-}
-
-const GERAL = {
-  rod: false,
-  kicker: 'Paraná e Santa Catarina',
-  title: 'Onde a sua marca aparece',
-  note: 'Quatro regiões urbanas e seis corredores rodoviários. Toque ou passe o mouse para explorar.',
+// Só o tipo fica aqui: ele governa a cor do chip e o comportamento do foco.
+// Nome, kicker e nota vêm das mensagens, em messages/*.json.
+const TIPOS = {
+  cwb: 'urbana',
+  joi: 'urbana',
+  itj: 'urbana',
+  bcm: 'urbana',
+  rod: 'rodovia',
 }
 
 const ehRod = (m) => m.r === 'rod'
@@ -85,6 +56,29 @@ const colide = (a, b) => !(a.x2 < b.x1 - 2 || a.x1 > b.x2 + 2 || a.y2 < b.y1 - 2
 const siglas = (lista) => lista.map((c) => c.br).join(', ')
 
 export default function MapaCobertura({ className = '' }) {
+  const locale = useLocale()
+  const t = useTranslations('MapaCobertura')
+  const CORREDORES = getCorredores(locale)
+
+  // Junta o tipo (que é comportamento) ao texto do idioma.
+  // Memoizados porque os dois entram nas dependências do useMemo do foco:
+  // recriados a cada render, anulariam a memoização dele.
+  const REGIOES = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(TIPOS).map(([rid, tipo]) => [rid, { tipo, ...t.raw(`regioes.${rid}`) }])
+      ),
+    [t]
+  )
+  const GERAL = useMemo(
+    () => ({
+      rod: false,
+      kicker: t('geralKicker'),
+      title: t('geralTitulo'),
+      note: t('geralNota'),
+    }),
+    [t]
+  )
   const [travado, setTravado] = useState(null)
   const [hover, setHover] = useState(null)
   const [regiao, setRegiao] = useState(null)
@@ -97,18 +91,20 @@ export default function MapaCobertura({ className = '' }) {
     const posicionar = () => {
       const ocupado = []
       for (const m of ORDEM_ROTULOS) {
-        const t = rotuloRefs.current.get(m.n)
-        if (!t) continue
+        // `el` e não `t`: `t` é o tradutor no escopo do componente, e o nome
+        // repetido aqui dentro só se sustentava por sombreamento.
+        const el = rotuloRefs.current.get(m.n)
+        if (!el) continue
         const fs = fonteRotulo(m)
         const gap = folgaRotulo(m)
         const aplicar = (lado) => {
-          t.setAttribute('text-anchor', lado === 'l' ? 'end' : lado === 'r' ? 'start' : 'middle')
-          t.setAttribute('x', lado === 'l' ? -gap : lado === 'r' ? gap : 0)
-          t.setAttribute(
+          el.setAttribute('text-anchor', lado === 'l' ? 'end' : lado === 'r' ? 'start' : 'middle')
+          el.setAttribute('x', lado === 'l' ? -gap : lado === 'r' ? gap : 0)
+          el.setAttribute(
             'y',
             lado === 'b' ? gap + fs * 0.86 : lado === 't' ? -(gap + 2) : fs * 0.34,
           )
-          const bb = t.getBBox()
+          const bb = el.getBBox()
           return {
             x1: m.x + bb.x,
             y1: m.y + bb.y,
@@ -154,10 +150,10 @@ export default function MapaCobertura({ className = '' }) {
           kicker: REGIOES[m.r].kicker,
           title: m.n,
           note: rod
-            ? `Alcance pela rodovia: ${siglas(cors)}. Sem mídia urbana nesta cidade.`
+            ? t('notaRod', { siglas: siglas(cors) })
             : cors.length
-              ? `Mídia urbana. Também atravessada por ${siglas(cors)}.`
-              : 'Mídia urbana.',
+              ? t('notaUrbanaComCor', { siglas: siglas(cors) })
+              : t('notaUrbana'),
         },
       }
     }
@@ -168,7 +164,7 @@ export default function MapaCobertura({ className = '' }) {
         cors: new Set([c.id]),
         texto: {
           rod: true,
-          kicker: 'Plataforma Rodovias',
+          kicker: t('legendaRodovias'),
           title: c.br,
           note: `${c.nome}.`,
         },
@@ -193,7 +189,7 @@ export default function MapaCobertura({ className = '' }) {
       }
     }
     return { nomes: null, cors: null, texto: GERAL }
-  }, [travado, hover, regiao])
+  }, [travado, hover, regiao, CORREDORES, REGIOES, GERAL, t])
 
   const munAceso = (m) => !foco.nomes || foco.nomes.has(m.n)
   const corAceso = (c) => !foco.cors || foco.cors.has(c.id)
@@ -231,13 +227,13 @@ export default function MapaCobertura({ className = '' }) {
     <div className={className}>
       <div className="mb-4 rounded-[16px] border border-line bg-white px-[22px] py-5 max-mob:px-4 max-mob:py-4">
         <p className="m-0 mb-3.5 flex flex-wrap items-baseline gap-2.5">
-          <strong className="eyebrow text-ink">Filtrar por categoria</strong>
-          <span className="text-[12.5px] text-ink-soft">combine mídia urbana e rodovias</span>
+          <strong className="eyebrow text-ink">{t('filtrarPor')}</strong>
+          <span className="text-[12.5px] text-ink-soft">{t('legendaCombinada')}</span>
         </p>
 
         <div className="flex flex-wrap gap-2">
           <Chip ativo={regiao === null} onClick={() => trocarRegiao(null)}>
-            Toda a rede
+            {t('todaARede')}
           </Chip>
           {Object.entries(REGIOES).map(([rid, r]) => (
             <Chip
@@ -257,7 +253,7 @@ export default function MapaCobertura({ className = '' }) {
               amostra={<i className="block h-[13px] w-[18px] rounded-[3px] bg-orange" />}
               forte
             >
-              Mídia urbana
+              {t('legendaUrbana')}
             </Legenda>
             <Legenda
               amostra={
@@ -275,7 +271,7 @@ export default function MapaCobertura({ className = '' }) {
               }
               forte
             >
-              Plataforma Rodovias
+              {t('legendaRodovias')}
             </Legenda>
             <Legenda
               amostra={
@@ -285,16 +281,16 @@ export default function MapaCobertura({ className = '' }) {
                 />
               }
             >
-              Sem cobertura
+              {t('legendaSemCobertura')}
             </Legenda>
           </div>
 
           <div className="ml-auto flex flex-wrap gap-2 max-tab:ml-0">
             <Switch ativo={rodovias} onClick={() => setRodovias((v) => !v)}>
-              Rodovias
+              {t('switchRodovias')}
             </Switch>
             <Switch ativo={todosNomes} onClick={() => setTodosNomes((v) => !v)}>
-              Todos os nomes
+              {t('switchNomes')}
             </Switch>
           </div>
         </div>
@@ -330,7 +326,7 @@ export default function MapaCobertura({ className = '' }) {
         </div>
 
         <svg
-          aria-label="Mapa de cobertura da Outdoormídia no Paraná e em Santa Catarina"
+          aria-label={t('mapaAlt')}
           className="block h-auto w-full"
           onClick={() => setTravado(null)}
           role="img"

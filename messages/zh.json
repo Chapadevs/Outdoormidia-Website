@@ -44,5 +44,418 @@
     "tagline": "深耕巴西南部户外广告 67 年。让您的品牌出现在人群所在之处。",
     "curitiba": "库里蒂巴",
     "santaCatarina": "圣卡塔琳娜州"
+  },
+  "Meta": {
+    "sobre": {
+      "titulo": "关于我们 | Outdoormídia",
+      "descricao": "自 1959 年起，Outdoormídia 就把品牌带上巴拉那州与圣卡塔琳娜州的街头：67 年自有户外媒体运营，从印刷大牌到 LED 屏幕。"
+    },
+    "ambiental": {
+      "titulo": "环境 | Outdoormídia",
+      "descricao": "电动充电广场、Batel 便利广场与垂直花园、喷绘布的循环利用，以及降低运营影响的各项举措：Outdoormídia 在巴拉那州与圣卡塔琳娜州的环境议程。"
+    },
+    "social": {
+      "titulo": "社会 | Outdoormídia",
+      "descricao": "Corajosamente Éticos、Loja OM do Bem 与再生媒体：我们的价值观、喷绘布的循环经济，以及首个接入库里蒂巴数字城墙的户外媒体资源。"
+    },
+    "governanca": {
+      "titulo": "公司治理 | Outdoormídia",
+      "descricao": "谁为公司负责、点位许可、合同独占条款、受众数据处理与商业行为准则：Outdoormídia 如何运营，以及哪些内容会白纸黑字写下来。"
+    },
+    "trabalheConosco": {
+      "titulo": "加入我们 | Outdoormídia",
+      "descricao": "加入这家自 1959 年起就占据巴西南部街头的公司。登记进入 Outdoormídia 人才库，在您所在领域出现空缺时第一时间收到通知。"
+    },
+    "solucoes": {
+      "titulo": "解决方案 | Outdoormídia",
+      "descricao": "Outdoormídia 投放在街头的一切：支撑运营的核心优势、巴拉那州与圣卡塔琳娜州的覆盖城市、8 大户外媒体平台与标志性项目。"
+    },
+    "diferenciais": {
+      "titulo": "核心优势 | Outdoormídia",
+      "descricao": "Face Única 独占、Aeroporto Square、可量化受众、再生媒体、按细分场景划分的 MUB 线路与 Gestão 360 OM：让一场战役被城市看见，而不是悄然掠过。"
+    },
+    "regioesCobertura": {
+      "titulo": "投放城市：库里蒂巴、海岸、若因维利、伊塔雅伊与坎布里乌 | Outdoormídia",
+      "descricao": "覆盖库里蒂巴、大都会区、巴拉那海岸、若因维利、伊塔雅伊、坎布里乌海滨市，以及连接巴拉那州与圣卡塔琳娜州的高速公路。"
+    },
+    "plataformas": {
+      "titulo": "媒体平台 | Outdoormídia",
+      "descricao": "了解 Outdoormídia 的户外媒体平台：从数字户外大牌到城市家具，以及覆盖巴拉那州与圣卡塔琳娜州的标志性项目。"
+    },
+    "projetosIconicos": {
+      "titulo": "标志性项目 | Outdoormídia",
+      "descricao": "Outdoormídia 的标志性结构：3D 数字转角、混合式大屏、生态花园，以及在库里蒂巴与若因维利的城市更新项目。"
+    },
+    "areaDoAnunciante": {
+      "titulo": "广告主专区 | Outdoormídia",
+      "descricao": "品牌存在感诊断、您的品牌在户外、最佳实践与常见问答：在联系商务团队之前，先自行理清思路的工具。"
+    },
+    "diagnostico": {
+      "titulo": "品牌存在感诊断 | Outdoormídia",
+      "descricao": "用一分钟回答 10 个问题，看看您的品牌目前处于「存在感阶梯」五个台阶中的哪一级，以及如何向上攀升。"
+    },
+    "suaMarcaNoOoh": {
+      "titulo": "您的品牌在户外 | Outdoormídia",
+      "descricao": "选择城市、平台与投放周期，查看您的户外战役在巴拉那州与圣卡塔琳娜州可能带来的曝光量。"
+    },
+    "melhoresPraticas": {
+      "titulo": "如何规划一场户外广告战役：8 条实践 | Outdoormídia",
+      "descricao": "八个决定，区分真正有效的战役与只是「出现过」的战役。在采买户外媒体之前，如何选择城市、形式、周期与时机。"
+    },
+    "programatica": {
+      "titulo": "程序化媒体 | Outdoormídia",
+      "descricao": "Outdoormídia 的媒体资源已接入市场主流 SSP：通过贵司代理公司或交易平台已在使用的 DSP，即可采买我们运营的屏幕。"
+    },
+    "faq": {
+      "titulo": "常见问答 | Outdoormídia",
+      "descricao": "关于在巴拉那州与圣卡塔琳娜州投放户外广告的疑问：投放城市、媒体形式、效果衡量、点位独占，以及如何索取方案。"
+    },
+    "blog": {
+      "titulo": "博客 | Outdoormídia",
+      "descricao": "Outdoormídia 的户外广告内容：巴拉那州与圣卡塔琳娜州的真实战役案例，以及关于户外媒体、受众与媒体形式的文章。"
+    },
+    "artigos": {
+      "titulo": "文章 | Outdoormídia",
+      "descricao": "关于巴西南部户外广告的文章：户外大牌、LED 屏幕、城市家具、机场媒体，以及让品牌占据街头的策略。"
+    },
+    "podcast": {
+      "titulo": "播客 | Outdoormídia",
+      "descricao": "Rua Principal，Outdoormídia 出品的播客：聊巴拉那州与圣卡塔琳娜州的品牌、城市与户外媒体。"
+    },
+    "cases": {
+      "titulo": "案例 | Outdoormídia",
+      "descricao": "Outdoormídia 的户外广告案例：在巴拉那州与圣卡塔琳娜州的户外大牌、LED、城市家具、机场媒体与标志性项目投放。"
+    },
+    "proposta": {
+      "titulo": "索取方案 | Outdoormídia",
+      "descricao": "填写需求简报，在 1 个工作日内获得量身定制的户外媒体方案。"
+    },
+    "obrigado": {
+      "titulo": "感谢您 | Outdoormídia",
+      "descricao": "我们已收到您的需求。商务团队将在 1 个工作日内回复投放城市、媒体形式与报价。"
+    },
+    "privacidade": {
+      "titulo": "隐私政策 | Outdoormídia",
+      "descricao": "Outdoormídia 如何收集、使用与保护通过本网站与我们联系者的数据：使用目的、LGPD 法律依据、保存期限，以及如何行使您的权利。"
+    },
+    "termos": {
+      "titulo": "使用条款 | Outdoormídia",
+      "descricao": "Outdoormídia 网站的使用规则：内容归属、可下载素材、模拟器与诊断工具的估算性质，以及责任范围。"
+    }
+  },
+  "PlataformasPage": {
+    "eyebrow": "产品目录 · {n} 个媒体平台",
+    "h1": "媒体平台。",
+    "lead": "没有一场战役能靠单一媒体形式解决。我们提供 {n} 个媒体平台，可根据您需要触达的人群自由组合，从高车流 LED 到街区城市家具，覆盖巴拉那州与圣卡塔琳娜州。位列首位的是标志性项目：逐个点位量身设计的招牌结构。",
+    "ctaPlanejar": "规划战役",
+    "ctaFormatos": "查看媒体形式",
+    "numeros": {
+      "plataformas": "媒体平台",
+      "telas": "数字屏幕",
+      "impactos": "每月曝光量",
+      "anos": "运营年数"
+    },
+    "formatosTitulo": "平台决定在哪里，形式决定怎么呈现。",
+    "formatosTexto": "平台决定您的品牌所处的环境，形式决定投放画面的尺寸、比例与类型。目录中共有 {n} 款产品，每个平台使用其中的一部分。",
+    "verTiposDeMidia": "查看媒体类型",
+    "cliqueFotos": "点击按钮查看每种形式的实拍照片。",
+    "comoLerTitulo": "如何理解产品命名",
+    "comoLerTexto": "Top 为竖版，与短视频画幅一致；Poster 为横版，与视频画幅一致；所有以 Super 开头的产品，尺寸都是两倍。"
+  },
+  "SocialPage": {
+    "breadcrumb": "社会",
+    "eyebrow": "关于我们 · 社会",
+    "h1": "社会。",
+    "lead": "Outdoormídia 认为，市场领先地位并不只靠创新、技术与城市曝光来建立，它同样需要清晰的价值观、言行一致与机构责任来支撑。",
+    "eticosP1": "Outdoormídia 是全球性运动 Corajosamente Éticos 的成员。该运动倡导以个人与职业伦理作为社会变革的基础，直面腐败文化，捍卫公平的市场环境。",
+    "eticosP2": "这不是一次性的行动，也不是品牌宣传战役，而是在内外部关系中对正直与一致的持续承诺。它已融入我们的组织文化，指导着各项决策、行为与举措。",
+    "eticosP3": "对采买户外媒体的客户而言，这有着切实的意义：我们对内所用的标准，同样适用于合同、谈判，以及我们在街头所做出的承诺。",
+    "eticosCta": "了解该运动",
+    "eticosAlt": "Corajosamente Éticos 运动的标识",
+    "lojaAlt": "Loja OM do Bem 的货架，陈列着用回收广告布制作的环保袋",
+    "lojaH2": "从画面上拆下的喷绘布，变成了收入。",
+    "lojaP1": "Loja OM do Bem 是 Corajosamente Éticos 框架下的落地举措，它把 Outdoormídia 对社会责任、循环经济与员工参与的承诺变成了具体行动。",
+    "lojaP2": "我们无偿捐出已完成投放周期的广告喷绘布。经过培训的缝纫师把这些材料制成环保袋等产品，既创造收入，也让废弃物退出流通。这些产品在店内与零食及轮换商品一同出售。",
+    "lojaP3": "全部利润均完整捐赠给 Caminho do Renascer 公益组织。",
+    "renascerAlt": "Caminho do Renascer 公益组织所帮助的儿童",
+    "renascerP1": "Caminho do Renascer 由社区志愿者于 2009 年创办，为库里蒂巴 Campo Comprido 街区处境脆弱的儿童、青少年与家庭提供帮助。",
+    "renascerP2": "其中许多家庭居住在 Barigui 河流域保护区内条件简陋的环境中，缺乏必要的基础设施，面临内涝与卫生风险，公共服务覆盖仍不稳定。店铺的收益正是送往这里。",
+    "tampinhasTitulo": "瓶盖回收",
+    "tampinhasAlt": "Outdoormídia 前台收集的彩色塑料瓶盖",
+    "tampinhasP1": "在总部前台，员工与访客会把塑料瓶盖单独分出，而不是与普通垃圾一起丢弃。回收点就设在公司标识旁边，任何路过的人都可以投放。",
+    "tampinhasP2": "这些材料会送去回收，让一种体量虽小却持续产生、且积累很快的废弃物退出流通。这与喷绘布变成环保袋是同一套逻辑：在日常产生的东西变成填埋垃圾之前，为它找到正确的去处。",
+    "lojaNota": "Loja OM do Bem 不是商业产品，也不是媒体平台，不属于户外广告产品线。它是一项企业文化与商业伦理层面的行动。",
+    "lojaCta": "查看喷绘布的完整循环",
+    "redeTitulo": "服务于城市的媒体网络",
+    "redeLead": "户外广告的未来，不会由创造曝光的能力来定义，而会由创造价值的能力来定义。",
+    "regAlt": "Batel 便利广场的立柱，配有监控摄像头与数字城墙紧急呼叫按钮",
+    "regLabel": "再生媒体",
+    "regEyebrow": "行业首创 · 城市安全",
+    "regP1": "Batel 便利广场。这是首个接入库里蒂巴数字城墙的户外媒体资源，数字城墙是这座城市的监控与城市智能系统。",
+    "regP2": "该设施继续履行连接品牌与人的职能，同时也开始为公共安全与城市空间品质作出贡献。它将接入数字城墙的监控与一枚紧急呼叫按钮结合起来，在这座城市使用率最高的公共交流空间之一，为处境危急者提供支援。",
+    "regP3": "在库里蒂巴，我们率先把户外媒体与城市安全结合起来。在一个热议 ESG 与智慧城市的市场中，这正是「占据一处空间」与「提升一处空间」之间的差别。",
+    "regP4": "对广告主而言，这是让品牌出现在一处被城市认可为有用的设施上的机会。占据城市空间同时意味着承担城市责任，而最好的传播，是能留下传承的传播。"
+  },
+  "AmbientalPage": {
+    "breadcrumb": "环境",
+    "eyebrow": "关于我们 · 环境",
+    "h1": "环境。",
+    "lead": "在这座城市里存在 67 年，本身就是一种责任。我们的回应不是一份报告，而是真正建成的广场、有生命的画面，以及重新变成产品的喷绘布。户外媒体应当切实回馈它所占据的空间。",
+    "realidadeTitulo": "已经落地的部分",
+    "realidadeLead": "我们谈的不是环保意愿，而是已建成的设施：有具体地址、由我们负责养护、每天被公众使用。下面每一个项目都是户外媒体资源，即使人们没有在看广告，城市依然在使用它们。",
+    "realidadeNotaAntes": "它们都属于 ",
+    "realidadeNotaMarca": "再生媒体",
+    "realidadeNotaDepois": " 项目组合，其中还包括 MUB Garden（库里蒂巴首个顶部带生态花园的数字城市家具）、Jardim Digital 以及本市其他宠物广场。",
+    "cicloTitulo": "喷绘布的循环",
+    "cicloH2": "喷绘布从画面上拆下，又以产品的形式回来。",
+    "cicloP1": "每一场印刷投放结束后都会留下拆下的喷绘布。行业惯常的去向是填埋场，我们的不是。",
+    "cicloP2": "Outdoormídia 无偿捐出已完成投放周期的广告喷绘布。经过培训的缝纫师把材料制成环保袋等产品，既创造收入，也让废弃物退出流通。这是流程可核查的循环经济，而不是买来的认证标签。",
+    "cicloP3": "该举措属于 Corajosamente Éticos 项目，全部收益均捐给合作的公益项目。",
+    "cicloCta": "了解完整项目",
+    "kopherTitulo": "向 Instituto Kópher 捐赠电子废弃物",
+    "kopherLogoAlt": "Instituto Kópher 标识",
+    "kopherP1": "我们把淘汰的电子电器设备捐赠给 Instituto Kópher。这家非营利组织九年来致力于促进社区福祉，把环境责任与社会共融结合在一起。",
+    "kopherP2": "此次捐赠直接支持该机构的 Programa Resgate 项目，这是电子废弃物逆向制造领域的开创性举措。项目为处境脆弱的人群提供技能培训，尤其面向治疗性社区，帮助他们重新融入家庭与职场。",
+    "kopherCertificadoAlt": "Instituto Kópher 捐赠证书",
+    "operacaoTitulo": "运营如何降低环境影响",
+    "operacaoLead": "带照明的画面消耗电力，印刷画面产生废弃物。这是户外媒体每月都要支付的两笔账，我们把它们当作技术决策来处理，而不是当作口号。"
+  },
+  "GovernancaPage": {
+    "breadcrumb": "公司治理",
+    "eyebrow": "关于我们 · 公司治理",
+    "h1": "公司治理。",
+    "lead": "审批一笔户外媒体采买，需要知道该点位持有何种许可、合同里写了什么，以及由谁签字负责。在一家非上市家族企业里，最后这个答案有名有姓。",
+    "quemTitulo": "由谁负责",
+    "ceoLegenda": "Halisson Pontarola，首席执行官",
+    "ceoP1": "户外媒体行业的口碑不是在投放期间建立的，而是在投放结束之后建立的。",
+    "ceoP2": "这是 67 年的家族经营。今天安装的点位十年后依然属于我们，我们服务的广告主也是如此。这会改变谈判的方式、承诺的内容，以及拒绝去做的事。",
+    "ceoP3": "Halisson Pontarola 是 Grupo Outdoormídia 的首席执行官，执掌公司三十余年，并推动了巴西户外媒体行业的转型。",
+    "ceoP4": "他是工商管理专业出身，拥有市场营销 MBA 学位（并在宾夕法尼亚州立大学进修）、FGV 企业管理专业进修、SBC 高级教练资格以及神学硕士学位。其高管教育经历还包括 Haggai Institute 的高级领导力课程、EBC 的家族企业管理课程，以及 Fundação Dom Cabral 的董事资格认证。",
+    "ceoP5": "作为演讲者、导师与企业家顾问，他创办了 Mentoria 10+1，致力于培养领导者与创业者，重点关注家族企业内部的冲突化解以及中小企业的可持续增长。他还著有《Meu Pequeno Grande Negócio》一书，探讨如何强化管理、领导力与企业传承。",
+    "ceoP6": "凭借三十余年的实践经验，Halisson 形成了以战略、价值观与人才发展为标志的领导风格，帮助众多家族企业以健全的治理、清晰的方向与长远的眼光持续成长。",
+    "ceoP7": "目前，他还担任 Central de Outdoor 的董事长兼总裁，该机构是代表并推动巴西户外媒体市场发展的全国性组织。",
+    "estruturaTitulo": "架构与合规",
+    "docTitulo": "现在就需要某份文件？",
+    "docTexto": "供应商登记所需的证明、合同草案，或投标所需的企业登记信息。请告诉我们贵司流程的具体要求，我们随即发送。",
+    "docCta": "索取文件"
+  },
+  "SobrePage": {
+    "breadcrumb": "关于我们",
+    "eyebrow": "自 1959 年起 · 巴拉那州与圣卡塔琳娜州",
+    "h1": "关于我们。",
+    "lead": "在巴拉那州与圣卡塔琳娜州拥有九个户外媒体平台，全部由我们自己的团队端到端运营。从洽谈到安装，作出承诺的人就是执行的人。",
+    "capaAlt": "Outdoormídia 团队在库里蒂巴总部门前合影",
+    "sobreOmLabel": "关于 OM",
+    "sobreOmP1": "一切始于 **1959 年**，在巴拉那州的公路旁，只有一桶胶水、纸张和一个想法。Euclides Aristides Farias 先生当时并不是在卖户外广告，他是在把梦想贴到纸质画板上，让信息与穿行公路的人流连接起来。",
+    "sobreOmP2": "他与女婿 Hamilton Pontarola 一道，把才华化为愿景，又把愿景化为事业。**Outdoormídia** 由此诞生。",
+    "sobreOmP3": "从库里蒂巴的一家小型家族企业，我们成长为**巴西南部户外广告**的标杆。我们的成长，始终跟随街道、城市、技术，尤其是人的变化。",
+    "sobreOmP4": "67 年积累，九个一体化的 **OOH 与 DOOH** 平台：这是巴拉那州唯一具备如此覆盖能力的运营体系。从印刷大牌到 LED 屏幕，我们把策略、技术与受众数据结合起来，**让您的品牌出现在它需要被看见的地方**。",
+    "sobreOmP5": "但这一转变并非独自完成。它由每一位相信「可以有不同做法」的客户共同建成，也由一支每天以**热忱、专业与远见**把它变为现实的团队共同建成。",
+    "presencaLabel": "覆盖区域",
+    "presencaTexto": "我们的媒体资源覆盖库里蒂巴、大都会区、巴拉那海岸、若因维利、伊塔雅伊与坎布里乌海滨市，始终位于人流量、可见度与实际影响力最高的点位。",
+    "pracas": [
+      "库里蒂巴",
+      "大都会区",
+      "巴拉那海岸",
+      "若因维利",
+      "伊塔雅伊",
+      "坎布里乌海滨市",
+      "PR-SC 高速公路"
+    ],
+    "processTitulo": "为什么选择 Outdoormídia",
+    "compromissoTitulo": "我们的承诺",
+    "compromissoLead": "在街头存在 67 年，本身就是一种责任。我们如何处理废弃物、向城市回馈什么，以及在合同里写下什么。",
+    "compromisso": [
+      {
+        "imageAlt": "Outdoormídia 的 LED 屏幕与建筑外墙垂直花园融为一体",
+        "eyebrow": "承诺 · 环境",
+        "title": "环境",
+        "text": "带照明的画面消耗电力，喷绘布会变成废弃物。因此我们把画面改造为 LED，为喷绘布找到新的去处，并以城市家具回馈我们从城市取用的空间。",
+        "cta": "查看已经落地的部分"
+      },
+      {
+        "imageAlt": "Outdoormídia 的城市家具立柱，配有全天候监控摄像头",
+        "eyebrow": "承诺 · 社会",
+        "title": "社会",
+        "text": "我们加入 Corajosamente Éticos，把拆下的喷绘布捐出，让它在 Loja OM do Bem 变成收入，并落成了库里蒂巴首个再生媒体资源。",
+        "cta": "查看相关举措"
+      },
+      {
+        "imageAlt": "Outdoormídia 首席执行官 Halisson Pontarola 的肖像",
+        "eyebrow": "承诺 · 公司治理",
+        "title": "公司治理",
+        "text": "违规点位带来的麻烦最终会波及广告主。我们的点位全部持证合规，独占条款写进合同，并且合同的每一条都有具体的人负责。",
+        "cta": "了解我们如何运营"
+      }
+    ],
+    "timeTitulo": "想加入 OM 团队吗？",
+    "timeTexto": "这座城市看到的每一场战役，都经过这里某个人的手。如果你希望自己的作品出现在街头，请把简历留在我们的人才库。",
+    "timeCta": "加入我们"
+  },
+  "Hero": {
+    "tituloForte": "随时随地",
+    "tituloResto": "，无处不在。",
+    "lead": "我们不只是决定品牌出现在哪里，而是判断它需要出现在哪里。我们依据真实车流与受众数据来规划区域、媒体形式与投放周期：从经典户外大牌到数字户外，覆盖连接巴拉那州与圣卡塔琳娜州的城市与高速公路。",
+    "ctaPlanejar": "规划战役",
+    "ctaPlataformas": "查看媒体平台"
+  },
+  "Institutional": {
+    "eyebrow": "自 1959 年起 · 巴拉那州与圣卡塔琳娜州",
+    "tituloA": "昨日的标杆。",
+    "tituloB": "今日的创新。",
+    "p1Antes": "这是 ",
+    "p1Anos": "67 年",
+    "p1Meio": "，把品牌放到城市经过的地方：从库里蒂巴到海岸，从高速公路到圣卡塔琳娜州。当市场刚开始了解 ",
+    "p1Ooh": "户外广告",
+    "p1Depois": " 时，Outdoormídia 已经参与了它的建设。",
+    "p2": "我们覆盖网络中的每一个点位，在成为曝光之前都经过战略性筛选。正是这种逐年累积的城市洞察，让户外广告转化为实际的战役成果。"
+  },
+  "Process": {
+    "tituloPadrao": "Gestão 360 OM",
+    "lead": "您说明目标、面向什么人群、需要在哪里出现。Outdoormídia 会综合区域、人流、媒体形式、受众与预算，为战役规划出最优路径。",
+    "etapas": [
+      {
+        "title": "策划",
+        "text": "确定目标与区域，筛选平台与点位，解读受众数据，并制定媒体方案。"
+      },
+      {
+        "title": "制作",
+        "text": "按媒体形式确定规格，使创意适配点位，并完成静态或数字素材的准备。"
+      },
+      {
+        "title": "投放与数据",
+        "text": "安装或上传、核验、监测，并交付该周期的受众数据。"
+      }
+    ],
+    "fechoAntes": "在独占广告牌项目中，Gestão 360 OM 还包含牌照合规的法务咨询与完整安装服务。",
+    "fechoLink": "了解更多",
+    "cta": "我想投放广告",
+    "tituloComoContratar": "如何签约"
+  },
+  "Culture": {
+    "titulo": "为什么选择 Outdoormídia",
+    "lead": "自 1959 年起，我们就把品牌带上巴拉那州与圣卡塔琳娜州的街头。从印刷大牌到 LED 屏幕，加入 OM 团队意味着与对城市中心影响力最大的媒介一起工作。"
+  },
+  "PlatformsCarousel": {
+    "tituloA": "有些战役需要 ",
+    "tituloDestaque1": "被看见",
+    "tituloB": "，有些战役需要 ",
+    "tituloDestaque2": "让人无法忽视",
+    "tituloC": "。",
+    "carrosselLabel": "Outdoormídia 媒体平台"
+  },
+  "Reviews": {
+    "titulo": "客户评价",
+    "subtitulo": "来自实践的成功故事",
+    "lead": "从第一次投放广告的客户，到管理大型品牌的操盘手，这些都是已经把信息放上巴西南部街头的人的真实体验。",
+    "carrosselLabel": "客户评价",
+    "fechar": "关闭"
+  },
+  "NovaCampanha": {
+    "kicker": "开启新战役",
+    "tituloA": "您希望从哪里",
+    "tituloB": "开始？",
+    "lead": "您了解自己的生意，我们懂得如何把您的品牌放到正确的位置。",
+    "diagnosticoNome": "品牌存在感诊断",
+    "diagnosticoIntencao": "我想了解我的品牌目前的存在感",
+    "programaticaNome": "程序化媒体",
+    "programaticaIntencao": "我想查看可投放的媒体资源",
+    "atendimentoNome": "快速咨询",
+    "atendimentoIntencao": "我想立即与顾问沟通"
+  },
+  "CoverageExplorer": {
+    "tituloA": "只是身处这座城市",
+    "tituloB": "并不够。",
+    "tituloC": "关键是要出现在",
+    "tituloDestaque": "日常动线",
+    "tituloD": "每天经过的路上。",
+    "lead": "Outdoormídia 的媒体资源覆盖库里蒂巴、大都会区、巴拉那海岸、若因维利、伊塔雅伊与坎布里乌海滨市，始终位于人流量、可见度与实际影响力最高的点位。从 Batel 街区到海岸，从高速公路到圣卡塔琳娜州的海滩，您的品牌将全程伴随两州人群的日常动线。",
+    "resposta": "当个工作日内回复",
+    "eyebrowPadrao": "覆盖范围",
+    "tituloAntesDestaque": "出现在",
+    "cta": "查询可投放资源"
+  },
+  "BancoDeTalentos": {
+    "tituloA": "加入我们的",
+    "tituloB": "人才库。",
+    "lead": "我们并非随时都有适合每种背景的空缺。请在人才库中留下您的信息：当您所在领域出现空缺时，您的登记会被优先查看。",
+    "cta": "投递简历",
+    "label": "人才库",
+    "fotoAlt": "Outdoormídia 团队",
+    "cadastroAberto": "登记开放中",
+    "seloDesde": "自 {ano} 年起",
+    "seloPlataformas": "{n} 个媒体平台",
+    "seloTelas": "175 块数字屏幕",
+    "ctaFormulario": "填写登记表 →",
+    "prefereAntes": "希望直接发送简历？"
+  },
+  "BlogTeaser": {
+    "lead": "关于户外媒体的观点、数据与策略，助您把品牌带上巴拉那州与圣卡塔琳娜州的街头。",
+    "vazio": "目前尚无已发布的文章，敬请期待。"
+  },
+  "SolucoesHero": {
+    "eyebrow": "商务中心 · 巴拉那州与圣卡塔琳娜州",
+    "h1": "解决方案。",
+    "lead": "从对您而言最合适的地方开始：从我们的差异化优势入手，从品牌需要出现的城市入手，或直接从您心中已有的媒体形式入手。"
+  },
+  "LinhaDoTempo": {
+    "lead": "从街头第一块广告画面至今，什么变了，什么没变。",
+    "role": "滚动浏览"
+  },
+  "Iconicos": {
+    "titulo": "标志性项目",
+    "eyebrow": "目录之外",
+    "proximo": "下一个项目"
+  },
+  "MapaCobertura": {
+    "legendaCombinada": "城市媒体与高速公路兼具",
+    "legendaUrbana": "城市媒体",
+    "mapaAlt": "Outdoormídia 在巴拉那州与圣卡塔琳娜州的覆盖地图",
+    "filtrarPor": "按类别筛选",
+    "todaARede": "全部网络",
+    "legendaRodovias": "高速公路平台",
+    "legendaSemCobertura": "未覆盖",
+    "switchRodovias": "高速公路",
+    "switchNomes": "显示全部名称",
+    "geralKicker": "巴拉那州与圣卡塔琳娜州",
+    "geralTitulo": "您的品牌会出现在哪里",
+    "geralNota": "四个城市区域与六条公路走廊。点击或悬停即可查看。",
+    "notaRod": "通过公路触达：{siglas}。该城市无城市媒体资源。",
+    "notaUrbanaComCor": "城市媒体。同时有 {siglas} 穿越。",
+    "notaUrbana": "城市媒体。",
+    "regioes": {
+      "cwb": {
+        "nome": "库里蒂巴及大都会区",
+        "kicker": "城市媒体 · 巴拉那州",
+        "nota": "十二个市镇，从库里蒂巴市中心到大都会环线。"
+      },
+      "joi": {
+        "nome": "若因维利",
+        "kicker": "城市媒体 · 圣卡塔琳娜州",
+        "nota": "圣卡塔琳娜州第一大城市，也是该州北部的工业中心。"
+      },
+      "itj": {
+        "nome": "伊塔雅伊",
+        "kicker": "城市媒体 · 圣卡塔琳娜州",
+        "nota": "港口与物流枢纽，全年人流不断。"
+      },
+      "bcm": {
+        "nome": "坎布里乌海滨市",
+        "kicker": "城市媒体 · 圣卡塔琳娜州",
+        "nota": "高端旅游目的地，旺季流动人口众多。"
+      },
+      "rod": {
+        "nome": "高速公路",
+        "kicker": "高速公路平台",
+        "nota": "连接巴拉那州与圣卡塔琳娜州的六条走廊。品牌伴随行程出现，但这些城市内没有城市媒体资源。"
+      }
+    }
+  },
+  "MapaRodovias": {
+    "legendaCidade": "走廊沿线城市",
+    "legendaApoio": "支持点位",
+    "legendaCorredor": "公路走廊",
+    "notaSaoPaulo": "圣保罗标记表示距离参照，并非覆盖范围。",
+    "mapaAlt": "巴拉那州与圣卡塔琳娜州之间所覆盖公路走廊的地图"
   }
 }
