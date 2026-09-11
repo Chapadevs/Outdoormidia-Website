@@ -96,7 +96,7 @@
     },
     "suaMarcaNoOoh": {
       "titulo": "Your brand in OOH | Outdoormídia",
-      "descricao": "Choose location, platform and period and see how many impacts your outdoor media campaign could generate across Paraná and Santa Catarina."
+      "descricao": "Upload your logo as a PNG and see your brand applied to a real Outdoormídia panel in Paraná and Santa Catarina. Download the image in seconds."
     },
     "melhoresPraticas": {
       "titulo": "How to plan an outdoor media campaign: 8 practices | Outdoormídia",
@@ -244,7 +244,7 @@
     "eyebrow": "Since 1959 · PR + SC",
     "h1": "About us.",
     "lead": "Nine outdoor media platforms across Paraná and Santa Catarina, operated end to end by our own team. From negotiation to installation, whoever promises is whoever delivers.",
-    "capaAlt": "The Outdoormídia team gathered in front of the head office in Curitiba",
+    "capaAlt": "Aerial view of the Outdoormídia head office in Curitiba: the warehouses with solar panels and the branded façade",
     "sobreOmLabel": "About OM",
     "sobreOmP1": "It all began in **1959**, along the highways of Paraná, with a bucket of glue, paper and an idea. Mr Euclides Aristides Farias was not selling outdoor media. He was pasting dreams onto paper panels, connecting messages to the movement of those crossing the roads.",
     "sobreOmP2": "Alongside his son-in-law, Hamilton Pontarola, he turned talent into vision and vision into a business. That is how **Outdoormídia** was born.",
@@ -291,6 +291,12 @@
     "timeTitulo": "Want to be part of the OM team?",
     "timeTexto": "Every campaign the city sees passed through someone’s hands here. If you want your work to show up on the street, leave your CV in our talent pool.",
     "timeCta": "Work with us"
+  },
+  "SuaMarcaPage": {
+    "eyebrow": "Advertiser area · Preview",
+    "h1A": "Your brand",
+    "h1B": "in OOH.",
+    "lead": "Choose the platform and the panel, upload your logo as a PNG and see your brand applied to a real Outdoormídia panel. Download the image in seconds."
   },
   "Hero": {
     "tituloForte": "Every Hour",
@@ -383,6 +389,144 @@
     "diagnosticoIntencao": "I want a reading of my brand’s presence",
     "atendimentoNome": "Talk to us now",
     "atendimentoIntencao": "I want to speak to someone now"
+  },
+  "QualifierForm": {
+    "formulario": "Form",
+    "semClareza": "Not sure about the goal yet?",
+    "fazerDiagnostico": "Take the Presence Diagnosis.",
+    "contador": "<b>{respondidas}</b> of {total}",
+    "editar": "edit",
+    "resumo": {
+      "momento": "Stage",
+      "objetivo": "Goal",
+      "praca": "Market",
+      "periodo": "Period",
+      "segmento": "Industry"
+    },
+    "perguntas": {
+      "intencao": "Where are you today?",
+      "objetivo": "What is the campaign goal?",
+      "praca": "Where does your brand need to be seen?",
+      "pracaAjuda": "You can pick more than one market.",
+      "continuar": "Continue",
+      "periodo": "How long will the campaign run?",
+      "segmento": "What industry is your business in?",
+      "contato": "Who are we talking to?"
+    },
+    "campos": {
+      "nome": "Full name*",
+      "empresa": "Company*",
+      "email": "Work e-mail*",
+      "celular": "Mobile*",
+      "preferencia": "How would you like to be contacted?*",
+      "verba": "How much do you plan to invest? (optional)"
+    },
+    "obrigatorios": {
+      "nome": "name",
+      "empresa": "company",
+      "email": "e-mail",
+      "celular": "mobile",
+      "contato": "contact preference"
+    },
+    "aceite": "I agree to the <link>Privacy Terms</link>.",
+    "enviar": "Send via WhatsApp",
+    "enviando": "Sending…",
+    "faltaPreencher": "Still missing: {campos}.",
+    "faltaAceite": "Please accept the Privacy Terms.",
+    "retorno": "Your answers go with the message. We reply within 1 business day.",
+    "tooltipBiSemana": "Standard OOH run, with a new creative every 14 days",
+    "opcoes": {
+      "intencao": {
+        "primeira": "It’s my first campaign",
+        "jaAnunciei": "I’ve advertised in OOH before",
+        "agencia": "I’m an agency or media planner"
+      },
+      "objetivo": {
+        "loja": "Drive people to the store",
+        "lancamento": "Launch a product or a new location",
+        "marca": "Build the brand in the region",
+        "evento": "Promote a date or event",
+        "naoSei": "I don’t know yet"
+      },
+      "praca": {
+        "curitiba": "Curitiba and Metropolitan Area",
+        "litoral": "Paraná Coast",
+        "joinville": "Joinville",
+        "itajai": "Itajaí and Balneário Camboriú",
+        "rodovias": "Highways",
+        "todas": "All markets",
+        "naoSei": "I don’t know yet"
+      },
+      "periodo": {
+        "biSemana": "Two-week cycle",
+        "umMes": "1 month",
+        "tresMeses": "3 months",
+        "seisMeses": "6 months or more",
+        "naoSei": "I don’t know yet"
+      },
+      "segmento": {
+        "varejo": "Retail",
+        "servicos": "Services",
+        "alimentacao": "Restaurants and food",
+        "imobiliario": "Real estate and construction",
+        "saude": "Healthcare",
+        "educacao": "Education",
+        "industria": "Industry",
+        "supermercados": "Supermarkets",
+        "automotivo": "Automotive",
+        "eventos": "Events",
+        "agencias": "Marketing and advertising agencies",
+        "outro": "Other"
+      },
+      "contato": {
+        "whatsapp": "WhatsApp",
+        "ligacao": "Phone call",
+        "email": "E-mail"
+      },
+      "verba": {
+        "nenhuma": "No budget planned yet",
+        "ate5": "Up to R$ 5,000",
+        "de5a10": "R$ 5,000 to R$ 10,000",
+        "de10a50": "R$ 10,000 to R$ 50,000",
+        "acima50": "Above R$ 50,000"
+      }
+    }
+  },
+  "SuaMarcaNoOoh": {
+    "passos": {
+      "plataforma": "01 · Platform",
+      "arte": "02 · Your artwork",
+      "resultado": "03 · Result"
+    },
+    "paineis": "Panels on this platform",
+    "vazio": "Choose a platform to get started.",
+    "subaLogo": "Upload your logo as a PNG to see it on the panel.",
+    "carregando": "Loading the panel…",
+    "painelReal": "Real panel from the Outdoormídia network.",
+    "resultadoAlt": "{painel} with your brand applied",
+    "arraste": "Drag your logo here or click to choose a file",
+    "formato": "PNG only, ideally with a transparent background · up to 8 MB",
+    "remover": "Remove logo",
+    "erroFormato": "PNG only. Export your logo as a PNG and try again.",
+    "erroTamanho": "File over 8 MB. Please upload a lighter version.",
+    "erroLeitura": "We couldn't open that file. Try another PNG.",
+    "corDoPainel": "Panel color",
+    "corPersonalizada": "Custom color",
+    "cores": {
+      "branco": "White",
+      "preto": "Black",
+      "cinza": "Gray",
+      "laranja": "Orange",
+      "vermelho": "Red",
+      "azul": "Blue",
+      "marinho": "Navy",
+      "verde": "Green",
+      "amarelo": "Yellow"
+    },
+    "tamanho": "Logo size",
+    "baixar": "Download image",
+    "enviar": "Send to our sales team →",
+    "nota": "Illustrative preview. The final artwork is adjusted with our sales team. Your logo never leaves your browser."
   },
   "CoverageExplorer": {
     "tituloA": "Being in the city",

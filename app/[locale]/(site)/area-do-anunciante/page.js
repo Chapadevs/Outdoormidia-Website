@@ -34,7 +34,7 @@ const FERRAMENTAS = [
     Icone: Presentation,
     eyebrow: 'Ferramenta · Pré-visualização',
     title: 'Sua marca no OOH',
-    text: 'Escolha a praça e o formato, suba a sua logo ou a peça pronta, e veja a sua marca aplicada no painel real. Baixe a imagem e mande para quem decide.',
+    text: 'Escolha a plataforma e o painel, suba a sua logo em PNG e veja a sua marca aplicada no painel real. Baixe a imagem e mande para quem decide.',
     cta: 'Ver minha marca no painel',
   },
   {

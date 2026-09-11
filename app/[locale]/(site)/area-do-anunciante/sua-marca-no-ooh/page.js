@@ -1,11 +1,10 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import { LOCALES, TAG_OG } from '@/i18n/routing'
 import { alternatesDe } from '@/lib/seo'
-import SimuladorForm from '@/components/forms/SimuladorForm'
-import { getPeriodos } from '@/lib/simulador'
+import SuaMarcaNoOoh from '@/components/forms/SuaMarcaNoOoh'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { getLocations } from '@/lib/locations'
-import { getPlatforms } from '@/lib/platforms'
+import { getPlatformsListagem } from '@/lib/platforms'
+import { PLATAFORMAS_COM_MOCKUP } from '@/lib/suaMarca'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 
@@ -31,46 +30,44 @@ export async function generateMetadata({ params }) {
 
 export const revalidate = 3600
 
-export default async function SimuladorPage({ params }) {
+export default async function SuaMarcaNoOohPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'SuaMarcaPage' })
+  const tNav = await getTranslations({ locale, namespace: 'Nav' })
 
-  const locations = await getLocations(locale)
-  // `semEstimativa` fica de fora: painel sob medida não tem CPM nem alcance de
-  // tabela, e sem o filtro ele cairia no impacto padrão do simulador.
-  const platforms = getPlatforms(locale).filter((p) => !p.semEstimativa).map(({ slug, name }) => ({
-    slug,
-    name,
-  }))
+  // Só as plataformas que têm foto de painel entram no seletor, na ordem da
+  // listagem do site. Plataforma sem foto não sobe como botão apagado: seria
+  // anunciar na página o que ainda não existe.
+  const plataformas = getPlatformsListagem(locale)
+    .filter((p) => PLATAFORMAS_COM_MOCKUP.includes(p.slug))
+    .map(({ slug, name }) => ({ slug, name }))
 
   return (
     <>
       <main>
         <Breadcrumb
           items={[
-            { label: 'Área do anunciante', href: '/area-do-anunciante' },
-            { label: 'Sua marca no OOH' },
+            { label: tNav('areaDoAnunciante'), href: '/area-do-anunciante' },
+            { label: tNav('suaMarcaNoOoh') },
           ]}
         />
 
         <section className="pb-[54px] pt-[54px] max-mob:pb-9 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Área do anunciante · Pré-visualização</div>
+            <div className="eyebrow reveal">{t('eyebrow')}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(40px,6.4vw,88px)] text-ink">
-              Sua marca
+              {t('h1A')}
               <br />
-              no OOH.
+              {t('h1B')}
             </h1>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Escolha a plataforma, suba a sua logo ou a sua peça pronta, e veja a sua marca
-              aplicada em um painel real da Outdoormídia. Baixe a imagem em segundos.
-            </p>
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{t('lead')}</p>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SimuladorForm locations={locations} platforms={platforms} periodos={getPeriodos(locale)} />
+            <SuaMarcaNoOoh plataformas={plataformas} />
           </div>
         </section>
 

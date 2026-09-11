@@ -69,6 +69,7 @@ export default async function LocaleLayout({ children, params }) {
     Footer: mensagens.Footer,
     Nav: mensagens.Nav,
     Hero: mensagens.Hero,
+    QualifierForm: mensagens.QualifierForm,
     PlatformsCarousel: mensagens.PlatformsCarousel,
     Process: mensagens.Process,
     Reviews: mensagens.Reviews,
