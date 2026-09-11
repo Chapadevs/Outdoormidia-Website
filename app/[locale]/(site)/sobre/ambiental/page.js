@@ -133,26 +133,25 @@ export default async function AmbientalPage({ params }) {
           <div className="wrap">
             <SectionHeading title={t('kopherTitulo')} className="reveal mb-[34px]" />
             <div className="ticks reveal grid grid-cols-[280px_1fr] gap-10 rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
-              <CoverMedia
-                src="/media/ambiental/Logo-instituto-Kopher.jpeg"
-                alt={t('kopherLogoAlt')}
-                ratio="2/1"
-                sizes="(max-width: 980px) 100vw, 280px"
-                className="self-start"
-              />
+              <div className="flex flex-col gap-5 self-start">
+                <CoverMedia
+                  src="/media/ambiental/Logo-instituto-Kopher.jpeg"
+                  alt={t('kopherLogoAlt')}
+                  ratio="2/1"
+                  sizes="(max-width: 980px) 100vw, 280px"
+                />
+                <CoverMedia
+                  src="/media/ambiental/certificado-kopher.png"
+                  alt={t('kopherCertificadoAlt')}
+                  ratio="a4"
+                  sizes="(max-width: 980px) 100vw, 280px"
+                />
+              </div>
               <div className="flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
                 <p className="m-0">{t('kopherP1')}</p>
                 <p className="m-0">{t('kopherP2')}</p>
               </div>
             </div>
-            <CoverMedia
-              src="/media/ambiental/certificado-kopher.png"
-              alt={t('kopherCertificadoAlt')}
-              ratio="16/9"
-              sizes="(max-width: 980px) 100vw, 640px"
-              className="reveal mt-8 max-w-[640px] bg-bone"
-              recorte
-            />
           </div>
         </section>
 

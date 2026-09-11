@@ -12,11 +12,12 @@ import LinhaDoTempo from '@/components/sections/LinhaDoTempo'
 import { getMarcos } from '@/lib/sobre'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-// A capa do topo é a mesma foto da sede que abre o Banco de Talentos: o time
-// reunido na frente do prédio. O arquivo é 2000x1125, 16/9 exato, então a capa
-// sobe nessa proporção e nada é cortado — em 16/7 o corte cairia justamente nos
-// pés de quem está agachado na ponta direita.
-const CAPA = { src: '/media/trabalhe-conosco/time-outdoormidia.webp' }
+// A capa do topo é a foto aérea da sede, em Curitiba: os dois galpões com as
+// placas solares, a fachada com a marca e a bandeira. É a mesma peça que abre o
+// hero de /trabalhe-conosco. O arquivo é 2000x1125, 16/9 exato, então a capa
+// sobe nessa proporção e nada é cortado — em 16/7 o corte levaria a fileira
+// de carros da frente e o telhado do galpão de trás.
+const CAPA = { src: '/media/sobre-nos/foto-da-sede.webp' }
 
 // `**negrito**` é o único realce que os parágrafos de "Sobre a OM" usam, mesmo
 // padrão de components/ui/Accordion.jsx. O realce vive dentro da mensagem, e não

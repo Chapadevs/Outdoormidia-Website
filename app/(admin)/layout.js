@@ -1,4 +1,5 @@
 import { Poppins } from 'next/font/google'
+import { NextIntlClientProvider } from 'next-intl'
 import '../globals.css'
 import RevealObserver from '@/components/widgets/RevealObserver'
 import RadialReveal from '@/components/widgets/RadialReveal'
@@ -18,6 +19,12 @@ const poppins = Poppins({
 // fixo. Ficaram de fora os widgets de marketing que o layout antigo instalava
 // aqui sem uso (WhatsAppButton, CookieNotice e o JSON-LD de LocalBusiness):
 // nenhum deles faz sentido atrás do login, e /admin já é noindex.
+//
+// O provider do next-intl entra mesmo sem tradução no painel: Logo, Breadcrumb
+// e SectionHeading (peças compartilhadas com o site) usam o Link de
+// @/i18n/navigation, que lê o locale do contexto e derruba a renderização com
+// "No intl context found" quando ele não existe. Foi o 500 de /admin/login em
+// produção. Sem mensagens, porque nada atrás do login chama useTranslations.
 export const metadata = {
   title: 'Painel Outdoormídia',
   robots: { index: false, follow: false },
@@ -27,9 +34,11 @@ export default function AdminRootLayout({ children }) {
   return (
     <html lang="pt-BR" className={poppins.variable}>
       <body>
-        {children}
-        <RevealObserver />
-        <RadialReveal />
+        <NextIntlClientProvider locale="pt" messages={{}}>
+          {children}
+          <RevealObserver />
+          <RadialReveal />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

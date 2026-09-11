@@ -18,6 +18,9 @@ const RATIOS = {
   // 16/9 cortaria justamente o céu e a base da estrutura, que é o que mostra a
   // altura do painel na via.
   '2/1': 'aspect-[2/1]',
+  // Folha A4 deitada (297×210): o certificado de doação do Instituto Kópher. Com
+  // a proporção exata a peça sobe inteira, sem faixa bege nem corte.
+  a4: 'aspect-[297/210]',
 }
 
 export default function CoverMedia({

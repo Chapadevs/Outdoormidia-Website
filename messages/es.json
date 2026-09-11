@@ -96,7 +96,7 @@
     },
     "suaMarcaNoOoh": {
       "titulo": "Tu marca en OOH | Outdoormídia",
-      "descricao": "Elige plaza, plataforma y período y mira cuántos impactos puede generar tu campaña de medios exteriores en Paraná y en Santa Catarina."
+      "descricao": "Sube tu logo en PNG y mira tu marca aplicada en un panel real de Outdoormídia, en Paraná y en Santa Catarina. Descarga la imagen en segundos."
     },
     "melhoresPraticas": {
       "titulo": "Cómo planificar una campaña de medios exteriores: 8 prácticas | Outdoormídia",
@@ -244,7 +244,7 @@
     "eyebrow": "Desde 1959 · PR + SC",
     "h1": "Sobre nosotros.",
     "lead": "Nueve plataformas de medios exteriores en Paraná y en Santa Catarina, operadas de punta a punta por nuestro equipo. De la negociación a la instalación, quien promete es quien ejecuta.",
-    "capaAlt": "Equipo de Outdoormídia reunido frente a la sede, en Curitiba",
+    "capaAlt": "Vista aérea de la sede de Outdoormídia, en Curitiba: los galpones con placas solares y la fachada con la marca",
     "sobreOmLabel": "Sobre la OM",
     "sobreOmP1": "Todo empezó en **1959**, a las orillas de las carreteras de Paraná, con un balde de pegamento, papel y una idea en la cabeza. El Sr. Euclides Aristides Farias no vendía medios exteriores. Pegaba sueños en paneles de papel, conectando mensajes al movimiento de quien cruzaba las rutas.",
     "sobreOmP2": "Junto a su yerno, Hamilton Pontarola, transformó talento en visión y visión en negocio. Así nació **Outdoormídia**.",
@@ -291,6 +291,12 @@
     "timeTitulo": "¿Quieres formar parte del equipo OM?",
     "timeTexto": "Toda campaña que la ciudad ve pasó por la mano de alguien aquí. Si quieres que tu trabajo aparezca en la calle, deja tu currículum en nuestro banco de talentos.",
     "timeCta": "Trabaja con nosotros"
+  },
+  "SuaMarcaPage": {
+    "eyebrow": "Área del anunciante · Vista previa",
+    "h1A": "Tu marca",
+    "h1B": "en OOH.",
+    "lead": "Elige la plataforma y el panel, sube tu logo en PNG y mira tu marca aplicada en un panel real de Outdoormídia. Descarga la imagen en segundos."
   },
   "Hero": {
     "tituloForte": "Toda Hora",
@@ -384,6 +390,144 @@
     "atendimentoNome": "Atención rápida",
     "atendimentoIntencao": "Quiero atención ahora"
   },
+  "QualifierForm": {
+    "formulario": "Formulario",
+    "semClareza": "¿Sin claridad sobre el objetivo?",
+    "fazerDiagnostico": "Haz el Diagnóstico de Presencia.",
+    "contador": "<b>{respondidas}</b> de {total}",
+    "editar": "editar",
+    "resumo": {
+      "momento": "Momento",
+      "objetivo": "Objetivo",
+      "praca": "Plaza",
+      "periodo": "Período",
+      "segmento": "Segmento"
+    },
+    "perguntas": {
+      "intencao": "¿Dónde estás hoy?",
+      "objetivo": "¿Cuál es el objetivo de la campaña?",
+      "praca": "¿Dónde necesita aparecer tu marca?",
+      "pracaAjuda": "Puedes marcar más de una plaza.",
+      "continuar": "Continuar",
+      "periodo": "¿Por cuánto tiempo estará al aire la campaña?",
+      "segmento": "¿Cuál es el segmento de tu negocio?",
+      "contato": "¿Con quién estamos hablando?"
+    },
+    "campos": {
+      "nome": "Nombre completo*",
+      "empresa": "Empresa*",
+      "email": "E-mail corporativo*",
+      "celular": "Celular*",
+      "preferencia": "¿Cómo prefieres que te contactemos?*",
+      "verba": "¿Cuánto piensas invertir? (opcional)"
+    },
+    "obrigatorios": {
+      "nome": "nombre",
+      "empresa": "empresa",
+      "email": "e-mail",
+      "celular": "celular",
+      "contato": "preferencia de contacto"
+    },
+    "aceite": "Acepto los <link>Términos de Privacidad</link>.",
+    "enviar": "Enviar por WhatsApp",
+    "enviando": "Enviando…",
+    "faltaPreencher": "Falta completar: {campos}.",
+    "faltaAceite": "Falta aceptar los Términos de Privacidad.",
+    "retorno": "Tus respuestas van junto con el mensaje. Respondemos en hasta 1 día hábil.",
+    "tooltipBiSemana": "Período estándar de exhibición OOH, con cambio cada 14 días",
+    "opcoes": {
+      "intencao": {
+        "primeira": "Es mi primera campaña",
+        "jaAnunciei": "Ya anuncié en OOH antes",
+        "agencia": "Soy agencia o planificación"
+      },
+      "objetivo": {
+        "loja": "Llevar gente a la tienda",
+        "lancamento": "Lanzar un producto o una unidad",
+        "marca": "Construir marca en la región",
+        "evento": "Divulgar una fecha o evento",
+        "naoSei": "Todavía no sé"
+      },
+      "praca": {
+        "curitiba": "Curitiba y Región Metropolitana",
+        "litoral": "Litoral de Paraná",
+        "joinville": "Joinville",
+        "itajai": "Itajaí y Balneário Camboriú",
+        "rodovias": "Carreteras",
+        "todas": "Todas las plazas",
+        "naoSei": "Todavía no sé"
+      },
+      "periodo": {
+        "biSemana": "Bisemana",
+        "umMes": "1 mes",
+        "tresMeses": "3 meses",
+        "seisMeses": "6 meses o más",
+        "naoSei": "Todavía no sé"
+      },
+      "segmento": {
+        "varejo": "Retail",
+        "servicos": "Servicios",
+        "alimentacao": "Restaurantes y alimentación",
+        "imobiliario": "Inmobiliario y construcción",
+        "saude": "Salud",
+        "educacao": "Educación",
+        "industria": "Industria",
+        "supermercados": "Supermercados",
+        "automotivo": "Automotriz",
+        "eventos": "Eventos",
+        "agencias": "Agencias de marketing y publicidad",
+        "outro": "Otro"
+      },
+      "contato": {
+        "whatsapp": "WhatsApp",
+        "ligacao": "Llamada",
+        "email": "E-mail"
+      },
+      "verba": {
+        "nenhuma": "No hay presupuesto planificado",
+        "ate5": "Hasta R$ 5.000",
+        "de5a10": "De R$ 5.000 a R$ 10.000",
+        "de10a50": "De R$ 10.000 a R$ 50.000",
+        "acima50": "Más de R$ 50.000"
+      }
+    }
+  },
+  "SuaMarcaNoOoh": {
+    "passos": {
+      "plataforma": "01 · Plataforma",
+      "arte": "02 · Tu arte",
+      "resultado": "03 · Resultado"
+    },
+    "paineis": "Paneles de la plataforma",
+    "vazio": "Elige una plataforma para empezar.",
+    "subaLogo": "Sube tu logo en PNG para verlo en el panel.",
+    "carregando": "Cargando el panel…",
+    "painelReal": "Panel real de la red Outdoormídia.",
+    "resultadoAlt": "{painel} con tu marca aplicada",
+    "arraste": "Arrastra tu logo o haz clic para elegir un archivo",
+    "formato": "Solo PNG, de preferencia con fondo transparente · hasta 8 MB",
+    "remover": "Quitar logo",
+    "erroFormato": "Solo PNG. Exporta tu logo en PNG e inténtalo de nuevo.",
+    "erroTamanho": "Archivo de más de 8 MB. Envía una versión más liviana.",
+    "erroLeitura": "No pudimos abrir ese archivo. Prueba con otro PNG.",
+    "corDoPainel": "Color del panel",
+    "corPersonalizada": "Color personalizado",
+    "cores": {
+      "branco": "Blanco",
+      "preto": "Negro",
+      "cinza": "Gris",
+      "laranja": "Naranja",
+      "vermelho": "Rojo",
+      "azul": "Azul",
+      "marinho": "Azul marino",
+      "verde": "Verde",
+      "amarelo": "Amarillo"
+    },
+    "tamanho": "Tamaño del logo",
+    "baixar": "Descargar imagen",
+    "enviar": "Enviar al equipo comercial →",
+    "nota": "Vista previa ilustrativa. El arte final se ajusta con el equipo comercial. Tu logo no sale de tu navegador."
+  },
   "CoverageExplorer": {
     "tituloA": "No basta con estar",
     "tituloB": "en la ciudad.",
@@ -428,7 +572,9 @@
     "titulo": "Icónicos",
     "eyebrow": "Fuera del catálogo",
     "proximo": "Próximo proyecto",
-    "anterior": "Proyecto anterior"
+    "anterior": "Proyecto anterior",
+    "legendaRegenerativo": "Antes → después",
+    "legendaElegancy": "Luz como firma"
   },
   "MapaCobertura": {
     "legendaCombinada": "combina medios urbanos y carreteras",

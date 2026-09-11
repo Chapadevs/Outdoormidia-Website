@@ -4,6 +4,7 @@ import { Link } from '@/i18n/navigation'
 import { useEffect, useRef, useState } from 'react'
 import AtivoCard from '@/components/ui/AtivoCard'
 import AuroraField from '@/components/ui/AuroraField'
+import IconicosFx, { CLASSE_IMAGEM } from '@/components/ui/IconicosFx'
 import SlideStage from '@/components/ui/SlideStage'
 import { useLocale } from 'next-intl'
 import { getIconicos } from '@/lib/iconicos'
@@ -24,6 +25,7 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
   const SLIDES = ICONICOS.map((i) => ({
     src: i.image,
     alt: i.imageAlt || `${i.name}: ${i.tagline}`,
+    classe: CLASSE_IMAGEM[i.slug],
   }))
 
   const [active, setActive] = useState(0)
@@ -32,6 +34,12 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
   // o card existe visível para o navegador rolar até ele. Ref, não estado: só
   // o `active` precisa re-renderizar, ler e limpar o alvo não.
   const scrollAlvo = useRef(null)
+
+  // As animações da foto (IconicosFx) só montam com a faixa perto da tela:
+  // são dezenas de folhas, ladrilhos e estrelas em loop, e não há por que
+  // mantê-las vivas enquanto o visitante lê o resto da página.
+  const palcoRef = useRef(null)
+  const [emCena, setEmCena] = useState(false)
 
   const go = (i) => setActive(((i % ICONICOS.length) + ICONICOS.length) % ICONICOS.length)
 
@@ -70,6 +78,16 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
     document.getElementById(scrollAlvo.current)?.scrollIntoView({ block: 'start' })
     scrollAlvo.current = null
   }, [active])
+
+  useEffect(() => {
+    const el = palcoRef.current
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => setEmCena(e.isIntersecting), {
+      rootMargin: '120px 0px',
+    })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
 
   return (
     <>
@@ -169,14 +187,25 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
               ))}
             </div>
 
+            {/* O palco fica de fora do `key={active}` da coluna de texto: o
+                deslize entre fotos precisa do componente vivo através da troca.
+                Quem troca a cada aba são só as camadas do `IconicosFx`, para as
+                entradas (cipó, folhas, moldura) rodarem de novo. */}
             {TODOS_COM_FOTO && (
-              <SlideStage
-                className="shadow-[0_34px_90px_rgba(22,17,13,.30)]"
-                index={active}
-                ratio="aspect-[4/3]"
-                sizes="(max-width: 980px) 100vw, 52vw"
-                slides={SLIDES}
-              />
+              <div ref={palcoRef}>
+                <IconicosFx
+                  slug={emCena ? ICONICOS[active].slug : null}
+                  src={ICONICOS[active].image}
+                >
+                  <SlideStage
+                    className="relative z-[1] shadow-[0_34px_90px_rgba(22,17,13,.30)]"
+                    index={active}
+                    ratio="aspect-[4/3]"
+                    sizes="(max-width: 980px) 100vw, 52vw"
+                    slides={SLIDES}
+                  />
+                </IconicosFx>
+              </div>
             )}
           </div>
 

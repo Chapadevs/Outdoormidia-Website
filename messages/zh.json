@@ -96,7 +96,7 @@
     },
     "suaMarcaNoOoh": {
       "titulo": "您的品牌在户外 | Outdoormídia",
-      "descricao": "选择城市、平台与投放周期，查看您的户外战役在巴拉那州与圣卡塔琳娜州可能带来的曝光量。"
+      "descricao": "上传 PNG 格式的品牌标志，即可看到它出现在 Outdoormídia 位于巴拉那州和圣卡塔琳娜州的真实广告牌上，几秒内即可下载图片。"
     },
     "melhoresPraticas": {
       "titulo": "如何规划一场户外广告战役：8 条实践 | Outdoormídia",
@@ -244,7 +244,7 @@
     "eyebrow": "自 1959 年起 · 巴拉那州与圣卡塔琳娜州",
     "h1": "关于我们。",
     "lead": "在巴拉那州与圣卡塔琳娜州拥有九个户外媒体平台，全部由我们自己的团队端到端运营。从洽谈到安装，作出承诺的人就是执行的人。",
-    "capaAlt": "Outdoormídia 团队在库里蒂巴总部门前合影",
+    "capaAlt": "Outdoormídia 库里蒂巴总部鸟瞰：装有太阳能板的厂房和带品牌标识的外墙",
     "sobreOmLabel": "关于 OM",
     "sobreOmP1": "一切始于 **1959 年**，在巴拉那州的公路旁，只有一桶胶水、纸张和一个想法。Euclides Aristides Farias 先生当时并不是在卖户外广告，他是在把梦想贴到纸质画板上，让信息与穿行公路的人流连接起来。",
     "sobreOmP2": "他与女婿 Hamilton Pontarola 一道，把才华化为愿景，又把愿景化为事业。**Outdoormídia** 由此诞生。",
@@ -291,6 +291,12 @@
     "timeTitulo": "想加入 OM 团队吗？",
     "timeTexto": "这座城市看到的每一场战役，都经过这里某个人的手。如果你希望自己的作品出现在街头，请把简历留在我们的人才库。",
     "timeCta": "加入我们"
+  },
+  "SuaMarcaPage": {
+    "eyebrow": "广告主专区 · 效果预览",
+    "h1A": "您的品牌",
+    "h1B": "登上户外广告。",
+    "lead": "选择平台和广告牌，上传 PNG 格式的品牌标志，即可看到您的品牌出现在 Outdoormídia 的真实广告牌上。几秒内即可下载图片。"
   },
   "Hero": {
     "tituloForte": "随时随地",
@@ -384,6 +390,144 @@
     "atendimentoNome": "快速咨询",
     "atendimentoIntencao": "我想立即与顾问沟通"
   },
+  "QualifierForm": {
+    "formulario": "表单",
+    "semClareza": "还不确定目标？",
+    "fazerDiagnostico": "做一次品牌存在感诊断。",
+    "contador": "已回答 <b>{respondidas}</b> / {total}",
+    "editar": "修改",
+    "resumo": {
+      "momento": "阶段",
+      "objetivo": "目标",
+      "praca": "区域",
+      "periodo": "周期",
+      "segmento": "行业"
+    },
+    "perguntas": {
+      "intencao": "您目前处于什么阶段？",
+      "objetivo": "这次投放的目标是什么？",
+      "praca": "您的品牌需要出现在哪里？",
+      "pracaAjuda": "可以选择多个区域。",
+      "continuar": "继续",
+      "periodo": "投放持续多长时间？",
+      "segmento": "您的业务属于哪个行业？",
+      "contato": "请留下您的联系方式"
+    },
+    "campos": {
+      "nome": "姓名*",
+      "empresa": "公司*",
+      "email": "工作邮箱*",
+      "celular": "手机*",
+      "preferencia": "您希望我们如何联系您？*",
+      "verba": "计划投入多少预算？（可选）"
+    },
+    "obrigatorios": {
+      "nome": "姓名",
+      "empresa": "公司",
+      "email": "邮箱",
+      "celular": "手机",
+      "contato": "联系方式偏好"
+    },
+    "aceite": "我同意<link>隐私条款</link>。",
+    "enviar": "通过 WhatsApp 发送",
+    "enviando": "发送中…",
+    "faltaPreencher": "还需填写：{campos}。",
+    "faltaAceite": "请先接受隐私条款。",
+    "retorno": "您的回答会随消息一起发送。我们会在 1 个工作日内回复。",
+    "tooltipBiSemana": "OOH 标准投放周期，每 14 天更换一次",
+    "opcoes": {
+      "intencao": {
+        "primeira": "这是我的第一次投放",
+        "jaAnunciei": "我之前投放过户外广告",
+        "agencia": "我是广告公司或媒介策划"
+      },
+      "objetivo": {
+        "loja": "把顾客带到门店",
+        "lancamento": "推出新产品或新门店",
+        "marca": "在区域内建立品牌",
+        "evento": "宣传某个日期或活动",
+        "naoSei": "还不确定"
+      },
+      "praca": {
+        "curitiba": "库里蒂巴及大都会区",
+        "litoral": "巴拉那海岸",
+        "joinville": "若因维利",
+        "itajai": "伊塔雅伊与坎布里乌海滨市",
+        "rodovias": "高速公路",
+        "todas": "全部区域",
+        "naoSei": "还不确定"
+      },
+      "periodo": {
+        "biSemana": "两周周期",
+        "umMes": "1 个月",
+        "tresMeses": "3 个月",
+        "seisMeses": "6 个月或更长",
+        "naoSei": "还不确定"
+      },
+      "segmento": {
+        "varejo": "零售",
+        "servicos": "服务业",
+        "alimentacao": "餐饮",
+        "imobiliario": "房地产与建筑",
+        "saude": "医疗健康",
+        "educacao": "教育",
+        "industria": "工业",
+        "supermercados": "超市",
+        "automotivo": "汽车",
+        "eventos": "活动",
+        "agencias": "营销与广告公司",
+        "outro": "其他"
+      },
+      "contato": {
+        "whatsapp": "WhatsApp",
+        "ligacao": "电话",
+        "email": "邮箱"
+      },
+      "verba": {
+        "nenhuma": "尚无预算计划",
+        "ate5": "5,000 雷亚尔以内",
+        "de5a10": "5,000 至 10,000 雷亚尔",
+        "de10a50": "10,000 至 50,000 雷亚尔",
+        "acima50": "50,000 雷亚尔以上"
+      }
+    }
+  },
+  "SuaMarcaNoOoh": {
+    "passos": {
+      "plataforma": "01 · 平台",
+      "arte": "02 · 您的素材",
+      "resultado": "03 · 效果"
+    },
+    "paineis": "该平台的广告牌",
+    "vazio": "请先选择一个平台。",
+    "subaLogo": "上传 PNG 格式的品牌标志，即可在广告牌上预览。",
+    "carregando": "正在加载广告牌…",
+    "painelReal": "Outdoormídia 网络中的真实广告牌。",
+    "resultadoAlt": "应用了您品牌的{painel}",
+    "arraste": "将标志拖到这里，或点击选择文件",
+    "formato": "仅支持 PNG，建议使用透明背景 · 最大 8 MB",
+    "remover": "移除标志",
+    "erroFormato": "仅支持 PNG。请将标志导出为 PNG 后重试。",
+    "erroTamanho": "文件超过 8 MB，请上传更小的版本。",
+    "erroLeitura": "无法打开该文件，请尝试其他 PNG。",
+    "corDoPainel": "广告牌颜色",
+    "corPersonalizada": "自定义颜色",
+    "cores": {
+      "branco": "白色",
+      "preto": "黑色",
+      "cinza": "灰色",
+      "laranja": "橙色",
+      "vermelho": "红色",
+      "azul": "蓝色",
+      "marinho": "藏青色",
+      "verde": "绿色",
+      "amarelo": "黄色"
+    },
+    "tamanho": "标志大小",
+    "baixar": "下载图片",
+    "enviar": "发送给销售团队 →",
+    "nota": "效果图仅供参考，最终素材将与销售团队共同确定。您的标志不会离开您的浏览器。"
+  },
   "CoverageExplorer": {
     "tituloA": "只是身处这座城市",
     "tituloB": "并不够。",
@@ -428,7 +572,9 @@
     "titulo": "标志性项目",
     "eyebrow": "目录之外",
     "proximo": "下一个项目",
-    "anterior": "上一个项目"
+    "anterior": "上一个项目",
+    "legendaRegenerativo": "改造前 → 改造后",
+    "legendaElegancy": "以光为签名"
   },
   "MapaCobertura": {
     "legendaCombinada": "城市媒体与高速公路兼具",

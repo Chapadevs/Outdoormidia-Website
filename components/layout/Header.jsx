@@ -15,12 +15,38 @@ const EASE = 'ease-[cubic-bezier(.2,.7,.2,1)]'
 // à seção e a seta ao lado abre a lista de filhas.
 const COMPACT_QUERY = '(max-width: 980px)'
 
+// Chevron dos acordeões do menu: o dos hubs (só no modo compacto) e o de
+// Plataformas, que abre o nível 3 em qualquer largura.
+function Chevron({ aberto, className = '' }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`transition-transform duration-300 ${EASE} motion-reduce:transition-none ${className} ${
+        aberto ? 'rotate-180' : ''
+      }`}
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  )
+}
+
 // O painel fica montado o tempo todo para poder animar altura e opacidade; o
 // `inert` tira os links do fluxo de foco enquanto está fechado.
-export default function Header() {
+//
+// `plataformas` é o nível 3 da coluna Soluções: as 8 do catálogo, montadas no
+// servidor por `getPlatformsNav`. O item Plataformas ganha uma seta que abre a
+// lista; o link continua levando ao índice.
+export default function Header({ plataformas = [] }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [compact, setCompact] = useState(false)
   const [hubsAbertos, setHubsAbertos] = useState({})
+  const [plataformasAbertas, setPlataformasAbertas] = useState(null)
   const pathname = usePathname()
   const locale = useLocale()
   const t = useTranslations('Header')
@@ -61,6 +87,12 @@ export default function Header() {
   function isActive(href) {
     return pathname === href || pathname.startsWith(`${href}/`)
   }
+
+  // Nasce aberto em cima do índice ou de uma página de plataforma; Projetos
+  // Icônicos mora em /plataformas/ mas é item próprio, então não conta.
+  const plataformasAtivas =
+    pathname === '/plataformas' || plataformas.some((p) => isActive(p.href))
+  const nivel3Aberto = plataformasAbertas ?? plataformasAtivas
 
   // Cada coluna entra um pouco depois da anterior; ao fechar, todas saem juntas.
   function atraso(i) {
@@ -172,20 +204,7 @@ export default function Header() {
                             }
                             className="flex h-11 w-11 flex-none cursor-pointer items-center justify-center rounded-full text-white/85 transition-colors duration-150 hover:bg-white/15 hover:text-white"
                           >
-                            <svg
-                              aria-hidden
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className={`h-[18px] w-[18px] transition-transform duration-300 ${EASE} motion-reduce:transition-none ${
-                                aberto ? 'rotate-180' : ''
-                              }`}
-                            >
-                              <path d="m6 9 6 6 6-6" />
-                            </svg>
+                            <Chevron aberto={aberto} className="h-[18px] w-[18px]" />
                           </button>
                         )}
                       </div>
@@ -200,18 +219,73 @@ export default function Header() {
                         >
                           <div className="overflow-hidden">
                             <div className="mt-3.5 flex flex-col gap-2.5 border-l border-white/25 pl-3.5 max-tab:mb-5 max-tab:mt-1 max-tab:gap-0">
-                              {item.children.map((child) => (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  onClick={() => setMenuOpen(false)}
-                                  className={`text-[14.5px] font-semibold transition-[color,translate] duration-150 hover:translate-x-1 hover:text-white motion-reduce:transition-none max-tab:flex max-tab:min-h-11 max-tab:items-center ${
-                                    isActive(child.href) ? 'text-white' : 'text-white/70'
-                                  }`}
-                                >
-                                  {tNav(child.key)}
-                                </Link>
-                              ))}
+                              {item.children.map((child) => {
+                                const subitens =
+                                  child.key === 'plataformas' && plataformas.length > 0
+                                    ? plataformas
+                                    : null
+                                const subId = `${painelId}-${child.key}`
+                                const link = (
+                                  <Link
+                                    key={child.href}
+                                    href={child.href}
+                                    onClick={() => setMenuOpen(false)}
+                                    className={`text-[14.5px] font-semibold transition-[color,translate] duration-150 hover:translate-x-1 hover:text-white motion-reduce:transition-none max-tab:flex max-tab:min-h-11 max-tab:items-center ${
+                                      isActive(child.href) ? 'text-white' : 'text-white/70'
+                                    }`}
+                                  >
+                                    {tNav(child.key)}
+                                  </Link>
+                                )
+
+                                if (!subitens) return link
+
+                                return (
+                                  <div key={child.href}>
+                                    <div className="flex items-center justify-between gap-2">
+                                      {link}
+                                      <button
+                                        type="button"
+                                        aria-expanded={nivel3Aberto}
+                                        aria-controls={subId}
+                                        aria-label={
+                                          nivel3Aberto
+                                            ? t('recolher', { secao: tNav(child.key) })
+                                            : t('expandir', { secao: tNav(child.key) })
+                                        }
+                                        onClick={() => setPlataformasAbertas(!nivel3Aberto)}
+                                        className="flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-full text-white/70 transition-colors duration-150 hover:bg-white/15 hover:text-white max-tab:h-11 max-tab:w-11"
+                                      >
+                                        <Chevron aberto={nivel3Aberto} className="h-4 w-4" />
+                                      </button>
+                                    </div>
+                                    <div
+                                      id={subId}
+                                      inert={!nivel3Aberto}
+                                      className={`grid transition-[grid-template-rows] duration-300 ${EASE} motion-reduce:transition-none ${
+                                        nivel3Aberto ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                                      }`}
+                                    >
+                                      <div className="overflow-hidden">
+                                        <div className="mb-1 mt-2 flex flex-col gap-2 border-l border-white/25 pl-3.5 max-tab:mb-3 max-tab:mt-0 max-tab:gap-0">
+                                          {subitens.map((p) => (
+                                            <Link
+                                              key={p.href}
+                                              href={p.href}
+                                              onClick={() => setMenuOpen(false)}
+                                              className={`text-[13.5px] font-medium transition-[color,translate] duration-150 hover:translate-x-1 hover:text-white motion-reduce:transition-none max-tab:flex max-tab:min-h-10 max-tab:items-center ${
+                                                isActive(p.href) ? 'text-white' : 'text-white/70'
+                                              }`}
+                                            >
+                                              {p.label}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )
+                              })}
                             </div>
                           </div>
                         </div>

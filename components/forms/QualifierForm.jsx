@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { useFormatter, useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import {
   Briefcase,
@@ -35,72 +36,84 @@ import { enviarLead } from '@/lib/leads/enviarLead'
 // Perguntas, opções e rótulos na redação oficial do cliente (COPY_SITE); os
 // ícones são o mapa entregue pela Imagine Concept (claude/icones-nova-campanha.md).
 //
-// `label` continua sendo o valor da resposta — é ele que vai para o resumo, para
-// o lead e para a mensagem de WhatsApp. O ícone é só apresentação.
+// `label` continua sendo o valor da resposta, e continua em português nos
+// quatro idiomas: é ele que vai para o lead, para a mensagem de WhatsApp (que o
+// comercial lê em português) e para o roteamento por praça de `waLinkPorPraca`,
+// que compara com estes nomes. O que o visitante vê é a tradução de `chave` em
+// `messages/*.json` (namespace QualifierForm), que em PT é idêntica ao `label`.
+// O ícone é só apresentação.
 const INTENCOES = [
-  { label: 'É minha primeira campanha', Icone: Flag },
-  { label: 'Já anunciei em OOH antes', Icone: Megaphone },
-  { label: 'Sou agência ou planejamento', Icone: Briefcase },
+  { chave: 'primeira', label: 'É minha primeira campanha', Icone: Flag },
+  { chave: 'jaAnunciei', label: 'Já anunciei em OOH antes', Icone: Megaphone },
+  { chave: 'agencia', label: 'Sou agência ou planejamento', Icone: Briefcase },
 ]
 
 const OBJETIVOS = [
-  { label: 'Levar gente até a loja', Icone: Store },
-  { label: 'Lançar produto ou unidade', Icone: Package },
-  { label: 'Construir marca na região', Icone: MapPin },
-  { label: 'Divulgar uma data ou evento', Icone: Calendar },
-  { label: 'Ainda não sei', Icone: CircleHelp },
+  { chave: 'loja', label: 'Levar gente até a loja', Icone: Store },
+  { chave: 'lancamento', label: 'Lançar produto ou unidade', Icone: Package },
+  { chave: 'marca', label: 'Construir marca na região', Icone: MapPin },
+  { chave: 'evento', label: 'Divulgar uma data ou evento', Icone: Calendar },
+  { chave: 'naoSei', label: 'Ainda não sei', Icone: CircleHelp },
 ]
 
 const PRACAS = [
-  { label: 'Curitiba e Região Metropolitana', Icone: Building2 },
-  { label: 'Litoral do Paraná', Icone: Umbrella },
-  { label: 'Joinville', Icone: Milestone },
-  { label: 'Itajaí e Balneário Camboriú', Icone: Landmark },
-  { label: 'Rodovias', Icone: Route },
-  { label: 'Todas as praças', Icone: MapPin },
-  { label: 'Ainda não sei', Icone: CircleHelp },
+  { chave: 'curitiba', label: 'Curitiba e Região Metropolitana', Icone: Building2 },
+  { chave: 'litoral', label: 'Litoral do Paraná', Icone: Umbrella },
+  { chave: 'joinville', label: 'Joinville', Icone: Milestone },
+  { chave: 'itajai', label: 'Itajaí e Balneário Camboriú', Icone: Landmark },
+  { chave: 'rodovias', label: 'Rodovias', Icone: Route },
+  { chave: 'todas', label: 'Todas as praças', Icone: MapPin },
+  { chave: 'naoSei', label: 'Ainda não sei', Icone: CircleHelp },
 ]
 
 // O checklist trazia "Bi-semana" e "Quinzenal" como opções separadas, mas a
 // própria resposta do FAQ define bi-semana como o ciclo de 14 dias — são a
-// mesma coisa. Ficou uma opção só, com o ciclo explicado no `title` em vez de
-// virar duas alternativas que dizem o mesmo.
-const TOOLTIP_BI_SEMANA = 'Período padrão de veiculação OOH, com troca a cada 14 dias'
-
+// mesma coisa. Ficou uma opção só, com o ciclo explicado no `title`
+// (`tooltipBiSemana`) em vez de virar duas alternativas que dizem o mesmo.
 const PERIODOS = [
-  { label: 'Bi-semana', Icone: CalendarRange },
-  { label: '1 mês', Icone: CalendarCheck },
-  { label: '3 meses', Icone: Calendar },
-  { label: '6 meses ou mais', Icone: CalendarClock },
-  { label: 'Ainda não sei', Icone: CircleHelp },
+  { chave: 'biSemana', label: 'Bi-semana', Icone: CalendarRange },
+  { chave: 'umMes', label: '1 mês', Icone: CalendarCheck },
+  { chave: 'tresMeses', label: '3 meses', Icone: Calendar },
+  { chave: 'seisMeses', label: '6 meses ou mais', Icone: CalendarClock },
+  { chave: 'naoSei', label: 'Ainda não sei', Icone: CircleHelp },
 ]
 
 const SEGMENTOS = [
-  { label: 'Varejo', Icone: Store },
-  { label: 'Serviços', Icone: Wrench },
-  { label: 'Restaurantes e alimentação', Icone: UtensilsCrossed },
-  { label: 'Imobiliário e construção civil', Icone: Home },
-  { label: 'Saúde', Icone: Cross },
-  { label: 'Educação', Icone: GraduationCap },
-  { label: 'Indústria', Icone: Factory },
-  { label: 'Supermercados', Icone: ShoppingCart },
-  { label: 'Automotivo', Icone: Car },
-  { label: 'Eventos', Icone: CalendarDays },
-  { label: 'Agências de marketing e publicidade', Icone: Megaphone },
-  { label: 'Outro', Icone: Plus },
+  { chave: 'varejo', label: 'Varejo', Icone: Store },
+  { chave: 'servicos', label: 'Serviços', Icone: Wrench },
+  { chave: 'alimentacao', label: 'Restaurantes e alimentação', Icone: UtensilsCrossed },
+  { chave: 'imobiliario', label: 'Imobiliário e construção civil', Icone: Home },
+  { chave: 'saude', label: 'Saúde', Icone: Cross },
+  { chave: 'educacao', label: 'Educação', Icone: GraduationCap },
+  { chave: 'industria', label: 'Indústria', Icone: Factory },
+  { chave: 'supermercados', label: 'Supermercados', Icone: ShoppingCart },
+  { chave: 'automotivo', label: 'Automotivo', Icone: Car },
+  { chave: 'eventos', label: 'Eventos', Icone: CalendarDays },
+  { chave: 'agencias', label: 'Agências de marketing e publicidade', Icone: Megaphone },
+  { chave: 'outro', label: 'Outro', Icone: Plus },
 ]
 
 // A etapa de contato não leva ícone (regra da Imagine): só campo de input puro e
 // os chips de preferência e verba.
-const CONTATOS = ['WhatsApp', 'Ligação', 'E-mail']
+const CONTATOS = [
+  { chave: 'whatsapp', label: 'WhatsApp' },
+  { chave: 'ligacao', label: 'Ligação' },
+  { chave: 'email', label: 'E-mail' },
+]
 
 const VERBAS = [
-  'Não há orçamento planejado',
-  'Até R$ 5.000',
-  'De R$ 5.000 a R$ 10.000',
-  'De R$ 10.000 a R$ 50.000',
-  'Acima de R$ 50.000',
+  { chave: 'nenhuma', label: 'Não há orçamento planejado' },
+  { chave: 'ate5', label: 'Até R$ 5.000' },
+  { chave: 'de5a10', label: 'De R$ 5.000 a R$ 10.000' },
+  { chave: 'de10a50', label: 'De R$ 10.000 a R$ 50.000' },
+  { chave: 'acima50', label: 'Acima de R$ 50.000' },
 ]
+
+// O resumo e a mensagem de WhatsApp guardam o `label`; para mostrar a resposta
+// traduzida no resumo é preciso voltar dele à `chave`.
+function chaveDe(opcoes, label) {
+  return opcoes.find((o) => o.label === label)?.chave
+}
 
 // Mesma anatomia da porta 03 do bloco Nova campanha: o ícone vive dentro
 // de um quadrado claro arredondado à esquerda, e o rótulo fica ao lado dele, na
@@ -151,18 +164,8 @@ const CHAVES = ['intencao', 'objetivo', 'praca', 'periodo', 'segmento']
 const TOTAL = CHAVES.length + 1
 
 // Sem asterisco vermelho: o botão fica inativo e a microcopy diz o que falta.
-const OBRIGATORIOS = [
-  ['nome', 'nome'],
-  ['empresa', 'empresa'],
-  ['email', 'e-mail'],
-  ['celular', 'celular'],
-  ['contato', 'preferência de contato'],
-]
-
-function listar(itens) {
-  if (itens.length === 1) return itens[0]
-  return `${itens.slice(0, -1).join(', ')} e ${itens[itens.length - 1]}`
-}
+// O nome de cada campo na microcopy vem de `obrigatorios.<campo>` nas mensagens.
+const OBRIGATORIOS = ['nome', 'empresa', 'email', 'celular', 'contato']
 
 // De onde o lead veio: a querystring da campanha que trouxe o visitante e a
 // página onde ele preencheu. Lidos no clique, não na montagem, porque o
@@ -188,6 +191,10 @@ function vazio(valor) {
 // diria a plataforma nas rotas de /plataformas, mas não diz a linha de quem
 // preenche pela aba Green dentro do hub de Icônicos.
 export default function QualifierForm({ contexto = '' }) {
+  const t = useTranslations('QualifierForm')
+  // `Intl.ListFormat` por baixo: "nome, empresa e celular" em PT, "and" em EN,
+  // "y" em ES e "、…和" em ZH, sem uma conjunção por idioma nas mensagens.
+  const formatar = useFormatter()
   const [respostas, setRespostas] = useState({
     intencao: '',
     objetivo: '',
@@ -252,8 +259,8 @@ export default function QualifierForm({ contexto = '' }) {
   // lista de obrigatórios — cobrar um dado que não está na tela trava o envio.
   const pedeCelular = dados.contato !== 'E-mail'
   const faltando = OBRIGATORIOS.filter(
-    ([campo]) => (campo !== 'celular' || pedeCelular) && !dados[campo].trim()
-  ).map(([, rotulo]) => rotulo)
+    (campo) => (campo !== 'celular' || pedeCelular) && !dados[campo].trim()
+  ).map((campo) => t(`obrigatorios.${campo}`))
   const completo = faltando.length === 0 && aceite
 
   // Grava o lead e segue para o WhatsApp. O link é montado antes do await:
@@ -288,18 +295,41 @@ export default function QualifierForm({ contexto = '' }) {
   }
 
   const respondidas = CHAVES.filter(respondida).length
+  // `valor` é o que está guardado (português); `texto` é o que aparece.
+  const traduzir = (grupo, opcoes, label) =>
+    label ? t(`opcoes.${grupo}.${chaveDe(opcoes, label)}`) : ''
   const resumo = [
-    { rotulo: 'Momento', valor: respostas.intencao },
-    { rotulo: 'Objetivo', valor: respostas.objetivo },
-    { rotulo: 'Praça', valor: respostas.praca.join(', ') },
-    { rotulo: 'Período', valor: respostas.periodo },
-    { rotulo: 'Segmento', valor: respostas.segmento },
+    {
+      rotulo: t('resumo.momento'),
+      valor: respostas.intencao,
+      texto: traduzir('intencao', INTENCOES, respostas.intencao),
+    },
+    {
+      rotulo: t('resumo.objetivo'),
+      valor: respostas.objetivo,
+      texto: traduzir('objetivo', OBJETIVOS, respostas.objetivo),
+    },
+    {
+      rotulo: t('resumo.praca'),
+      valor: respostas.praca.join(', '),
+      texto: respostas.praca.map((p) => traduzir('praca', PRACAS, p)).join(', '),
+    },
+    {
+      rotulo: t('resumo.periodo'),
+      valor: respostas.periodo,
+      texto: traduzir('periodo', PERIODOS, respostas.periodo),
+    },
+    {
+      rotulo: t('resumo.segmento'),
+      valor: respostas.segmento,
+      texto: traduzir('segmento', SEGMENTOS, respostas.segmento),
+    },
   ]
 
   return (
     <div className="ticks reveal w-full rounded-[16px] border border-line bg-white p-[38px] text-ink shadow-[0_28px_56px_-28px_rgba(22,17,13,.55)] max-mob:p-7">
       <div className="mb-6 flex items-center gap-3.5">
-        <span className="eyebrow text-ink-soft">Formulário</span>
+        <span className="eyebrow text-ink-soft">{t('formulario')}</span>
         <span className="h-px flex-1 bg-line"></span>
       </div>
 
@@ -308,19 +338,23 @@ export default function QualifierForm({ contexto = '' }) {
           que ela escolheu. */}
       {respostas.objetivo === 'Ainda não sei' && (
         <p className="m-0 mb-6 text-[14px] text-ink-soft">
-          Sem clareza do objetivo?{' '}
+          {t('semClareza')}{' '}
           <Link
             href="/area-do-anunciante/diagnostico-de-presenca"
             className="font-bold text-orange hover:underline"
           >
-            Faça o Diagnóstico de Presença.
+            {t('fazerDiagnostico')}
           </Link>
         </p>
       )}
 
       <div className="mb-8 flex items-center gap-5 max-mob:gap-3.5">
         <span className="eyebrow whitespace-nowrap">
-          <b>{respondidas}</b> de {TOTAL}
+          {t.rich('contador', {
+            respondidas,
+            total: TOTAL,
+            b: (partes) => <b>{partes}</b>,
+          })}
         </span>
         <span className="h-1 flex-1 rounded-full bg-line">
           <span
@@ -340,13 +374,13 @@ export default function QualifierForm({ contexto = '' }) {
                   key={item.rotulo}
                 >
                   <span className="text-ink-soft">{item.rotulo}:</span>
-                  <b className="text-ink">{item.valor}</b>
+                  <b className="text-ink">{item.texto}</b>
                   <button
                     type="button"
                     onClick={() => editar(i)}
                     className="cursor-pointer text-[12.5px] font-bold uppercase tracking-[0.1em] text-orange underline hover:text-ink"
                   >
-                    editar
+                    {t('editar')}
                   </button>
                 </li>
               )
@@ -358,13 +392,13 @@ export default function QualifierForm({ contexto = '' }) {
         {passo === 0 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-4 text-[17px] font-extrabold text-ink">
-              Onde você está hoje?
+              {t('perguntas.intencao')}
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {INTENCOES.map(({ label, Icone }) => (
+              {INTENCOES.map(({ chave, label, Icone }) => (
                 <OpcaoChip
-                  key={label}
-                  label={label}
+                  key={chave}
+                  label={t(`opcoes.intencao.${chave}`)}
                   Icone={Icone}
                   onClick={() => responder('intencao', label)}
                 />
@@ -376,13 +410,13 @@ export default function QualifierForm({ contexto = '' }) {
         {passo === 1 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-4 text-[17px] font-extrabold text-ink">
-              Qual o objetivo da campanha?
+              {t('perguntas.objetivo')}
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {OBJETIVOS.map(({ label, Icone }) => (
+              {OBJETIVOS.map(({ chave, label, Icone }) => (
                 <OpcaoChip
-                  key={label}
-                  label={label}
+                  key={chave}
+                  label={t(`opcoes.objetivo.${chave}`)}
                   Icone={Icone}
                   onClick={() => responder('objetivo', label)}
                 />
@@ -394,14 +428,14 @@ export default function QualifierForm({ contexto = '' }) {
         {passo === 2 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-2 text-[17px] font-extrabold text-ink">
-              Onde sua marca precisa aparecer?
+              {t('perguntas.praca')}
             </legend>
-            <p className="mb-4 text-[13.5px] text-ink-soft">Pode marcar mais de uma praça.</p>
+            <p className="mb-4 text-[13.5px] text-ink-soft">{t('perguntas.pracaAjuda')}</p>
             <div className="flex flex-wrap gap-2.5">
-              {PRACAS.map(({ label, Icone }) => (
+              {PRACAS.map(({ chave, label, Icone }) => (
                 <OpcaoChip
-                  key={label}
-                  label={label}
+                  key={chave}
+                  label={t(`opcoes.praca.${chave}`)}
                   Icone={Icone}
                   ativo={respostas.praca.includes(label)}
                   onClick={() => alternarPraca(label)}
@@ -414,7 +448,7 @@ export default function QualifierForm({ contexto = '' }) {
               onClick={() => setPracaConfirmada(true)}
               type="button"
             >
-              Continuar
+              {t('perguntas.continuar')}
             </button>
           </fieldset>
         )}
@@ -422,16 +456,16 @@ export default function QualifierForm({ contexto = '' }) {
         {passo === 3 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-4 text-[17px] font-extrabold text-ink">
-              Por quanto tempo a campanha fica no ar?
+              {t('perguntas.periodo')}
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {PERIODOS.map(({ label, Icone }) => (
+              {PERIODOS.map(({ chave, label, Icone }) => (
                 <OpcaoChip
-                  key={label}
-                  label={label}
+                  key={chave}
+                  label={t(`opcoes.periodo.${chave}`)}
                   Icone={Icone}
                   onClick={() => responder('periodo', label)}
-                  title={label === 'Bi-semana' ? TOOLTIP_BI_SEMANA : undefined}
+                  title={chave === 'biSemana' ? t('tooltipBiSemana') : undefined}
                 />
               ))}
             </div>
@@ -441,13 +475,13 @@ export default function QualifierForm({ contexto = '' }) {
         {passo === 4 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-4 text-[17px] font-extrabold text-ink">
-              Qual o segmento do seu negócio?
+              {t('perguntas.segmento')}
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {SEGMENTOS.map(({ label, Icone }) => (
+              {SEGMENTOS.map(({ chave, label, Icone }) => (
                 <OpcaoChip
-                  key={label}
-                  label={label}
+                  key={chave}
+                  label={t(`opcoes.segmento.${chave}`)}
                   Icone={Icone}
                   onClick={() => responder('segmento', label)}
                 />
@@ -459,11 +493,11 @@ export default function QualifierForm({ contexto = '' }) {
         {passo === 5 && (
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-4 text-[17px] font-extrabold text-ink">
-              Com quem estamos falando?
+              {t('perguntas.contato')}
             </legend>
             <div className="grid grid-cols-2 gap-4 max-mob:grid-cols-1">
               <label className="flex flex-col gap-2">
-                <span className="field-label">Nome completo*</span>
+                <span className="field-label">{t('campos.nome')}</span>
                 <input
                   className="field-input"
                   value={dados.nome}
@@ -471,7 +505,7 @@ export default function QualifierForm({ contexto = '' }) {
                 />
               </label>
               <label className="flex flex-col gap-2">
-                <span className="field-label">Empresa*</span>
+                <span className="field-label">{t('campos.empresa')}</span>
                 <input
                   className="field-input"
                   value={dados.empresa}
@@ -479,7 +513,7 @@ export default function QualifierForm({ contexto = '' }) {
                 />
               </label>
               <label className="flex flex-col gap-2">
-                <span className="field-label">E-mail corporativo*</span>
+                <span className="field-label">{t('campos.email')}</span>
                 <input
                   className="field-input"
                   type="email"
@@ -489,7 +523,7 @@ export default function QualifierForm({ contexto = '' }) {
               </label>
               {pedeCelular && (
                 <label className="flex flex-col gap-2">
-                  <span className="field-label">Celular*</span>
+                  <span className="field-label">{t('campos.celular')}</span>
                   <input
                     className="field-input"
                     type="tel"
@@ -500,26 +534,28 @@ export default function QualifierForm({ contexto = '' }) {
               )}
             </div>
 
-            <p className="field-label mt-6">Como prefere receber contato?*</p>
+            <p className="field-label mt-6">{t('campos.preferencia')}</p>
             <div className="mt-2.5 flex flex-wrap gap-2.5">
-              {CONTATOS.map((op) => (
+              {CONTATOS.map(({ chave, label }) => (
                 <OpcaoChip
-                  key={op}
-                  label={op}
-                  ativo={dados.contato === op}
-                  onClick={() => setDados({ ...dados, contato: op })}
+                  key={chave}
+                  label={t(`opcoes.contato.${chave}`)}
+                  ativo={dados.contato === label}
+                  onClick={() => setDados({ ...dados, contato: label })}
                 />
               ))}
             </div>
 
-            <p className="field-label mt-6">Quanto pretende investir? (opcional)</p>
+            <p className="field-label mt-6">{t('campos.verba')}</p>
             <div className="mt-2.5 flex flex-wrap gap-2.5">
-              {VERBAS.map((op) => (
+              {VERBAS.map(({ chave, label }) => (
                 <OpcaoChip
-                  key={op}
-                  label={op}
-                  ativo={dados.verba === op}
-                  onClick={() => setDados({ ...dados, verba: dados.verba === op ? '' : op })}
+                  key={chave}
+                  label={t(`opcoes.verba.${chave}`)}
+                  ativo={dados.verba === label}
+                  onClick={() =>
+                    setDados({ ...dados, verba: dados.verba === label ? '' : label })
+                  }
                 />
               ))}
             </div>
@@ -532,11 +568,13 @@ export default function QualifierForm({ contexto = '' }) {
                 type="checkbox"
               />
               <span>
-                Concordo com os{' '}
-                <Link href="/privacidade" className="font-bold text-orange hover:underline">
-                  Termos de Privacidade
-                </Link>
-                .
+                {t.rich('aceite', {
+                  link: (partes) => (
+                    <Link href="/privacidade" className="font-bold text-orange hover:underline">
+                      {partes}
+                    </Link>
+                  ),
+                })}
               </span>
             </label>
 
@@ -550,19 +588,17 @@ export default function QualifierForm({ contexto = '' }) {
                 disabled={!completo || enviando}
                 className="btn btn-fill shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {enviando ? 'Enviando…' : 'Enviar pelo WhatsApp'}
+                {enviando ? t('enviando') : t('enviar')}
               </button>
               <div className="min-w-[220px] flex-1 text-[13.5px] leading-snug">
                 {!completo && (
                   <p className="m-0 mb-1 font-semibold text-ink">
                     {faltando.length > 0
-                      ? `Falta preencher: ${listar(faltando)}.`
-                      : 'Falta aceitar os Termos de Privacidade.'}
+                      ? t('faltaPreencher', { campos: formatar.list(faltando) })
+                      : t('faltaAceite')}
                   </p>
                 )}
-                <p className="m-0 text-ink-soft">
-                  Suas respostas vão junto na mensagem. Retornamos em até 1 dia útil.
-                </p>
+                <p className="m-0 text-ink-soft">{t('retorno')}</p>
               </div>
             </div>
           </fieldset>
