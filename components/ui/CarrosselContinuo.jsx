@@ -1,6 +1,7 @@
 'use client'
 
 import { Children, useEffect, useRef } from 'react'
+import { envolver, proximaAcaoDeMidia } from '@/lib/carrosselMidia'
 
 // Coverflow contínuo: a fita não tem começo nem fim, e gira sozinha enquanto a
 // seção está na tela.
@@ -21,17 +22,30 @@ import { Children, useEffect, useRef } from 'react'
 // e ficam num ref. Nenhum estado do React participa do movimento, então o
 // componente não re-renderiza uma única vez enquanto o carrossel gira.
 //
-// Vídeo dentro do card é o item mais caro da seção: cada `<video>` que toca é
-// um decodificador rodando. O laço mantém no máximo um tocando (o do card no
-// centro) e só anexa o `src` quando o card se aproxima, lendo o `data-src` que
-// quem chama deixa no elemento. Sem isso os seis vídeos da home baixam e
-// decodificam ao mesmo tempo, e nenhuma otimização de transform salva os frames.
+// ## Vídeo fica fora do frame
 //
-// Pausar, porém, não devolve nada: o elemento pausado continua segurando o
-// decodificador e os buffers, e o navegador tem um teto pequeno deles — passar
-// do teto derruba tudo para decodificação em software. Por isso o card que se
-// afasta do centro (e a seção inteira, quando sai da tela) solta a fonte de
-// verdade, e volta a carregá-la pelo `data-src` ao se aproximar de novo.
+// Vídeo dentro do card é o item mais caro da seção: cada `<video>` que toca é
+// um decodificador rodando, e o navegador tem um teto pequeno deles — passando
+// do teto tudo cai para decodificação em software. Por isso o carrossel mantém
+// no máximo um tocando (o do card no centro), anexa a fonte só quando o card se
+// aproxima (lendo o `data-src` que quem chama deixa no elemento) e devolve o
+// decodificador de verdade quando ele se afasta: pausar não solta nada, é o
+// `removeAttribute('src')` seguido de `load()` que faz o elemento voltar a
+// NETWORK_EMPTY e liberar os buffers.
+//
+// **Nada disso acontece dentro do laço de animação.** Trocar a fonte de um
+// `<video>` é trabalho de milissegundos na thread principal, e dentro do `rAF`
+// isso cai exatamente no frame que estava sendo montado: era o solavanco que
+// aparecia toda vez que um card cruzava um limiar, e a trava inteira num
+// arrasto rápido, em que vários cruzam no mesmo punhado de frames. Agora o laço
+// só pinta, e a gestão de mídia roda em `requestIdleCallback` (nas folgas entre
+// frames), **uma ação por vez** e só quando a fita está devagar o bastante para
+// a decisão valer a pena — com a fita voando, qual vídeo carregar muda a cada
+// frame e nenhuma das respostas se sustenta.
+//
+// O que segura a imagem do card nesse meio-tempo é o `poster` (ver
+// `lib/videoPoster.js`): o card nunca fica vazio, e é isso que permite carregar
+// tarde e soltar cedo.
 
 const suavizar = (t) => t * t * (3 - 2 * t)
 
@@ -41,14 +55,6 @@ const suavizar = (t) => t * t * (3 - 2 * t)
 const queda = (valor, alcance) => suavizar(Math.min(Math.abs(valor) / alcance, 1))
 
 const sinal = (valor) => (valor < 0 ? -1 : 1)
-
-// Distância de `valor` até zero pelo caminho mais curto de um círculo de `n`
-// posições: o resultado fica em (-n/2, n/2]. É a única peça de matemática que o
-// modo contínuo precisa.
-const envolver = (valor, n) => {
-  const resto = ((valor % n) + n) % n
-  return resto > n / 2 ? resto - n : resto
-}
 
 const GIRO = 27 // graus do card lateral
 const RECUO = 110 // px em Z
@@ -71,16 +77,18 @@ const COLA = 9
 // Teto do arremesso, em cards por segundo.
 const ARREMESSO = 5
 
-// Distância (em cards) em que o vídeo do card começa a baixar, em que ele toca,
-// e em que ele devolve o decodificador. Pausar não basta: um <video> pausado
-// segue segurando um decodificador e os buffers de frame, e o navegador tem um
-// teto pequeno deles. Passando do teto ele cai para decodificação em software,
-// que é de onde vinha a travada com os seis vídeos da home todos vivos ao mesmo
-// tempo. A folga entre CARREGA e DESCARREGA é histerese: sem ela o card na
-// fronteira soltaria e recarregaria a fonte a cada frame.
-const CARREGA_VIDEO = 2
-const TOCA_VIDEO = 0.85
-const DESCARREGA_VIDEO = 3
+// Acima desta velocidade (cards/s) a gestão de mídia não decide nada: com a
+// fita voando, o card que está a meio caminho do centro agora estará a três
+// cards dele no frame seguinte, e carregar por essa leitura só produz troca de
+// fonte que será desfeita em seguida. A deriva normal (0,055) fica muito
+// abaixo; arrasto e arremesso ficam acima e voltam a passar por aqui menos de
+// um segundo depois de o dedo sair.
+const VELOCIDADE_MIDIA = 0.9
+
+// Intervalo mínimo entre duas passagens da gestão de mídia, em ms. Uma ação por
+// passagem: quando há trabalho acumulado ele drena numa ação a cada tique, em
+// vez de sair tudo no mesmo instante.
+const MIDIA_INTERVALO = 90
 
 // Tempo fora da tela antes de soltar as fontes. A seção volta a carregar sozinha
 // ao reaparecer; o atraso existe para que passar raspando pela borda (ou uma
@@ -93,6 +101,25 @@ const SOLTAR_APOS = 1200
 // de o ponteiro pousar nela, movendo frações de nanômetro. Com o piso, `pos`
 // para de mudar e o laço passa a sair antes de tocar no DOM.
 const PARADA = 1e-4
+
+// `requestIdleCallback` é o ponto certo para a mídia: roda na folga entre dois
+// frames, então uma troca de fonte de 4ms não come o frame que estava sendo
+// montado. O `timeout` impede que ela seja adiada para sempre numa página
+// ocupada, e o `setTimeout` cobre o Safari antigo, que não tem a API.
+//
+// O handle vem etiquetado porque `requestIdleCallback` e `setTimeout` numeram
+// em espaços separados: cancelar um id de idle com `clearTimeout` pode derrubar
+// um timeout alheio que por acaso recebeu o mesmo número.
+const agendarOcioso = (fn) =>
+  typeof requestIdleCallback === 'function'
+    ? { ocioso: true, id: requestIdleCallback(fn, { timeout: 250 }) }
+    : { ocioso: false, id: setTimeout(fn, 0) }
+
+const cancelarOcioso = (handle) => {
+  if (!handle) return
+  if (handle.ocioso) cancelIdleCallback(handle.id)
+  else clearTimeout(handle.id)
+}
 
 export default function CarrosselContinuo({
   alturaClasse = '',
@@ -143,13 +170,20 @@ export default function CarrosselContinuo({
     const pista = pistaRef.current
     if (!pista || n === 0) return
     const s = estadoRef.current
-    const cards = cardsRef.current
+    // Cortado em `n`: o array de refs só cresce, e uma entrada sobrando de uma
+    // listagem maior seria posicionada por `envolver(i - pos, n)` com `i >= n`,
+    // ou seja, em cima de outro card.
+    const cards = cardsRef.current.slice(0, n)
     const videos = cards.map((el) => el?.querySelector('video') ?? null)
     const ocultos = cards.map(() => false)
     const tocando = cards.map(() => false)
     const carregados = cards.map(() => false)
     const camadas = cards.map(() => null)
     const opacidades = cards.map(() => null)
+    // O card só entra na conta de mídia se tiver de fato uma fonte para anexar:
+    // `PLATFORMS_LISTAGEM` mistura entradas com vídeo e entradas com foto.
+    const temFonte = videos.map((video) => Boolean(video?.dataset.src))
+    const temVideo = temFonte.some(Boolean)
 
     const preferenciaReduzida = window.matchMedia('(prefers-reduced-motion: reduce)')
     let semMovimento = preferenciaReduzida.matches
@@ -168,94 +202,61 @@ export default function CarrosselContinuo({
       s.limite = Math.max(1.8, Math.min(n / 2 - 0.5, meio / s.passo + 1.5))
     }
 
-    // Devolve o decodificador ao navegador. `removeAttribute` sozinho não basta:
-    // é o `load()` seguinte que faz o elemento voltar a NETWORK_EMPTY e liberar
-    // os buffers. O `data-src` fica onde está, e é por ele que o card recarrega
-    // quando voltar a se aproximar do centro.
-    const soltarVideo = (i) => {
-      const video = videos[i]
-      if (!video || !carregados[i]) return
-      carregados[i] = false
-      tocando[i] = false
-      video.pause()
-      video.removeAttribute('src')
-      video.load()
-    }
+    // ---------------------------------------------------------------- pintura
 
-    const soltarVideos = () => {
-      for (let i = 0; i < videos.length; i++) soltarVideo(i)
-    }
-
+    // Só transform, opacity, z-index e visibility. Nenhuma leitura do DOM,
+    // nenhuma chamada de mídia: é o caminho quente, roda a cada frame em que a
+    // fita se move e não pode ter dentro dele nada que custe milissegundos.
     const pintar = () => {
       const { pos, passo, largura, limite } = s
       const inicioFade = Math.max(0.9, limite - 1.2)
+      const alcanceFade = limite - inicioFade
       for (let i = 0; i < cards.length; i++) {
         const el = cards[i]
         if (!el) continue
         const d = envolver(i - pos, n)
         const ad = Math.abs(d)
 
-        const video = videos[i]
-        if (video) {
-          if (!carregados[i] && s.naTela && ad < CARREGA_VIDEO && video.dataset.src) {
-            carregados[i] = true
-            // `preload` sobe junto: com "none" o arquivo só começaria a baixar
-            // no play, e o card chegaria ao centro em branco. Assim ele tem a
-            // travessia de um card inteiro para bufferizar e mostrar o primeiro
-            // frame antes de rodar.
-            video.preload = 'auto'
-            video.src = video.dataset.src
-          } else if (carregados[i] && ad > DESCARREGA_VIDEO) {
-            soltarVideo(i)
-          }
-          const tocar = carregados[i] && ad < TOCA_VIDEO && s.naTela
-          if (tocar !== tocando[i]) {
-            tocando[i] = tocar
-            if (tocar) video.play()?.catch(() => {})
-            else video.pause()
-          }
-        }
-
-        // Card fora da tela sai do pipeline de pintura. A exceção é o teclado:
-        // com o foco dentro da fita todos voltam a existir, senão o Tab pularia
-        // as plataformas que estão do outro lado do círculo neste instante.
+        // Card fora da tela sai do pipeline de pintura, e devolve a camada de
+        // composição junto (`will-change` é o que a segura viva). A exceção é o
+        // teclado: com o foco dentro da fita todos voltam a existir, senão o
+        // Tab pularia as plataformas que estão do outro lado do círculo neste
+        // instante.
         const oculto = !s.tudoVisivel && ad >= limite
         if (oculto !== ocultos[i]) {
           ocultos[i] = oculto
           el.style.visibility = oculto ? 'hidden' : ''
+          el.style.willChange = oculto ? 'auto' : 'transform, opacity'
         }
         if (oculto) continue
 
         const q1 = queda(d, ALCANCE_GIRO)
         const q2 = queda(d, ALCANCE_RECUO)
-        const sg = sinal(d)
-        const x = (d * passo).toFixed(2)
+
+        if (semMovimento) {
+          el.style.transform = `translate3d(${(d * passo).toFixed(2)}px,0,0)`
+        } else {
+          // O eixo do giro acompanha a borda interna do card: o lateral abre
+          // como página, em vez de girar em torno do próprio meio. O
+          // deslocamento do eixo vai dobrado na própria matriz (`T(ox) · lista
+          // · T(-ox)`, que é exatamente o que `transform-origin` faz) em vez de
+          // sair numa propriedade à parte: `transform` e `opacity` o compositor
+          // resolve sozinho, mas `transform-origin` reescrito a cada frame
+          // obriga a thread principal a refazer a árvore de propriedades de
+          // pintura de cada card, todo frame, para um efeito que a matriz já
+          // sabe expressar.
+          const ox = -sinal(d) * 0.42 * q1 * largura
+          el.style.transform =
+            `translate3d(${(d * passo + ox).toFixed(2)}px,0,${(-RECUO * q2).toFixed(2)}px)` +
+            ` rotateY(${(sinal(d) * GIRO * q1).toFixed(3)}deg)` +
+            ` scale(${(1 - ESCALA * q2).toFixed(4)})` +
+            ` translateX(${(-ox).toFixed(2)}px)`
+        }
+
         // As bordas dissolvem em vez de sumir de uma vez: o corte por
         // `visibility` acontece depois que o card já chegou a zero.
         const beira =
-          ad <= inicioFade
-            ? 1
-            : 1 - suavizar(Math.min((ad - inicioFade) / (limite - inicioFade), 1))
-
-        // O eixo do giro acompanha a borda interna do card: o lateral abre como
-        // página, em vez de girar em torno do próprio meio. O deslocamento do
-        // eixo vai dobrado na própria matriz (`T(ox) · lista · T(-ox)`, que é
-        // exatamente o que `transform-origin` faz) em vez de sair numa
-        // propriedade à parte: `transform` e `opacity` o compositor resolve
-        // sozinho, mas `transform-origin` reescrito a cada frame obriga a
-        // thread principal a refazer a árvore de propriedades de pintura de
-        // cada card, todo frame, para um efeito que a matriz já sabe expressar.
-        const ox = -sg * 0.42 * q1 * largura
-        el.style.transform = semMovimento
-          ? `translate3d(${x}px,0,0)`
-          : `translate3d(${(d * passo + ox).toFixed(2)}px,0,${(-RECUO * q2).toFixed(2)}px) rotateY(${(
-              sg *
-              GIRO *
-              q1
-            ).toFixed(3)}deg) scale(${(1 - ESCALA * q2).toFixed(4)}) translateX(${(-ox).toFixed(
-              2
-            )}px)`
-
+          ad <= inicioFade ? 1 : 1 - suavizar(Math.min((ad - inicioFade) / alcanceFade, 1))
         const opacidade = ((1 - APAGA * q1) * beira).toFixed(3)
         if (opacidade !== opacidades[i]) {
           opacidades[i] = opacidade
@@ -271,8 +272,104 @@ export default function CarrosselContinuo({
     }
     s.pintar = pintar
 
+    // ------------------------------------------------------------------ mídia
+
+    const carregarVideo = (i) => {
+      const video = videos[i]
+      if (!video || carregados[i] || !video.dataset.src) return
+      carregados[i] = true
+      // `preload` sobe junto: com "none" o arquivo só começaria a baixar no
+      // play, e o card chegaria ao centro no pôster parado. Assim ele tem a
+      // travessia até o centro para bufferizar (`LIMITES_MIDIA.carrega` menos
+      // `LIMITES_MIDIA.toca`, meio card).
+      video.preload = 'auto'
+      video.src = video.dataset.src
+    }
+
+    // Devolve o decodificador ao navegador. `removeAttribute` sozinho não basta:
+    // é o `load()` seguinte que faz o elemento voltar a NETWORK_EMPTY e liberar
+    // os buffers. O `data-src` fica onde está, e é por ele que o card recarrega
+    // quando voltar a se aproximar do centro; enquanto isso o card volta a
+    // mostrar o `poster`, então soltar a fonte não deixa buraco na tela.
+    const soltarVideo = (i) => {
+      const video = videos[i]
+      if (!video || !carregados[i]) return
+      carregados[i] = false
+      tocando[i] = false
+      video.pause()
+      video.removeAttribute('src')
+      video.load()
+    }
+
+    const soltarVideos = () => {
+      for (let i = 0; i < videos.length; i++) soltarVideo(i)
+    }
+
+    let midiaAgendada = null
+    // `pendente` fica ligado enquanto houver decisão de mídia por tomar (a
+    // passagem foi adiada por velocidade, ou agiu e pode haver mais). Desligado
+    // e com `pos` parada, o carrossel não agenda mais nada: fita pousada não
+    // gasta nem frame nem tique de mídia.
+    let midiaPendente = true
+    let posMidia = NaN
+
+    const agendarMidia = () => {
+      if (midiaAgendada) return
+      midiaAgendada = agendarOcioso(() => {
+        midiaAgendada = null
+        gerirMidia()
+      })
+    }
+
+    // Uma ação por passagem, e a passagem seguinte se agenda sozinha enquanto
+    // sobrar trabalho. Fatiar assim é o que impede que a chegada de uma seção à
+    // tela (ou o fim de um arremesso) dispare três trocas de fonte no mesmo
+    // instante: cada uma cai numa folga diferente entre frames.
+    //
+    // Quem decide é `proximaAcaoDeMidia`, em `lib/carrosselMidia.js`; aqui só
+    // se executa. A decisão mora lá fora porque assim ela é pura, e uma função
+    // pura dá para simular pela fita inteira sem navegador.
+    const gerirMidia = () => {
+      midiaPendente = true
+      if (!s.naTela || document.hidden) return
+      // Fita voando: qualquer decisão tomada agora estará errada no frame
+      // seguinte. Espera assentar — o laço volta a chamar aqui sozinho.
+      if (s.arraste || Math.abs(s.v) > VELOCIDADE_MIDIA) return
+
+      const acao = proximaAcaoDeMidia({
+        n,
+        pos: s.pos,
+        temFonte,
+        carregados,
+        tocando,
+      })
+
+      if (!acao) {
+        midiaPendente = false
+        return
+      }
+
+      const video = videos[acao.i]
+      if (acao.tipo === 'tocar') {
+        tocando[acao.i] = true
+        video.play()?.catch(() => {})
+      } else if (acao.tipo === 'pausar') {
+        tocando[acao.i] = false
+        video.pause()
+      } else if (acao.tipo === 'soltar') {
+        soltarVideo(acao.i)
+      } else {
+        carregarVideo(acao.i)
+      }
+
+      agendarMidia()
+    }
+
+    // ------------------------------------------------------------------- laço
+
     let raf = 0
     let ultimo = 0
+    let proximaMidia = 0
     // Última posição efetivamente escrita no DOM. Com o ponteiro parado em cima
     // da fita a deriva chega a zero, e daí em diante o laço não toca no DOM: um
     // carrossel pausado custa o mesmo que um carrossel que não existe.
@@ -317,6 +414,15 @@ export default function CarrosselContinuo({
         }
       }
 
+      // Acima da guarda de pintura: com `prefers-reduced-motion` (ou com o
+      // ponteiro pousado na fita) `pos` não muda, e mesmo assim o vídeo do card
+      // central precisa ser anexado e tocar.
+      if (temVideo && agora >= proximaMidia && (midiaPendente || s.pos !== posMidia)) {
+        proximaMidia = agora + MIDIA_INTERVALO
+        posMidia = s.pos
+        agendarMidia()
+      }
+
       if (s.pos === posPintada) return
       posPintada = s.pos
       pintar()
@@ -334,6 +440,8 @@ export default function CarrosselContinuo({
       // navega com `prefers-reduced-motion`, onde a fita não anda sozinha e
       // `pos` nunca mudaria para disparar a pintura).
       posPintada = NaN
+      proximaMidia = 0
+      midiaPendente = true
       if (raf) return
       ultimo = 0
       raf = requestAnimationFrame(frame)
@@ -344,6 +452,8 @@ export default function CarrosselContinuo({
         cancelAnimationFrame(raf)
         raf = 0
       }
+      cancelarOcioso(midiaAgendada)
+      midiaAgendada = null
       for (let i = 0; i < videos.length; i++) {
         if (videos[i] && tocando[i]) {
           videos[i].pause()
@@ -396,13 +506,14 @@ export default function CarrosselContinuo({
       if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return
       e.preventDefault()
       s.alvo = null
-      s.pos += e.deltaX / s.passo
+      s.pos = ((((s.pos + e.deltaX / s.passo) % n) + n) % n)
     }
     pista.addEventListener('wheel', naRoda, { passive: false })
 
     return () => {
       desligar()
       clearTimeout(soltarEm)
+      cancelarOcioso(midiaAgendada)
       soltarVideos()
       observadorTela.disconnect()
       observadorTamanho.disconnect()

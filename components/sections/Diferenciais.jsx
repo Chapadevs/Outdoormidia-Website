@@ -2,7 +2,7 @@ import { Link } from '@/i18n/navigation'
 import CarrosselContinuo from '@/components/ui/CarrosselContinuo'
 import DiferencialCard from '@/components/ui/DiferencialCard'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { getLocale } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { getDiferenciais } from '@/lib/diferenciais'
 
 // A altura é declarada aqui e não no card porque quem conhece a caixa é a
@@ -12,6 +12,7 @@ import { getDiferenciais } from '@/lib/diferenciais'
 const ALTURA = 'h-[520px] max-mob:h-[500px]'
 
 export default async function Diferenciais({ moreHref }) {
+  const t = await getTranslations('Diferenciais')
   const DIFERENCIAIS = getDiferenciais(await getLocale())
 
   return (
@@ -22,17 +23,17 @@ export default async function Diferenciais({ moreHref }) {
     <section className="overflow-clip py-[110px] max-mob:py-[72px]" id="diferenciais">
       <div className="wrap">
         <div className="reveal mb-[34px] flex items-start justify-between gap-10 max-tab:flex-col max-tab:gap-4">
-          <SectionHeading title="Diferenciais" className="flex-1 max-tab:w-full" />
+          <SectionHeading title={t('titulo')} className="flex-1 max-tab:w-full" />
           <div className="flex w-[34ch] flex-col gap-2 max-tab:w-full">
             <p className="m-0 text-pretty text-lg leading-snug text-ink-soft">
-              O que separa uma campanha que a cidade vê de uma que passa despercebida.
+              {t('lead')}
             </p>
             {moreHref && (
               <Link
                 className="eyebrow whitespace-nowrap transition-colors duration-150 hover:text-orange"
                 href={moreHref}
               >
-                Ver todos →
+                {t('verTodos')}
               </Link>
             )}
           </div>
@@ -47,7 +48,7 @@ export default async function Diferenciais({ moreHref }) {
         <CarrosselContinuo
           alturaClasse={ALTURA}
           gap={22}
-          label="Diferenciais Outdoormídia"
+          label={t('carrosselLabel')}
           velocidade={0.055}
           width="min(360px,78vw)"
         >

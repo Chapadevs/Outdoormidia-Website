@@ -330,11 +330,26 @@
     "fechoAntes": "On exclusive panel projects, Gestão 360 OM also includes legal licensing advice and full installation.",
     "fechoLink": "Find out more",
     "cta": "I want to advertise",
-    "tituloComoContratar": "How to book"
+    "tituloComoContratar": "How to book",
+    "subtitulo": "From the objective to being known"
   },
   "Culture": {
     "titulo": "Why Outdoormídia",
-    "lead": "We are the company that has been putting brands on the streets of Paraná and Santa Catarina since 1959. From printed billboards to LED panels, anyone joining the OM team works with the medium that has the greatest impact on urban centres."
+    "lead": "We are the company that has been putting brands on the streets of Paraná and Santa Catarina since 1959. From printed billboards to LED panels, anyone joining the OM team works with the medium that has the greatest impact on urban centres.",
+    "pilares": [
+      {
+        "title": "The street is the product",
+        "text": "Our media does not live in a browser tab. It is on the way home, on the highway, at the airport. Whoever works here sees the result of their own work out in the open."
+      },
+      {
+        "title": "67 years, a market in motion",
+        "text": "The company dates from 1959 and went digital: 175 digital screens, audience data per campaign and live cameras 24×7. The stability of a company that crossed six decades, with the technology of one that never stopped."
+      },
+      {
+        "title": "A lean team that owns what it does",
+        "text": "From the negotiation to the installed site, whoever does it signs it. There are few layers between the idea and the street, and that counts for the client as much as for the people who work here."
+      }
+    ]
   },
   "PlatformsCarousel": {
     "tituloA": "Some campaigns need to ",
@@ -342,7 +357,15 @@
     "tituloB": ". Others need to be ",
     "tituloDestaque2": "impossible to ignore",
     "tituloC": ".",
-    "carrosselLabel": "Outdoormídia platforms"
+    "carrosselLabel": "Outdoormídia platforms",
+    "letreiro": "Platforms"
+  },
+  "Diferenciais": {
+    "titulo": "Differentiators",
+    "lead": "What separates a campaign the city sees from one that goes unnoticed.",
+    "verTodos": "See all →",
+    "carrosselLabel": "Outdoormídia differentiators",
+    "verDiferencial": "See differentiator"
   },
   "Reviews": {
     "titulo": "What they say",
@@ -358,8 +381,6 @@
     "lead": "You know your business. We know how to put your brand in the right places.",
     "diagnosticoNome": "Presence Diagnosis",
     "diagnosticoIntencao": "I want a reading of my brand’s presence",
-    "programaticaNome": "Programmatic Media",
-    "programaticaIntencao": "I want to see the available inventory",
     "atendimentoNome": "Talk to us now",
     "atendimentoIntencao": "I want to speak to someone now"
   },
@@ -400,12 +421,14 @@
   },
   "LinhaDoTempo": {
     "lead": "What has changed since the first face on the street, and what has not.",
-    "role": "Scroll to move through"
+    "role": "Scroll to move through",
+    "titulo": "Timeline"
   },
   "Iconicos": {
     "titulo": "Iconic",
     "eyebrow": "Outside the catalogue",
-    "proximo": "Next project"
+    "proximo": "Next project",
+    "anterior": "Previous project"
   },
   "MapaCobertura": {
     "legendaCombinada": "combines urban media and highways",
@@ -457,5 +480,115 @@
     "legendaCorredor": "Highway corridor",
     "notaSaoPaulo": "The São Paulo marker indicates distance, not coverage.",
     "mapaAlt": "Map of the highway corridors served between Paraná and Santa Catarina"
+  },
+  "Ticker": {
+    "itens": [
+      "Curitiba and Greater Curitiba",
+      "Paraná coast",
+      "PR-SC highways",
+      "Itajaí",
+      "Joinville",
+      "Balneário Camboriú",
+      "Airport",
+      "Indoor Media"
+    ]
+  },
+  "PlatformsCatalog": {
+    "lead": "Drag either way, use the trackpad or the arrow keys to move through the {n} platforms.",
+    "carrosselLabel": "Outdoormídia platform catalogue"
+  },
+  "FormatosGallery": {
+    "fechar": "Close",
+    "formato": "{nome} format"
+  },
+  "Programatica": {
+    "glossarioEyebrow": "Glossary",
+    "glossarioTitulo": "The acronyms on this page, one sentence each."
+  },
+  "HomeTimeline": {
+    "aria": "Sections on this page",
+    "secoes": {
+      "inicio": "Start",
+      "institucional": "Company",
+      "diferenciais": "Differentiators",
+      "plataformas": "Platforms",
+      "cobertura": "Coverage",
+      "depoimentos": "Testimonials",
+      "cases": "Cases",
+      "processo": "Process",
+      "nova-campanha": "Advertise",
+      "blog": "Blog",
+      "faq": "Questions"
+    }
+  },
+  "Explorers": {
+    "semArtigos": "No article matches this combination of filters.",
+    "semCasesAinda": "No case published yet. Come back soon.",
+    "semCases": "No case matches this combination of filters."
+  },
+  "Share": {
+    "whatsapp": "Share on WhatsApp",
+    "linkedin": "Share on LinkedIn",
+    "facebook": "Share on Facebook",
+    "x": "Share on X",
+    "copiar": "Copy link",
+    "copiado": "Link copied"
+  },
+  "Tecnologia": {
+    "estatico": "Static",
+    "digital": "Digital"
+  },
+  "LegalDoc": {
+    "sumario": "Contents",
+    "nestaPagina": "On this page"
+  },
+  "Mapas": {
+    "coberturaAria": "Coverage map of Paraná and Santa Catarina",
+    "sentidoDoFluxo": "Direction of flow"
+  },
+  "CoverMedia": {
+    "altPadrao": "Outdoormídia, Out of Home media"
+  },
+  "Widgets": {
+    "avisoCookies": "Cookie notice",
+    "whatsappMercadoOoh": "MercadoOOH WhatsApp, programmatic media",
+    "whatsappComercial": "Outdoormídia sales WhatsApp",
+    "enviarCurriculo": "Send CV by e-mail",
+    "adiantarWhatsapp": "Get ahead on WhatsApp",
+    "falarWhatsapp": "Talk on WhatsApp"
+  },
+  "NotFound": {
+    "eyebrow": "Error",
+    "tituloA": "This page",
+    "tituloB": "is off the air.",
+    "lead": "The address changed or never existed. Our other 530 million-plus impacts a month are still standing. Choose where to go next.",
+    "breadcrumb": "Page not found",
+    "paraOndeIr": "Where to go",
+    "ver": "See",
+    "rotas": [
+      {
+        "meta": "Catalogue",
+        "title": "Platforms",
+        "text": "Digital outdoor, front light, indoor media, airport, MUB, highways and mobile media."
+      },
+      {
+        "meta": "Coverage",
+        "title": "Regions",
+        "text": "Where we have sites in Paraná and Santa Catarina, city by city."
+      },
+      {
+        "meta": "Proof",
+        "title": "Cases",
+        "text": "Real campaigns that have already taken the streets of Southern Brazil."
+      },
+      {
+        "meta": "Sales",
+        "title": "Request a proposal",
+        "text": "Tell us the city, the format and the period. An answer within 1 working day."
+      }
+    ],
+    "ajudaTitulo": "Looking for something specific?",
+    "ajudaTexto": "Tell us what you were trying to find and we will send the link, or the answer itself.",
+    "ajudaCta": "Ask on WhatsApp"
   }
 }

@@ -10,7 +10,7 @@ import PlatformShowcaseCard from '@/components/ui/PlatformShowcaseCard'
 // ser a mesma nas duas páginas.
 //
 // `inicial` chega em 0 (igual à home) e só muda se a página abrir numa âncora
-// de plataforma (`/plataformas#mub`, usada pelo card 05 de diferenciais): o
+// de plataforma (`/plataformas#mub`, vinda de qualquer link externo): o
 // hash só existe no navegador, então a centralização acontece depois da
 // montagem, sem quebrar a hidratação.
 export default function PlatformsCatalog({ plataformas }) {

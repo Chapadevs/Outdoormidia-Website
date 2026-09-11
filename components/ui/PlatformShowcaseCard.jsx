@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
+import { posterDoVideo } from '@/lib/videoPoster'
 
 // Card do coverflow contínuo de plataformas: vídeo ou foto de fundo, véu
 // laranja e texto sobre ele. Compartilhado entre a home (`PlatformsCarousel`)
@@ -23,7 +24,10 @@ export default function PlatformShowcaseCard({ p }) {
     >
       {p.video ? (
         // Sem `src` e sem `autoPlay`: quem anexa a fonte e dá o play é o
-        // carrossel, e só no card que está passando pelo centro.
+        // carrossel, e só no card que está passando pelo centro. O `poster` é
+        // o que o card mostra nesse meio-tempo: sem ele um <video> sem fonte
+        // não pinta nada, e o card subia vazio sob o véu laranja. É o quadro 0
+        // do próprio arquivo, então a troca de pôster para vídeo não tem salto.
         <video
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0 size-full object-cover"
@@ -31,6 +35,7 @@ export default function PlatformShowcaseCard({ p }) {
           loop
           muted
           playsInline
+          poster={posterDoVideo(p.video)}
           preload="none"
         />
       ) : p.image ? (

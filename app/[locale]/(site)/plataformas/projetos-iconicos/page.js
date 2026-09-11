@@ -72,9 +72,6 @@ export default async function ProjetosIconicosPage({ params }) {
                   <a className="btn btn-fill" href="#nova-campanha">
                     Quero avaliar um Icônico
                   </a>
-                  <a className="btn btn-ghost" href="#elegancy">
-                    Ver os ícones
-                  </a>
                 </div>
               </div>
               <div className="flex flex-col gap-5">
