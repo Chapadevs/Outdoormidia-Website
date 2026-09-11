@@ -55,21 +55,34 @@ const TRILHA_CIPO = (() => {
 
 const DENSIDADE_FOLHAS = 34
 
-const FOLHAS = Array.from({ length: Math.min(DENSIDADE_FOLHAS, TRILHA_CIPO.length) }, (_, n, arr) => {
-  const p = TRILHA_CIPO[Math.floor((n * TRILHA_CIPO.length) / arr.length)]
-  const [claro, escuro] = VERDES[n % VERDES.length]
-  return {
-    claro,
-    escuro,
-    left: p[0],
-    top: p[1],
-    tamanho: 22 + ((n * 37) % 34),
-    giro: ((n * 71) % 360) - 180,
-    atraso: (0.25 + n * 0.055).toFixed(2),
-    balanco: (3.8 + (n % 7) * 0.35).toFixed(2),
-    atrasoBalanco: (n * 0.17).toFixed(2),
-  }
-})
+const QUANTIDADE_FOLHAS = Math.min(
+  DENSIDADE_FOLHAS,
+  TRILHA_CIPO.length,
+)
+
+const FOLHAS = Array.from(
+  { length: QUANTIDADE_FOLHAS },
+  (_, n) => {
+    const p =
+      TRILHA_CIPO[
+        Math.floor((n * TRILHA_CIPO.length) / QUANTIDADE_FOLHAS)
+      ]
+
+    const [claro, escuro] = VERDES[n % VERDES.length]
+
+    return {
+      claro,
+      escuro,
+      left: p[0],
+      top: p[1],
+      tamanho: 22 + ((n * 37) % 34),
+      giro: ((n * 71) % 360) - 180,
+      atraso: (0.25 + n * 0.055).toFixed(2),
+      balanco: (3.8 + (n % 7) * 0.35).toFixed(2),
+      atrasoBalanco: (n * 0.17).toFixed(2),
+    }
+  },
+)
 
 const FOLHAS_CAINDO = ['#a3d861', '#8ecb4a', '#c9ee9c', '#7dbf3f', '#b7e276', '#95d152'].map((cor, n) => ({
   cor,
