@@ -18,10 +18,13 @@ const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 560px'
 const PONTO_SIZES = '(max-width: 560px) 100vw, 280px'
 
 export default function AtivoCard({ ativo, prioridadeImagem = false }) {
-  const { name, kicker, text, specs, pontos, image, imageAlt, verEm } = ativo
+  const { slug, name, kicker, text, specs, pontos, image, imageAlt, verEm } = ativo
 
   return (
-    <article className="ticks reveal flex flex-col overflow-hidden rounded-[16px] border border-line bg-white">
+    <article
+      className="ticks reveal scroll-mt-24 flex flex-col overflow-hidden rounded-[16px] border border-line bg-white"
+      id={slug}
+    >
       <CoverMedia
         alt={imageAlt}
         label={name}

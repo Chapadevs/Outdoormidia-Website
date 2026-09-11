@@ -63,6 +63,8 @@ export default async function DiferencialPage({ params }) {
   const {
     aside,
     oQueE,
+    oQueGanha,
+    carteira,
     prova,
     aplicacao,
     comparativo,
@@ -226,6 +228,54 @@ export default async function DiferencialPage({ params }) {
                   </div>
                 </>
               )}
+            </div>
+          </section>
+        )}
+
+        {oQueGanha && (
+          <section className={SECAO}>
+            <div className="wrap">
+              <SectionHeading title={oQueGanha.title} className={TITULO_SECAO} />
+              <div className={`${LEAD} flex flex-col gap-5 max-mob:gap-4`}>
+                {oQueGanha.lead.map((paragrafo) => (
+                  <p className="m-0" key={paragrafo}>
+                    {paragrafo}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {carteira && (
+          <section className={`bg-bone ${SECAO_Y}`}>
+            <div className="wrap">
+              <SectionHeading title={carteira.title} className={TITULO_SECAO} />
+              <p className={`${LEAD} mb-[54px] max-w-[54ch] max-tab:mb-[42px] max-mob:mb-8`}>
+                {carteira.lead}
+              </p>
+              <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
+                {carteira.projetos.map((projeto) => (
+                  <Link
+                    className={`${CARD} group reveal flex flex-col gap-4 transition-colors duration-200 hover:border-orange`}
+                    href={projeto.href}
+                    key={projeto.title}
+                  >
+                    <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
+                      {projeto.title}
+                    </h3>
+                    <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
+                      {projeto.text}
+                    </p>
+                    <span className="mt-auto flex items-center gap-2 pt-2 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
+                      {projeto.label}
+                      <span aria-hidden className="text-base">
+                        →
+                      </span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </section>
         )}

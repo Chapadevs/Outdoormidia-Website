@@ -87,14 +87,19 @@ export default function SlideStage({
     return correndo ? `translateX(${fim})` : 'translateX(0%)'
   }
 
-  const camada = (slot, transform, correndo) => (
+  // `animando` cobre o deslize inteiro, inclusive os dois frames de preparo
+  // antes de `correndo`: é aí que a camada precisa estar promovida, senão o
+  // `will-change` chega no mesmo frame em que a transição começa e não adianta
+  // nada. Em repouso ele sai, para o slide parado não segurar uma camada de
+  // composição do tamanho da foto sem ter o que animar.
+  const camada = (slot, transform, correndo, animando) => (
     <div
       className="absolute inset-0"
       key={fotos[slot].src}
       style={{
         transform,
         transition: correndo ? `transform ${duracao}ms ${CURVA}` : 'none',
-        willChange: 'transform',
+        willChange: animando ? 'transform' : undefined,
       }}
     >
       <Image
@@ -112,11 +117,11 @@ export default function SlideStage({
     <div className={`relative w-full overflow-hidden rounded-[16px] ${ratio} ${className}`}>
       {deslize ? (
         <>
-          {camada(deslize.de, transformDe('sai'), deslize.correndo)}
-          {camada(deslize.para, transformDe('entra'), deslize.correndo)}
+          {camada(deslize.de, transformDe('sai'), deslize.correndo, true)}
+          {camada(deslize.para, transformDe('entra'), deslize.correndo, true)}
         </>
       ) : (
-        camada(index, 'translateX(0%)', false)
+        camada(index, 'translateX(0%)', false, false)
       )}
     </div>
   )

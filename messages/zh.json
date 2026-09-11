@@ -330,11 +330,26 @@
     "fechoAntes": "在独占广告牌项目中，Gestão 360 OM 还包含牌照合规的法务咨询与完整安装服务。",
     "fechoLink": "了解更多",
     "cta": "我想投放广告",
-    "tituloComoContratar": "如何签约"
+    "tituloComoContratar": "如何签约",
+    "subtitulo": "从目标到被记住"
   },
   "Culture": {
     "titulo": "为什么选择 Outdoormídia",
-    "lead": "自 1959 年起，我们就把品牌带上巴拉那州与圣卡塔琳娜州的街头。从印刷大牌到 LED 屏幕，加入 OM 团队意味着与对城市中心影响力最大的媒介一起工作。"
+    "lead": "自 1959 年起，我们就把品牌带上巴拉那州与圣卡塔琳娜州的街头。从印刷大牌到 LED 屏幕，加入 OM 团队意味着与对城市中心影响力最大的媒介一起工作。",
+    "pilares": [
+      {
+        "title": "街道就是产品",
+        "text": "我们的媒体不活在浏览器标签页里，而是在回家的路上、在高速公路旁、在机场里。在这里工作的人，能亲眼看到自己工作的成果。"
+      },
+      {
+        "title": "67 年，行业始终在变",
+        "text": "公司创立于 1959 年，并完成了数字化：175 块数字屏幕、按战役统计的受众数据，以及全天候实时监控摄像头。既有跨越六十年的稳定，也有从未停步的技术。"
+      },
+      {
+        "title": "精简的团队，为自己的工作署名",
+        "text": "从谈判到点位落地，做事的人就是署名的人。从想法到街头，中间没有几层。这一点对客户如此，对在这里工作的人同样如此。"
+      }
+    ]
   },
   "PlatformsCarousel": {
     "tituloA": "有些战役需要 ",
@@ -342,7 +357,15 @@
     "tituloB": "，有些战役需要 ",
     "tituloDestaque2": "让人无法忽视",
     "tituloC": "。",
-    "carrosselLabel": "Outdoormídia 媒体平台"
+    "carrosselLabel": "Outdoormídia 媒体平台",
+    "letreiro": "媒体平台"
+  },
+  "Diferenciais": {
+    "titulo": "核心优势",
+    "lead": "让一场战役被整座城市看见，而不是悄然而过，差别就在这里。",
+    "verTodos": "查看全部 →",
+    "carrosselLabel": "Outdoormídia 核心优势",
+    "verDiferencial": "查看优势"
   },
   "Reviews": {
     "titulo": "客户评价",
@@ -358,8 +381,6 @@
     "lead": "您了解自己的生意，我们懂得如何把您的品牌放到正确的位置。",
     "diagnosticoNome": "品牌存在感诊断",
     "diagnosticoIntencao": "我想了解我的品牌目前的存在感",
-    "programaticaNome": "程序化媒体",
-    "programaticaIntencao": "我想查看可投放的媒体资源",
     "atendimentoNome": "快速咨询",
     "atendimentoIntencao": "我想立即与顾问沟通"
   },
@@ -400,12 +421,14 @@
   },
   "LinhaDoTempo": {
     "lead": "从街头第一块广告画面至今，什么变了，什么没变。",
-    "role": "滚动浏览"
+    "role": "滚动浏览",
+    "titulo": "发展历程"
   },
   "Iconicos": {
     "titulo": "标志性项目",
     "eyebrow": "目录之外",
-    "proximo": "下一个项目"
+    "proximo": "下一个项目",
+    "anterior": "上一个项目"
   },
   "MapaCobertura": {
     "legendaCombinada": "城市媒体与高速公路兼具",
@@ -457,5 +480,115 @@
     "legendaCorredor": "公路走廊",
     "notaSaoPaulo": "圣保罗标记表示距离参照，并非覆盖范围。",
     "mapaAlt": "巴拉那州与圣卡塔琳娜州之间所覆盖公路走廊的地图"
+  },
+  "Ticker": {
+    "itens": [
+      "库里蒂巴及大都会区",
+      "巴拉那州海岸",
+      "PR-SC 高速公路",
+      "伊塔雅伊",
+      "若因维利",
+      "坎布里乌海滨市",
+      "机场",
+      "室内媒体"
+    ]
+  },
+  "PlatformsCatalog": {
+    "lead": "左右拖动，或使用触控板与键盘方向键，浏览全部 {n} 个媒体平台。",
+    "carrosselLabel": "Outdoormídia 媒体平台目录"
+  },
+  "FormatosGallery": {
+    "fechar": "关闭",
+    "formato": "{nome} 形式"
+  },
+  "Programatica": {
+    "glossarioEyebrow": "术语表",
+    "glossarioTitulo": "本页出现的缩写，每个一句话说明。"
+  },
+  "HomeTimeline": {
+    "aria": "本页各版块",
+    "secoes": {
+      "inicio": "开始",
+      "institucional": "公司",
+      "diferenciais": "核心优势",
+      "plataformas": "媒体平台",
+      "cobertura": "覆盖范围",
+      "depoimentos": "客户评价",
+      "cases": "案例",
+      "processo": "服务流程",
+      "nova-campanha": "投放广告",
+      "blog": "博客",
+      "faq": "常见问题"
+    }
+  },
+  "Explorers": {
+    "semArtigos": "没有符合当前筛选条件的文章。",
+    "semCasesAinda": "尚未发布案例，敬请期待。",
+    "semCases": "没有符合当前筛选条件的案例。"
+  },
+  "Share": {
+    "whatsapp": "分享到 WhatsApp",
+    "linkedin": "分享到 LinkedIn",
+    "facebook": "分享到 Facebook",
+    "x": "分享到 X",
+    "copiar": "复制链接",
+    "copiado": "链接已复制"
+  },
+  "Tecnologia": {
+    "estatico": "静态",
+    "digital": "数字"
+  },
+  "LegalDoc": {
+    "sumario": "目录",
+    "nestaPagina": "本页内容"
+  },
+  "Mapas": {
+    "coberturaAria": "巴拉那州与圣卡塔琳娜州覆盖地图",
+    "sentidoDoFluxo": "车流方向"
+  },
+  "CoverMedia": {
+    "altPadrao": "Outdoormídia，户外广告媒体"
+  },
+  "Widgets": {
+    "avisoCookies": "Cookie 提示",
+    "whatsappMercadoOoh": "MercadoOOH 的 WhatsApp，程序化广告",
+    "whatsappComercial": "Outdoormídia 商务 WhatsApp",
+    "enviarCurriculo": "通过电子邮件投递简历",
+    "adiantarWhatsapp": "通过 WhatsApp 先聊",
+    "falarWhatsapp": "通过 WhatsApp 联系"
+  },
+  "NotFound": {
+    "eyebrow": "错误",
+    "tituloA": "这个页面",
+    "tituloB": "已经下线。",
+    "lead": "这个地址被改过，或者从未存在。我们另外每月超过 5.3 亿次的曝光依然在线。请选择接下来去哪里。",
+    "breadcrumb": "页面未找到",
+    "paraOndeIr": "接下来去哪里",
+    "ver": "查看",
+    "rotas": [
+      {
+        "meta": "目录",
+        "title": "媒体平台",
+        "text": "数字大牌、灯箱大牌、室内媒体、机场、MUB 城市家具、高速公路与移动媒体。"
+      },
+      {
+        "meta": "覆盖范围",
+        "title": "区域",
+        "text": "我们在巴拉那州与圣卡塔琳娜州的点位分布，逐城呈现。"
+      },
+      {
+        "meta": "实证",
+        "title": "案例",
+        "text": "真实发生过的战役，已经占据巴西南部的街头。"
+      },
+      {
+        "meta": "商务",
+        "title": "索取方案",
+        "text": "告诉我们城市、形式与投放周期，1 个工作日内回复。"
+      }
+    ],
+    "ajudaTitulo": "在找某个具体的页面？",
+    "ajudaTexto": "告诉我们您想找什么，我们会把链接、或者直接把答案发给您。",
+    "ajudaCta": "通过 WhatsApp 询问"
   }
 }

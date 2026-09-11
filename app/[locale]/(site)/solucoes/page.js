@@ -4,6 +4,7 @@ import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import MapaCobertura from '@/components/ui/MapaCobertura'
+import PracaChips from '@/components/ui/PracaChips'
 import Diferenciais from '@/components/sections/Diferenciais'
 import PlatformsCarousel from '@/components/sections/PlatformsCarousel'
 import { getPlatformsListagem } from '@/lib/platforms'
@@ -11,6 +12,16 @@ import SolucoesHero from '@/components/sections/SolucoesHero'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import FormatosGallery from '@/components/sections/FormatosGallery'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+
+const PRACAS = [
+  'Curitiba',
+  'Região Metropolitana',
+  'Litoral do Paraná',
+  'Joinville',
+  'Itajaí',
+  'Balneário Camboriú',
+  'Rodovias PR-SC',
+]
 
 const TIPOS_MIDIA = [
   {
@@ -156,14 +167,15 @@ export default async function SolucoesPage({ params }) {
               Uma rede contínua nos dois estados onde o Sul se movimenta. Escolha a praça e a
               gente mostra o que existe nela.
             </p>
-            <div className="reveal grid grid-cols-[1fr_1fr] items-center gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
-              <div className="grid grid-cols-[220px_1fr] gap-[54px] max-tab:grid-cols-1 max-tab:gap-3">
+            <div className="reveal grid grid-cols-[minmax(0,1fr)_minmax(0,560px)] items-start gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
+              <div className="flex max-w-[52ch] flex-col gap-5">
                 <div className="eyebrow text-orange">Presença</div>
-                <p className="m-0 max-w-[68ch] text-[15.5px] leading-relaxed text-ink-soft">
+                <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
                   Estamos presentes em Curitiba, Região Metropolitana, Litoral do Paraná,
                   Joinville, Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo,
                   visibilidade e impacto real.
                 </p>
+                <PracaChips pracas={PRACAS} />
               </div>
               <div className="w-full max-tab:mx-auto max-tab:max-w-[520px]">
                 <MapaCobertura />

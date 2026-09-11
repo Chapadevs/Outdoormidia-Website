@@ -55,15 +55,15 @@ export default async function SimuladorPage({ params }) {
 
         <section className="pb-[54px] pt-[54px] max-mob:pb-9 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Área do anunciante · Ferramenta</div>
+            <div className="eyebrow reveal">Área do anunciante · Pré-visualização</div>
             <h1 className="display reveal mt-[18px] text-[clamp(40px,6.4vw,88px)] text-ink">
               Sua marca
               <br />
               no OOH.
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Quatro escolhas e você tem a ordem de grandeza da campanha antes de falar com
-              qualquer vendedor: quantas pessoas ela alcança e quanto costuma custar.
+              Escolha a plataforma, suba a sua logo ou a sua peça pronta, e veja a sua marca
+              aplicada em um painel real da Outdoormídia. Baixe a imagem em segundos.
             </p>
           </div>
         </section>

@@ -128,13 +128,15 @@ export default async function PlatformPage({ params }) {
                     typeof platform.quando[0] === 'string' ? 'grid-cols-3' : 'grid-cols-2'
                   }`}
                 >
-                  {platform.quando.map((item) => {
+                  {platform.quando.map((item, i) => {
                     const isCard = typeof item !== 'string'
+                    const Icone = platform.quandoIcones?.[i]
                     return (
                       <li
                         className="ticks rounded-[16px] border border-line bg-white p-6 text-[15.5px] leading-relaxed text-ink-soft max-mob:p-5"
                         key={isCard ? item.title : item}
                       >
+                        {Icone && <Icone className="mb-3 text-orange" size={24} />}
                         {isCard ? (
                           <>
                             <p className="m-0 mb-2 font-extrabold text-ink">{item.title}</p>
@@ -292,8 +294,17 @@ export default async function PlatformPage({ params }) {
             <div className="wrap">
               {produtos.length > 0 ? (
                 <>
-                  <SectionHeading title="Produtos" className="reveal mb-[34px]" />
-                  <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
+                  <SectionHeading
+                    title={produtos.length === 1 ? 'Produto' : 'Produtos'}
+                    className="reveal mb-[34px]"
+                  />
+                  <div
+                    className={
+                      produtos.length === 1
+                        ? 'grid max-w-[640px] grid-cols-1'
+                        : 'grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1'
+                    }
+                  >
                     {produtos.map((produto) => (
                       <ProdutoCard
                         key={produto.slug}

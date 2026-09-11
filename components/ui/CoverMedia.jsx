@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { posterDoVideo } from '@/lib/videoPoster'
 
 // Capa com fallback. Com `video`, toca em loop mudo dentro do próprio card, em
 // vez de vazar como fundo de seção inteira (era assim que Aeroporto e os
@@ -47,6 +48,12 @@ export default function CoverMedia({
     // `videoDeferido` entrega a fonte em `data-src` e sem `autoPlay`: dentro do
     // coverflow contínuo quem baixa e quem dá o play é o carrossel, e só no
     // card que está passando pelo centro. Fora dele o vídeo toca como sempre.
+    //
+    // O `poster` só entra no caso deferido, e é o quadro 0 do próprio arquivo:
+    // é ele que segura a imagem do card enquanto a fonte não chegou (sem ele o
+    // card sobe vazio), e sendo o quadro 0 a troca para o vídeo não tem salto.
+    // Vídeo que toca desde a montagem já pinta o primeiro quadro sozinho e não
+    // precisa de pôster — nem tem um gerado.
     return (
       <div className={`${base} ${className}`}>
         <video
@@ -57,6 +64,7 @@ export default function CoverMedia({
           loop
           muted
           playsInline
+          poster={videoDeferido ? posterDoVideo(video) : undefined}
           preload={videoDeferido ? 'none' : undefined}
           src={videoDeferido ? undefined : video}
         />

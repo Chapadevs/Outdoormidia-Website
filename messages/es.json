@@ -330,11 +330,26 @@
     "fechoAntes": "En proyectos de panel exclusivo, el Gestão 360 OM incluye además consultoría legal de licenciamiento e instalación completa.",
     "fechoLink": "Saber más",
     "cta": "Quiero anunciar",
-    "tituloComoContratar": "Cómo contratar"
+    "tituloComoContratar": "Cómo contratar",
+    "subtitulo": "Del objetivo a la notoriedad"
   },
   "Culture": {
     "titulo": "Por qué Outdoormídia",
-    "lead": "Somos la empresa que coloca marcas en las calles de Paraná y de Santa Catarina desde 1959. Del outdoor impreso al panel de LED, quien entra en el equipo OM trabaja con el medio que más impacta los centros urbanos."
+    "lead": "Somos la empresa que coloca marcas en las calles de Paraná y de Santa Catarina desde 1959. Del outdoor impreso al panel de LED, quien entra en el equipo OM trabaja con el medio que más impacta los centros urbanos.",
+    "pilares": [
+      {
+        "title": "La calle es el producto",
+        "text": "Nuestros medios no viven en una pestaña del navegador. Están camino a casa, en la carretera, en el aeropuerto. Quien trabaja aquí ve en la práctica el resultado de su propio trabajo."
+      },
+      {
+        "title": "67 años, mercado en movimiento",
+        "text": "La empresa es de 1959 y se digitalizó: 175 pantallas digitales, datos de audiencia por campaña y cámaras en vivo 24×7. Estabilidad de quien atravesó seis décadas, con la tecnología de quien no se detuvo."
+      },
+      {
+        "title": "Equipo reducido, dueño de lo que hace",
+        "text": "De la negociación al punto instalado, quien lo hace lo firma. Hay pocas capas entre la idea y la calle, y eso vale tanto para el cliente como para quien trabaja aquí."
+      }
+    ]
   },
   "PlatformsCarousel": {
     "tituloA": "Algunas campañas necesitan ",
@@ -342,7 +357,15 @@
     "tituloB": ". Otras necesitan ser ",
     "tituloDestaque2": "imposibles de ignorar",
     "tituloC": ".",
-    "carrosselLabel": "Plataformas Outdoormídia"
+    "carrosselLabel": "Plataformas Outdoormídia",
+    "letreiro": "Plataformas"
+  },
+  "Diferenciais": {
+    "titulo": "Diferenciales",
+    "lead": "Lo que separa una campaña que la ciudad ve de una que pasa desapercibida.",
+    "verTodos": "Ver todos →",
+    "carrosselLabel": "Diferenciales Outdoormídia",
+    "verDiferencial": "Ver diferencial"
   },
   "Reviews": {
     "titulo": "Qué dicen",
@@ -358,8 +381,6 @@
     "lead": "Tú entiendes de tu negocio. Nosotros entendemos de colocar tu marca en los lugares correctos.",
     "diagnosticoNome": "Diagnóstico de Presencia",
     "diagnosticoIntencao": "Quiero una lectura de la presencia de mi marca",
-    "programaticaNome": "Medios Programáticos",
-    "programaticaIntencao": "Quiero ver los espacios disponibles",
     "atendimentoNome": "Atención rápida",
     "atendimentoIntencao": "Quiero atención ahora"
   },
@@ -400,12 +421,14 @@
   },
   "LinhaDoTempo": {
     "lead": "Qué cambió desde la primera cara en la calle, y qué no cambió.",
-    "role": "Desplázate para recorrer"
+    "role": "Desplázate para recorrer",
+    "titulo": "Línea de tiempo"
   },
   "Iconicos": {
     "titulo": "Icónicos",
     "eyebrow": "Fuera del catálogo",
-    "proximo": "Próximo proyecto"
+    "proximo": "Próximo proyecto",
+    "anterior": "Proyecto anterior"
   },
   "MapaCobertura": {
     "legendaCombinada": "combina medios urbanos y carreteras",
@@ -457,5 +480,115 @@
     "legendaCorredor": "Corredor vial",
     "notaSaoPaulo": "El marcador de São Paulo indica distancia, no cobertura.",
     "mapaAlt": "Mapa de los corredores viales atendidos entre Paraná y Santa Catarina"
+  },
+  "Ticker": {
+    "itens": [
+      "Curitiba y Región Metropolitana",
+      "Litoral de PR",
+      "Carreteras PR-SC",
+      "Itajaí",
+      "Joinville",
+      "Balneário Camboriú",
+      "Aeropuerto",
+      "Medios Indoor"
+    ]
+  },
+  "PlatformsCatalog": {
+    "lead": "Arrastra hacia los dos lados, usa el trackpad o las flechas del teclado para recorrer las {n} plataformas.",
+    "carrosselLabel": "Catálogo de plataformas Outdoormídia"
+  },
+  "FormatosGallery": {
+    "fechar": "Cerrar",
+    "formato": "Formato {nome}"
+  },
+  "Programatica": {
+    "glossarioEyebrow": "Glosario",
+    "glossarioTitulo": "Las siglas de esta página, en una frase cada una."
+  },
+  "HomeTimeline": {
+    "aria": "Secciones de esta página",
+    "secoes": {
+      "inicio": "Inicio",
+      "institucional": "Empresa",
+      "diferenciais": "Diferenciales",
+      "plataformas": "Plataformas",
+      "cobertura": "Cobertura",
+      "depoimentos": "Testimonios",
+      "cases": "Casos",
+      "processo": "Proceso",
+      "nova-campanha": "Anunciar",
+      "blog": "Blog",
+      "faq": "Preguntas"
+    }
+  },
+  "Explorers": {
+    "semArtigos": "Ningún artículo con esa combinación de filtros.",
+    "semCasesAinda": "Ningún caso publicado todavía. Vuelve pronto.",
+    "semCases": "Ningún caso con esa combinación de filtros."
+  },
+  "Share": {
+    "whatsapp": "Compartir en WhatsApp",
+    "linkedin": "Compartir en LinkedIn",
+    "facebook": "Compartir en Facebook",
+    "x": "Compartir en X",
+    "copiar": "Copiar enlace",
+    "copiado": "Enlace copiado"
+  },
+  "Tecnologia": {
+    "estatico": "Estático",
+    "digital": "Digital"
+  },
+  "LegalDoc": {
+    "sumario": "Sumario",
+    "nestaPagina": "En esta página"
+  },
+  "Mapas": {
+    "coberturaAria": "Mapa de cobertura de Paraná y Santa Catarina",
+    "sentidoDoFluxo": "Sentido del flujo"
+  },
+  "CoverMedia": {
+    "altPadrao": "Outdoormídia, medios Out of Home"
+  },
+  "Widgets": {
+    "avisoCookies": "Aviso de cookies",
+    "whatsappMercadoOoh": "WhatsApp de MercadoOOH, medios programáticos",
+    "whatsappComercial": "WhatsApp comercial de Outdoormídia",
+    "enviarCurriculo": "Enviar currículum por e-mail",
+    "adiantarWhatsapp": "Adelantar por WhatsApp",
+    "falarWhatsapp": "Hablar por WhatsApp"
+  },
+  "NotFound": {
+    "eyebrow": "Error",
+    "tituloA": "Esta página",
+    "tituloB": "salió del aire.",
+    "lead": "La dirección cambió o nunca existió. Nuestros otros +530 millones de impactos por mes siguen en pie. Elige por dónde seguir.",
+    "breadcrumb": "Página no encontrada",
+    "paraOndeIr": "Hacia dónde ir",
+    "ver": "Ver",
+    "rotas": [
+      {
+        "meta": "Catálogo",
+        "title": "Plataformas",
+        "text": "Outdoor digital, front light, medios indoor, aeropuerto, MUB, carreteras y medios móviles."
+      },
+      {
+        "meta": "Cobertura",
+        "title": "Regiones",
+        "text": "Dónde tenemos puntos en Paraná y Santa Catarina, plaza por plaza."
+      },
+      {
+        "meta": "Prueba",
+        "title": "Casos",
+        "text": "Campañas reales que ya ocuparon las calles del Sur de Brasil."
+      },
+      {
+        "meta": "Comercial",
+        "title": "Solicitar propuesta",
+        "text": "Cuenta la plaza, el formato y el período. Respuesta en hasta 1 día hábil."
+      }
+    ],
+    "ajudaTitulo": "¿Buscabas algo específico?",
+    "ajudaTexto": "Dinos qué intentabas encontrar y te mandamos el enlace, o la respuesta directamente.",
+    "ajudaCta": "Preguntar por WhatsApp"
   }
 }

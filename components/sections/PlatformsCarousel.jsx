@@ -5,27 +5,48 @@ import { useTranslations } from 'next-intl'
 import CarrosselContinuo from '@/components/ui/CarrosselContinuo'
 import PlatformShowcaseCard from '@/components/ui/PlatformShowcaseCard'
 
-// 11 colunas soletram "Plataformas" como um letreiro de postes luminosos: cada
-// uma sobe até a própria altura de descanso (`alto`) quando a seção entra na
-// tela, em ordem embaralhada — não da esquerda para a direita — e desce de
-// volta se o visitante rolar para cima, porque a leitura é sempre a mesma
-// posição de rolagem. O "f" é o poste aceso: LED e haste já nascem em laranja,
-// sem esperar o hover.
-const LETRAS = [
-  { letra: 'P', alto: 0 },
-  { letra: 'l', alto: 6 },
-  { letra: 'a', alto: 2 },
-  { letra: 't', alto: 10 },
-  { letra: 'a', alto: 4 },
-  { letra: 'f', alto: 0, aceso: true },
-  { letra: 'o', alto: 8 },
-  { letra: 'r', alto: 3 },
-  { letra: 'm', alto: 12 },
-  { letra: 'a', alto: 5 },
-  { letra: 's', alto: 1 },
-]
+// Uma coluna por caractere soletra a palavra do idioma como um letreiro de
+// postes luminosos: cada uma sobe até a própria altura de descanso (`alto`)
+// quando a seção entra na tela, em ordem embaralhada — não da esquerda para a
+// direita — e desce de volta se o visitante rolar para cima, porque a leitura é
+// sempre a mesma posição de rolagem. Um dos postes nasce aceso: LED e haste já
+// em laranja, sem esperar o hover.
+//
+// A palavra vem de `PlatformsCarousel.letreiro` e muda de comprimento em cada
+// idioma (Plataformas tem 11 letras, Platforms tem 9, 媒体平台 tem 4), então
+// nada aqui pode ser tabela escrita à mão: as alturas saem de um padrão cíclico
+// e o poste aceso, de uma fração do comprimento. Em português o padrão devolve
+// exatamente a tabela que existia antes, com o "f" aceso.
+const PADRAO_ALTO = [0, 6, 2, 10, 4, 0, 8, 3, 12, 5, 1]
 
-function TituloPlataformas() {
+// Ideograma ocupa a caixa inteira; letra latina, pouco mais da metade dela. Sem
+// separar os dois, a mesma medida que enquadra "Plataformas" faria de 媒体平台
+// um letreiro que sangra pela borda.
+const CJK = /[぀-ヿ㐀-䶿一-鿿豈-﫿]/
+
+function letrasDe(palavra) {
+  // Spread e não split(''): par substituto vira um caractere só, não dois.
+  const caracteres = [...palavra]
+  const aceso = Math.round(caracteres.length * 0.45)
+  return caracteres.map((letra, i) => ({
+    letra,
+    alto: PADRAO_ALTO[i % PADRAO_ALTO.length],
+    aceso: i === aceso,
+  }))
+}
+
+// O letreiro ocupa a mesma faixa da tela em qualquer idioma: ~48vw de largura
+// somada, repartidos entre as colunas que a palavra tiver. É o que mantém
+// "Plataformas" nos mesmos 7vw por letra de antes e impede que uma palavra
+// curta vire um selo perdido no meio da seção.
+function corpoDe(palavra) {
+  const largura = [...palavra].length * (CJK.test(palavra) ? 0.9 : 0.62)
+  return `clamp(38px, ${(48 / largura).toFixed(2)}vw, 160px)`
+}
+
+function TituloPlataformas({ palavra }) {
+  const LETRAS = letrasDe(palavra)
+  const corpo = corpoDe(palavra)
   const linhaRef = useRef(null)
   const frameRef = useRef(0)
   const t0Ref = useRef(undefined)
@@ -33,15 +54,6 @@ function TituloPlataformas() {
   const limiaresRef = useRef(null)
 
   useEffect(() => {
-    if (!limiaresRef.current) {
-      const passos = LETRAS.map((_, i) => 0.06 + i * 0.062)
-      for (let i = passos.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-        ;[passos[i], passos[j]] = [passos[j], passos[i]]
-      }
-      limiaresRef.current = passos
-    }
-
     // Progresso do título na tela, de 0 (ainda embaixo) a 1. O título pode já
     // estar dentro da tela no primeiro paint: guardar esse valor de partida
     // (t0) e renormalizar em cima dele é o que garante que as onze colunas
@@ -61,8 +73,20 @@ function TituloPlataformas() {
     // layout na thread principal em cima do primeiro giro da fita, justamente
     // onde o travamento aparecia. `translateY` faz o mesmo percurso no
     // compositor, sem tocar no layout.
+    // Quem dá o número de colunas é o DOM, e não a palavra: assim o laço não
+    // depende de nada do render e o efeito segue com a lista de dependências
+    // vazia, mesmo com a palavra mudando de comprimento a cada idioma.
     const colunas = Array.from(linhaRef.current?.querySelectorAll('[data-letra]') ?? [])
-    const posicoes = LETRAS.map(() => null)
+    const posicoes = colunas.map(() => null)
+
+    if (!limiaresRef.current) {
+      const passos = colunas.map((_, i) => 0.06 + i * 0.062)
+      for (let i = passos.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[passos[i], passos[j]] = [passos[j], passos[i]]
+      }
+      limiaresRef.current = passos
+    }
 
     const medir = () => {
       const linha = linhaRef.current
@@ -110,10 +134,15 @@ function TituloPlataformas() {
     // caixa de conteúdo e a margem negativa devolve o padding. A folga existe
     // porque o `overflow-hidden` é quem corta a haste que desce 54px na
     // entrada, e sem ela cortaria também os 10px que a letra sobe no hover.
+    // A altura da caixa tem piso próprio (o de sempre) e acompanha o corpo da
+    // letra quando ele passa dele: com ideograma o corpo chega a 160px, e sem o
+    // `max` a haste que faz do caractere um poste ficaria sem os pixels para
+    // descer.
     <h2
-      aria-label="Plataformas"
-      className="mx-0 -mt-5 mb-0 box-content flex h-[clamp(178px,17vw,224px)] items-stretch justify-center gap-0.5 overflow-hidden px-6 pt-5 font-normal"
+      aria-label={palavra}
+      className="mx-0 -mt-5 mb-0 box-content flex h-[max(clamp(178px,17vw,224px),calc(var(--letreiro)*1.9))] items-stretch justify-center gap-0.5 overflow-hidden px-6 pt-5 font-normal"
       ref={linhaRef}
+      style={{ '--letreiro': corpo }}
     >
       {LETRAS.map(({ letra, alto, aceso }, i) => (
         <span
@@ -123,7 +152,7 @@ function TituloPlataformas() {
           key={i}
           style={{ paddingTop: alto, transform: 'translateY(54px)' }}
         >
-          <span className="text-center text-[clamp(38px,7vw,100px)] font-extrabold leading-[0.92] tracking-[-0.02em] text-ink transition-transform duration-300 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:-translate-y-2.5 group-hover:text-orange">
+          <span className="text-center text-[length:var(--letreiro)] font-extrabold leading-[0.92] tracking-[-0.02em] text-ink transition-transform duration-300 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:-translate-y-2.5 group-hover:text-orange">
             {letra}
           </span>
           <span
@@ -163,7 +192,7 @@ export default function PlatformsCarousel({ plataformas }) {
         {t('tituloC')}
       </p>
 
-      <TituloPlataformas />
+      <TituloPlataformas palavra={t('letreiro')} />
 
       <div className="reveal mx-auto h-[1.5px] max-w-[1280px] bg-[linear-gradient(to_right,rgba(22,17,13,0),rgba(22,17,13,.34)_14%,rgba(22,17,13,.34)_86%,rgba(22,17,13,0))]" />
 

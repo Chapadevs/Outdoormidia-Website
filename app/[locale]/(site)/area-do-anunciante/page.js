@@ -44,7 +44,7 @@ const FERRAMENTAS = [
     Icone: Lightbulb,
     eyebrow: `Conteúdo · ${PRATICAS.length} práticas`,
     title: 'Melhores práticas',
-    text: 'Oito decisões que separam a campanha que funciona da campanha que só aparece. Nenhuma delas depende de orçamento grande, todas dependem de escolher antes de comprar.',
+    text: 'Conteúdos e ideias para tirar mais da sua campanha: como escolher a praça certa, o que funciona em cada formato e as práticas que fazem uma marca ser lembrada na mídia exterior.',
     cta: 'Ver as práticas',
   },
   {

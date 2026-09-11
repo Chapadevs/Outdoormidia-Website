@@ -63,7 +63,8 @@ export default async function AmbientalPage({ params }) {
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
               {getAmbientalRealidade(locale).map((p) => (
                 <article
-                  className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
+                  className="ticks reveal scroll-mt-24 flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
+                  id={p.slug}
                   key={p.slug}
                 >
                   <CoverMedia
