@@ -76,6 +76,8 @@ export default async function LocaleLayout({ children, params }) {
     LinhaDoTempo: mensagens.LinhaDoTempo,
     MapaCobertura: mensagens.MapaCobertura,
     MapaRodovias: mensagens.MapaRodovias,
+    SuaMarcaNoOoh: mensagens.SuaMarcaNoOoh,
+    Iconicos: mensagens.Iconicos,
   }
 
   return (
