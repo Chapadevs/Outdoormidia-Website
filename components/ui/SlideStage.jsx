@@ -9,6 +9,10 @@ import { useEffect, useRef, useState } from 'react'
 //
 // Durante a troca as duas imagens ficam em cena, uma saindo e outra entrando;
 // em repouso só a atual é montada.
+//
+// `classe` no slide vai para a própria imagem: é por onde os Icônicos aplicam
+// o Ken Burns e o brilho de cada linha, que precisam andar junto com o deslize
+// e por isso não podem viver numa camada por cima.
 
 const DURACAO = 620
 const CURVA = 'cubic-bezier(.4,0,.2,1)'
@@ -104,7 +108,7 @@ export default function SlideStage({
     >
       <Image
         alt={fotos[slot].alt || ''}
-        className="select-none object-cover"
+        className={`select-none object-cover ${fotos[slot].classe || ''}`}
         draggable={false}
         fill
         sizes={sizes}

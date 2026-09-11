@@ -127,6 +127,434 @@
       transform: translateY(7px);
     }
   }
+
+  /* Icônicos: a vida de cada linha em cima da foto (IconicosFx). Green cresce
+     cipó e folha em volta da moldura, Regenerativo revela o depois por trás
+     de ladrilhos em preto e branco, Elegancy varre luz pela foto. Tudo em
+     transform, opacity, filter e stroke-dashoffset; nada de layout. */
+  --animate-surge: surge 0.6s ease 0.25s both;
+
+  @keyframes surge {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  --animate-ken-burns: ken-burns 22s ease-in-out infinite;
+  --animate-luz-elegancy: ken-burns 26s ease-in-out infinite, lumen 6s cubic-bezier(0.3, 0, 0.2, 1) 0.4s infinite;
+
+  @keyframes ken-burns {
+    0%,
+    100% {
+      transform: scale(1.04) translate3d(0, 0, 0);
+    }
+    50% {
+      transform: scale(1.12) translate3d(-1.5%, -1%, 0);
+    }
+  }
+
+  @keyframes lumen {
+    0%,
+    100% {
+      filter: brightness(1) saturate(1);
+    }
+    42% {
+      filter: brightness(1.16) saturate(1.12);
+    }
+  }
+
+  --animate-traca-linha: traca-linha 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+
+  @keyframes traca-linha {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Green */
+  --animate-traca-cipo: traca-cipo 2.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+  --animate-brota-folha: brota-folha 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-balanca: balanca 4s ease-in-out infinite;
+  --animate-cai-folha: cai-folha 8s linear infinite;
+  --animate-varre-verde: varre-verde 8s ease-in-out infinite;
+  --animate-tinge-verde: tinge-verde 8s ease-in-out infinite;
+  --animate-halo-verde: halo-verde 5.5s ease-in-out infinite;
+  --animate-esporo: esporo 6.5s linear infinite;
+
+  @keyframes traca-cipo {
+    from {
+      stroke-dashoffset: 1000;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes brota-folha {
+    0% {
+      transform: scale(0) rotate(-40deg);
+      opacity: 0;
+    }
+    55% {
+      transform: scale(1.22) rotate(6deg);
+      opacity: 1;
+    }
+    78% {
+      transform: scale(0.93) rotate(-3deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes balanca {
+    0%,
+    100% {
+      transform: rotate(-6deg);
+    }
+    50% {
+      transform: rotate(7deg);
+    }
+  }
+
+  @keyframes cai-folha {
+    0% {
+      transform: translate3d(0, -40px, 0) rotate(0deg);
+      opacity: 0;
+    }
+    8% {
+      opacity: 0.95;
+    }
+    50% {
+      transform: translate3d(46px, 190px, 0) rotate(190deg);
+    }
+    92% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate3d(-18px, 430px, 0) rotate(420deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes varre-verde {
+    0% {
+      transform: translateX(-110%);
+    }
+    45%,
+    100% {
+      transform: translateX(110%);
+    }
+  }
+
+  @keyframes tinge-verde {
+    0% {
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.45;
+    }
+    55%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes halo-verde {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.07);
+    }
+  }
+
+  @keyframes esporo {
+    0% {
+      transform: translate3d(0, 0, 0) scale(0.5);
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.95;
+    }
+    100% {
+      transform: translate3d(52px, -210px, 0) scale(1.15);
+      opacity: 0;
+    }
+  }
+
+  /* Regenerativo */
+  --animate-vira-ladrilho: vira-ladrilho 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  --animate-barra-scan: barra-scan 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  --animate-ondula: ondula 3.5s ease-out infinite;
+  --animate-sobe-particula: sobe-particula 5s ease-out infinite;
+  --animate-traca-tronco: traca-tronco 7s ease-in-out infinite;
+  --animate-brota-copa: brota-copa 7s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  --animate-pulsa-anel: pulsa-anel 2.4s ease-out infinite;
+  --animate-brilha-grade: brilha-grade 7s ease-in-out infinite;
+
+  @keyframes vira-ladrilho {
+    0% {
+      opacity: 1;
+      transform: rotateX(0deg) scale(1);
+    }
+    26% {
+      opacity: 0;
+      transform: rotateX(-94deg) scale(0.8);
+    }
+    80% {
+      opacity: 0;
+      transform: rotateX(-94deg) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: rotateX(0deg) scale(1);
+    }
+  }
+
+  /* A barra anda por translate do invólucro (que tem a largura da foto), não
+     por `left`: é a mesma travessia de -10% a 108% sem refazer layout. */
+  @keyframes barra-scan {
+    0% {
+      transform: translateX(0);
+      opacity: 0;
+    }
+    3% {
+      opacity: 1;
+    }
+    26% {
+      opacity: 1;
+    }
+    32% {
+      transform: translateX(118%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(118%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes ondula {
+    0% {
+      transform: scale(0.15);
+      opacity: 0.85;
+    }
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  @keyframes sobe-particula {
+    0% {
+      transform: translate3d(0, 0, 0) scale(0.4);
+      opacity: 0;
+    }
+    18% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(22px, -180px, 0) scale(1);
+      opacity: 0;
+    }
+  }
+
+  @keyframes traca-tronco {
+    0%,
+    14% {
+      stroke-dashoffset: 300;
+    }
+    46% {
+      stroke-dashoffset: 0;
+    }
+    84% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 300;
+    }
+  }
+
+  @keyframes brota-copa {
+    0%,
+    34% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    56% {
+      transform: scale(1.14);
+      opacity: 1;
+    }
+    66% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    84% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulsa-anel {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+  }
+
+  @keyframes brilha-grade {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.55;
+    }
+    44% {
+      opacity: 0;
+    }
+  }
+
+  /* Elegancy */
+  --animate-reflexo: reflexo 6s cubic-bezier(0.3, 0, 0.2, 1) 0.4s infinite;
+  --animate-clarao: clarao 6s cubic-bezier(0.3, 0, 0.2, 1) 0.4s infinite;
+  --animate-orbe: orbe 6s cubic-bezier(0.3, 0, 0.2, 1) infinite;
+  --animate-floresce: floresce 4.8s ease-in-out infinite;
+  --animate-gira-raios: gira-raios 30s linear infinite;
+  --animate-varre-cone: varre-cone 9s ease-in-out infinite;
+  --animate-cintila: cintila 3s ease-in-out infinite;
+  --animate-traca-moldura: traca-moldura 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+  --animate-respira: respira 4.8s ease-in-out infinite;
+
+  @keyframes reflexo {
+    0% {
+      transform: translateX(-140%) skewX(-16deg);
+    }
+    42%,
+    100% {
+      transform: translateX(330%) skewX(-16deg);
+    }
+  }
+
+  @keyframes clarao {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scaleX(0.4);
+    }
+    42% {
+      opacity: 0.9;
+      transform: scaleX(1.18);
+    }
+    62% {
+      opacity: 0;
+      transform: scaleX(1.32);
+    }
+  }
+
+  @keyframes orbe {
+    0% {
+      opacity: 0;
+      transform: translate3d(-160px, 80px, 0) scale(0.6);
+    }
+    38% {
+      opacity: 0.85;
+    }
+    55% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(220px, -110px, 0) scale(1.25);
+    }
+  }
+
+  @keyframes floresce {
+    0%,
+    100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.66;
+    }
+  }
+
+  @keyframes gira-raios {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes varre-cone {
+    0%,
+    100% {
+      transform: rotate(-16deg);
+      opacity: 0.3;
+    }
+    50% {
+      transform: rotate(16deg);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes cintila {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0.25) rotate(0deg);
+    }
+    45% {
+      opacity: 1;
+      transform: scale(1) rotate(45deg);
+    }
+    60% {
+      opacity: 0.6;
+      transform: scale(0.8) rotate(70deg);
+    }
+  }
+
+  @keyframes traca-moldura {
+    0% {
+      clip-path: inset(0 100% 100% 0);
+    }
+    45% {
+      clip-path: inset(0 0 100% 0);
+    }
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes respira {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
 }
 
 @theme inline {

@@ -572,7 +572,9 @@
     "titulo": "Icônicos",
     "eyebrow": "Fora do catálogo",
     "proximo": "Próximo projeto",
-    "anterior": "Projeto anterior"
+    "anterior": "Projeto anterior",
+    "legendaRegenerativo": "Antes → depois",
+    "legendaElegancy": "Luz como assinatura"
   },
   "MapaCobertura": {
     "legendaCombinada": "combine mídia urbana e rodovias",

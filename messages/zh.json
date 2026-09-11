@@ -572,7 +572,9 @@
     "titulo": "标志性项目",
     "eyebrow": "目录之外",
     "proximo": "下一个项目",
-    "anterior": "上一个项目"
+    "anterior": "上一个项目",
+    "legendaRegenerativo": "改造前 → 改造后",
+    "legendaElegancy": "以光为签名"
   },
   "MapaCobertura": {
     "legendaCombinada": "城市媒体与高速公路兼具",

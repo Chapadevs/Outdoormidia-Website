@@ -572,7 +572,9 @@
     "titulo": "Iconic",
     "eyebrow": "Outside the catalogue",
     "proximo": "Next project",
-    "anterior": "Previous project"
+    "anterior": "Previous project",
+    "legendaRegenerativo": "Before → after",
+    "legendaElegancy": "Light as a signature"
   },
   "MapaCobertura": {
     "legendaCombinada": "combines urban media and highways",
