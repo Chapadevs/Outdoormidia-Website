@@ -1,7 +1,7 @@
 import { Link } from '@/i18n/navigation'
 import { LOCALES, TAG_OG } from '@/i18n/routing'
 import { alternatesDe } from '@/lib/seo'
-import { CircleQuestionMark, Gauge, Lightbulb, Presentation, Zap } from 'lucide-react'
+import { CircleQuestionMark, Gauge, Lightbulb, Presentation } from 'lucide-react'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import NovaCampanha from '@/components/sections/NovaCampanha'
@@ -91,10 +91,6 @@ export default async function AnunciantePage({ params }) {
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            {/* A contagem é a da grade, derivada dela para não divergir. A
-                faixa de Mídia Programática logo abaixo não entra na conta: ela
-                é frente comercial, não ferramenta de autoatendimento, e é
-                justamente por isso que não virou card. */}
             <div className="eyebrow reveal">
               Autoatendimento · {FERRAMENTAS.length} ferramentas
             </div>
@@ -144,35 +140,6 @@ export default async function AnunciantePage({ params }) {
                 </Link>
               ))}
             </div>
-            {/* Programática é a página filha que não é ferramenta de
-                autoatendimento, é frente comercial. Por isso entra como faixa
-                abaixo da grade, e não como mais um card: a hierarquia é o que
-                diz o que ela é. Fundo escuro acompanhando a exceção de paleta
-                do card de Mídia Programática e do hero da própria página. */}
-            <Link
-              className="group reveal mt-[18px] flex items-center gap-5 rounded-[16px] border border-ink bg-ink p-7 text-white transition-colors duration-200 hover:border-orange max-mob:flex-wrap max-mob:gap-4 max-mob:p-6"
-              href="/area-do-anunciante/programatica"
-            >
-              <span className="grid size-11 shrink-0 place-items-center rounded-[10px] bg-white/15">
-                <Zap size={20} />
-              </span>
-              <span className="flex flex-col gap-1.5">
-                <span className="eyebrow text-white/70">Mídia Programática</span>
-                <span className="text-[17px] font-extrabold leading-tight">
-                  Compre as telas da Outdoormídia pela DSP que você já usa.
-                </span>
-              </span>
-              <span className="ml-auto flex shrink-0 items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-white/[.92] transition-colors duration-200 group-hover:text-orange max-mob:ml-0">
-                Ver como funciona
-                <span
-                  aria-hidden
-                  className="text-base transition-transform duration-200 group-hover:translate-x-1"
-                >
-                  →
-                </span>
-              </span>
-            </Link>
-
             <p className="reveal mt-9 text-[15px] text-ink-soft">
               Prefere resolver diretamente com a gente?{' '}
               <a

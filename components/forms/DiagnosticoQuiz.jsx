@@ -14,6 +14,7 @@ import {
 } from '@/lib/diagnostico'
 import { enviarLead } from '@/lib/leads/enviarLead'
 import { waDiagnostico, waDiagnosticoFragil, waLink } from '@/lib/whatsapp'
+import { comDestaque } from '@/lib/texto'
 
 const SEM_NOTAS = PERGUNTAS.map(() => null)
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -335,10 +336,10 @@ export default function DiagnosticoQuiz() {
                         <span className="font-extrabold">&ldquo;{fragil.pergunta}&rdquo;</span>
                       </p>
                       <p className={`mt-2.5 text-[14.5px] leading-[1.65] ${degrau.soft}`}>
-                        {fragil.fragil.diagnostico}
+                        {comDestaque(fragil.fragil.diagnostico)}
                       </p>
                       <p className={`mt-2.5 text-[14.5px] leading-[1.65] ${degrau.soft}`}>
-                        {fragil.fragil.cta}
+                        {comDestaque(fragil.fragil.cta)}
                         {fragil.fragil.link && (
                           <>
                             {' '}
@@ -362,7 +363,7 @@ export default function DiagnosticoQuiz() {
 
                   {degrau.paragrafos.map((paragrafo) => (
                     <p className={`mt-3 text-[14.5px] leading-[1.65] ${degrau.soft}`} key={paragrafo}>
-                      {paragrafo}
+                      {comDestaque(paragrafo)}
                     </p>
                   ))}
                 </div>
@@ -378,9 +379,9 @@ export default function DiagnosticoQuiz() {
                 decisão de mídia.
               </h3>
               <p className="mt-4 max-w-[62ch] text-white/[.92]">
-                Presença não se constrói com uma campanha. Se constrói aparecendo onde o seu público
-                passa todo dia, o ano inteiro. É isso que a Outdoormídia faz há 67 anos em Curitiba,
-                Região Metropolitana, Litoral do Paraná, Joinville, Itajaí e Balneário Camboriú.
+                {comDestaque(
+                  'Presença não se constrói com uma campanha. Se constrói **aparecendo onde o seu público passa todo dia, o ano inteiro**. É isso que a Outdoormídia faz há 67 anos em Curitiba, Região Metropolitana, Litoral do Paraná, Joinville, Itajaí e Balneário Camboriú.',
+                )}
               </p>
               <div className="mt-[30px] flex flex-wrap gap-3 max-mob:mt-6">
                 <a

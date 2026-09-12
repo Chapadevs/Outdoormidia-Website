@@ -19,7 +19,6 @@
     "diagnostico": "品牌存在感诊断",
     "suaMarcaNoOoh": "您的品牌在户外",
     "melhoresPraticas": "最佳实践",
-    "programatica": "程序化媒体",
     "faq": "常见问题",
     "blog": "博客",
     "cases": "案例",
@@ -102,10 +101,6 @@
       "titulo": "如何规划一场户外广告战役：8 条实践 | Outdoormídia",
       "descricao": "八个决定，区分真正有效的战役与只是「出现过」的战役。在采买户外媒体之前，如何选择城市、形式、周期与时机。"
     },
-    "programatica": {
-      "titulo": "程序化媒体 | Outdoormídia",
-      "descricao": "Outdoormídia 的媒体资源已接入市场主流 SSP：通过贵司代理公司或交易平台已在使用的 DSP，即可采买我们运营的屏幕。"
-    },
     "faq": {
       "titulo": "常见问答 | Outdoormídia",
       "descricao": "关于在巴拉那州与圣卡塔琳娜州投放户外广告的疑问：投放城市、媒体形式、效果衡量、点位独占，以及如何索取方案。"
@@ -180,12 +175,19 @@
     "renascerAlt": "Caminho do Renascer 公益组织所帮助的儿童",
     "renascerP1": "Caminho do Renascer 由社区志愿者于 2009 年创办，为库里蒂巴 Campo Comprido 街区处境脆弱的儿童、青少年与家庭提供帮助。",
     "renascerP2": "其中许多家庭居住在 Barigui 河流域保护区内条件简陋的环境中，缺乏必要的基础设施，面临内涝与卫生风险，公共服务覆盖仍不稳定。店铺的收益正是送往这里。",
-    "tampinhasTitulo": "瓶盖回收",
+    "tampinhasTitulo": "瓶盖公益活动",
     "tampinhasAlt": "Outdoormídia 前台收集的彩色塑料瓶盖",
-    "tampinhasP1": "在总部前台，员工与访客会把塑料瓶盖单独分出，而不是与普通垃圾一起丢弃。回收点就设在公司标识旁边，任何路过的人都可以投放。",
-    "tampinhasP2": "这些材料会送去回收，让一种体量虽小却持续产生、且积累很快的废弃物退出流通。这与喷绘布变成环保袋是同一套逻辑：在日常产生的东西变成填埋垃圾之前，为它找到正确的去处。",
+    "tampinhasP1": "瓶盖公益活动（Campanha Tampinha Solidária）由 Associação das Acácias da Emiliano Perneta（AAEP）发起，将塑料瓶盖转化为老年纸尿裤，捐赠给有需要的养老院。",
+    "tampinhasP2": "Outdoormídia 通过员工捐赠瓶盖支持这项活动，将可持续发展与公益结合在一起。每捐赠 1 千克瓶盖即可制成一片纸尿裤，为最需要的人带去关怀与尊严。",
     "lojaNota": "Loja OM do Bem 不是商业产品，也不是媒体平台，不属于户外广告产品线。它是一项企业文化与商业伦理层面的行动。",
     "lojaCta": "查看喷绘布的完整循环",
+    "anunciandoTitulo": "Anunciando o Bem",
+    "anunciandoP1": "Anunciando o Bem 项目把媒体资源转化为直接的社会影响力：一块专门用于公益的广告板，全部收益捐赠给最需要的人。",
+    "anunciandoP2": "该广告板上投放广告所产生收益的百分之百，都捐赠给 Caminho do Renascer 公益组织，用于帮助库里蒂巴处境脆弱的儿童、青少年与家庭。",
+    "anunciandoP3": "对广告主而言，这是让产品传播兼具意义的机会：品牌曝光的同时，也在支持一项真实的公益事业。",
+    "anunciandoStatLabel": "累计捐赠",
+    "anunciandoStatValor": "13,600 雷亚尔",
+    "anunciandoStatTexto": "包含赠款、直接营收，以及折算为食品捐赠给该组织的置换收益。",
     "redeTitulo": "服务于城市的媒体网络",
     "redeLead": "户外广告的未来，不会由创造曝光的能力来定义，而会由创造价值的能力来定义。",
     "regAlt": "Batel 便利广场的立柱，配有监控摄像头与数字城墙紧急呼叫按钮",
@@ -227,17 +229,14 @@
     "lead": "审批一笔户外媒体采买，需要知道该点位持有何种许可、合同里写了什么，以及由谁签字负责。在一家非上市家族企业里，最后这个答案有名有姓。",
     "quemTitulo": "由谁负责",
     "ceoLegenda": "Halisson Pontarola，首席执行官",
-    "ceoP1": "户外媒体行业的口碑不是在投放期间建立的，而是在投放结束之后建立的。",
-    "ceoP2": "这是 67 年的家族经营。今天安装的点位十年后依然属于我们，我们服务的广告主也是如此。这会改变谈判的方式、承诺的内容，以及拒绝去做的事。",
-    "ceoP3": "Halisson Pontarola 是 Grupo Outdoormídia 的首席执行官，执掌公司三十余年，并推动了巴西户外媒体行业的转型。",
-    "ceoP4": "他是工商管理专业出身，拥有市场营销 MBA 学位（并在宾夕法尼亚州立大学进修）、FGV 企业管理专业进修、SBC 高级教练资格以及神学硕士学位。其高管教育经历还包括 Haggai Institute 的高级领导力课程、EBC 的家族企业管理课程，以及 Fundação Dom Cabral 的董事资格认证。",
-    "ceoP5": "作为演讲者、导师与企业家顾问，他创办了 Mentoria 10+1，致力于培养领导者与创业者，重点关注家族企业内部的冲突化解以及中小企业的可持续增长。他还著有《Meu Pequeno Grande Negócio》一书，探讨如何强化管理、领导力与企业传承。",
-    "ceoP6": "凭借三十余年的实践经验，Halisson 形成了以战略、价值观与人才发展为标志的领导风格，帮助众多家族企业以健全的治理、清晰的方向与长远的眼光持续成长。",
-    "ceoP7": "目前，他还担任 Central de Outdoor 的董事长兼总裁，该机构是代表并推动巴西户外媒体市场发展的全国性组织。",
-    "estruturaTitulo": "架构与合规",
-    "docTitulo": "现在就需要某份文件？",
-    "docTexto": "供应商登记所需的证明、合同草案，或投标所需的企业登记信息。请告诉我们贵司流程的具体要求，我们随即发送。",
-    "docCta": "索取文件"
+    "ceoP1": "户外媒体行业的口碑不是在投放期间建立的，而是**在投放结束之后建立的**。",
+    "ceoP2": "这是**67 年的家族经营**。今天安装的点位十年后依然属于我们，我们服务的广告主也是如此。这会改变谈判的方式、承诺的内容，以及拒绝去做的事。",
+    "ceoP3": "Halisson Pontarola 是 **Grupo Outdoormídia 的首席执行官**，执掌公司**三十余年**，并推动了巴西户外媒体行业的转型。",
+    "ceoP4": "他是工商管理专业出身，拥有**市场营销 MBA 学位**（并在**宾夕法尼亚州立大学**进修）、**FGV** 企业管理专业进修、**SBC 高级教练**资格以及**神学硕士学位**。其高管教育经历还包括 **Haggai Institute** 的高级领导力课程、**EBC** 的家族企业管理课程，以及 **Fundação Dom Cabral** 的董事资格认证。",
+    "ceoP5": "作为演讲者、导师与企业家顾问，他**创办了 Mentoria 10+1**，致力于培养领导者与创业者，重点关注家族企业内部的冲突化解以及中小企业的可持续增长。他还**著有《Meu Pequeno Grande Negócio》一书**，探讨如何强化管理、领导力与企业传承。",
+    "ceoP6": "凭借**三十余年的实践经验**，Halisson 形成了以战略、价值观与人才发展为标志的领导风格，帮助众多家族企业以**健全的治理、清晰的方向与长远的眼光**持续成长。",
+    "ceoP7": "目前，他还担任 **Central de Outdoor 的董事长兼总裁**，该机构是代表并推动巴西户外媒体市场发展的全国性组织。",
+    "estruturaTitulo": "架构与合规"
   },
   "SobrePage": {
     "breadcrumb": "关于我们",
@@ -322,11 +321,11 @@
     "etapas": [
       {
         "title": "策划",
-        "text": "确定目标与区域，筛选平台与点位，解读受众数据，并制定媒体方案。"
+        "text": "确定目标与区域，为每次战役战略性地筛选平台与点位。"
       },
       {
-        "title": "制作",
-        "text": "按媒体形式确定规格，使创意适配点位，并完成静态或数字素材的准备。"
+        "title": "卓越执行",
+        "text": "统筹各个环节，包括创意适配、素材准备与各媒体形式的质量把控。"
       },
       {
         "title": "投放与数据",
@@ -416,6 +415,7 @@
     "campos": {
       "nome": "姓名*",
       "empresa": "公司*",
+      "cnpj": "CNPJ（可选）",
       "email": "工作邮箱*",
       "celular": "手机*",
       "preferencia": "您希望我们如何联系您？*",
@@ -430,6 +430,9 @@
     },
     "aceite": "我同意<link>隐私条款</link>。",
     "enviar": "通过 WhatsApp 发送",
+    "cnpjInvalido": "请核对 CNPJ：需要 14 位字符且校验位有效。",
+    "retomado": "已恢复您上次填写的进度。",
+    "recomecar": "重新开始",
     "enviando": "发送中…",
     "faltaPreencher": "还需填写：{campos}。",
     "faltaAceite": "请先接受隐私条款。",
@@ -534,7 +537,7 @@
     "tituloC": "关键是要出现在",
     "tituloDestaque": "日常动线",
     "tituloD": "每天经过的路上。",
-    "lead": "Outdoormídia 的媒体资源覆盖库里蒂巴、大都会区、巴拉那海岸、若因维利、伊塔雅伊与坎布里乌海滨市，始终位于人流量、可见度与实际影响力最高的点位。从 Batel 街区到海岸，从高速公路到圣卡塔琳娜州的海滩，您的品牌将全程伴随两州人群的日常动线。",
+    "lead": "Outdoormídia 的媒体资源覆盖库里蒂巴、大都会区、巴拉那海岸、若因维利、伊塔雅伊与坎布里乌海滨市，始终位于人流量、可见度与实际影响力最高的点位。从各城市中心到海岸，从高速公路到圣卡塔琳娜州的海滩，您的品牌将全程伴随两州人群的日常动线。",
     "resposta": "当个工作日内回复",
     "eyebrowPadrao": "覆盖范围",
     "tituloAntesDestaque": "出现在",
@@ -562,6 +565,23 @@
     "eyebrow": "商务中心 · 巴拉那州与圣卡塔琳娜州",
     "h1": "解决方案。",
     "lead": "从对您而言最合适的地方开始：从我们的差异化优势入手，从品牌需要出现的城市入手，或直接从您心中已有的媒体形式入手。"
+  },
+  "SolucoesPage": {
+    "breadcrumb": "解决方案",
+    "regioesTitulo": "覆盖区域",
+    "verOMapa": "查看地图 →",
+    "regioesLead": "一张覆盖两州、始终跟随南巴西人流动向的连续网络。选择城市，我们展示那里有哪些媒体资源。",
+    "presencaLabel": "覆盖区域",
+    "presencaTexto": "我们的媒体资源覆盖库里蒂巴、大都会区、巴拉那海岸、若因维利、伊塔雅伊与坎布里乌海滨市，始终位于人流量、可见度与实际影响力最高的点位。",
+    "pracas": [
+      "库里蒂巴",
+      "大都会区",
+      "巴拉那海岸",
+      "若因维利",
+      "伊塔雅伊",
+      "坎布里乌海滨市",
+      "PR-SC 高速公路"
+    ]
   },
   "LinhaDoTempo": {
     "lead": "从街头第一块广告画面至今，什么变了，什么没变。",
@@ -647,10 +667,6 @@
     "fechar": "关闭",
     "formato": "{nome} 形式"
   },
-  "Programatica": {
-    "glossarioEyebrow": "术语表",
-    "glossarioTitulo": "本页出现的缩写，每个一句话说明。"
-  },
   "HomeTimeline": {
     "aria": "本页各版块",
     "secoes": {
@@ -697,7 +713,6 @@
   },
   "Widgets": {
     "avisoCookies": "Cookie 提示",
-    "whatsappMercadoOoh": "MercadoOOH 的 WhatsApp，程序化广告",
     "whatsappComercial": "Outdoormídia 商务 WhatsApp",
     "enviarCurriculo": "通过电子邮件投递简历",
     "adiantarWhatsapp": "通过 WhatsApp 先聊",

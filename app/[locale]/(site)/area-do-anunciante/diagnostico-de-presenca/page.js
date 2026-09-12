@@ -54,7 +54,7 @@ export default async function DiagnosticoDePresencaPage({ params }) {
               <br />
               {/* O .display sobe tudo para caixa alta; o miolo volta para caixa
                   baixa para "DIAGNÓSTICO DE" e "MARCA" carregarem o destaque. */}
-              <span className="lowercase">presença de</span>{' '}
+              <span className="lowercase font-extrabold">presença de</span>{' '}
               <span className="font-extrabold">marca.</span>
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
@@ -71,7 +71,7 @@ export default async function DiagnosticoDePresencaPage({ params }) {
               priority
               ratio="16/9"
               sizes="(max-width: 1280px) 100vw, 1280px"
-              src="/media/hero-diagnostico.png"
+              src="/media/diagnostico/hero-diagnostico.png"
             />
           </div>
         </section>
@@ -94,11 +94,11 @@ export default async function DiagnosticoDePresencaPage({ params }) {
               decide. Antes de responder, veja o caminho inteiro.
             </p>
 
-            <EscadaPresenca className="mt-9 max-mob:mt-7" />
-
-            <p className="reveal mt-4 text-[12.5px] text-ink-soft/70">
+            <p className="reveal mt-4 text-[12.5px] font-bold text-ink-soft/70">
               Fonte: Kantar Ibope Media, Target Group Index, 2024.
             </p>
+
+            <EscadaPresenca className="mt-9 max-mob:mt-7" />
           </div>
         </section>
 

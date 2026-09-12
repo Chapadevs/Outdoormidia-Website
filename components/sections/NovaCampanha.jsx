@@ -99,7 +99,7 @@ export default async function NovaCampanha({ contexto = '' }) {
               alt=""
               className="size-6"
               height={24}
-              src="/media/icone-whatsapp-verde.png"
+              src="/media/icones/icone-whatsapp-verde.png"
               width={24}
             />
           </span>

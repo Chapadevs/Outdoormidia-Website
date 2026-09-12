@@ -9,9 +9,9 @@ import { getAmbientalPraticas, getAmbientalRealidade } from '@/lib/esg'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 
-// TODO(Imagine): remover o `robots` quando a foto da Praça de Carregamento
-// Elétrico existir. É o único item que bloqueia a publicação da página —
-// sem ela a seção 01 não sustenta o peso que ganhou.
+// TODO(Erik): a Praça de Carregamento Elétrico passou a usar vídeo em vez de
+// foto (12/09/2026). Confirmar se isso satisfaz o bloqueio de publicação antes
+// de remover o `robots` abaixo.
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
@@ -69,6 +69,7 @@ export default async function AmbientalPage({ params }) {
                 >
                   <CoverMedia
                     src={p.image}
+                    video={p.video}
                     alt={p.title}
                     label={p.title}
                     ratio="16/9"

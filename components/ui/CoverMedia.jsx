@@ -23,6 +23,15 @@ const RATIOS = {
   a4: 'aspect-[297/210]',
 }
 
+// `foco` desloca o `object-position` do corte: existe para retrato alto
+// recortado em caixa larga, onde o centro puro (padrão do `object-cover`)
+// corta o rosto fora da faixa visível. `centro` é o padrão em todo o resto do
+// site.
+const FOCOS = {
+  centro: 'object-center',
+  topo: 'object-top',
+}
+
 export default function CoverMedia({
   src,
   video,
@@ -34,6 +43,7 @@ export default function CoverMedia({
   className = '',
   videoDeferido = false,
   recorte = false,
+  foco = 'centro',
 }) {
   // `recorte` é a peça que já chega recortada, com fundo transparente e a
   // própria curva desenhada na imagem (as três de Digital Signage). Ela não entra
@@ -88,7 +98,7 @@ export default function CoverMedia({
           fill
           sizes={sizes}
           priority={priority}
-          className={recorte ? 'object-contain' : 'object-cover'}
+          className={recorte ? 'object-contain' : `object-cover ${FOCOS[foco]}`}
         />
       </div>
     )

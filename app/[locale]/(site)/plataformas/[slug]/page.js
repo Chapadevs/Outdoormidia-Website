@@ -306,11 +306,7 @@ export default async function PlatformPage({ params }) {
                     }
                   >
                     {produtos.map((produto) => (
-                      <ProdutoCard
-                        key={produto.slug}
-                        produto={produto}
-                        tecnologiaPadrao={platform.tecnologiaPadrao}
-                      />
+                      <ProdutoCard key={produto.slug} produto={produto} />
                     ))}
                   </div>
                 </>

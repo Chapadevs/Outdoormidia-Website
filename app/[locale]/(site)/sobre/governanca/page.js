@@ -5,8 +5,15 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import { getGovPilares } from '@/lib/esg'
-import { WA_GOVERNANCA, waLink } from '@/lib/whatsapp'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+
+// `**negrito**` é o único realce que os parágrafos de "Quem responde" usam,
+// mesmo padrão de components/ui/Accordion.jsx e de app/[locale]/(site)/sobre/page.js.
+function comDestaque(texto) {
+  return texto
+    .split(/\*\*(.+?)\*\*/g)
+    .map((parte, i) => (i % 2 ? <strong className="font-bold text-ink" key={i}>{parte}</strong> : parte))
+}
 
 
 export async function generateMetadata({ params }) {
@@ -60,6 +67,7 @@ export default async function GovernancaPage({ params }) {
                   label="Halisson Pontarola"
                   ratio="16/10"
                   sizes="(max-width: 980px) 100vw, 40vw"
+                  foco="topo"
                 />
                 {/* A legenda identifica quem está na foto. Enquanto o texto ao lado
                     for institucional, ela não pode virar assinatura: isso atribuiria
@@ -69,13 +77,13 @@ export default async function GovernancaPage({ params }) {
                 </figcaption>
               </figure>
               <div className="reveal flex max-w-[58ch] flex-col gap-5 text-[16.5px] leading-relaxed text-ink-soft">
-                <p className="m-0">{t('ceoP1')}</p>
-                <p className="m-0">{t('ceoP2')}</p>
-                <p className="m-0">{t('ceoP3')}</p>
-                <p className="m-0">{t('ceoP4')}</p>
-                <p className="m-0">{t('ceoP5')}</p>
-                <p className="m-0">{t('ceoP6')}</p>
-                <p className="m-0">{t('ceoP7')}</p>
+                <p className="m-0">{comDestaque(t('ceoP1'))}</p>
+                <p className="m-0">{comDestaque(t('ceoP2'))}</p>
+                <p className="m-0">{comDestaque(t('ceoP3'))}</p>
+                <p className="m-0">{comDestaque(t('ceoP4'))}</p>
+                <p className="m-0">{comDestaque(t('ceoP5'))}</p>
+                <p className="m-0">{comDestaque(t('ceoP6'))}</p>
+                <p className="m-0">{comDestaque(t('ceoP7'))}</p>
               </div>
             </div>
           </div>
@@ -97,24 +105,6 @@ export default async function GovernancaPage({ params }) {
                   <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{p.text}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="pb-[110px] max-mob:pb-[72px]">
-          <div className="wrap">
-            <div className="ticks reveal flex items-center justify-between gap-8 rounded-[16px] border border-line bg-bone p-10 max-mob:flex-col max-mob:items-start max-mob:gap-5 max-mob:p-7">
-              <div>
-                <h2 className="m-0 text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
-                  {t('docTitulo')}
-                </h2>
-                <p className="mt-3 max-w-[52ch] text-[15.5px] leading-relaxed text-ink-soft">
-                  {t('docTexto')}
-                </p>
-              </div>
-              <a href={waLink(WA_GOVERNANCA)} className="btn btn-fill whitespace-nowrap">
-                {t('docCta')}
-              </a>
             </div>
           </div>
         </section>

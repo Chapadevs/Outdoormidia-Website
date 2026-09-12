@@ -130,6 +130,9 @@ export default async function AdminLeadsPage({ searchParams }) {
                         <td className="py-4 pr-4">
                           <span className="font-extrabold">{lead.nome || 'não informado'}</span>
                           <span className="block text-sm text-ink-soft">{lead.empresa || 'não informado'}</span>
+                          {lead.cnpj && (
+                            <span className="block text-xs text-ink-soft">CNPJ {lead.cnpj}</span>
+                          )}
                         </td>
                         <td className="py-4 pr-4">
                           <span className={CHIP_VAZIO}>{rotuloOrigem(lead.origem)}</span>

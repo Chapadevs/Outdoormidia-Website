@@ -19,7 +19,6 @@
     "diagnostico": "Diagnóstico de presencia",
     "suaMarcaNoOoh": "Su marca en OOH",
     "melhoresPraticas": "Mejores prácticas",
-    "programatica": "Medios Programáticos",
     "faq": "FAQ",
     "blog": "Blog",
     "cases": "Casos",
@@ -102,10 +101,6 @@
       "titulo": "Cómo planificar una campaña de medios exteriores: 8 prácticas | Outdoormídia",
       "descricao": "Ocho decisiones que separan la campaña que funciona de la que solo aparece. Cómo elegir plaza, formato, período y momento antes de comprar medios exteriores."
     },
-    "programatica": {
-      "titulo": "Medios Programáticos | Outdoormídia",
-      "descricao": "El inventario de Outdoormídia está conectado a las principales SSP del mercado: compra las pantallas de nuestra operación por la DSP que tu agencia o trading desk ya usa."
-    },
     "faq": {
       "titulo": "FAQ | Outdoormídia",
       "descricao": "Dudas sobre anunciar en medios exteriores en Paraná y en Santa Catarina: plazas, formatos, medición de resultados, exclusividad del punto y cómo pedir una propuesta."
@@ -180,12 +175,19 @@
     "renascerAlt": "Niños acogidos por la ONG Caminho do Renascer",
     "renascerP1": "Fundada en 2009 por voluntarios de la propia comunidad, Caminho do Renascer acoge a niños, adolescentes y familias en situación de vulnerabilidad en el barrio Campo Comprido, en Curitiba.",
     "renascerP2": "Gran parte de esas familias vive en condiciones precarias en el área de preservación de la cuenca del río Barigui, sin infraestructura adecuada y expuesta a riesgo de inundación e insalubridad, con presencia pública aún puntual. Es ahí donde llega el resultado de la Loja.",
-    "tampinhasTitulo": "Recolección de tapitas",
+    "tampinhasTitulo": "Campaña Tampinha Solidária",
     "tampinhasAlt": "Tapitas plásticas de colores recolectadas en la recepción de Outdoormídia",
-    "tampinhasP1": "En la recepción de la sede, colaboradores y visitantes separan las tapitas plásticas en vez de descartarlas junto con la basura común. El punto de recolección queda al lado de la propia marca de la empresa, abierto a cualquier persona que pase por ahí.",
-    "tampinhasP2": "El material sigue a reciclaje, sacando de circulación un residuo pequeño y constante, pero que se acumula rápido. Es la misma lógica detrás de la lona que se vuelve ecobolsa: dar destino correcto a lo que el día a día produce, antes de que se vuelva vertedero.",
+    "tampinhasP1": "La Campaña Tampinha Solidária, de la Associação das Acácias da Emiliano Perneta (AAEP), transforma tapitas plásticas en pañales geriátricos para hogares de ancianos de bajos recursos.",
+    "tampinhasP2": "Outdoormídia apoya la iniciativa con la donación de tapitas por parte de los colaboradores, uniendo sostenibilidad y solidaridad. Cada 1 kg de tapitas donadas se convierte en un pañal, ofreciendo cuidado y dignidad a quienes más lo necesitan.",
     "lojaNota": "La Loja OM do Bem no es un producto comercial ni una plataforma de medios. No integra el portafolio OOH. Es una acción de cultura y ética corporativa.",
     "lojaCta": "Mira el ciclo completo de la lona",
+    "anunciandoTitulo": "Anunciando o Bem",
+    "anunciandoP1": "Anunciando o Bem convierte los medios en impacto social directo: un panel dedicado exclusivamente a la causa, con toda la recaudación destinada a quienes más lo necesitan.",
+    "anunciandoP2": "El cien por ciento del valor generado con las campañas en este panel va a la ONG Caminho do Renascer, que acoge a niños, adolescentes y familias en situación de vulnerabilidad en Curitiba.",
+    "anunciandoP3": "Para la marca anunciante, es la oportunidad de comunicar producto con propósito: presencia que también sostiene una causa real.",
+    "anunciandoStatLabel": "Transferido hasta hoy",
+    "anunciandoStatValor": "R$ 13.600",
+    "anunciandoStatTexto": "Entre bonificaciones, facturación directa y canjes convertidos en alimentos para la ONG.",
     "redeTitulo": "La red al servicio de la ciudad",
     "redeLead": "El futuro del OOH no se definirá por la capacidad de generar visibilidad. Se definirá por la capacidad de generar valor.",
     "regAlt": "Poste de la Plaza de Conveniencia Batel con cámara de monitoreo y botón de emergencia de la Muralha Digital",
@@ -227,17 +229,14 @@
     "lead": "Aprobar una compra de medios exteriores exige saber con qué licencia opera el punto, qué está escrito en el contrato y quién firma por él. En una empresa familiar de capital cerrado, esa última respuesta tiene nombre y apellido.",
     "quemTitulo": "Quién responde",
     "ceoLegenda": "Halisson Pontarola, CEO",
-    "ceoP1": "La reputación en medios exteriores no se construye durante la campaña. Se construye en lo que ocurre después de ella.",
-    "ceoP2": "Son 67 años de operación familiar. El punto instalado hoy sigue siendo nuestro dentro de diez años, y el anunciante atendido también. Eso cambia cómo se negocia, qué se promete y qué se rehúsa hacer.",
-    "ceoP3": "Halisson Pontarola es CEO del Grupo Outdoormídia, actuando hace más de 30 años al frente de la compañía y liderando la transformación del sector de medios exteriores en Brasil.",
-    "ceoP4": "Administrador de empresas, posee un MBA en Marketing con extensión por la Penn State University, especialización en Gestión Empresarial por la FGV, formación como Master Coach por la SBC y maestría en Teología. Su formación ejecutiva incluye además Liderazgo Avanzado por el Haggai Institute, gestión de empresas familiares por la EBC y certificación como consejero por la Fundação Dom Cabral.",
-    "ceoP5": "Conferencista, mentor y consejero de empresarios, es fundador de la Mentoria 10+1, donde actúa en el desarrollo de líderes y emprendedores, con foco en soluciones de conflictos en el ambiente corporativo familiar y crecimiento sostenible de pequeñas y medianas empresas. Es también autor del libro Meu Pequeno Grande Negócio, obra orientada al fortalecimiento de la gestión, el liderazgo y la sucesión empresarial.",
-    "ceoP6": "Con más de tres décadas de experiencia práctica, Halisson construyó un liderazgo marcado por estrategia, valores y desarrollo humano, ayudando a empresas familiares a evolucionar con gobernanza, claridad y visión de futuro.",
-    "ceoP7": "Actualmente, también es Director-Presidente de la Central de Outdoor, entidad nacional que representa y desarrolla el mercado de medios exteriores en Brasil.",
-    "estruturaTitulo": "Estructura y compliance",
-    "docTitulo": "¿Necesitas un documento ahora?",
-    "docTexto": "Certificado para registro de proveedor, minuta de contrato o dato registral para licitación. Dinos qué exige tu proceso y lo enviamos.",
-    "docCta": "Solicitar documento"
+    "ceoP1": "La reputación en medios exteriores no se construye durante la campaña. Se construye **en lo que ocurre después de ella**.",
+    "ceoP2": "Son **67 años de operación familiar**. El punto instalado hoy sigue siendo nuestro dentro de diez años, y el anunciante atendido también. Eso cambia cómo se negocia, qué se promete y qué se rehúsa hacer.",
+    "ceoP3": "Halisson Pontarola es **CEO del Grupo Outdoormídia**, actuando hace **más de 30 años** al frente de la compañía y liderando la transformación del sector de medios exteriores en Brasil.",
+    "ceoP4": "Administrador de empresas, posee un **MBA en Marketing** con extensión por la **Penn State University**, especialización en Gestión Empresarial por la **FGV**, formación como **Master Coach** por la SBC y **maestría en Teología**. Su formación ejecutiva incluye además **Liderazgo Avanzado** por el Haggai Institute, gestión de empresas familiares por la **EBC** y certificación como consejero por la **Fundação Dom Cabral**.",
+    "ceoP5": "Conferencista, mentor y consejero de empresarios, es **fundador de la Mentoria 10+1**, donde actúa en el desarrollo de líderes y emprendedores, con foco en soluciones de conflictos en el ambiente corporativo familiar y crecimiento sostenible de pequeñas y medianas empresas. Es también **autor del libro Meu Pequeno Grande Negócio**, obra orientada al fortalecimiento de la gestión, el liderazgo y la sucesión empresarial.",
+    "ceoP6": "Con **más de tres décadas de experiencia práctica**, Halisson construyó un liderazgo marcado por estrategia, valores y desarrollo humano, ayudando a empresas familiares a evolucionar con **gobernanza, claridad y visión de futuro**.",
+    "ceoP7": "Actualmente, también es **Director-Presidente de la Central de Outdoor**, entidad nacional que representa y desarrolla el mercado de medios exteriores en Brasil.",
+    "estruturaTitulo": "Estructura y compliance"
   },
   "SobrePage": {
     "breadcrumb": "Sobre nosotros",
@@ -322,11 +321,11 @@
     "etapas": [
       {
         "title": "Planificación",
-        "text": "Objetivo y región definidos, plataformas y puntos seleccionados, audiencia leída y propuesta de medios armada."
+        "text": "Objetivos y regiones definidos, con selección estratégica de plataformas y puntos para cada campaña."
       },
       {
-        "title": "Producción",
-        "text": "Especificación por formato, adecuación del creativo al punto y preparación de los materiales, estáticos o digitales."
+        "title": "Excelencia operativa",
+        "text": "Coordinación de todas las etapas, con adecuación de los creativos, preparación de los materiales y control de calidad para cada formato."
       },
       {
         "title": "Difusión y datos",
@@ -416,6 +415,7 @@
     "campos": {
       "nome": "Nombre completo*",
       "empresa": "Empresa*",
+      "cnpj": "CNPJ (opcional)",
       "email": "E-mail corporativo*",
       "celular": "Celular*",
       "preferencia": "¿Cómo prefieres que te contactemos?*",
@@ -430,6 +430,9 @@
     },
     "aceite": "Acepto los <link>Términos de Privacidad</link>.",
     "enviar": "Enviar por WhatsApp",
+    "cnpjInvalido": "Revisa el CNPJ: debe tener 14 caracteres y dígitos verificadores válidos.",
+    "retomado": "Retomamos donde lo dejaste.",
+    "recomecar": "Empezar de nuevo",
     "enviando": "Enviando…",
     "faltaPreencher": "Falta completar: {campos}.",
     "faltaAceite": "Falta aceptar los Términos de Privacidad.",
@@ -534,7 +537,7 @@
     "tituloC": "Hay que estar",
     "tituloDestaque": "trayecto",
     "tituloD": "de tu público.",
-    "lead": "Outdoormídia está en Curitiba, Región Metropolitana, Litoral de Paraná, Joinville, Itajaí y Balneário Camboriú, siempre en los puntos de mayor flujo, visibilidad e impacto real. Del Batel al litoral, de las carreteras a las playas de Santa Catarina, tu marca acompaña el trayecto del público en los dos estados.",
+    "lead": "Outdoormídia está en Curitiba, Región Metropolitana, Litoral de Paraná, Joinville, Itajaí y Balneário Camboriú, siempre en los puntos de mayor flujo, visibilidad e impacto real. De los centros urbanos al litoral, de las carreteras a las playas de Santa Catarina, tu marca acompaña el trayecto del público en los dos estados.",
     "resposta": "Respuesta el mismo día hábil",
     "eyebrowPadrao": "Cobertura",
     "tituloAntesDestaque": "en el ",
@@ -562,6 +565,23 @@
     "eyebrow": "Núcleo comercial · PR + SC",
     "h1": "Soluciones.",
     "lead": "Empieza por donde tenga sentido para ti: por lo que nos diferencia, por la plaza donde tu marca necesita aparecer o directo por el formato que ya tienes en mente."
+  },
+  "SolucoesPage": {
+    "breadcrumb": "Soluciones",
+    "regioesTitulo": "Regiones",
+    "verOMapa": "Ver el mapa →",
+    "regioesLead": "Una red continua en los dos estados donde el Sur se mueve. Elige la plaza y te mostramos qué hay en ella.",
+    "presencaLabel": "Presencia",
+    "presencaTexto": "Estamos presentes en Curitiba, Región Metropolitana, Litoral de Paraná, Joinville, Itajaí y Balneário Camboriú, siempre en los puntos de mayor flujo, visibilidad e impacto real.",
+    "pracas": [
+      "Curitiba",
+      "Región Metropolitana",
+      "Litoral de Paraná",
+      "Joinville",
+      "Itajaí",
+      "Balneário Camboriú",
+      "Carreteras PR-SC"
+    ]
   },
   "LinhaDoTempo": {
     "lead": "Qué cambió desde la primera cara en la calle, y qué no cambió.",
@@ -647,10 +667,6 @@
     "fechar": "Cerrar",
     "formato": "Formato {nome}"
   },
-  "Programatica": {
-    "glossarioEyebrow": "Glosario",
-    "glossarioTitulo": "Las siglas de esta página, en una frase cada una."
-  },
   "HomeTimeline": {
     "aria": "Secciones de esta página",
     "secoes": {
@@ -697,7 +713,6 @@
   },
   "Widgets": {
     "avisoCookies": "Aviso de cookies",
-    "whatsappMercadoOoh": "WhatsApp de MercadoOOH, medios programáticos",
     "whatsappComercial": "WhatsApp comercial de Outdoormídia",
     "enviarCurriculo": "Enviar currículum por e-mail",
     "adiantarWhatsapp": "Adelantar por WhatsApp",
