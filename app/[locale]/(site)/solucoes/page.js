@@ -13,16 +13,6 @@ import NovaCampanha from '@/components/sections/NovaCampanha'
 import FormatosGallery from '@/components/sections/FormatosGallery'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const PRACAS = [
-  'Curitiba',
-  'Região Metropolitana',
-  'Litoral do Paraná',
-  'Joinville',
-  'Itajaí',
-  'Balneário Camboriú',
-  'Rodovias PR-SC',
-]
-
 const TIPOS_MIDIA = [
   {
     title: 'Digital (DOOH)',
@@ -142,11 +132,12 @@ export const revalidate = 3600
 export default async function SolucoesPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations('SolucoesPage')
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Soluções' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
         <SolucoesHero />
 
@@ -155,27 +146,22 @@ export default async function SolucoesPage({ params }) {
         <section className="py-[110px] max-mob:py-[72px]" id="regioes">
           <div className="wrap">
             <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-              <SectionHeading title="Regiões" className="flex-1" />
+              <SectionHeading title={t('regioesTitulo')} className="flex-1" />
               <Link
                 className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
                 href="/solucoes/regioes-cobertura"
               >
-                Ver o mapa →
+                {t('verOMapa')}
               </Link>
             </div>
-            <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">
-              Uma rede contínua nos dois estados onde o Sul se movimenta. Escolha a praça e a
-              gente mostra o que existe nela.
-            </p>
+            <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">{t('regioesLead')}</p>
             <div className="reveal grid grid-cols-[minmax(0,1fr)_minmax(0,560px)] items-start gap-[54px] max-tab:grid-cols-1 max-tab:gap-8">
               <div className="flex max-w-[52ch] flex-col gap-5">
-                <div className="eyebrow text-orange">Presença</div>
+                <div className="eyebrow text-orange">{t('presencaLabel')}</div>
                 <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">
-                  Estamos presentes em Curitiba, Região Metropolitana, Litoral do Paraná,
-                  Joinville, Itajaí e Balneário Camboriú, sempre nos pontos de maior fluxo,
-                  visibilidade e impacto real.
+                  {t('presencaTexto')}
                 </p>
-                <PracaChips pracas={PRACAS} />
+                <PracaChips pracas={t.raw('pracas')} />
               </div>
               <div className="w-full max-tab:mx-auto max-tab:max-w-[520px]">
                 <MapaCobertura />

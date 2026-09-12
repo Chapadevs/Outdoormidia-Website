@@ -94,9 +94,8 @@ O título comercial e o título de busca não precisam ser o mesmo texto. `Melho
 | 01 | Abertura |
 | 02 | As oito práticas |
 | 03 | Objetivo e formato, tabela de leitura rápida |
-| 04 | O que perguntar antes de fechar |
-| 05 | Para onde ir depois |
-| 06 | CTA Nova Campanha, componente compartilhado |
+| 04 | Para onde ir depois |
+| 05 | CTA Nova Campanha, componente compartilhado |
 
 ---
 
@@ -170,15 +169,13 @@ Numeradas de `01` a `08`. Cada uma traz título, corpo e uma linha de aplicaçã
 
 > Mídia exterior não funciona por interrupção, funciona por acúmulo. A mesma pessoa passa pelo mesmo ponto várias vezes por semana, e é essa soma que vira memória de marca. Com a mesma verba, um período mais longo em menos pontos costuma render mais do que muitas faces em pouco tempo.
 
-**Na prática:** antes de aumentar o número de faces, verifique se o período está certo. A unidade de contratação da mídia exterior é a bi-semana, e o FAQ explica os ciclos de cada ativo.
-
 **Revisão de 09/09.** A versão anterior tinha um bloco inteiro só sobre o ciclo de contratação, explicando a bi-semana de 14 dias e os prazos por ativo.
 
 **Esse bloco foi removido.** O FAQ já responde a mesma coisa em duas perguntas: `Existe duração mínima de veiculação?` e `Minha empresa é pequena. Vale a pena anunciar em mídia exterior?`. As duas dizem bi-semana, 14 dias, e a primeira ainda traz o prazo de 15 meses de rodovia.
 
 Este próprio arquivo declara, na fronteira com as outras páginas, que **prazo de veiculação é do FAQ**. O bloco violava a regra que a página estabelece.
 
-O conceito não some: vira a linha de aplicação acima, com o link, e é o suficiente para a decisão que a prática pede.
+**Revisão de 12/09.** A linha `Na prática` que tinha substituído o bloco removido saiu também: repetia a bi-semana que o FAQ já explica, sem acrescentar critério de decisão novo. A prática fica só com o corpo acima, sem linha de aplicação.
 
 ---
 
@@ -278,47 +275,11 @@ A base de plataformas e nomenclatura já traz **as nove plataformas oficiais com
 
 ---
 
-# 05 · O QUE PERGUNTAR ANTES DE FECHAR
-
-### Título
-> Cinco perguntas que evitam surpresa depois.
-
-### Corpo de abertura
-> Ninguém precisa dominar o vocabulário do setor para fazer uma boa compra. Precisa saber o que perguntar.
-
-### As cinco perguntas
-
-| | Pergunta | Por que ela importa |
-|---|---|---|
-| 01 | A face é dedicada só à minha marca? | Define se a sua marca divide ou não a atenção naquele campo de visão. Na Outdoormídia, o Face Única garante que sim |
-| 02 | O ponto tem iluminação? | A iluminação segue a viabilidade de cada ponto e muda a performance no período noturno |
-| 03 | Qual é o ciclo de contratação deste ativo? | Bi-semana, mês e ciclos mais longos mudam o cálculo de investimento |
-| 04 | A instalação está inclusa? | Nos produtos de painel exclusivo, está. Perguntar evita a maior dúvida da frente |
-| 05 | O que está incluso no valor da campanha? | Separa o que já está pago do que aparece como linha extra, antes de a proposta chegar |
-
-**Este bloco é o mais estratégico da página inteira.** Ele entrega ao leitor o roteiro da própria negociação, que é exatamente o que o hero da Área do Anunciante promete: `Quando você procurar o time comercial, já vai saber o que pedir.`
-
-As perguntas 02, 04 e 05 saíram de dúvida recorrente relatada em campo pelos líderes das frentes de Rodovias e Digital Signage. Não são hipotéticas.
-
-### A pergunta 05 mudou de forma em 09/09
-
-Ela era `Existem custos após o período inicial de veiculação?`, marcada como aguardando validação da Alexandra.
-
-**O FAQ já resolveu essa mesma questão, e melhor.** A pergunta equivalente foi removida de lá em 26/08, com esta justificativa registrada:
-
-> A pergunta de hoje é letra miúda vestida de pergunta. Ninguém pergunta isso, e quem lê passa a desconfiar que existem outros custos escondidos que o FAQ não listou. Ela planta a dúvida que pretende resolver.
-
-No lugar entrou `O que está incluso no valor da campanha?`, que lista primeiro tudo o que já está pago e só depois declara a exceção do custo de operação em rodovia.
-
-**Esta página adota a mesma solução.** Ganha três coisas: a pergunta deixa de plantar desconfiança, deixa de depender de validação, e passa a apontar para uma resposta que já existe pronta no FAQ.
-
-**A pendência de validação 01 está encerrada.**
-
-**Atualização de 08/09, pergunta 04:** o `checklist-digital-signage.md` confirma, com base no mesmo documento de campo, que a instalação está inclusa e que isso deve aparecer de forma explícita no site. O ponto de validação sobre instalação **pode ser fechado**, restando confirmar apenas se vale para todos os produtos da frente ou parte deles.
+**Revisão de 12/09.** O bloco `O que perguntar antes de fechar` (o checklist visual das cinco perguntas) saiu da página por decisão do Erik: era o segundo lugar do site respondendo o que o FAQ já responde melhor, em pergunta e resposta completa, em vez de uma linha de "por que ela importa". As perguntas 03 e 04 (ciclo de contratação, instalação inclusa) seguem cobertas pelo FAQ; a 01 (Face Única) pela prática 06; a 05 (o que está incluso no valor) já tinha migrado para a mesma solução do FAQ antes de o bloco inteiro sair.
 
 ---
 
-# 06 · PARA ONDE IR DEPOIS
+# 05 · PARA ONDE IR DEPOIS
 
 Três saídas, em cards, na ordem abaixo.
 
@@ -334,7 +295,7 @@ Três saídas, em cards, na ordem abaixo.
 
 ---
 
-# 07 · CTA DE RODAPÉ · COMPONENTE COMPARTILHADO
+# 06 · CTA DE RODAPÉ · COMPONENTE COMPARTILHADO
 
 O bloco `NOVA CAMPANHA` com o título `Como você prefere começar?` entra sem alteração, no mesmo componente das demais páginas.
 
@@ -380,17 +341,11 @@ Nenhum outro dado numérico. Isso é deliberado: a página vende critério de de
 
 # PONTOS QUE EXIGEM VALIDAÇÃO DA ALEXANDRA
 
-São quatro.
+São duas. Os pontos antigos 01 (pergunta 05, custos) e 02 (pergunta 04, instalação
+inclusa) saíram junto com a remoção do bloco `O que perguntar antes de fechar`, em
+12/09/2026 — ambos só existiam porque a pergunta correspondente estava na página.
 
-**01 · ENCERRADO EM 09/09.**
-A pergunta 05 deixou de ser `Existem custos após o período inicial de veiculação?` e passou a ser `O que está incluso no valor da campanha?`, seguindo a solução que o FAQ já validou em 26/08. Não depende mais de validação.
-
-**Nota:** a informação sobre o custo de operação em rodovia continua no site, na resposta do FAQ, declarada como exceção depois da lista do que já está pago. A transparência que o documento de campo pediu está cumprida, em outro lugar e em melhor forma.
-
-**02 · Pergunta 04, instalação inclusa.**
-Confirmada pelo documento de campo e pelo checklist de Digital Signage. Resta confirmar se vale para todos os produtos da frente ou apenas para parte deles, para a redação não generalizar.
-
-**03 · Face Única, escopo. `CONFLITO ENTRE DOCUMENTOS`**
+**01 · Face Única, escopo. `CONFLITO ENTRE DOCUMENTOS`**
 
 Dois documentos do projeto afirmam coisas diferentes, e isso precisa ser resolvido na fonte, não só nesta página.
 
@@ -403,9 +358,9 @@ Dois documentos do projeto afirmam coisas diferentes, e isso precisa ser resolvi
 
 **Se ele valer só para alguns ativos**, o problema é maior que esta página: a resposta do FAQ promete exclusividade em toda face e precisa ser corrigida antes de qualquer publicação. Nesse caso a prática 06 passa a citar os projetos nomeados.
 
-Esta é a pendência mais urgente das quatro, porque a afirmação já está escrita como garantia em uma página comercial.
+Esta é a pendência mais urgente das duas, porque a afirmação já está escrita como garantia em uma página comercial.
 
-**04 · Prática 07, dados por ponto.** `NOVO EM 08/09`
+**02 · Prática 07, dados por ponto.** `NOVO EM 08/09`
 Confirmar se existe, hoje, leitura de fluxo e perfil de público por ponto disponível para o comercial entregar quando o lead pedir. **Se existir**, a prática volta para a forma afirmativa, que é mais forte, e o card `Sua marca no OOH` da Área do Anunciante pode ser reavaliado. **Se não existir**, a redação atual em forma de pergunta é a correta e o assunto fica encerrado.
 
 ---
@@ -413,7 +368,7 @@ Confirmar se existe, hoje, leitura de fluxo e perfil de público por ponto dispo
 # PENDÊNCIAS
 
 **Bloqueia a publicação:**
-- Os quatro pontos de validação acima
+- Os dois pontos de validação acima
 - Confirmação com o Erik da rota `/area-do-anunciante/diagnostico-de-presenca`
 
 **Não bloqueia, mas precisa de decisão:**

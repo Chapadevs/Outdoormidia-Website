@@ -172,6 +172,24 @@ export default async function SocialPage({ params }) {
           </div>
         </section>
 
+        <section className="pb-[110px] max-mob:pb-[72px]" id="anunciando-o-bem">
+          <div className="wrap">
+            <SectionHeading title={t('anunciandoTitulo')} className="reveal mb-[34px]" />
+            <div className="reveal flex max-w-[70ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
+              <p className="m-0">{t('anunciandoP1')}</p>
+              <p className="m-0">{t('anunciandoP2')}</p>
+              <p className="m-0">{t('anunciandoP3')}</p>
+            </div>
+            <div className="ticks reveal mt-[34px] flex max-w-[380px] flex-col gap-2 rounded-[16px] border border-line bg-white p-8">
+              <span className="eyebrow text-orange">{t('anunciandoStatLabel')}</span>
+              <span className="text-[clamp(30px,4vw,40px)] font-extrabold leading-none text-ink">
+                {t('anunciandoStatValor')}
+              </span>
+              <p className="m-0 text-[15px] leading-relaxed text-ink-soft">{t('anunciandoStatTexto')}</p>
+            </div>
+          </div>
+        </section>
+
         <section className="pb-[110px] max-mob:pb-[72px]" id="rede-a-servico-da-cidade">
           <div className="wrap">
             <SectionHeading title={t('redeTitulo')} className="reveal mb-[34px]" />

@@ -5,14 +5,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { CircleCheck } from 'lucide-react'
-import {
-  PRATICAS,
-  getChecklistCategorias,
-  getPerguntasAntesDeFechar,
-  getPraticas,
-  getSaidas,
-} from '@/lib/melhoresPraticas'
+import { PRATICAS, getPraticas, getSaidas } from '@/lib/melhoresPraticas'
 
 
 // O título comercial e o título de busca não são o mesmo texto. "Melhores
@@ -20,8 +13,8 @@ import {
 // quem está neste momento de decisão busca "como escolher outdoor" e "como
 // fazer campanha de outdoor".
 // Fora do índice até o escopo do Face Única ser confirmado com a Alexandra
-// (ponto de validação 03 do checklist). A prática 06 e a pergunta 01 dizem
-// que a face é dedicada a uma marca só em toda a nossa operação, e essa é a
+// (ponto de validação 01 do checklist). A prática 06 diz que a face é
+// dedicada a uma marca só em toda a nossa operação, e essa é a
 // afirmação de maior exposição da página: ela já está escrita como garantia
 // no FAQ, e a base de plataformas registra o Face Única documentado apenas
 // no Mosaico Square. Ao liberar, apagar este `robots` e o `noindex` de
@@ -145,93 +138,12 @@ export default async function MelhoresPraticasPage({ params }) {
                     </div>
                   )}
 
-                  <p className="m-0 mt-auto border-l-2 border-orange pl-5 pt-0 text-[15.5px] leading-relaxed text-ink">
-                    <strong className="font-extrabold">Na prática:</strong>{' '}
-                    <LinhaDeAplicacao pratica={p.pratica} praticaLink={p.praticaLink} />
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        {/* O que o time de marketing confere em toda peça antes de aprovar a
-            arte para veiculação, por frente: produto, imagem, case e som. */}
-        <section className="bg-bone py-[110px] max-tab:py-[92px] max-mob:py-[72px]">
-          <div className="wrap">
-            <div className="eyebrow reveal">Aprovação de peças</div>
-            <h2 className="reveal m-0 mt-3.5 max-w-[28ch] text-balance text-[clamp(28px,4.4vw,54px)] font-extrabold leading-none tracking-[-0.02em] text-ink">
-              Checklist visual, antes de aprovar qualquer peça.
-            </h2>
-
-            <div className="mt-11 grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
-              {getChecklistCategorias(locale).map((c) => (
-                <div
-                  className="reveal flex flex-col gap-5 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
-                  key={c.titulo}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] bg-paper">
-                      <c.Icone size={20} className="text-orange" />
-                    </span>
-                    <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                      {c.titulo}
-                    </h3>
-                  </div>
-
-                  {c.intro && (
-                    <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{c.intro}</p>
-                  )}
-
-                  <ul className="ticks m-0 flex list-none flex-col gap-3 p-0">
-                    {c.itens.map((item) => (
-                      <li className="flex items-start gap-3" key={item}>
-                        <CircleCheck size={18} className="mt-0.5 shrink-0 text-orange" />
-                        <span className="text-[15.5px] leading-relaxed text-ink">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {c.fechamento && (
-                    <p className="m-0 mt-auto border-l-2 border-orange pl-5 pt-0 text-[15.5px] leading-relaxed text-ink-soft">
-                      {c.fechamento}
+                  {p.pratica && (
+                    <p className="m-0 mt-auto border-l-2 border-orange pl-5 pt-0 text-[15.5px] leading-relaxed text-ink">
+                      <strong className="font-extrabold">Na prática:</strong>{' '}
+                      <LinhaDeAplicacao pratica={p.pratica} praticaLink={p.praticaLink} />
                     </p>
                   )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* O bloco mais estratégico da página: entrega ao leitor o roteiro da
-            própria negociação, que é o que o hero da Área do anunciante
-            promete. */}
-        <section className="py-[110px] max-tab:py-[92px] max-mob:py-[72px]">
-          <div className="wrap">
-            <div className="eyebrow reveal">Antes de fechar</div>
-            <h2 className="reveal m-0 mt-3.5 max-w-[24ch] text-balance text-[clamp(28px,4.4vw,54px)] font-extrabold leading-none tracking-[-0.02em] text-ink">
-              Cinco perguntas que evitam surpresa depois.
-            </h2>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Ninguém precisa dominar o vocabulário do setor para fazer uma boa compra.
-              Precisa saber o que perguntar.
-            </p>
-
-            <ol className="m-0 mt-11 grid list-none grid-cols-1 gap-[18px] p-0">
-              {getPerguntasAntesDeFechar(locale).map((p, i) => (
-                <li
-                  className="ticks reveal flex items-start gap-6 rounded-[16px] border border-line bg-white p-7 max-mob:flex-col max-mob:gap-3 max-mob:p-6"
-                  key={p.pergunta}
-                >
-                  <span className="text-[25px] font-extrabold leading-none text-orange">
-                    {num(i)}
-                  </span>
-                  <div className="flex flex-col gap-2">
-                    <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
-                      {p.pergunta}
-                    </h3>
-                    <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{p.porque}</p>
-                  </div>
                 </li>
               ))}
             </ol>

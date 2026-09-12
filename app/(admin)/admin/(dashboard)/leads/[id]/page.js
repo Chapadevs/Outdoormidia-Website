@@ -82,6 +82,7 @@ export default async function AdminLeadPage({ params }) {
             <dl className="m-0 mt-1">
               <Linha rotulo="Nome">{lead.nome || 'não informado'}</Linha>
               <Linha rotulo="Empresa">{lead.empresa || 'não informado'}</Linha>
+              <Linha rotulo="CNPJ">{lead.cnpj || 'não informado'}</Linha>
               <Linha rotulo="E-mail">
                 {lead.email ? (
                   <a className="underline hover:text-orange" href={`mailto:${lead.email}`}>

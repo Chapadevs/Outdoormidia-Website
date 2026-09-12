@@ -217,6 +217,7 @@ export default async function DiferencialPage({ params }) {
                   <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
                     {oQueE.cards.map((card) => (
                       <article className={`${CARD} reveal flex flex-col gap-4`} key={card.title}>
+                        {card.Icone && <card.Icone size={24} className="text-orange" />}
                         <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
                           {card.title}
                         </h3>
@@ -261,6 +262,16 @@ export default async function DiferencialPage({ params }) {
                     href={projeto.href}
                     key={projeto.title}
                   >
+                    {(projeto.image || projeto.video) && (
+                      <CoverMedia
+                        src={projeto.image}
+                        video={projeto.video}
+                        alt={projeto.imageAlt}
+                        label={projeto.title}
+                        ratio="16/10"
+                        sizes="(max-width: 560px) 100vw, 50vw"
+                      />
+                    )}
                     <h3 className="m-0 text-[21px] font-extrabold leading-tight text-ink">
                       {projeto.title}
                     </h3>

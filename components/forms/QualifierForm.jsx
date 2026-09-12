@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { useFormatter, useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import {
@@ -32,6 +32,7 @@ import {
 } from 'lucide-react'
 import { waQualificador, waLinkPorPraca } from '@/lib/whatsapp'
 import { enviarLead } from '@/lib/leads/enviarLead'
+import { cnpjValido, formatarCnpj, normalizarCnpj } from '@/lib/cnpj'
 
 // Perguntas, opções e rótulos na redação oficial do cliente (COPY_SITE); os
 // ícones são o mapa entregue pela Imagine Concept (claude/icones-nova-campanha.md).
@@ -163,6 +164,82 @@ function OpcaoChip({ label, Icone, ativo, onClick, title }) {
 const CHAVES = ['intencao', 'objetivo', 'praca', 'periodo', 'segmento']
 const TOTAL = CHAVES.length + 1
 
+const RESPOSTAS_VAZIAS = {
+  intencao: '',
+  objetivo: '',
+  praca: [],
+  periodo: '',
+  segmento: '',
+}
+const DADOS_VAZIOS = {
+  nome: '',
+  empresa: '',
+  cnpj: '',
+  email: '',
+  celular: '',
+  contato: '',
+  verba: '',
+}
+
+// Rascunho no navegador: quem fecha a aba no meio das seis etapas volta e
+// encontra as respostas no lugar. Fica só neste navegador, nada sobe antes do
+// envio, e some ao enviar ou ao recomeçar. Um mês parado ele expira: a campanha
+// que a pessoa tinha em mente já não é a mesma. O aceite dos termos não entra:
+// consentimento se marca de novo a cada envio.
+const CHAVE_RASCUNHO = 'om:qualificador:v1'
+const VALIDADE_RASCUNHO = 30 * 24 * 60 * 60 * 1000
+
+// Só as chaves que o formulário conhece, e só com o tipo que ele espera —
+// o que estiver no storage pode ter vindo de uma versão antiga do formulário.
+function mesclar(base, salvo) {
+  const resultado = { ...base }
+  for (const chave of Object.keys(base)) {
+    const valor = salvo?.[chave]
+    if (Array.isArray(base[chave])) {
+      if (Array.isArray(valor)) resultado[chave] = valor.filter((v) => typeof v === 'string')
+    } else if (typeof valor === 'string') {
+      resultado[chave] = valor
+    }
+  }
+  return resultado
+}
+
+function lerRascunho() {
+  try {
+    const bruto = window.localStorage.getItem(CHAVE_RASCUNHO)
+    if (!bruto) return null
+    const rascunho = JSON.parse(bruto)
+    if (!rascunho?.salvoEm || Date.now() - rascunho.salvoEm > VALIDADE_RASCUNHO) return null
+    const respostas = mesclar(RESPOSTAS_VAZIAS, rascunho.respostas)
+    const dados = mesclar(DADOS_VAZIOS, rascunho.dados)
+    if (!temConteudo(respostas, dados)) return null
+    return { respostas, dados, pracaConfirmada: rascunho.pracaConfirmada === true }
+  } catch {
+    return null
+  }
+}
+
+function gravarRascunho(rascunho) {
+  try {
+    window.localStorage.setItem(
+      CHAVE_RASCUNHO,
+      JSON.stringify({ ...rascunho, salvoEm: Date.now() })
+    )
+  } catch {}
+}
+
+function apagarRascunho() {
+  try {
+    window.localStorage.removeItem(CHAVE_RASCUNHO)
+  } catch {}
+}
+
+function temConteudo(respostas, dados) {
+  return (
+    Object.values(respostas).some((v) => !vazio(v)) || Object.values(dados).some((v) => v.trim())
+  )
+}
+
 // Sem asterisco vermelho: o botão fica inativo e a microcopy diz o que falta.
 // O nome de cada campo na microcopy vem de `obrigatorios.<campo>` nas mensagens.
 const OBRIGATORIOS = ['nome', 'empresa', 'email', 'celular', 'contato']
@@ -184,38 +261,68 @@ function vazio(valor) {
   return Array.isArray(valor) ? valor.length === 0 : !valor
 }
 
+const semInscricao = () => () => {}
+
 // `contexto` é a plataforma ou a linha da página onde o bloco Nova campanha
 // está montado. O handoff de Plataformas pedia isso como querystring
 // (`/nova-campanha?plataforma=…`); como o formulário continua sendo a seção no
 // fim de cada página, o dado chega por prop e vai junto no lead. A `pagina` já
 // diria a plataforma nas rotas de /plataformas, mas não diz a linha de quem
 // preenche pela aba Green dentro do hub de Icônicos.
+//
+// A retomada do rascunho acontece aqui fora, sem setState em effect: o rascunho
+// é lido uma vez por montagem (no servidor não há storage, e vem vazio) e fica
+// congelado; `hidratado` é falso só no render de hidratação, para o HTML bater
+// com o do servidor, e vira verdadeiro em seguida. Quando há rascunho, a troca
+// de `key` remonta o formulário já nascendo com as respostas no lugar. Depois
+// disso nada aqui muda de valor, então o formulário nunca é remontado no meio
+// do preenchimento.
 export default function QualifierForm({ contexto = '' }) {
+  const hidratado = useSyncExternalStore(
+    semInscricao,
+    () => true,
+    () => false
+  )
+  const [rascunhoSalvo] = useState(() => (typeof window === 'undefined' ? null : lerRascunho()))
+  const rascunho = hidratado ? rascunhoSalvo : null
+  return (
+    <Formulario
+      key={rascunho ? 'retomado' : 'novo'}
+      contexto={contexto}
+      hidratado={hidratado}
+      rascunho={rascunho}
+    />
+  )
+}
+
+function Formulario({ contexto, hidratado, rascunho }) {
   const t = useTranslations('QualifierForm')
   // `Intl.ListFormat` por baixo: "nome, empresa e celular" em PT, "and" em EN,
   // "y" em ES e "、…和" em ZH, sem uma conjunção por idioma nas mensagens.
   const formatar = useFormatter()
-  const [respostas, setRespostas] = useState({
-    intencao: '',
-    objetivo: '',
-    praca: [],
-    periodo: '',
-    segmento: '',
-  })
-  const [dados, setDados] = useState({
-    nome: '',
-    empresa: '',
-    email: '',
-    celular: '',
-    contato: '',
-    verba: '',
-  })
+  const [respostas, setRespostas] = useState(rascunho?.respostas ?? RESPOSTAS_VAZIAS)
+  const [dados, setDados] = useState(rascunho?.dados ?? DADOS_VAZIOS)
   // A praça é múltipla: sem uma confirmação explícita, o primeiro clique já
   // marcaria o passo como respondido e o painel sumiria antes da segunda praça.
-  const [pracaConfirmada, setPracaConfirmada] = useState(false)
+  const [pracaConfirmada, setPracaConfirmada] = useState(rascunho?.pracaConfirmada ?? false)
   const [aceite, setAceite] = useState(false)
+  const [cnpjTocado, setCnpjTocado] = useState(false)
   const [enviando, setEnviando] = useState(false)
+  // O aviso de que as respostas vieram do rascunho, com o botão de recomeçar.
+  const [retomado, setRetomado] = useState(Boolean(rascunho))
   const passoRef = useRef(null)
+  // A rolagem até o passo é para quem acabou de responder. Nascer com o rascunho
+  // também posiciona o passo, e rolar a página inteira até o formulário na
+  // chegada seria sequestrar a visita.
+  const interagiu = useRef(false)
+
+  // Toda mudança vai para o storage. Antes da hidratação não: o estado vazio
+  // do render do servidor apagaria o rascunho que ainda está por ser lido.
+  useEffect(() => {
+    if (!hidratado) return
+    if (temConteudo(respostas, dados)) gravarRascunho({ respostas, dados, pracaConfirmada })
+    else apagarRascunho()
+  }, [hidratado, respostas, dados, pracaConfirmada])
 
   // Passo derivado do estado — impossível dessincronizar.
   const respondida = (chave) =>
@@ -226,12 +333,28 @@ export default function QualifierForm({ contexto = '' }) {
   const passo = pendente === -1 ? CHAVES.length : pendente
 
   useEffect(() => {
-    if (passo === 0) return
+    if (passo === 0 || !interagiu.current) return
     passoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }, [passo])
 
   function responder(chave, valor) {
+    interagiu.current = true
     setRespostas((atual) => ({ ...atual, [chave]: valor }))
+  }
+
+  function confirmarPraca() {
+    interagiu.current = true
+    setPracaConfirmada(true)
+  }
+
+  function recomecar() {
+    setRespostas(RESPOSTAS_VAZIAS)
+    setDados(DADOS_VAZIOS)
+    setPracaConfirmada(false)
+    setAceite(false)
+    setCnpjTocado(false)
+    setRetomado(false)
+    apagarRascunho()
   }
 
   function alternarPraca(opcao) {
@@ -245,6 +368,7 @@ export default function QualifierForm({ contexto = '' }) {
 
   // Editar limpa dali para frente — não há objetivo sem intenção.
   function editar(indice) {
+    interagiu.current = true
     if (indice <= CHAVES.indexOf('praca')) setPracaConfirmada(false)
     setRespostas((atual) => {
       const proximo = { ...atual }
@@ -261,7 +385,10 @@ export default function QualifierForm({ contexto = '' }) {
   const faltando = OBRIGATORIOS.filter(
     (campo) => (campo !== 'celular' || pedeCelular) && !dados[campo].trim()
   ).map((campo) => t(`obrigatorios.${campo}`))
-  const completo = faltando.length === 0 && aceite
+  // CNPJ é opcional, mas preenchido tem que ser um CNPJ: meio número não serve
+  // ao comercial e travaria a validação do servidor de qualquer forma.
+  const cnpjInvalido = Boolean(normalizarCnpj(dados.cnpj)) && !cnpjValido(dados.cnpj)
+  const completo = faltando.length === 0 && !cnpjInvalido && aceite
 
   // Grava o lead e segue para o WhatsApp. O link é montado antes do await:
   // navegar depois de um await só funciona na mesma aba — window.open seria
@@ -276,6 +403,7 @@ export default function QualifierForm({ contexto = '' }) {
       origem: 'qualificador',
       nome: dados.nome,
       empresa: dados.empresa,
+      cnpj: dados.cnpj,
       email: dados.email,
       whatsapp: dados.celular,
       dados: {
@@ -291,6 +419,8 @@ export default function QualifierForm({ contexto = '' }) {
         contexto,
       },
     })
+    // O rascunho existe para retomar o que não foi enviado; enviado, some.
+    apagarRascunho()
     window.location.href = destino
   }
 
@@ -345,6 +475,19 @@ export default function QualifierForm({ contexto = '' }) {
           >
             {t('fazerDiagnostico')}
           </Link>
+        </p>
+      )}
+
+      {retomado && (
+        <p className="m-0 mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-ink-soft">
+          {t('retomado')}
+          <button
+            type="button"
+            onClick={recomecar}
+            className="cursor-pointer text-[12.5px] font-bold uppercase tracking-[0.1em] text-orange underline hover:text-ink"
+          >
+            {t('recomecar')}
+          </button>
         </p>
       )}
 
@@ -445,7 +588,7 @@ export default function QualifierForm({ contexto = '' }) {
             <button
               className="btn btn-ghost mt-6 disabled:opacity-50"
               disabled={respostas.praca.length === 0}
-              onClick={() => setPracaConfirmada(true)}
+              onClick={confirmarPraca}
               type="button"
             >
               {t('perguntas.continuar')}
@@ -511,6 +654,26 @@ export default function QualifierForm({ contexto = '' }) {
                   value={dados.empresa}
                   onChange={(e) => setDados({ ...dados, empresa: e.target.value })}
                 />
+              </label>
+              {/* Máscara aplicada na digitação: o estado guarda o valor já
+                  pontuado, que é o que vai para o lead e para a mensagem. O erro
+                  só aparece depois de sair do campo, para não acusar CNPJ
+                  incompleto enquanto a pessoa ainda digita. */}
+              <label className="flex flex-col gap-2">
+                <span className="field-label">{t('campos.cnpj')}</span>
+                <input
+                  className="field-input"
+                  autoComplete="off"
+                  maxLength={18}
+                  placeholder="00.000.000/0000-00"
+                  value={dados.cnpj}
+                  aria-invalid={cnpjTocado && cnpjInvalido ? 'true' : undefined}
+                  onBlur={() => setCnpjTocado(true)}
+                  onChange={(e) => setDados({ ...dados, cnpj: formatarCnpj(e.target.value) })}
+                />
+                {cnpjTocado && cnpjInvalido && (
+                  <span className="field-error">{t('cnpjInvalido')}</span>
+                )}
               </label>
               <label className="flex flex-col gap-2">
                 <span className="field-label">{t('campos.email')}</span>
@@ -595,7 +758,9 @@ export default function QualifierForm({ contexto = '' }) {
                   <p className="m-0 mb-1 font-semibold text-ink">
                     {faltando.length > 0
                       ? t('faltaPreencher', { campos: formatar.list(faltando) })
-                      : t('faltaAceite')}
+                      : cnpjInvalido
+                        ? t('cnpjInvalido')
+                        : t('faltaAceite')}
                   </p>
                 )}
                 <p className="m-0 text-ink-soft">{t('retorno')}</p>

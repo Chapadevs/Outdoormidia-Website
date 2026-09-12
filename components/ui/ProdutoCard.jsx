@@ -1,36 +1,22 @@
-'use client'
-
-import { useState } from 'react'
 import CoverMedia from '@/components/ui/CoverMedia'
 
-// Componentes C7 e C4 do handoff no mesmo card: a anatomia fixa do produto
-// (kicker em caixa alta, nome, copy, linha de specs) e o seletor de tecnologia.
-//
-// Produto de dupla tecnologia é UM card com seletor, nunca dois cards. O seletor
-// abre na tecnologia da plataforma que está exibindo o card: em Outdoor Digital
-// abre em Digital, em Front Light abre em Estático. Sem isso o visitante de
-// Front Light cairia numa ficha de resolução em pixels.
-//
-// A copy é a mesma nas duas tecnologias de propósito: o texto do handoff
-// descreve o produto inteiro, e é a ficha técnica que muda de lado. Onde a ficha
-// de uma tecnologia ainda não veio do cliente, a linha some naquele lado, que é
-// a mesma regra do quadro de números.
+// Componente C7 do handoff: a anatomia fixa do produto (kicker em caixa alta,
+// nome, copy, linha de specs). O seletor de tecnologia (C4) saiu do card em
+// 12/09/2026, a pedido do cliente: a foto real de cada tecnologia substitui o
+// par de pílulas ESTÁTICO/DIGITAL, que ficava sem sentido enquanto
+// `specsPor.estatico` seguir vazio (pendência 2 do handoff). `imagemPor` é o
+// mapa tecnologia → foto de `lib/produtos.js`; onde só uma tecnologia tem foto
+// (Poster Sight, Billboard), sobe uma imagem só, sem legenda de tecnologia.
 const ROTULOS = { estatico: 'Estático', digital: 'Digital' }
 
-const TOGGLE =
-  'radial-reveal cursor-pointer rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] transition-colors duration-150 [--rr-fill:var(--color-ink)]'
-
-export default function ProdutoCard({ produto, tecnologiaPadrao = 'digital' }) {
-  const { name, kicker, text, specs, specsPor, pontos, selo, tecnologias, image, imageAlt, imageRatio } =
+export default function ProdutoCard({ produto }) {
+  const { name, kicker, text, specs, specsPor, pontos, selo, imagemPor, image, imageAlt, imageRatio } =
     produto
 
-  const dupla = tecnologias?.length > 1
-  const inicial = tecnologias?.includes(tecnologiaPadrao) ? tecnologiaPadrao : tecnologias?.[0]
-  const [tec, setTec] = useState(inicial)
-
-  const ficha = dupla ? specsPor?.[tec] : specs
-  const rotulo = dupla ? `${ROTULOS[tec]} · ${kicker}` : kicker
+  const ficha = specsPor?.digital ?? specs
+  const rotulo = kicker
   const comEndereco = pontos?.filter((p) => p.endereco) ?? []
+  const fotos = imagemPor ? Object.entries(imagemPor) : null
 
   return (
     <article className="ticks reveal flex flex-col rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
@@ -45,6 +31,25 @@ export default function ProdutoCard({ produto, tecnologiaPadrao = 'digital' }) {
         />
       )}
 
+      {fotos && (
+        <div className={`mb-5 grid gap-3 ${fotos.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          {fotos.map(([opcao, foto]) => (
+            <div key={opcao}>
+              <CoverMedia
+                alt={foto.alt}
+                label={name}
+                ratio="4/3"
+                sizes="(max-width: 980px) 50vw, (max-width: 1280px) 25vw, 16vw"
+                src={foto.src}
+              />
+              {fotos.length > 1 && (
+                <p className="eyebrow m-0 mt-2 text-ink-soft/70">{ROTULOS[opcao]}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="flex items-start justify-between gap-4">
         <p className="eyebrow m-0 text-orange">{rotulo}</p>
         {selo && (
@@ -57,24 +62,6 @@ export default function ProdutoCard({ produto, tecnologiaPadrao = 'digital' }) {
       <h3 className="m-0 mt-3.5 text-[24px] font-extrabold leading-tight tracking-[-0.01em] text-ink max-mob:text-[21px]">
         {name}
       </h3>
-
-      {dupla && (
-        <div className="mt-5 inline-flex w-fit gap-1 rounded-full border border-line p-1">
-          {tecnologias.map((opcao) => (
-            <button
-              aria-pressed={opcao === tec}
-              className={`${TOGGLE} ${
-                opcao === tec ? 'bg-ink text-white' : 'text-ink-soft hover:text-white'
-              }`}
-              key={opcao}
-              onClick={() => setTec(opcao)}
-              type="button"
-            >
-              {ROTULOS[opcao]}
-            </button>
-          ))}
-        </div>
-      )}
 
       <p className="m-0 mt-4 text-[15.5px] leading-relaxed text-ink-soft">{text}</p>
 

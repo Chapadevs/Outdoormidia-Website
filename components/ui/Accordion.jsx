@@ -1,11 +1,4 @@
-// `**negrito**` é o único realce que a copy das respostas usa — o resto é texto
-// corrido, e uma dependência de markdown aqui custaria mais que estas três
-// linhas.
-function comDestaque(texto) {
-  return texto
-    .split(/\*\*(.+?)\*\*/g)
-    .map((parte, i) => (i % 2 ? <strong className="font-bold text-ink" key={i}>{parte}</strong> : parte))
-}
+import { comDestaque } from '@/lib/texto'
 
 // Controlado pelo pai: quem usa precisa do índice aberto para montar o link de
 // WhatsApp com a pergunta em foco. `idPrefix` mantém os ids únicos quando mais
