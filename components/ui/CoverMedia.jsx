@@ -21,6 +21,8 @@ const RATIOS = {
   // Folha A4 deitada (297×210): o certificado de doação do Instituto Kópher. Com
   // a proporção exata a peça sobe inteira, sem faixa bege nem corte.
   a4: 'aspect-[297/210]',
+  // A foto do Banco Reciclável vem 4:3 do acervo do cliente, não 16:9.
+  '4/3': 'aspect-[4/3]',
 }
 
 // `foco` desloca o `object-position` do corte: existe para retrato alto
@@ -45,11 +47,11 @@ export default function CoverMedia({
   recorte = false,
   foco = 'centro',
 }) {
-  // `recorte` é a peça que já chega recortada, com fundo transparente e a
-  // própria curva desenhada na imagem (as três de Digital Signage). Ela não entra
-  // em moldura: borda e canto arredondado desenhariam um segundo contorno em
-  // volta do primeiro, e `object-cover` cortaria justamente a curva. Fica
-  // contida na caixa, sobre o fundo da seção.
+  // `recorte` é a peça que já chega recortada, com fundo transparente (o logo
+  // da Eco Local Recicla na Ambiental; as três fotos de Digital Signage usaram
+  // até 13/09/2026). Ela não entra em moldura: borda e canto arredondado
+  // desenhariam um segundo contorno em volta do primeiro, e `object-cover`
+  // cortaria justamente a curva. Fica contida na caixa, sobre o fundo da seção.
   const base = `relative w-full overflow-hidden ${
     recorte ? '' : 'rounded-[16px] border border-line'
   } ${RATIOS[ratio]}`

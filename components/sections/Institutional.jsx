@@ -1,4 +1,5 @@
 import StatGrid from '@/components/ui/StatGrid'
+import VideoComSom from '@/components/ui/VideoComSom'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { getNumerosMarca } from '@/lib/numeros'
 
@@ -28,14 +29,9 @@ export default async function Institutional() {
             </p>
           </div>
 
-          <video
+          <VideoComSom
             className="reveal ticks aspect-[16/9] w-full rounded-[16px] border border-line object-cover"
             src={VIDEO_SRC}
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden="true"
           />
         </div>
 

@@ -138,6 +138,9 @@
       "descricao": "The rules for using the Outdoormídia site: ownership of content, downloadable materials, the estimate-only nature of the simulator and the diagnosis, and limits of liability."
     }
   },
+  "PlatformPage": {
+    "falarComercial": "Talk to our sales team"
+  },
   "PlataformasPage": {
     "eyebrow": "Catalogue · {n} platforms",
     "h1": "Platforms.",
@@ -150,6 +153,9 @@
       "impactos": "Impacts per month",
       "anos": "Years in operation"
     },
+    "especiaisTitulo": "Special Projects",
+    "especiaisSubtitulo": "they speak for themselves.",
+    "especiaisFrontLightAlt": "Front Light with the campaign's rocket cut out and rising above the panel, in Curitiba",
     "formatosTitulo": "The platform is where. The format is how.",
     "formatosTexto": "The platform defines the environment your brand occupies. The format defines the size, the proportion and the kind of piece that goes live. There are {n} catalogue products, and each platform works with a selection of them.",
     "verTiposDeMidia": "See media types",
@@ -214,6 +220,11 @@
     "cicloP2": "Outdoormídia donates, at no cost, the advertising vinyl that has completed its display cycle. Trained seamstresses turn the material into tote bags and other products, generating income and taking waste out of circulation. A circular economy with a verifiable process, not a purchased seal.",
     "cicloP3": "The initiative is part of the Corajosamente Éticos programme, and all the proceeds go to a partner social project.",
     "cicloCta": "Discover the full programme",
+    "bancoTitulo": "Recycled Bench",
+    "bancoFotoAlt": "Recycled concrete benches installed in a public square, with an Outdoormídia plaque",
+    "bancoH2": "Urban furniture usually arrives in the city as a public expense. Ours arrives as a destination for material.",
+    "bancoP1": "The benches Outdoormídia installs in squares and sidewalks are made from recycled material, in partnership with Eco Local Recicla. Each unit takes waste out of circulation and gives back structure for public use, maintained at our own expense.",
+    "bancoLogoAlt": "Eco Local Recicla logo",
     "kopherTitulo": "Donation of electronic waste to Instituto Kópher",
     "kopherLogoAlt": "Instituto Kópher logo",
     "kopherP1": "We donated obsolete electronic equipment to Instituto Kópher, a non-profit organisation that has spent nine years promoting community wellbeing, combining environmental responsibility with social inclusion.",

@@ -138,6 +138,9 @@
       "descricao": "Las reglas de uso del sitio de Outdoormídia: propiedad del contenido, materiales para descarga, carácter estimativo del simulador y del diagnóstico, y límites de responsabilidad."
     }
   },
+  "PlatformPage": {
+    "falarComercial": "Hablar con el equipo comercial"
+  },
   "PlataformasPage": {
     "eyebrow": "Catálogo · {n} plataformas",
     "h1": "Plataformas.",
@@ -150,6 +153,9 @@
       "impactos": "Impactos por mes",
       "anos": "Años de operación"
     },
+    "especiaisTitulo": "Proyectos Especiales",
+    "especiaisSubtitulo": "hablan por sí solos.",
+    "especiaisFrontLightAlt": "Front Light con el cohete de la campaña recortado saliendo por encima del panel, en Curitiba",
     "formatosTitulo": "La plataforma es dónde. El formato es cómo.",
     "formatosTexto": "La plataforma define el ambiente que ocupa tu marca. El formato define el tamaño, la proporción y el tipo de pieza que sale al aire. Son {n} productos de catálogo, y cada plataforma trabaja con un recorte de ellos.",
     "verTiposDeMidia": "Ver tipos de medios",
@@ -214,6 +220,11 @@
     "cicloP2": "Outdoormídia dona, sin costo, las lonas publicitarias que ya cumplieron el ciclo de exhibición. Costureras capacitadas transforman el material en ecobolsas y otros productos, generando ingresos y sacando el residuo de circulación. Economía circular con proceso verificable, no con sello comprado.",
     "cicloP3": "La iniciativa forma parte del programa Corajosamente Éticos, y todo el resultado se destina a un proyecto social socio.",
     "cicloCta": "Conoce el programa completo",
+    "bancoTitulo": "Banco Reciclable",
+    "bancoFotoAlt": "Bancos de concreto reciclado instalados en una plaza, con placa de Outdoormídia",
+    "bancoH2": "El mobiliario urbano suele llegar a la ciudad como gasto público. El nuestro llega como destino de material.",
+    "bancoP1": "Los bancos que Outdoormídia instala en plazas y aceras se producen a partir de material reciclado, en alianza con Eco Local Recicla. Cada unidad retira residuos de circulación y devuelve estructura de uso público, con mantenimiento por nuestra cuenta.",
+    "bancoLogoAlt": "Logo de Eco Local Recicla",
     "kopherTitulo": "Donación de residuos electrónicos al Instituto Kópher",
     "kopherLogoAlt": "Logo del Instituto Kópher",
     "kopherP1": "Realizamos la donación de equipos electroelectrónicos obsoletos al Instituto Kópher, organización sin fines de lucro que hace nueve años actúa en la promoción del bienestar de la comunidad, uniendo responsabilidad ambiental e inclusión social.",

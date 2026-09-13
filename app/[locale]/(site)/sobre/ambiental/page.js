@@ -130,6 +130,36 @@ export default async function AmbientalPage({ params }) {
           </div>
         </section>
 
+        <section className="pb-[110px] max-mob:pb-[72px]" id="banco-reciclavel">
+          <div className="wrap">
+            <SectionHeading title={t('bancoTitulo')} className="reveal mb-[34px]" />
+            <div className="ticks reveal grid grid-cols-[1fr_1.15fr] items-center gap-10 rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
+              <CoverMedia
+                src="/media/ambiental/banco-reciclavel.webp"
+                alt={t('bancoFotoAlt')}
+                ratio="4/3"
+                sizes="(max-width: 980px) 100vw, 50vw"
+              />
+              <div>
+                <h2 className="m-0 max-w-[24ch] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
+                  {t('bancoH2')}
+                </h2>
+                <div className="mt-6 flex max-w-[62ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
+                  <p className="m-0">{t('bancoP1')}</p>
+                </div>
+                <CoverMedia
+                  src="/media/ambiental/logo-reciclavel.png"
+                  alt={t('bancoLogoAlt')}
+                  ratio="2/1"
+                  recorte
+                  sizes="160px"
+                  className="mt-7 max-w-[160px]"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="pb-[110px] max-mob:pb-[72px]" id="doacao-instituto-kopher">
           <div className="wrap">
             <SectionHeading title={t('kopherTitulo')} className="reveal mb-[34px]" />

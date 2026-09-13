@@ -138,6 +138,9 @@
       "descricao": "Outdoormídia 网站的使用规则：内容归属、可下载素材、模拟器与诊断工具的估算性质，以及责任范围。"
     }
   },
+  "PlatformPage": {
+    "falarComercial": "联系销售团队"
+  },
   "PlataformasPage": {
     "eyebrow": "产品目录 · {n} 个媒体平台",
     "h1": "媒体平台。",
@@ -150,6 +153,9 @@
       "impactos": "每月曝光量",
       "anos": "运营年数"
     },
+    "especiaisTitulo": "特别项目",
+    "especiaisSubtitulo": "不言自明。",
+    "especiaisFrontLightAlt": "库里蒂巴的Front Light广告牌，广告中的火箭以异形裁切伸出画面上方",
     "formatosTitulo": "平台决定在哪里，形式决定怎么呈现。",
     "formatosTexto": "平台决定您的品牌所处的环境，形式决定投放画面的尺寸、比例与类型。目录中共有 {n} 款产品，每个平台使用其中的一部分。",
     "verTiposDeMidia": "查看媒体类型",
@@ -214,6 +220,11 @@
     "cicloP2": "Outdoormídia 无偿捐出已完成投放周期的广告喷绘布。经过培训的缝纫师把材料制成环保袋等产品，既创造收入，也让废弃物退出流通。这是流程可核查的循环经济，而不是买来的认证标签。",
     "cicloP3": "该举措属于 Corajosamente Éticos 项目，全部收益均捐给合作的公益项目。",
     "cicloCta": "了解完整项目",
+    "bancoTitulo": "再生长椅",
+    "bancoFotoAlt": "安装在广场上的再生混凝土长椅，带有 Outdoormídia 标牌",
+    "bancoH2": "城市家具通常以公共支出的形式进入城市，我们的则以材料再利用的形式到来。",
+    "bancoP1": "Outdoormídia 在广场和人行道上安装的长椅由再生材料制成，与 Eco Local Recicla 合作完成。每一件都能让废弃物退出流通，换回供公众使用的设施，由我们负责维护。",
+    "bancoLogoAlt": "Eco Local Recicla 标识",
     "kopherTitulo": "向 Instituto Kópher 捐赠电子废弃物",
     "kopherLogoAlt": "Instituto Kópher 标识",
     "kopherP1": "我们把淘汰的电子电器设备捐赠给 Instituto Kópher。这家非营利组织九年来致力于促进社区福祉，把环境责任与社会共融结合在一起。",

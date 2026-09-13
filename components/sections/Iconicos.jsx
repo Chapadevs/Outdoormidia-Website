@@ -1,6 +1,7 @@
 'use client'
 
 import { Link } from '@/i18n/navigation'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import AtivoCard from '@/components/ui/AtivoCard'
 import AuroraField from '@/components/ui/AuroraField'
@@ -116,19 +117,19 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
             <div className="flex shrink-0 gap-2.5 max-tab:hidden">
               <button
                 aria-label="Projeto anterior"
-                className="grid size-[46px] cursor-pointer place-items-center rounded-full border-[1.5px] border-white/55 text-[17px] text-white transition duration-200 hover:bg-white hover:text-orange"
+                className="radial-reveal grid size-[46px] cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.25)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)]"
                 onClick={() => go(active - 1)}
                 type="button"
               >
-                ←
+                <ChevronLeft size={20} />
               </button>
               <button
                 aria-label="Próximo projeto"
-                className="grid size-[46px] cursor-pointer place-items-center rounded-full border-[1.5px] border-white/55 text-[17px] text-white transition duration-200 hover:bg-white hover:text-orange"
+                className="radial-reveal grid size-[46px] cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.25)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)]"
                 onClick={() => go(active + 1)}
                 type="button"
               >
-                →
+                <ChevronRight size={20} />
               </button>
             </div>
           </div>
@@ -204,6 +205,22 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
                     sizes="(max-width: 980px) 100vw, 52vw"
                     slides={SLIDES}
                   />
+                  <button
+                    aria-label="Projeto anterior"
+                    className="radial-reveal absolute inset-y-0 left-3 z-10 my-auto grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
+                    onClick={() => go(active - 1)}
+                    type="button"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    aria-label="Próximo projeto"
+                    className="radial-reveal absolute inset-y-0 right-3 z-10 my-auto grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
+                    onClick={() => go(active + 1)}
+                    type="button"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
                 </IconicosFx>
               </div>
             )}

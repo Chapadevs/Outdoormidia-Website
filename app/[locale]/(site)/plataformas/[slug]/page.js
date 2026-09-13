@@ -14,12 +14,13 @@ import Process from '@/components/sections/Process'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import CaseCard from '@/components/cases/CaseCard'
 import ProdutoCard from '@/components/ui/ProdutoCard'
-import { getPlatformBySlugLocale } from '@/lib/platforms'
+import { getPlatformBySlug, getPlatformBySlugLocale } from '@/lib/platforms'
 import { getAtivoBySlugLocale } from '@/lib/iconicos'
 import { getProdutosPorPlataformaLocale } from '@/lib/produtos'
 import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { comIdioma, waLink, waPlataforma } from '@/lib/whatsapp'
 
 export const revalidate = 300
 
@@ -64,9 +65,14 @@ export default async function PlatformPage({ params }) {
   const { locale, slug } = await params
   setRequestLocale(locale)
   const tProcess = await getTranslations({ locale, namespace: 'Process' })
+  const t = await getTranslations({ locale, namespace: 'PlatformPage' })
 
   const platform = getPlatformBySlugLocale(slug, locale)
   if (!platform) notFound()
+
+  // A mensagem de WhatsApp vai em português com o nome PT do catálogo, que é o
+  // que o comercial reconhece; o rótulo do botão é o que muda de idioma.
+  const hrefComercial = waLink(comIdioma(waPlataforma(getPlatformBySlug(platform.slug).name), locale))
 
   const [cases, tags] = await fetchCases(platform.slug)
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
@@ -97,9 +103,16 @@ export default async function PlatformPage({ params }) {
                   {platform.heading}
                 </h1>
                 <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">{platform.intro}</p>
+                <a
+                  className="btn btn-fill reveal mt-8 max-mob:whitespace-normal max-mob:text-center"
+                  href={hrefComercial}
+                >
+                  {t('falarComercial')}
+                </a>
               </div>
-              {/* A peça recortada é retrato: sem teto de largura ela abriria um
-                  hero de mais de 800px de altura na coluna de 1fr. */}
+              {/* Capa recortada (`imageRecorte`) é retrato: sem teto de largura
+                  ela abriria um hero de mais de 800px de altura na coluna de 1fr.
+                  Nenhuma entrada usa hoje; Digital Signage usou até 13/09/2026. */}
               <CoverMedia
                 alt={platform.imageAlt}
                 className={`reveal ${platform.imageRecorte ? 'mx-auto max-w-[420px]' : ''}`}
@@ -115,14 +128,15 @@ export default async function PlatformPage({ params }) {
 
             {platform.quando?.length > 0 && (
               <div className="reveal mt-[70px] max-mob:mt-12">
-                {platform.quandoKicker && (
-                  <p className="m-0 mb-2 text-[17px] font-extrabold text-ink">
+                {platform.quandoKicker ? (
+                  <h2 className="m-0 text-[clamp(30px,4vw,44px)] font-extrabold leading-tight tracking-[-0.01em] text-ink">
                     {platform.quandoKicker}
-                  </p>
+                  </h2>
+                ) : (
+                  <h2 className="m-0 text-[clamp(21px,2.2vw,27px)] font-extrabold leading-tight tracking-[-0.01em] text-ink">
+                    Quando essa plataforma é a escolha certa
+                  </h2>
                 )}
-                <h2 className="m-0 text-[clamp(21px,2.2vw,27px)] font-extrabold leading-tight tracking-[-0.01em] text-ink">
-                  Quando essa plataforma é a escolha certa
-                </h2>
                 <ul
                   className={`m-0 mt-6 grid list-none gap-[18px] p-0 max-tab:grid-cols-1 ${
                     typeof platform.quando[0] === 'string' ? 'grid-cols-3' : 'grid-cols-2'
@@ -155,25 +169,6 @@ export default async function PlatformPage({ params }) {
             {/* Componente C1: só sobe onde há número validado. Sem `bignumbers`
                 a página fica sem o quadro, em vez de exibir um dado inventado. */}
             <BigNumbers className="reveal mt-[54px]" stats={platform.bignumbers} />
-
-            {/* Faixa de fotos sem título: as peças continuam a leitura do hero, e
-                um cabeçalho aqui anunciaria uma seção que o texto do cliente não
-                tem. Só Digital Signage traz `galeria` hoje. */}
-            {platform.galeria?.length > 0 && (
-              <div className="reveal mx-auto mt-[54px] grid max-w-[880px] grid-cols-2 gap-[18px] max-mob:mt-10 max-mob:max-w-[420px] max-mob:grid-cols-1">
-                {platform.galeria.map((foto) => (
-                  <CoverMedia
-                    alt={foto.alt}
-                    key={foto.src}
-                    label={platform.name}
-                    ratio="3/4"
-                    recorte
-                    sizes="(max-width: 980px) 100vw, 50vw"
-                    src={foto.src}
-                  />
-                ))}
-              </div>
-            )}
           </div>
         </section>
 
