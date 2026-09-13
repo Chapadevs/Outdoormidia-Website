@@ -96,7 +96,7 @@ export default async function ProjetosIconicosPage({ params }) {
           </div>
         </section>
 
-        <Iconicos comAtivos linkTitulo={false} />
+        <Iconicos linkTitulo={false} />
 
         <Process title={tProcess('tituloComoContratar')} />
 
