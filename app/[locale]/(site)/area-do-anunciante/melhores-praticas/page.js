@@ -90,28 +90,6 @@ export default async function MelhoresPraticasPage({ params }) {
           </div>
         </section>
 
-        {/* A segunda frase do primeiro parágrafo é a mais importante da página:
-            ela desarma o leitor sem corrigi-lo, que é a única forma de o
-            Marcelo continuar lendo. */}
-        <section className="bg-bone py-[110px] max-tab:py-[92px] max-mob:py-[72px]">
-          <div className="wrap">
-            <h2 className="reveal m-0 max-w-[22ch] text-balance text-[clamp(28px,4.4vw,54px)] font-extrabold leading-none tracking-[-0.02em] text-ink">
-              A maior parte das campanhas de rua começa pelo lugar errado.
-            </h2>
-            <div className="reveal mt-8 flex max-w-[62ch] flex-col gap-5 text-lg text-ink-soft">
-              <p className="m-0">
-                A pergunta mais comum que o nosso time comercial recebe é sobre um painel
-                específico, quase sempre o que a pessoa vê todo dia no caminho de casa. É um
-                ótimo começo de conversa e um péssimo começo de campanha.
-              </p>
-              <p className="m-0">
-                O que está reunido aqui é o que 67 anos de operação ensinaram sobre a
-                diferença entre estar na cidade e estar na rotina de quem você quer alcançar.
-              </p>
-            </div>
-          </div>
-        </section>
-
         <section className="py-[110px] max-tab:py-[92px] max-mob:py-[72px]">
           <div className="wrap">
             <SectionHeading title="As oito práticas" className="reveal mb-[34px]" />

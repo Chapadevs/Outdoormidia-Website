@@ -6,9 +6,7 @@ import Culture from '@/components/sections/Culture'
 import BancoDeTalentos from '@/components/sections/BancoDeTalentos'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-// A foto aérea da sede é a mesma capa do topo de /sobre; o arquivo é 16/9
-// exato, então a proporção do card é a da foto e nada é cortado.
-const SEDE = '/media/sobre-nos/foto-da-sede.webp'
+const SEDE = '/media/trabalhe-conosco/foto-da-sede.webp'
 
 
 export async function generateMetadata({ params }) {

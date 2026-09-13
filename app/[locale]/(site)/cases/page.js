@@ -3,6 +3,7 @@ import { LOCALES, TAG_OG } from '@/i18n/routing'
 import { alternatesDe } from '@/lib/seo'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CasesExplorer from '@/components/cases/CasesExplorer'
+import Reviews from '@/components/sections/Reviews'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
 import { listTagGroups } from '@/lib/tags/groups'
@@ -72,6 +73,8 @@ export default async function CasesPage({ params }) {
             <CasesExplorer cases={cases} tags={tags} groups={groups} />
           </div>
         </section>
+
+        <Reviews />
       </main>
     </>
   )

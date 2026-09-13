@@ -2,8 +2,10 @@ import { Images } from 'lucide-react'
 import { LOCALES, TAG_OG } from '@/i18n/routing'
 import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import CoverMedia from '@/components/ui/CoverMedia'
 import SectionHeading from '@/components/ui/SectionHeading'
 import BigNumbers from '@/components/ui/BigNumbers'
+import Iconicos from '@/components/sections/Iconicos'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import PlatformsCatalog from '@/components/sections/PlatformsCatalog'
 import { getPlatformsListagem } from '@/lib/platforms'
@@ -80,6 +82,33 @@ export default async function PlataformasPage({ params }) {
           <div className="wrap">
             <SectionHeading title={tNav('plataformas')} className="reveal mb-5" />
             <PlatformsCatalog plataformas={plataformas} />
+          </div>
+        </section>
+
+        {/* A faixa laranja dos três projetos, logo abaixo da grade em que os
+            Icônicos abrem a lista. Sem `comAtivos`: o grid de ativos de cada
+            linha fica no hub, para onde o título da faixa leva. */}
+        <Iconicos />
+
+        {/* Projetos Especiais: título, subtítulo e as duas peças, sem texto de
+            apoio, por decisão do cliente. As duas caixas são 16/9 para a foto
+            e o vídeo subirem no mesmo tamanho; a foto do Front Light é 4:3 e
+            entra com `foco="topo"`, porque o corte central levaria a ponta do
+            foguete que sai por cima do painel, que é o projeto especial. */}
+        <section className="border-t border-line py-[90px] max-mob:py-[60px]">
+          <div className="wrap">
+            <SectionHeading title={t('especiaisTitulo')} className="reveal" />
+            <p className="reveal m-0 mt-4 text-lg text-ink-soft">{t('especiaisSubtitulo')}</p>
+            <div className="reveal mt-[34px] grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
+              <CoverMedia ratio="16/9" video="/media/projetos-especiais/projetos-especiais.mp4" />
+              <CoverMedia
+                alt={t('especiaisFrontLightAlt')}
+                foco="topo"
+                ratio="16/9"
+                sizes="(max-width: 560px) 100vw, 50vw"
+                src="/media/projetos-especiais/front-light.webp"
+              />
+            </div>
           </div>
         </section>
 

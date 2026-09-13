@@ -34,7 +34,7 @@ function comDestaque(texto) {
 const COMPROMISSO = [
   { href: '/sobre/ambiental', image: '/media/sobre-nos/ambiental.webp' },
   { href: '/sobre/social', image: '/media/sobre-nos/social.webp' },
-  { href: '/sobre/governanca', image: '/media/sobre-nos/governanca.webp' },
+  { href: '/sobre/governanca', image: '/media/governanca/halisson-pontarola.jpg', foco: 'topo' },
 ]
 
 
@@ -136,6 +136,7 @@ export default async function SobrePage({ params }) {
                     <CoverMedia
                       alt={c.imageAlt}
                       className="mb-1"
+                      foco={c.foco}
                       label={c.title}
                       ratio="16/9"
                       sizes="(max-width: 980px) 100vw, 400px"
