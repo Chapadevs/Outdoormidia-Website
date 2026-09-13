@@ -4,8 +4,9 @@ import { alternatesDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import NovaCampanha from '@/components/sections/NovaCampanha'
+import PraticasGrid from '@/components/sections/PraticasGrid'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { PRATICAS, getPraticas, getSaidas } from '@/lib/melhoresPraticas'
+import { PRATICAS, getSaidas } from '@/lib/melhoresPraticas'
 
 
 // O título comercial e o título de busca não são o mesmo texto. "Melhores
@@ -38,26 +39,6 @@ export async function generateMetadata({ params }) {
       type: 'website',
     },
   }
-}
-
-const num = (i) => String(i + 1).padStart(2, '0')
-
-// A linha de aplicação da prática 04 carrega um link no meio da frase. O texto
-// continua sendo um só campo em lib/, e é aqui que ele é partido: guardar JSX
-// no arquivo de conteúdo obrigaria quem edita a copy a mexer em markup.
-function LinhaDeAplicacao({ pratica, praticaLink }) {
-  if (!praticaLink) return pratica
-
-  const [antes, depois] = pratica.split(praticaLink.trecho)
-  return (
-    <>
-      {antes}
-      <Link href={praticaLink.href} className="font-bold text-orange hover:underline">
-        {praticaLink.trecho}
-      </Link>
-      {depois}
-    </>
-  )
 }
 
 export default async function MelhoresPraticasPage({ params }) {
@@ -93,38 +74,7 @@ export default async function MelhoresPraticasPage({ params }) {
         <section className="py-[110px] max-tab:py-[92px] max-mob:py-[72px]">
           <div className="wrap">
             <SectionHeading title="As oito práticas" className="reveal mb-[34px]" />
-            <ol className="m-0 grid list-none grid-cols-2 gap-[18px] p-0 max-tab:grid-cols-1">
-              {getPraticas(locale).map((p, i) => (
-                <li
-                  className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
-                  key={p.titulo}
-                >
-                  <span className="text-[34px] font-extrabold leading-none text-orange">
-                    {num(i)}
-                  </span>
-                  <h3 className="m-0 text-[25px] font-extrabold leading-tight text-ink">
-                    {p.titulo}
-                  </h3>
-                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{p.corpo}</p>
-
-                  {p.recomendacoes && (
-                    <div className="mt-2 rounded-[10px] border border-line bg-paper p-5">
-                      <span className="eyebrow">{p.recomendacoes.titulo}</span>
-                      <p className="m-0 mt-3 text-[15.5px] leading-relaxed text-ink-soft">
-                        {p.recomendacoes.texto}
-                      </p>
-                    </div>
-                  )}
-
-                  {p.pratica && (
-                    <p className="m-0 mt-auto border-l-2 border-orange pl-5 pt-0 text-[15.5px] leading-relaxed text-ink">
-                      <strong className="font-extrabold">Na prática:</strong>{' '}
-                      <LinhaDeAplicacao pratica={p.pratica} praticaLink={p.praticaLink} />
-                    </p>
-                  )}
-                </li>
-              ))}
-            </ol>
+            <PraticasGrid />
           </div>
         </section>
 

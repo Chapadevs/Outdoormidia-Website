@@ -5,44 +5,39 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import AtivoCard from '@/components/ui/AtivoCard'
 import AuroraField from '@/components/ui/AuroraField'
-import IconicosFx, { CLASSE_IMAGEM } from '@/components/ui/IconicosFx'
-import SlideStage from '@/components/ui/SlideStage'
 import { useLocale } from 'next-intl'
 import { getIconicos } from '@/lib/iconicos'
 
 // `linkTitulo` desliga o link do h2: dentro de /plataformas/projetos-iconicos
-// ele apontaria para a própria página. `comAtivos` liga o grid de ativos de
-// cada linha logo abaixo da faixa, trocado pela mesma navegação de abas e
-// setas que já troca tagline/foto aqui — era a seção "As três linhas"
-// (LinhaTabs), com uma navegação Green/Regenerativo/Elegancy própria que
-// repetia a desta faixa.
-export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
+// ele apontaria para a própria página.
+//
+// A coluna da direita é o carrossel dos ativos da linha aberta: um `AtivoCard`
+// por vez, e as setas passam de um ativo ao outro dentro da linha (dando a
+// volta nas pontas). Trocar de linha é pelas abas, que sempre reabrem a linha
+// no primeiro ativo. Substituiu a foto única com as animações do `IconicosFx`
+// e o grid claro de ativos que ficava abaixo da faixa: os dois mostravam a
+// mesma lista, e o visitante rolava a página inteira para chegar nela.
+export default function Iconicos({ linkTitulo = true }) {
   const locale = useLocale()
   const ICONICOS = getIconicos(locale)
 
-  // O palco só entra se os três projetos tiverem foto: ele é indexado pelo
-  // mesmo `active` das abas, e um projeto sem imagem desalinharia aba e imagem.
-  const TODOS_COM_FOTO = ICONICOS.every((i) => i.image)
-  const SLIDES = ICONICOS.map((i) => ({
-    src: i.image,
-    alt: i.imageAlt || `${i.name}: ${i.tagline}`,
-    classe: CLASSE_IMAGEM[i.slug],
-  }))
-
   const [active, setActive] = useState(0)
+  const [card, setCard] = useState(0)
+  const totalCards = ICONICOS[active].ativos?.length ?? 0
   // Âncora de ativo (`#jardim-digital`) chega com a linha errada aberta: o
   // grid dela nasce com `hidden` até o efeito abaixo trocar a aba, e só então
   // o card existe visível para o navegador rolar até ele. Ref, não estado: só
   // o `active` precisa re-renderizar, ler e limpar o alvo não.
   const scrollAlvo = useRef(null)
 
-  // As animações da foto (IconicosFx) só montam com a faixa perto da tela:
-  // são dezenas de folhas, ladrilhos e estrelas em loop, e não há por que
-  // mantê-las vivas enquanto o visitante lê o resto da página.
-  const palcoRef = useRef(null)
-  const [emCena, setEmCena] = useState(false)
-
-  const go = (i) => setActive(((i % ICONICOS.length) + ICONICOS.length) % ICONICOS.length)
+  const abrirLinha = (i) => {
+    setActive(i)
+    setCard(0)
+  }
+  const go = (i) => {
+    if (!totalCards) return
+    setCard(((i % totalCards) + totalCards) % totalCards)
+  }
 
   // A âncora define a linha aberta. É o que faz `/plataformas/projetos-iconicos#green`
   // funcionar, e é por onde chegam os links de espelhamento das outras rotas
@@ -57,11 +52,13 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
       const porLinha = ICONICOS.findIndex((l) => l.slug === hash)
       if (porLinha >= 0) {
         setActive(porLinha)
+        setCard(0)
         return
       }
       const porAtivo = ICONICOS.findIndex((l) => l.ativos?.some((a) => a.slug === hash))
       if (porAtivo >= 0) {
         setActive(porAtivo)
+        setCard(ICONICOS[porAtivo].ativos.findIndex((a) => a.slug === hash))
         scrollAlvo.current = hash
       }
     }
@@ -78,17 +75,7 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
     if (!scrollAlvo.current) return
     document.getElementById(scrollAlvo.current)?.scrollIntoView({ block: 'start' })
     scrollAlvo.current = null
-  }, [active])
-
-  useEffect(() => {
-    const el = palcoRef.current
-    if (!el) return
-    const io = new IntersectionObserver(([e]) => setEmCena(e.isIntersecting), {
-      rootMargin: '120px 0px',
-    })
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
+  }, [active, card])
 
   return (
     <>
@@ -116,7 +103,7 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
             <span className="eyebrow shrink-0 text-white/85 max-tab:hidden">Fora do catálogo</span>
             <div className="flex shrink-0 gap-2.5 max-tab:hidden">
               <button
-                aria-label="Projeto anterior"
+                aria-label="Ativo anterior"
                 className="radial-reveal grid size-[46px] cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.25)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)]"
                 onClick={() => go(active - 1)}
                 type="button"
@@ -124,7 +111,7 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
                 <ChevronLeft size={20} />
               </button>
               <button
-                aria-label="Próximo projeto"
+                aria-label="Próximo ativo"
                 className="radial-reveal grid size-[46px] cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.25)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)]"
                 onClick={() => go(active + 1)}
                 type="button"
@@ -137,11 +124,12 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
           <div className="mt-9 grid grid-cols-3 border-b border-white/40 max-mob:mt-7 max-mob:grid-cols-1">
             {ICONICOS.map((i, index) => (
               <button
-                className={`-mb-px flex cursor-pointer items-baseline border-0 border-b-[3px] bg-transparent pb-[22px] pt-[6px] text-left font-sans transition-[color,border-color] duration-200 max-mob:py-4 ${
+                className={`-mb-px flex scroll-mt-24 cursor-pointer items-baseline border-0 border-b-[3px] bg-transparent pb-[22px] pt-[6px] text-left font-sans transition-[color,border-color] duration-200 max-mob:py-4 ${
                   index === active ? 'border-b-white text-white' : 'border-b-transparent text-white/65'
                 }`}
+                id={i.slug}
                 key={i.slug}
-                onClick={() => setActive(index)}
+                onClick={() => abrirLinha(index)}
                 type="button"
               >
                 <span className="text-[clamp(20px,2vw,30px)] font-extrabold leading-none tracking-[-0.02em]">
@@ -154,13 +142,7 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
           {/* Os três painéis saem no HTML; a aba só troca qual fica visível. Render
               condicional deixaria o texto de dois dos projetos fora do documento —
               invisível para o Google e para os rastreadores de IA. */}
-          <div
-            className={`reveal grid items-center pb-4 pt-16 max-mob:pb-0 max-mob:pt-10 ${
-              TODOS_COM_FOTO
-                ? 'grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] gap-20 max-tab:grid-cols-1 max-tab:gap-10'
-                : 'grid-cols-1'
-            }`}
-          >
+          <div className="reveal grid grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] items-center gap-20 pb-4 pt-16 max-tab:grid-cols-1 max-tab:gap-10 max-mob:pb-0 max-mob:pt-10">
             {/* A coluna é remontada a cada troca (key={active}) só para a animação
                 de entrada rodar de novo — os três painéis continuam no HTML, que é
                 o que o Google e os rastreadores de IA leem. */}
@@ -188,73 +170,51 @@ export default function Iconicos({ linkTitulo = true, comAtivos = false }) {
               ))}
             </div>
 
-            {/* O palco fica de fora do `key={active}` da coluna de texto: o
-                deslize entre fotos precisa do componente vivo através da troca.
-                Quem troca a cada aba são só as camadas do `IconicosFx`, para as
-                entradas (cipó, folhas, moldura) rodarem de novo. */}
-            {TODOS_COM_FOTO && (
-              <div ref={palcoRef}>
-                <IconicosFx
-                  slug={emCena ? ICONICOS[active].slug : null}
-                  src={ICONICOS[active].image}
-                >
-                  <SlideStage
-                    className="relative z-[1] shadow-[0_34px_90px_rgba(22,17,13,.30)]"
-                    index={active}
-                    ratio="aspect-[4/3]"
-                    sizes="(max-width: 980px) 100vw, 52vw"
-                    slides={SLIDES}
-                  />
-                  <button
-                    aria-label="Projeto anterior"
-                    className="radial-reveal absolute inset-y-0 left-3 z-10 my-auto grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
-                    onClick={() => go(active - 1)}
-                    type="button"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    aria-label="Próximo projeto"
-                    className="radial-reveal absolute inset-y-0 right-3 z-10 my-auto grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
-                    onClick={() => go(active + 1)}
-                    type="button"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </IconicosFx>
+            {/* Todos os ativos das três linhas saem no HTML, pela mesma razão
+                dos painéis de texto: `hidden` só escolhe qual card aparece. O
+                `id={slug}` que o AtivoCard carrega é o que faz a âncora de
+                ativo (`#jardim-digital`) chegar no card certo. */}
+            <div>
+              <div className="motion-safe:animate-sobe-suave" key={`${active}-${card}`}>
+                {ICONICOS.map((linha, li) =>
+                  linha.ativos.map((ativo, ci) => (
+                    <div hidden={li !== active || ci !== card} key={ativo.slug}>
+                      <AtivoCard ativo={ativo} />
+                    </div>
+                  )),
+                )}
               </div>
-            )}
+
+              {totalCards > 1 && (
+                <div className="mt-6 flex items-center justify-between gap-4">
+                  <span className="eyebrow text-white/85">
+                    {String(card + 1).padStart(2, '0')} / {String(totalCards).padStart(2, '0')}
+                  </span>
+                  <div className="flex gap-2.5">
+                    <button
+                      aria-label="Ativo anterior"
+                      className="radial-reveal grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
+                      onClick={() => go(card - 1)}
+                      type="button"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button
+                      aria-label="Próximo ativo"
+                      className="radial-reveal grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
+                      onClick={() => go(card + 1)}
+                      type="button"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
         </div>
       </section>
-
-      {comAtivos && (
-        <section className="border-t border-line py-[90px] max-mob:py-[60px]">
-          <div className="wrap">
-            {/* Mesma lógica de painéis no HTML: os três grids de ativos saem
-                renderizados, só o `hidden` troca qual aparece. O `id` é o que
-                as âncoras de espelhamento (`#green`, `#regenerativo`,
-                `#elegancy`) precisam para abrir na linha certa. */}
-            {ICONICOS.map((linha, index) => (
-              <div className="scroll-mt-24" hidden={index !== active} id={linha.slug} key={linha.slug}>
-                <div className="flex items-end justify-between gap-8 max-tab:flex-col max-tab:items-start max-tab:gap-6">
-                  <p className="m-0 max-w-[58ch] text-lg text-ink-soft">{linha.frase}</p>
-                  <Link className="btn btn-ghost shrink-0" href="#nova-campanha">
-                    {linha.ctaLinha} →
-                  </Link>
-                </div>
-
-                <div className="mt-[42px] grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
-                  {linha.ativos.map((ativo) => (
-                    <AtivoCard ativo={ativo} key={ativo.slug} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
     </>
   )
 }

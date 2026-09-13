@@ -434,6 +434,22 @@
   }
 
   /* Elegancy */
+  /* Melhores práticas — o selo de leitura pipoca no canto do número quando o
+     card é dado como lido. */
+  --animate-pipoca-selo: pipoca-selo 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s both;
+
+  @keyframes pipoca-selo {
+    0% {
+      transform: scale(0);
+    }
+    70% {
+      transform: scale(1.25);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
   --animate-reflexo: reflexo 6s cubic-bezier(0.3, 0, 0.2, 1) 0.4s infinite;
   --animate-clarao: clarao 6s cubic-bezier(0.3, 0, 0.2, 1) 0.4s infinite;
   --animate-orbe: orbe 6s cubic-bezier(0.3, 0, 0.2, 1) infinite;
@@ -762,6 +778,31 @@
       transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
+  /* Melhores práticas — cada card nasce apagado e acende quando cruza a linha de
+     leitura (quem marca o `.in` é o PraticasGrid, card a card, porque a barra de
+     progresso precisa saber qual foi). O hover levanta pelo `translate`, que é
+     outra propriedade que o `transform` da entrada, então os dois convivem. */
+  .praticas > li {
+    opacity: 0;
+    transform: translateY(22px) scale(0.98);
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+      translate 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .praticas > li.in {
+    opacity: 1;
+    transform: none;
+  }
+  .praticas .selo {
+    transform: scale(0);
+  }
+  .praticas .selo.in {
+    animation: var(--animate-pipoca-selo);
+  }
+
   /* corpo de post do blog — Markdown renderizado */
   .post-body {
     @apply text-[17px] leading-[1.7] text-ink max-mob:text-base;
@@ -953,6 +994,16 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .praticas > li {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .praticas .selo,
+  .praticas .selo.in {
+    transform: none;
+    animation: none;
   }
   /* o botão continua trocando de estado no hover, só sem o crescimento */
   :is(.btn, .btn-fill, .btn-on-orange, .btn-ghost, .radial-reveal),
