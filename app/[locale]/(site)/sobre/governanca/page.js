@@ -60,14 +60,13 @@ export default async function GovernancaPage({ params }) {
         <section className="pb-[110px] max-mob:pb-[72px]" id="quem-responde">
           <div className="wrap">
             <SectionHeading title={t('quemTitulo')} className="reveal mb-[34px]" />
-            <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] items-start gap-[44px] max-tab:grid-cols-1 max-tab:gap-[34px]">
+            <div className="grid grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)] items-start gap-[44px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <figure className="reveal m-0">
                 <CoverMedia
                   src="/media/governanca/halisson-pontarola.jpg"
                   label="Halisson Pontarola"
-                  ratio="16/10"
+                  ratio="2/3"
                   sizes="(max-width: 980px) 100vw, 40vw"
-                  foco="topo"
                 />
                 {/* A legenda identifica quem está na foto. Enquanto o texto ao lado
                     for institucional, ela não pode virar assinatura: isso atribuiria

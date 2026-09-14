@@ -23,6 +23,9 @@ const RATIOS = {
   a4: 'aspect-[297/210]',
   // A foto do Banco Reciclável vem 4:3 do acervo do cliente, não 16:9.
   '4/3': 'aspect-[4/3]',
+  // O retrato do CEO em Governança vem 4001×6000 do cliente, 2:3 exato: com a
+  // proporção da própria foto ela sobe inteira, sem cortar a cabeça nem o busto.
+  '2/3': 'aspect-[2/3]',
 }
 
 // `foco` desloca o `object-position` do corte: existe para retrato alto
