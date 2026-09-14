@@ -52,6 +52,7 @@ export default function CoverMedia({
   videoDeferido = false,
   recorte = false,
   foco = 'centro',
+  classeImagem = '',
 }) {
   const t = useTranslations('CoverMedia')
   // `recorte` é a peça que já chega recortada, com fundo transparente (o logo
@@ -97,6 +98,10 @@ export default function CoverMedia({
   // Havendo imagem, o alt é obrigatório: cai no rótulo do card e, na falta dele,
   // na marca. Nunca em string vazia — isso marcaria a capa como decorativa e a
   // tiraria da leitura de quem usa leitor de tela e dos rastreadores.
+  //
+  // `classeImagem` vai na própria `<img>`, não na moldura: é por onde os
+  // Icônicos aplicam o Ken Burns e o brilho de cada linha, que escalam a foto
+  // por dentro do `overflow-hidden` da caixa.
   if (src) {
     const textoAlt = alt || label || t('altPadrao')
     return (
@@ -107,7 +112,7 @@ export default function CoverMedia({
           fill
           sizes={sizes}
           priority={priority}
-          className={recorte ? 'object-contain' : `object-cover ${FOCOS[foco]}`}
+          className={`${recorte ? 'object-contain' : `object-cover ${FOCOS[foco]}`} ${classeImagem}`}
         />
       </div>
     )

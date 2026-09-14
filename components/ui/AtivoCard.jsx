@@ -20,10 +20,14 @@ import CoverMedia from '@/components/ui/CoverMedia'
 // nasce dentro de `hidden` e a coluna é remontada a cada seta, então o observer
 // global (que só varre `.reveal` uma vez por rota) nunca adiciona o `.in`, e o
 // card ficaria em opacidade zero para sempre. Lá quem anima é a própria coluna.
+//
+// `classeCapa` vai para a `<img>` da capa: é por onde o carrossel de `Iconicos`
+// aplica o Ken Burns e o brilho da linha aberta (`CLASSE_IMAGEM` do
+// `IconicosFx`). Só a capa, nunca as fotos dos `pontos`.
 const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 560px'
 const PONTO_SIZES = '(max-width: 560px) 100vw, 280px'
 
-export default function AtivoCard({ ativo, prioridadeImagem = false, reveal = true }) {
+export default function AtivoCard({ ativo, prioridadeImagem = false, reveal = true, classeCapa = '' }) {
   const { slug, name, kicker, text, specs, pontos, image, imageAlt, verEm } = ativo
 
   return (
@@ -39,6 +43,7 @@ export default function AtivoCard({ ativo, prioridadeImagem = false, reveal = tr
         sizes={CARD_SIZES}
         src={image}
         className="rounded-none border-0"
+        classeImagem={classeCapa}
       />
 
       <div className="flex flex-1 flex-col border-t border-line p-7 max-mob:p-6">

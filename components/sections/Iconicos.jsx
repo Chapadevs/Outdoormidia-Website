@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import AtivoCard from '@/components/ui/AtivoCard'
 import AuroraField from '@/components/ui/AuroraField'
+import IconicosFx, { CLASSE_IMAGEM } from '@/components/ui/IconicosFx'
 import { useLocale, useTranslations } from 'next-intl'
 import { getIconicos } from '@/lib/iconicos'
 
@@ -14,9 +15,19 @@ import { getIconicos } from '@/lib/iconicos'
 // A coluna da direita é o carrossel dos ativos da linha aberta: um `AtivoCard`
 // por vez, e as setas passam de um ativo ao outro dentro da linha (dando a
 // volta nas pontas). Trocar de linha é pelas abas, que sempre reabrem a linha
-// no primeiro ativo. Substituiu a foto única com as animações do `IconicosFx`
-// e o grid claro de ativos que ficava abaixo da faixa: os dois mostravam a
-// mesma lista, e o visitante rolava a página inteira para chegar nela.
+// no primeiro ativo. Substituiu a foto única e o grid claro de ativos que
+// ficava abaixo da faixa: os dois mostravam a mesma lista, e o visitante
+// rolava a página inteira para chegar nela.
+//
+// As animações da linha (`IconicosFx`) vestem o card: cipó, folha, estrela e
+// halo em volta da moldura do card inteiro, e o que anima por dentro da foto
+// (ladrilho, varredura, moldura de luz) recortado na faixa 2/1 do topo, que é
+// a capa do `AtivoCard`.
+
+// A capa do `AtivoCard` é `ratio="2/1"` na largura toda do card, então a região
+// da foto é determinística sem medir nada: a caixa 2/1 colada no topo.
+const RECORTE_CAPA = 'inset-x-0 top-0 aspect-[2/1] rounded-t-[16px]'
+
 export default function Iconicos({ linkTitulo = true }) {
   const locale = useLocale()
   const t = useTranslations('Iconicos')
@@ -30,6 +41,12 @@ export default function Iconicos({ linkTitulo = true }) {
   // o card existe visível para o navegador rolar até ele. Ref, não estado: só
   // o `active` precisa re-renderizar, ler e limpar o alvo não.
   const scrollAlvo = useRef(null)
+
+  // As animações (IconicosFx) só montam com a faixa perto da tela: são dezenas
+  // de folhas, ladrilhos e estrelas em loop, e não há por que mantê-las vivas
+  // enquanto o visitante lê o resto da página.
+  const palcoRef = useRef(null)
+  const [emCena, setEmCena] = useState(false)
 
   const abrirLinha = (i) => {
     setActive(i)
@@ -77,6 +94,19 @@ export default function Iconicos({ linkTitulo = true }) {
     document.getElementById(scrollAlvo.current)?.scrollIntoView({ block: 'start' })
     scrollAlvo.current = null
   }, [active, card])
+
+  useEffect(() => {
+    const el = palcoRef.current
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => setEmCena(e.isIntersecting), {
+      rootMargin: '120px 0px',
+    })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  const linha = ICONICOS[active]
+  const ativoEmCena = linha.ativos?.[card]
 
   return (
     <>
@@ -174,16 +204,27 @@ export default function Iconicos({ linkTitulo = true }) {
                 dos painéis de texto: `hidden` só escolhe qual card aparece. O
                 `id={slug}` que o AtivoCard carrega é o que faz a âncora de
                 ativo (`#jardim-digital`) chegar no card certo. */}
-            <div>
-              <div className="motion-safe:animate-sobe-suave" key={`${active}-${card}`}>
-                {ICONICOS.map((linha, li) =>
-                  linha.ativos.map((ativo, ci) => (
-                    <div hidden={li !== active || ci !== card} key={ativo.slug}>
-                      <AtivoCard ativo={ativo} reveal={false} />
-                    </div>
-                  )),
-                )}
-              </div>
+            <div ref={palcoRef}>
+              {/* O `IconicosFx` fica de fora do `key` da coluna: só a camada troca
+                  de tipo com a linha (e roda de novo cipó, folha, moldura); a
+                  troca de card por seta acontece por baixo dela, sem regravar
+                  a entrada. O `z-[1]` põe o card entre o fundo (halo, raios) e
+                  a frente (cipó, estrela) das camadas. */}
+              <IconicosFx
+                recorte={RECORTE_CAPA}
+                slug={emCena ? linha.slug : null}
+                src={ativoEmCena?.image}
+              >
+                <div className="relative z-[1] motion-safe:animate-sobe-suave" key={`${active}-${card}`}>
+                  {ICONICOS.map((l, li) =>
+                    l.ativos.map((ativo, ci) => (
+                      <div hidden={li !== active || ci !== card} key={ativo.slug}>
+                        <AtivoCard ativo={ativo} classeCapa={CLASSE_IMAGEM[l.slug]} reveal={false} />
+                      </div>
+                    )),
+                  )}
+                </div>
+              </IconicosFx>
 
               {totalCards > 1 && (
                 <div className="mt-6 flex items-center justify-between gap-4">

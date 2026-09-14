@@ -6,27 +6,32 @@ import { useTranslations } from 'next-intl'
 // cresce cipó e folha em volta da moldura, Regenerativo revela o depois por
 // trás de ladrilhos em preto e branco, Elegancy varre luz pela foto.
 //
-// O `SlideStage` entra como `children` e continua sendo quem mostra a foto;
-// em volta dele vão três camadas: `fundo` (atrás da moldura: halo, raios,
-// cone), `frente` (por cima: cipó, folha, estrela, e um recorte com a mesma
-// moldura arredondada para o que precisa ficar dentro da foto) e a legenda
-// abaixo, quando a linha tem uma. Foto e camadas moram num `isolate` próprio,
-// para a legenda não entrar na conta de `inset-0` das camadas.
+// Quem mostra a foto entra como `children`; em volta vão três camadas:
+// `fundo` (atrás da moldura: halo, raios, cone), `frente` (por cima: cipó,
+// folha, estrela, e um recorte com a mesma moldura arredondada para o que
+// precisa ficar dentro da foto) e a legenda abaixo, quando a linha tem uma.
+// Foto e camadas moram num `isolate` próprio, para a legenda não entrar na
+// conta de `inset-0` das camadas.
+//
+// `recorte` é a região do filho que é foto. Por padrão é o filho inteiro
+// (a foto solta de antes); na faixa dos Icônicos o filho é o `AtivoCard`, cuja
+// foto é a faixa 2/1 do topo, então o ladrilho, a varredura e a moldura ficam
+// nela, enquanto cipó, folha, estrela e halo seguem em volta do card inteiro.
 //
 // Decorativo: `aria-hidden` e `pointer-events-none`, e some inteiro em
 // `prefers-reduced-motion`, porque sem a animação o cipó por desenhar e a
 // folha por brotar ficariam invisíveis ou parados no meio do caminho.
 //
-// Quem monta o componente é `Iconicos`, com `key={active}`: cada troca de aba
-// remonta a camada e roda de novo as entradas (cipó, folha, moldura).
+// Quem monta o componente é `Iconicos`: a camada troca de tipo com o slug da
+// linha, e cada troca de aba roda de novo as entradas (cipó, folha, moldura).
 //
 // Os verdes e os brancos quentes são do desenho aprovado, não da paleta: são
 // a cor da vegetação e da luz que cada linha vende, como o verde da placa no
 // mapa de Rodovias.
 
-// A foto de cada linha recebe um movimento próprio, aplicado pelo `SlideStage`
-// na própria imagem, para o Ken Burns e o brilho do Elegancy andarem junto
-// com o deslize entre slides.
+// A foto de cada linha recebe um movimento próprio, aplicado na própria
+// imagem (via `classeCapa` do `AtivoCard`): o Ken Burns e o brilho do Elegancy
+// precisam escalar a foto por dentro da moldura, o que camada por cima não faz.
 export const CLASSE_IMAGEM = {
   green: 'motion-safe:animate-ken-burns',
   elegancy: 'motion-safe:animate-luz-elegancy',
@@ -164,11 +169,12 @@ const ESTRELA = 'M50 0 C54 36 64 46 100 50 C64 54 54 64 50 100 C46 64 36 54 0 50
 
 const FUNDO = 'pointer-events-none absolute inset-0 z-0 motion-safe:animate-surge motion-reduce:hidden'
 const FRENTE = 'pointer-events-none absolute inset-0 z-[2] motion-safe:animate-surge motion-reduce:hidden'
-// O recorte repete a moldura do `SlideStage`: o que anima por dentro da foto
-// precisa ser cortado pelos mesmos cantos arredondados.
-const RECORTE = 'absolute inset-0 overflow-hidden rounded-[16px]'
+// O recorte repete a moldura da foto: o que anima por dentro dela precisa ser
+// cortado pelos mesmos cantos arredondados. A região vem do prop `recorte`.
+const RECORTE_PADRAO = 'inset-0 rounded-[16px]'
+const recorteDe = (recorte) => `absolute overflow-hidden ${recorte}`
 
-function Green() {
+function Green({ recorte }) {
   return (
     <>
       <div aria-hidden="true" className={FUNDO}>
@@ -179,7 +185,7 @@ function Green() {
       </div>
 
       <div aria-hidden="true" className={FRENTE}>
-        <div className={RECORTE}>
+        <div className={recorteDe(recorte)}>
           <div
             className="absolute inset-0 motion-safe:animate-tinge-verde"
             style={{ background: 'linear-gradient(120deg, rgba(30,95,32,.88), rgba(120,190,70,.32) 55%, rgba(30,95,32,0) 80%)' }}
@@ -286,10 +292,10 @@ function Green() {
   )
 }
 
-function Regenerativo({ src }) {
+function Regenerativo({ src, recorte }) {
   return (
     <div aria-hidden="true" className={FRENTE}>
-      <div className={`${RECORTE} [perspective:900px]`}>
+      <div className={`${recorteDe(recorte)} [perspective:900px]`}>
         {LADRILHOS.map((l) => (
           <div
             className="absolute origin-top [backface-visibility:hidden] motion-safe:animate-vira-ladrilho"
@@ -370,7 +376,7 @@ function Regenerativo({ src }) {
   )
 }
 
-function Elegancy() {
+function Elegancy({ recorte }) {
   return (
     <>
       <div aria-hidden="true" className={FUNDO}>
@@ -393,7 +399,7 @@ function Elegancy() {
       </div>
 
       <div aria-hidden="true" className={FRENTE}>
-        <div className={`${RECORTE} shadow-[0_0_0_1px_rgba(255,255,255,.3)]`}>
+        <div className={`${recorteDe(recorte)} shadow-[0_0_0_1px_rgba(255,255,255,.3)]`}>
           <div
             className="absolute -inset-y-1/4 w-[22%] mix-blend-screen motion-safe:animate-reflexo"
             style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.95), rgba(255,255,255,0))' }}
@@ -473,22 +479,23 @@ function Legenda({ slug, texto }) {
   return null
 }
 
-// `slug` é a linha aberta; `src` é a foto dela, que o Regenerativo repete em
-// preto e branco nos ladrilhos. Com `slug` nulo sobe só a foto, sem camada.
+// `slug` é a linha aberta; `src` é a foto em cena, que o Regenerativo repete
+// em preto e branco nos ladrilhos. Com `slug` nulo sobe só o filho, sem camada.
 //
-// A foto (`children`) fica sempre no mesmo lugar da árvore, e é a camada que
-// troca de tipo com o slug: é o que remonta cipó, folha e moldura a cada aba
-// sem remontar o `SlideStage`, que precisa seguir vivo para deslizar.
-export default function IconicosFx({ slug, src, children }) {
+// O filho fica sempre no mesmo lugar da árvore, e é a camada que troca de
+// tipo com o slug: é o que remonta cipó, folha e moldura a cada aba sem
+// remontar o carrossel de cards, que troca de ativo por baixo das camadas.
+// O filho precisa subir com `relative z-[1]`, entre o `fundo` e a `frente`.
+export default function IconicosFx({ slug, src, recorte = RECORTE_PADRAO, children }) {
   const t = useTranslations('Iconicos')
 
   const camadas =
     slug === 'green' ? (
-      <Green />
+      <Green recorte={recorte} />
     ) : slug === 'regenerativo' ? (
-      <Regenerativo src={src} />
+      <Regenerativo recorte={recorte} src={src} />
     ) : slug === 'elegancy' ? (
-      <Elegancy />
+      <Elegancy recorte={recorte} />
     ) : null
 
   const texto =
