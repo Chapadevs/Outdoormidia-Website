@@ -331,6 +331,30 @@ export default async function PlatformPage({ params }) {
           </section>
         )}
 
+        {/* Bloco de destaque de um formato sem ficha de catálogo (hoje só a
+            Empena Digital, em Outdoor Digital): foto de um lado, argumento do
+            outro, no mesmo desenho das seções de mídia + texto da Ambiental. */}
+        {platform.destaque && (
+          <section className="border-t border-line py-[90px] max-mob:py-[60px]">
+            <div className="wrap">
+              <SectionHeading title={platform.destaque.title} className="reveal mb-[34px]" />
+              <div className="grid grid-cols-[1.4fr_1fr] items-center gap-[48px] max-tab:grid-cols-1 max-tab:gap-8">
+                <CoverMedia
+                  alt={platform.destaque.imageAlt}
+                  className="reveal"
+                  label={platform.destaque.title}
+                  ratio="16/9"
+                  sizes="(max-width: 980px) 100vw, 58vw"
+                  src={platform.destaque.image}
+                />
+                <p className="reveal m-0 max-w-[52ch] text-[17px] leading-relaxed text-ink-soft">
+                  {platform.destaque.text}
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
         {platform.mapaRede && (
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">

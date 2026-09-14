@@ -673,7 +673,9 @@
     "formatosTexto": "每种形式都为兼顾美感、冲击力和效果而设计，适应不同的城市环境和品牌目标。",
     "ajudaLembrarTitulo": "便于记忆：",
     "ajudaLembrarTexto": "Top（竖版，相当于数字端的 Reel）· Poster（横版，相当于数字端的 YouTube 视频）· 带 super 的尺寸大 2 倍。",
-    "techBike": "移动媒体：三辆连续自行车 / 静态"
+    "techBike": "移动媒体：三辆连续自行车 / 静态",
+    "programaticaTitulo": "程序化投放",
+    "programaticaTexto": "我们的 CMS 已接入巴西及全球主要的 SSP、DSP 和广告网络，广告主可直接使用线上预算进行投放。"
   },
   "LinhaDoTempo": {
     "lead": "从街头第一块广告画面至今，什么变了，什么没变。",
@@ -812,6 +814,7 @@
   "Widgets": {
     "avisoCookies": "Cookie 提示",
     "whatsappComercial": "Outdoormídia 商务 WhatsApp",
+    "atendimentoMercadoOoh": "MercadoOOH 客服，程序化媒体",
     "enviarCurriculo": "通过电子邮件投递简历",
     "adiantarWhatsapp": "通过 WhatsApp 先聊",
     "falarWhatsapp": "通过 WhatsApp 联系",

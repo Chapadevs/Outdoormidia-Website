@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { ChevronRight, Target } from 'lucide-react'
 import QualifierForm from '@/components/forms/QualifierForm'
-import { WA_ATENDIMENTO_AGORA, waLink } from '@/lib/whatsapp'
+import { MERCADOOH_URL } from '@/lib/constants'
 
 // As portas do bloco "Nova campanha", na hierarquia fechada no checklist
 // da home (claude/checklist-home.md, item 10).
@@ -92,15 +92,17 @@ export default async function NovaCampanha({ contexto = '' }) {
 
         <a
           className={`reveal ${FAIXA} mt-5 border-white/35 bg-white/10 hover:border-white hover:bg-white/[.18]`}
-          href={waLink(WA_ATENDIMENTO_AGORA)}
+          href={MERCADOOH_URL}
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <span className={`${ICONE_QUADRADO_MARCA} size-9`}>
             <Image
               alt=""
-              className="size-6"
-              height={24}
-              src="/media/icones/icone-whatsapp-verde.png"
-              width={24}
+              className="size-7"
+              height={28}
+              src="/media/icones/Mercadooh-icone.png"
+              width={28}
             />
           </span>
           <span className="text-[17px] font-extrabold leading-tight">

@@ -673,7 +673,9 @@
     "formatosTexto": "Each format was developed to combine aesthetics, impact and performance, adapting to different urban contexts and brand goals.",
     "ajudaLembrarTitulo": "Easy to remember:",
     "ajudaLembrarTexto": "Top (vertical, our reel in digital) · Poster (horizon, horizontal, our YouTube video in digital) · anything called super is 2x bigger.",
-    "techBike": "Mobile media: trio of sequential bikes / static"
+    "techBike": "Mobile media: trio of sequential bikes / static",
+    "programaticaTitulo": "Programmatic",
+    "programaticaTexto": "Our CMS is connected to the leading SSPs, DSPs and ad networks in Brazil and worldwide, letting advertisers run campaigns from their online budget."
   },
   "LinhaDoTempo": {
     "lead": "What has changed since the first face on the street, and what has not.",
@@ -812,6 +814,7 @@
   "Widgets": {
     "avisoCookies": "Cookie notice",
     "whatsappComercial": "Outdoormídia sales WhatsApp",
+    "atendimentoMercadoOoh": "MercadoOOH support, programmatic media",
     "enviarCurriculo": "Send CV by e-mail",
     "adiantarWhatsapp": "Get ahead on WhatsApp",
     "falarWhatsapp": "Talk on WhatsApp",
