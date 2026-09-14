@@ -79,7 +79,7 @@ export default async function PlatformPage({ params }) {
   // Os ativos nomeados vêm dos Icônicos pelo slug: a plataforma guarda a
   // referência, nunca uma segunda cópia do texto (regra C8 do handoff).
   const ativos = (platform.ativos ?? []).map((slugAtivo) => getAtivoBySlugLocale(slugAtivo, locale)).filter(Boolean)
-  const produtos = getProdutosPorPlataformaLocale(platform.slug, locale)
+  const produtos = getProdutosPorPlataformaLocale(platform.slug, locale, platform.tecnologia)
 
   // Produtos e Formatos dividem uma seção só. `semFormatos` desliga o lado do
   // diagrama sem tocar no dos produtos: é o caso de Rodovias, onde o painel é

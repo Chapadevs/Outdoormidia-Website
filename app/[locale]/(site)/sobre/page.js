@@ -16,7 +16,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 // hero de /trabalhe-conosco. O arquivo é 2000x1125, 16/9 exato, então a capa
 // sobe nessa proporção e nada é cortado — em 16/7 o corte levaria a fileira
 // de carros da frente e o telhado do galpão de trás.
-const CAPA = { src: '/media/sobre-nos/foto-da-sede.webp' }
+const CAPA = { src: '/media/trabalhe-conosco/foto-da-sede.webp' }
 
 // `**negrito**` é o único realce que os parágrafos de "Sobre a OM" usam, mesmo
 // padrão de components/ui/Accordion.jsx. O realce vive dentro da mensagem, e não

@@ -62,6 +62,10 @@ const LEGADO = [
   // Operação e monitoramento saiu do bloco de diferenciais em 02/09/2026:
   // o que ele dizia já estava dito nos que ficaram.
   { de: '/solucoes/diferenciais/operacao-propria', para: '/solucoes/diferenciais' },
+
+  // Mídia Indoor passou a atender pelo próprio nome em 14/09/2026: o slug
+  // `shoppings` era o da primeira versão do catálogo.
+  { de: '/plataformas/shoppings', para: '/plataformas/midia-indoor' },
 ]
 
 /** @type {import('next').NextConfig} */

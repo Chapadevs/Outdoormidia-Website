@@ -35,14 +35,13 @@ export default function FormatSpecCard({ formats }) {
           {/* Com `image` a foto do produto toma o lugar do diagrama: em Digital
               Signage o painel é sob medida e as cotas não têm medida real para
               mostrar, então o desenho não explicava nada que a foto não explique
-              melhor. As peças chegam recortadas, com o arco laranja e fundo
-              transparente, e por isso sobem sem moldura (`recorte`). */}
+              melhor. Desde 14/09/2026 são fotos reais, retângulo cheio já
+              cortado em 3/4, então sobem com a moldura normal do CoverMedia. */}
           {f.image ? (
             <CoverMedia
               alt={f.imageAlt}
               label={f.title}
               ratio="3/4"
-              recorte
               sizes="(max-width: 560px) 100vw, (max-width: 980px) 50vw, 25vw"
               src={f.image}
             />
