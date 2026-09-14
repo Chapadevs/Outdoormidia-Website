@@ -2,6 +2,7 @@ import { Link } from '@/i18n/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { getPlatformsNav } from '@/lib/platforms'
+import { getDiferenciaisNav } from '@/lib/diferenciais'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { WA_404, waLink } from '@/lib/whatsapp'
@@ -45,7 +46,7 @@ const ROTAS = [
 export default function NotFound() {
   return (
     <>
-      <Header plataformas={getPlatformsNav('pt')} />
+      <Header plataformas={getPlatformsNav('pt')} diferenciais={getDiferenciaisNav('pt')} />
       <main>
         <Breadcrumb items={[{ label: 'Página não encontrada' }]} />
 

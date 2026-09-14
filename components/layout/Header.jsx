@@ -16,7 +16,7 @@ const EASE = 'ease-[cubic-bezier(.2,.7,.2,1)]'
 const COMPACT_QUERY = '(max-width: 980px)'
 
 // Chevron dos acordeões do menu: o dos hubs (só no modo compacto) e o de
-// Plataformas, que abre o nível 3 em qualquer largura.
+// Plataformas e Diferenciais, que abrem o nível 3 em qualquer largura.
 function Chevron({ aberto, className = '' }) {
   return (
     <svg
@@ -39,14 +39,15 @@ function Chevron({ aberto, className = '' }) {
 // O painel fica montado o tempo todo para poder animar altura e opacidade; o
 // `inert` tira os links do fluxo de foco enquanto está fechado.
 //
-// `plataformas` é o nível 3 da coluna Soluções: as 8 do catálogo, montadas no
-// servidor por `getPlatformsNav`. O item Plataformas ganha uma seta que abre a
-// lista; o link continua levando ao índice.
-export default function Header({ plataformas = [] }) {
+// `plataformas` e `diferenciais` são o nível 3 da coluna Soluções: as 8 do
+// catálogo (`getPlatformsNav`) e os 6 diferenciais publicados
+// (`getDiferenciaisNav`), montados no servidor. Cada um dos dois itens ganha
+// uma seta que abre a própria lista; o link continua levando ao índice.
+export default function Header({ plataformas = [], diferenciais = [] }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [compact, setCompact] = useState(false)
   const [hubsAbertos, setHubsAbertos] = useState({})
-  const [plataformasAbertas, setPlataformasAbertas] = useState(null)
+  const [nivel3Abertos, setNivel3Abertos] = useState({})
   const pathname = usePathname()
   const locale = useLocale()
   const t = useTranslations('Header')
@@ -88,11 +89,20 @@ export default function Header({ plataformas = [] }) {
     return pathname === href || pathname.startsWith(`${href}/`)
   }
 
-  // Nasce aberto em cima do índice ou de uma página de plataforma; Projetos
-  // Icônicos mora em /plataformas/ mas é item próprio, então não conta.
-  const plataformasAtivas =
-    pathname === '/plataformas' || plataformas.some((p) => isActive(p.href))
-  const nivel3Aberto = plataformasAbertas ?? plataformasAtivas
+  // Cada lista nasce aberta em cima do próprio índice ou de uma página sua.
+  // Plataformas não conta Projetos Icônicos, que mora em /plataformas/ mas é
+  // item próprio; Diferenciais conta só as rotas dentro de /solucoes/diferenciais,
+  // porque dois dos seis são âncora para outra seção do site.
+  const NIVEL3 = {
+    plataformas: {
+      itens: plataformas,
+      ativo: pathname === '/plataformas' || plataformas.some((p) => isActive(p.href)),
+    },
+    diferenciais: {
+      itens: diferenciais,
+      ativo: isActive('/solucoes/diferenciais'),
+    },
+  }
 
   // Cada coluna entra um pouco depois da anterior; ao fechar, todas saem juntas.
   function atraso(i) {
@@ -220,10 +230,9 @@ export default function Header({ plataformas = [] }) {
                           <div className="overflow-hidden">
                             <div className="mt-3.5 flex flex-col gap-2.5 border-l border-white/25 pl-3.5 max-tab:mb-5 max-tab:mt-1 max-tab:gap-0">
                               {item.children.map((child) => {
-                                const subitens =
-                                  child.key === 'plataformas' && plataformas.length > 0
-                                    ? plataformas
-                                    : null
+                                const nivel3 = NIVEL3[child.key]
+                                const subitens = nivel3?.itens.length > 0 ? nivel3.itens : null
+                                const nivel3Aberto = nivel3Abertos[child.key] ?? nivel3?.ativo
                                 const subId = `${painelId}-${child.key}`
                                 const link = (
                                   <Link
@@ -253,7 +262,12 @@ export default function Header({ plataformas = [] }) {
                                             ? t('recolher', { secao: tNav(child.key) })
                                             : t('expandir', { secao: tNav(child.key) })
                                         }
-                                        onClick={() => setPlataformasAbertas(!nivel3Aberto)}
+                                        onClick={() =>
+                                          setNivel3Abertos((atual) => ({
+                                            ...atual,
+                                            [child.key]: !nivel3Aberto,
+                                          }))
+                                        }
                                         className="flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-full text-white/70 transition-colors duration-150 hover:bg-white/15 hover:text-white max-tab:h-11 max-tab:w-11"
                                       >
                                         <Chevron aberto={nivel3Aberto} className="h-4 w-4" />

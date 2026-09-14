@@ -2,6 +2,7 @@ import { setRequestLocale } from 'next-intl/server'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { getPlatformsNav } from '@/lib/platforms'
+import { getDiferenciaisNav } from '@/lib/diferenciais'
 
 // O Header e o Footer eram importados uma vez em cada uma das 28 páginas deste
 // grupo. Aqui eles existem uma vez só, e ganham de brinde a persistência de
@@ -18,7 +19,7 @@ export default async function SiteLayout({ children, params }) {
 
   return (
     <>
-      <Header plataformas={getPlatformsNav(locale)} />
+      <Header plataformas={getPlatformsNav(locale)} diferenciais={getDiferenciaisNav(locale)} />
       {children}
       <Footer />
     </>
