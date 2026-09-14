@@ -542,7 +542,6 @@ export default async function DiferencialPage({ params }) {
               <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
                 {[comparativo.amador, comparativo.especialista].map((lado) => (
                   <article className={`${CARD} reveal flex flex-col gap-4`} key={lado.label}>
-                    <div className="eyebrow">{lado.label}</div>
                     <CoverMedia
                       src={lado.image}
                       alt={lado.imageAlt}
