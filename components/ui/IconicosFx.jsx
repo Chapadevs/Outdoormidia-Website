@@ -54,11 +54,13 @@ const TRILHA_CIPO = (() => {
   for (let k = 1; k <= 6; k++) p.push([104, -6 + k * 17])
   for (let k = 0; k <= 9; k++) p.push([100 - k * 10.6, 100])
   for (let k = 1; k <= 6; k++) p.push([-6, 100 - k * 17])
-  p.push([12, 74], [18, 56], [30, 44], [84, 30], [76, 48], [64, 62], [40, 84], [52, 22])
   return p
 })()
 
-const DENSIDADE_FOLHAS = 34
+// Reduzido em 14/09/2026 a pedido do cliente: eram 34 folhas de 22 a 56 px,
+// seis caindo e cinco cipós (dois de moldura, três gavinhas por dentro do
+// card). Ficaram as folhas na moldura, menores, e só os dois cipós de borda.
+const DENSIDADE_FOLHAS = 14
 
 const QUANTIDADE_FOLHAS = Math.min(
   DENSIDADE_FOLHAS,
@@ -80,7 +82,7 @@ const FOLHAS = Array.from(
       escuro,
       left: p[0],
       top: p[1],
-      tamanho: 22 + ((n * 37) % 34),
+      tamanho: 16 + ((n * 37) % 18),
       giro: ((n * 71) % 360) - 180,
       atraso: (0.25 + n * 0.055).toFixed(2),
       balanco: (3.8 + (n % 7) * 0.35).toFixed(2),
@@ -89,9 +91,9 @@ const FOLHAS = Array.from(
   },
 )
 
-const FOLHAS_CAINDO = ['#a3d861', '#8ecb4a', '#c9ee9c', '#7dbf3f', '#b7e276', '#95d152'].map((cor, n) => ({
+const FOLHAS_CAINDO = ['#a3d861', '#c9ee9c', '#7dbf3f'].map((cor, n) => ({
   cor,
-  left: 6 + n * 16,
+  left: 14 + n * 32,
   tamanho: 14 + (n % 3) * 7,
   duracao: (7 + n * 0.9).toFixed(1),
   atraso: (n * 1.6).toFixed(1),
@@ -104,11 +106,8 @@ const ESPOROS = [
 ]
 
 const CIPOS = [
-  { d: 'M6 296 C6 200 10 120 8 20 C60 10 140 6 200 5 C270 4 340 8 394 6', cor: '#2f7d32', largura: 5, duracao: 2.6, atraso: 0.1 },
-  { d: 'M394 6 C392 90 396 200 394 294 C320 298 220 296 140 297 C90 298 40 297 8 296', cor: '#4a9632', largura: 4, duracao: 2.6, atraso: 0.5 },
-  { d: 'M8 240 C50 232 70 200 64 170 C58 142 78 126 104 128', cor: '#6fb23c', largura: 3, duracao: 2, atraso: 1.2 },
-  { d: 'M394 80 C352 88 336 116 344 146 C352 176 330 192 302 188', cor: '#6fb23c', largura: 3, duracao: 2, atraso: 1.5 },
-  { d: 'M150 298 C152 262 176 246 206 250 C236 254 254 240 256 214', cor: '#6fb23c', largura: 3, duracao: 2, atraso: 1.8 },
+  { d: 'M6 296 C6 200 10 120 8 20 C60 10 140 6 200 5 C270 4 340 8 394 6', cor: '#2f7d32', largura: 3.5, duracao: 2.6, atraso: 0.1 },
+  { d: 'M394 6 C392 90 396 200 394 294 C320 298 220 296 140 297 C90 298 40 297 8 296', cor: '#4a9632', largura: 3, duracao: 2.6, atraso: 0.5 },
 ]
 
 // A foto em preto e branco, em 6 × 4 ladrilhos que viram e somem para
@@ -132,17 +131,13 @@ const ARVORES = [
   { tronco: 'M330 300 C330 268 334 246 340 230', largura: 5, origem: '340px 224px', atraso: 0.7, copas: [[340, 224, 26, '#3c8a30'], [322, 234, 17, '#4a9632'], [358, 234, 19, '#2f7d32']] },
 ]
 
-const ONDAS = [
-  { cor: 'rgba(255,255,255,.55)', largura: 2, atraso: 0.8 },
-  { cor: 'rgba(163,216,97,.7)', largura: 2, atraso: 2 },
-  { cor: 'rgba(255,255,255,.4)', largura: 1, atraso: 3.1 },
-]
+// Reduzido em 14/09/2026 junto com o Green: eram três ondas e quatro
+// partículas em cima dos ladrilhos, da grade, da barra e das três árvores.
+const ONDAS = [{ cor: 'rgba(255,255,255,.4)', largura: 1, atraso: 1.2 }]
 
 const PARTICULAS = [
-  { left: 16, tamanho: 8, cor: '#b8e08a', atraso: 1 },
-  { left: 36, tamanho: 6, cor: '#ffffff', atraso: 2.1 },
-  { left: 60, tamanho: 9, cor: '#9ed46f', atraso: 3 },
-  { left: 84, tamanho: 6, cor: '#e8f7d6', atraso: 3.9 },
+  { left: 24, tamanho: 6, cor: '#b8e08a', atraso: 1.4 },
+  { left: 68, tamanho: 6, cor: '#e8f7d6', atraso: 3.2 },
 ]
 
 const ORBES = [
@@ -151,11 +146,11 @@ const ORBES = [
   { tamanho: 20, cor: 'rgba(255,226,180,.9)', atraso: 0.82 },
 ]
 
-const ESTRELAS = [[-4, 18], [22, -7], [58, -5], [96, 34], [102, 70], [72, 103], [34, 104], [-5, 66], [12, 88], [88, 12]].map(
+const ESTRELAS = [[-4, 18], [58, -5], [102, 70], [34, 104], [-5, 66], [88, 12]].map(
   ([left, top], n) => ({
     left,
     top,
-    tamanho: 12 + ((n * 5) % 14),
+    tamanho: 10 + ((n * 5) % 10),
     duracao: (3 + (n % 5) * 0.6).toFixed(1),
     atraso: (n * 0.43).toFixed(2),
   }),
@@ -180,7 +175,7 @@ function Green({ recorte }) {
       <div aria-hidden="true" className={FUNDO}>
         <div
           className="absolute -inset-10 rounded-[34px] motion-safe:animate-halo-verde"
-          style={{ background: 'radial-gradient(58% 58% at 50% 60%, rgba(74,150,50,.62), rgba(74,150,50,0) 72%)' }}
+          style={{ background: 'radial-gradient(58% 58% at 50% 60%, rgba(74,150,50,.38), rgba(74,150,50,0) 72%)' }}
         />
       </div>
 
@@ -188,11 +183,11 @@ function Green({ recorte }) {
         <div className={recorteDe(recorte)}>
           <div
             className="absolute inset-0 motion-safe:animate-tinge-verde"
-            style={{ background: 'linear-gradient(120deg, rgba(30,95,32,.88), rgba(120,190,70,.32) 55%, rgba(30,95,32,0) 80%)' }}
+            style={{ background: 'linear-gradient(120deg, rgba(30,95,32,.55), rgba(120,190,70,.2) 55%, rgba(30,95,32,0) 80%)' }}
           />
           <div
             className="absolute inset-y-0 left-0 w-[38%] mix-blend-soft-light motion-safe:animate-varre-verde"
-            style={{ background: 'linear-gradient(90deg, rgba(160,220,110,0), rgba(190,240,140,.55), rgba(160,220,110,0))' }}
+            style={{ background: 'linear-gradient(90deg, rgba(160,220,110,0), rgba(190,240,140,.32), rgba(160,220,110,0))' }}
           />
         </div>
 
@@ -318,7 +313,7 @@ function Regenerativo({ src, recorte }) {
           className="absolute inset-0 motion-safe:animate-brilha-grade"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(180,230,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(180,230,255,.5) 1px, transparent 1px)',
+              'linear-gradient(rgba(180,230,255,.28) 1px, transparent 1px), linear-gradient(90deg, rgba(180,230,255,.28) 1px, transparent 1px)',
             backgroundSize: `${100 / COLUNAS}% ${100 / LINHAS}%`,
           }}
         />
