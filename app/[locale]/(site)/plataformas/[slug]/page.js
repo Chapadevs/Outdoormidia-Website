@@ -85,6 +85,12 @@ export default async function PlatformPage({ params }) {
   // diagrama sem tocar no dos produtos: é o caso de Rodovias, onde o painel é
   // sob demanda e proporção fixa mentiria sobre o que a plataforma entrega.
   const mostraFormatos = produtos.length > 0 || !platform.semFormatos
+  // Formato com foto sobe mesmo onde há produto: em Digital Signage o produto
+  // (Painel Exclusivo) é o pacote, e as três fotos de Fachada, Posto e Passagem
+  // são o que mostra a aplicação. Sem foto, o produto continua substituindo o
+  // diagrama, como antes.
+  const formatosIlustrados =
+    produtos.length > 0 && (platform.formats ?? []).some((f) => f.image)
 
   return (
     <>
@@ -308,6 +314,12 @@ export default async function PlatformPage({ params }) {
                       <ProdutoCard key={produto.slug} produto={produto} />
                     ))}
                   </div>
+                  {formatosIlustrados && (
+                    <div className="mt-[70px] max-mob:mt-12">
+                      <SectionHeading title={t('formatos')} className="reveal mb-[34px]" />
+                      <FormatSpecCard formats={platform.formats} />
+                    </div>
+                  )}
                 </>
               ) : (
                 <>

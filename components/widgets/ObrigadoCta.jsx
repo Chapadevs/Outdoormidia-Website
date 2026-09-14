@@ -4,6 +4,7 @@ import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { CHAVE_BRIEFING, MAILTO_RH } from '@/lib/constants'
 import { WA_OBRIGADO, waBriefing, waLink } from '@/lib/whatsapp'
+import { EVENTO_LEAD, registrarEvento } from '@/lib/analytics'
 
 // CTA da tela de confirmação. O ProposalForm guarda o briefing no
 // sessionStorage (ver CHAVE_BRIEFING em lib/constants.js) e este widget o lê
@@ -41,6 +42,12 @@ export default function ObrigadoCta({ origem }) {
       } catch {}
     }
   }, [])
+
+  // Chegar aqui é a conversão: os dois formulários redirecionam para esta
+  // tela depois de gravar o lead, e é o que a propriedade do GA4 conta.
+  useEffect(() => {
+    registrarEvento(EVENTO_LEAD, { origem: origem || 'padrao' })
+  }, [origem])
 
   function whatsapp() {
     if (origem !== 'proposta' || !guardado) return waLink(WA_OBRIGADO)

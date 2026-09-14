@@ -815,9 +815,10 @@
     "enviarCurriculo": "Enviar currículum por e-mail",
     "adiantarWhatsapp": "Adelantar por WhatsApp",
     "falarWhatsapp": "Hablar por WhatsApp",
-    "cookiesTexto": "Este sitio usa solo las cookies necesarias para funcionar, sin rastreo y sin publicidad. Al seguir navegando, aceptas su uso. Detalles en la",
+    "cookiesTexto": "Este sitio usa cookies necesarias para funcionar y, solo si aceptas, cookies de Google Analytics para medir el uso de las páginas, sin publicidad. Detalles en la",
     "cookiesLink": "Política de privacidad",
-    "cookiesEntendi": "Entendido",
+    "cookiesAceitar": "Aceptar",
+    "cookiesRecusar": "Solo necesarias",
     "voltarInicio": "Volver al inicio",
     "ativarSom": "Activar el sonido del video",
     "desativarSom": "Desactivar el sonido del video"
@@ -1100,7 +1101,7 @@
     "eyebrow": "Cobertura",
     "eyebrowForte": "+530 millones de impactos por mes",
     "h1": "Regiones.",
-    "lead": "Del Batel al litoral, de las carreteras a las playas de Santa Catarina. Mira abajo en qué regiones opera Outdoormídia y qué plataformas existen en cada una."
+    "lead": "De los centros urbanos al litoral, de las carreteras a las playas de Santa Catarina. Mira abajo en qué regiones opera Outdoormídia y qué plataformas existen en cada una."
   },
   "TrabalheConoscoPage": {
     "breadcrumb": "Trabaje con nosotros",

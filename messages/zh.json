@@ -815,9 +815,10 @@
     "enviarCurriculo": "通过电子邮件投递简历",
     "adiantarWhatsapp": "通过 WhatsApp 先聊",
     "falarWhatsapp": "通过 WhatsApp 联系",
-    "cookiesTexto": "本网站仅使用运行所必需的 Cookie，不进行跟踪，也没有广告。继续浏览即表示您同意使用这些 Cookie。详情请见",
+    "cookiesTexto": "本网站使用运行所必需的 Cookie；仅在您同意后，才会使用 Google Analytics 的 Cookie 来统计页面使用情况，没有广告。详情请见",
     "cookiesLink": "隐私政策",
-    "cookiesEntendi": "知道了",
+    "cookiesAceitar": "接受",
+    "cookiesRecusar": "仅必要",
     "voltarInicio": "返回首页",
     "ativarSom": "开启视频声音",
     "desativarSom": "关闭视频声音"
@@ -1100,7 +1101,7 @@
     "eyebrow": "覆盖",
     "eyebrowForte": "每月 5.3 亿以上曝光",
     "h1": "区域。",
-    "lead": "从巴特尔到海岸，从公路到圣卡塔琳娜州的海滩。下方可查看 Outdoormídia 覆盖哪些区域，以及每个区域拥有哪些媒体平台。"
+    "lead": "从城市中心到海岸，从公路到圣卡塔琳娜州的海滩。下方可查看 Outdoormídia 覆盖哪些区域，以及每个区域拥有哪些媒体平台。"
   },
   "TrabalheConoscoPage": {
     "breadcrumb": "加入我们",
