@@ -673,7 +673,9 @@
     "formatosTexto": "Cada formato fue desarrollado para unir estética, impacto y rendimiento, adaptándose a distintos contextos urbanos y objetivos de marca.",
     "ajudaLembrarTitulo": "Para recordar:",
     "ajudaLembrarTexto": "Top (vertical, nuestro reel en digital) · Poster (horizonte, horizontal, nuestro video de YouTube en digital) · lo que lleva super es 2x más grande.",
-    "techBike": "Medio móvil: trío de bicis secuenciales / estático"
+    "techBike": "Medio móvil: trío de bicis secuenciales / estático",
+    "programaticaTitulo": "Programática",
+    "programaticaTexto": "Nuestro CMS está conectado a las principales SSPs, DSPs y ADNetworks de Brasil y del mundo, lo que permite al anunciante pautar a partir de su presupuesto online."
   },
   "LinhaDoTempo": {
     "lead": "Qué cambió desde la primera cara en la calle, y qué no cambió.",
@@ -812,6 +814,7 @@
   "Widgets": {
     "avisoCookies": "Aviso de cookies",
     "whatsappComercial": "WhatsApp comercial de Outdoormídia",
+    "atendimentoMercadoOoh": "Atención de MercadoOOH, medios programáticos",
     "enviarCurriculo": "Enviar currículum por e-mail",
     "adiantarWhatsapp": "Adelantar por WhatsApp",
     "falarWhatsapp": "Hablar por WhatsApp",

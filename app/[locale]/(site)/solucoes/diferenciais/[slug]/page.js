@@ -12,6 +12,7 @@ import {
   getOutrosDiferenciaisLocale,
 } from '@/lib/diferenciais'
 import { waDiferencial, waLink } from '@/lib/whatsapp'
+import { comDestaque } from '@/lib/texto'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 const CARD = 'ticks rounded-[16px] border border-line bg-white p-7 max-mob:p-6'
@@ -244,11 +245,12 @@ export default async function DiferencialPage({ params }) {
         {oQueGanha && (
           <section className={SECAO}>
             <div className="wrap">
+              {oQueGanha.eyebrow && <div className="eyebrow reveal mb-4">{oQueGanha.eyebrow}</div>}
               <SectionHeading title={oQueGanha.title} className={TITULO_SECAO} />
               <div className={`${LEAD} flex flex-col gap-5 max-mob:gap-4`}>
                 {oQueGanha.lead.map((paragrafo) => (
                   <p className="m-0" key={paragrafo}>
-                    {paragrafo}
+                    {comDestaque(paragrafo)}
                   </p>
                 ))}
               </div>

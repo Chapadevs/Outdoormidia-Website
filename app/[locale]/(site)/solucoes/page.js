@@ -194,6 +194,19 @@ export default async function SolucoesPage({ params }) {
           </div>
         </section>
 
+        <section className="pb-[110px] max-mob:pb-[72px]" id="programatica">
+          <div className="wrap">
+            <div className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6">
+              <h3 className="m-0 text-[22px] font-extrabold leading-tight text-ink">
+                {t('programaticaTitulo')}
+              </h3>
+              <p className="m-0 max-w-[62ch] text-[15.5px] leading-relaxed text-ink-soft">
+                {t('programaticaTexto')}
+              </p>
+            </div>
+          </div>
+        </section>
+
         <PlatformsCarousel plataformas={getPlatformsListagem(locale)} />
 
         <NovaCampanha />
