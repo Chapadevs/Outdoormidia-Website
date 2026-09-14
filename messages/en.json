@@ -815,9 +815,10 @@
     "enviarCurriculo": "Send CV by e-mail",
     "adiantarWhatsapp": "Get ahead on WhatsApp",
     "falarWhatsapp": "Talk on WhatsApp",
-    "cookiesTexto": "This site only uses the cookies it needs to work, with no tracking and no advertising. By continuing to browse, you agree to their use. Details in the",
+    "cookiesTexto": "This site uses the cookies it needs to work and, only if you accept, Google Analytics cookies to measure how the pages are used, with no advertising. Details in the",
     "cookiesLink": "Privacy policy",
-    "cookiesEntendi": "Got it",
+    "cookiesAceitar": "Accept",
+    "cookiesRecusar": "Necessary only",
     "voltarInicio": "Back to home",
     "ativarSom": "Turn video sound on",
     "desativarSom": "Turn video sound off"
@@ -1100,7 +1101,7 @@
     "eyebrow": "Coverage",
     "eyebrowForte": "+530 million impressions per month",
     "h1": "Regions.",
-    "lead": "From Batel to the coast, from the highways to the beaches of Santa Catarina. See below which regions Outdoormídia operates in and which platforms exist in each one."
+    "lead": "From the urban centers to the coast, from the highways to the beaches of Santa Catarina. See below which regions Outdoormídia operates in and which platforms exist in each one."
   },
   "TrabalheConoscoPage": {
     "breadcrumb": "Careers",

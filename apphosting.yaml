@@ -33,6 +33,12 @@ env:
       - BUILD
       - RUNTIME
 
+  - variable: NEXT_PUBLIC_GA_MEASUREMENT_ID
+    value: "G-H0X3RJE0Z1"
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: FIREBASE_PROJECT_ID
     value: "outdoormidia-ecf88"
     availability:

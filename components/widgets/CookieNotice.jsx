@@ -2,41 +2,28 @@
 import { useSyncExternalStore } from 'react'
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
-
-const STORAGE_KEY = 'om-aviso-cookies'
-
-const listeners = new Set()
-
-function subscribe(onChange) {
-  listeners.add(onChange)
-  return () => listeners.delete(onChange)
-}
-
-function lerDispensa() {
-  try {
-    return localStorage.getItem(STORAGE_KEY)
-  } catch {
-    return null
-  }
-}
+import {
+  ACEITO,
+  RECUSADO,
+  assinarConsentimento,
+  gravarConsentimento,
+  lerConsentimento,
+} from '@/lib/consentimento'
 
 // No SSR o aviso sai dispensado: ele entra depois da hidratação, quando dá para
-// saber se o visitante já fechou. Renderizar no servidor faria o aviso piscar em
-// quem já leu.
-const dispensaNoServidor = () => '1'
+// saber se o visitante já escolheu. Renderizar no servidor faria o aviso piscar
+// em quem já respondeu.
+const escolhidoNoServidor = () => RECUSADO
 
 export default function CookieNotice() {
   const t = useTranslations('Widgets')
-  const dispensado = useSyncExternalStore(subscribe, lerDispensa, dispensaNoServidor)
+  const consentimento = useSyncExternalStore(
+    assinarConsentimento,
+    lerConsentimento,
+    escolhidoNoServidor,
+  )
 
-  function fechar() {
-    try {
-      localStorage.setItem(STORAGE_KEY, '1')
-    } catch {}
-    listeners.forEach((onChange) => onChange())
-  }
-
-  if (dispensado) return null
+  if (consentimento) return null
 
   return (
     <div
@@ -55,9 +42,22 @@ export default function CookieNotice() {
             .
           </p>
         </div>
-        <button type="button" onClick={fechar} className="btn btn-ghost shrink-0 max-mob:px-4 max-mob:py-2 max-mob:text-[12px]">
-          {t('cookiesEntendi')}
-        </button>
+        <div className="flex shrink-0 flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => gravarConsentimento(ACEITO)}
+            className="btn btn-fill max-mob:px-4 max-mob:py-2 max-mob:text-[12px]"
+          >
+            {t('cookiesAceitar')}
+          </button>
+          <button
+            type="button"
+            onClick={() => gravarConsentimento(RECUSADO)}
+            className="btn btn-ghost max-mob:px-4 max-mob:py-2 max-mob:text-[12px]"
+          >
+            {t('cookiesRecusar')}
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -8,6 +8,7 @@ import RevealObserver from '@/components/widgets/RevealObserver'
 import RadialReveal from '@/components/widgets/RadialReveal'
 import JsonLd from '@/components/widgets/JsonLd'
 import CookieNotice from '@/components/widgets/CookieNotice'
+import Analytics from '@/components/widgets/Analytics'
 import { SITE_URL } from '@/lib/constants'
 import { routing, TAG_HTML, TAG_OG } from '@/i18n/routing'
 
@@ -113,6 +114,7 @@ export default async function LocaleLayout({ children, params }) {
           <RevealObserver />
           <RadialReveal />
           <CookieNotice />
+          <Analytics />
         </NextIntlClientProvider>
       </body>
     </html>
