@@ -28,6 +28,15 @@ import { getIconicos } from '@/lib/iconicos'
 // da foto é determinística sem medir nada: a caixa 2/1 colada no topo.
 const RECORTE_CAPA = 'inset-x-0 top-0 aspect-[2/1] rounded-t-[16px]'
 
+// As setas do carrossel vivem fora do card, nas laterais do palco: brancas
+// sobre o laranja (borda e chevron), e o Radial Reveal preenche de branco com
+// o chevron virando laranja. Abaixo de 980px o palco perde a faixa lateral e
+// as setas descem para a linha do contador, ao lado do `01 / 07`.
+const SETA =
+  'radial-reveal absolute top-1/2 z-[3] grid size-14 -translate-y-1/2 cursor-pointer place-items-center rounded-full border-2 border-white bg-transparent text-white transition-colors duration-200 hover:text-orange [--rr-fill:#fff] max-tab:hidden'
+const SETA_EMPILHADA =
+  'radial-reveal grid size-11 cursor-pointer place-items-center rounded-full border-2 border-white bg-transparent text-white transition-colors duration-200 hover:text-orange [--rr-fill:#fff] max-mob:size-10'
+
 export default function Iconicos({ linkTitulo = true }) {
   const locale = useLocale()
   const t = useTranslations('Iconicos')
@@ -131,24 +140,6 @@ export default function Iconicos({ linkTitulo = true }) {
               )}
             </h2>
             <span className="h-px flex-1 bg-white/40"></span>
-            <div className="flex shrink-0 gap-2.5 max-tab:hidden">
-              <button
-                aria-label={t('ativoAnterior')}
-                className="radial-reveal grid size-[46px] cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.25)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)]"
-                onClick={() => go(active - 1)}
-                type="button"
-              >
-                <ChevronLeft size={20} />
-              </button>
-              <button
-                aria-label={t('proximoAtivo')}
-                className="radial-reveal grid size-[46px] cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.25)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)]"
-                onClick={() => go(active + 1)}
-                type="button"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
           </div>
 
           <div className="mt-9 grid grid-cols-3 border-b border-white/40 max-mob:mt-7 max-mob:grid-cols-1">
@@ -204,49 +195,75 @@ export default function Iconicos({ linkTitulo = true }) {
                 dos painéis de texto: `hidden` só escolhe qual card aparece. O
                 `id={slug}` que o AtivoCard carrega é o que faz a âncora de
                 ativo (`#jardim-digital`) chegar no card certo. */}
-            <div ref={palcoRef}>
+            <div className="relative px-[76px] max-tab:px-0" ref={palcoRef}>
               {/* O `IconicosFx` fica de fora do `key` da coluna: só a camada troca
                   de tipo com a linha (e roda de novo cipó, folha, moldura); a
                   troca de card por seta acontece por baixo dela, sem regravar
                   a entrada. O `z-[1]` põe o card entre o fundo (halo, raios) e
                   a frente (cipó, estrela) das camadas. */}
-              <IconicosFx
-                recorte={RECORTE_CAPA}
-                slug={emCena ? linha.slug : null}
-                src={ativoEmCena?.image}
-              >
-                <div className="relative z-[1] motion-safe:animate-sobe-suave" key={`${active}-${card}`}>
-                  {ICONICOS.map((l, li) =>
-                    l.ativos.map((ativo, ci) => (
-                      <div hidden={li !== active || ci !== card} key={ativo.slug}>
-                        <AtivoCard ativo={ativo} classeCapa={CLASSE_IMAGEM[l.slug]} reveal={false} />
-                      </div>
-                    )),
-                  )}
-                </div>
-              </IconicosFx>
+              <div className="relative">
+                <IconicosFx
+                  recorte={RECORTE_CAPA}
+                  slug={emCena ? linha.slug : null}
+                  src={ativoEmCena?.image}
+                >
+                  <div className="relative z-[1] motion-safe:animate-sobe-suave" key={`${active}-${card}`}>
+                    {ICONICOS.map((l, li) =>
+                      l.ativos.map((ativo, ci) => (
+                        <div hidden={li !== active || ci !== card} key={ativo.slug}>
+                          <AtivoCard ativo={ativo} classeCapa={CLASSE_IMAGEM[l.slug]} reveal={false} />
+                        </div>
+                      )),
+                    )}
+                  </div>
+                </IconicosFx>
+
+                {/* As setas ficam fora do card, na faixa lateral que o palco
+                    reserva (`px-[76px]`), centradas na altura da foto e do
+                    texto, e não na do contador abaixo. */}
+                {totalCards > 1 && (
+                  <>
+                    <button
+                      aria-label={t('ativoAnterior')}
+                      className={`${SETA} -left-[76px]`}
+                      onClick={() => go(card - 1)}
+                      type="button"
+                    >
+                      <ChevronLeft size={28} />
+                    </button>
+                    <button
+                      aria-label={t('proximoAtivo')}
+                      className={`${SETA} -right-[76px]`}
+                      onClick={() => go(card + 1)}
+                      type="button"
+                    >
+                      <ChevronRight size={28} />
+                    </button>
+                  </>
+                )}
+              </div>
 
               {totalCards > 1 && (
                 <div className="mt-6 flex items-center justify-between gap-4">
                   <span className="eyebrow text-white/85">
                     {String(card + 1).padStart(2, '0')} / {String(totalCards).padStart(2, '0')}
                   </span>
-                  <div className="flex gap-2.5">
+                  <div className="hidden gap-2.5 max-tab:flex">
                     <button
                       aria-label={t('ativoAnterior')}
-                      className="radial-reveal grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
+                      className={SETA_EMPILHADA}
                       onClick={() => go(card - 1)}
                       type="button"
                     >
-                      <ChevronLeft size={20} />
+                      <ChevronLeft size={22} />
                     </button>
                     <button
                       aria-label={t('proximoAtivo')}
-                      className="radial-reveal grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
+                      className={SETA_EMPILHADA}
                       onClick={() => go(card + 1)}
                       type="button"
                     >
-                      <ChevronRight size={20} />
+                      <ChevronRight size={22} />
                     </button>
                   </div>
                 </div>
