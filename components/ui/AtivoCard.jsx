@@ -14,15 +14,21 @@ import CoverMedia from '@/components/ui/CoverMedia'
 //              caso do segundo Jardim Vertical enquanto o dado não vem
 // - `verEm`  — o link para a outra rota onde o mesmo ativo aparece. É o par
 //              visível da regra C8: o texto é único, o leitor é que circula
+//
+// `reveal` liga a animação de entrada do RevealObserver. Nos grids das páginas
+// ele fica ligado; no carrossel de `Iconicos` precisa ser desligado: o card
+// nasce dentro de `hidden` e a coluna é remontada a cada seta, então o observer
+// global (que só varre `.reveal` uma vez por rota) nunca adiciona o `.in`, e o
+// card ficaria em opacidade zero para sempre. Lá quem anima é a própria coluna.
 const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 560px'
 const PONTO_SIZES = '(max-width: 560px) 100vw, 280px'
 
-export default function AtivoCard({ ativo, prioridadeImagem = false }) {
+export default function AtivoCard({ ativo, prioridadeImagem = false, reveal = true }) {
   const { slug, name, kicker, text, specs, pontos, image, imageAlt, verEm } = ativo
 
   return (
     <article
-      className="ticks reveal scroll-mt-24 flex flex-col overflow-hidden rounded-[16px] border border-line bg-white"
+      className={`ticks scroll-mt-24 flex flex-col overflow-hidden rounded-[16px] border border-line bg-white ${reveal ? 'reveal' : ''}`}
       id={slug}
     >
       <CoverMedia

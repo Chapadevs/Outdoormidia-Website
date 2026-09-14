@@ -31,10 +31,12 @@ const RATIOS = {
 // `foco` desloca o `object-position` do corte: existe para retrato alto
 // recortado em caixa larga, onde o centro puro (padrão do `object-cover`)
 // corta o rosto fora da faixa visível. `centro` é o padrão em todo o resto do
-// site.
+// site. `rosto` é o `topo` descido um pouco: o retrato do CEO tem uma faixa
+// de fundo acima do cabelo, e colado no topo o corte de 16/9 levava o queixo.
 const FOCOS = {
   centro: 'object-center',
   topo: 'object-top',
+  rosto: 'object-[50%_10%]',
 }
 
 export default function CoverMedia({

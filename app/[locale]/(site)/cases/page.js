@@ -67,12 +67,14 @@ export default async function CasesPage({ params }) {
           </div>
         </section>
 
-        <section className="pb-[110px] max-mob:pb-[72px]">
-          <div className="wrap">
-            <SectionHeading title="Todos os cases" className="reveal mb-[34px]" />
-            <CasesExplorer cases={cases} tags={tags} groups={groups} />
-          </div>
-        </section>
+        {cases.length > 0 && (
+          <section className="pb-[110px] max-mob:pb-[72px]">
+            <div className="wrap">
+              <SectionHeading title="Todos os cases" className="reveal mb-[34px]" />
+              <CasesExplorer cases={cases} tags={tags} groups={groups} />
+            </div>
+          </section>
+        )}
 
         <Reviews />
       </main>

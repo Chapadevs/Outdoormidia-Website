@@ -1,3 +1,5 @@
+import CoverMedia from './CoverMedia'
+
 function DimTop({ children }) {
   return (
     <span className="absolute inset-x-0 -top-4 h-0.5 bg-ink-soft">
@@ -30,16 +32,32 @@ export default function FormatSpecCard({ formats }) {
           className="flex flex-col gap-[18px] rounded-[16px] border border-line bg-white p-6 max-mob:p-5"
           key={f.title}
         >
-          <div
-            className="relative mb-[26px] mr-3.5 mt-[18px] w-[78%] self-start rounded-[10px] border-[1.5px] border-ink bg-bone"
-            style={{ aspectRatio: f.aspect }}
-          >
-            <DimTop>{f.top}</DimTop>
-            <DimSide>{f.side}</DimSide>
-            <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold uppercase tracking-[0.14em] text-ink-soft">
-              {f.label}
-            </span>
-          </div>
+          {/* Com `image` a foto do produto toma o lugar do diagrama: em Digital
+              Signage o painel é sob medida e as cotas não têm medida real para
+              mostrar, então o desenho não explicava nada que a foto não explique
+              melhor. As peças chegam recortadas, com o arco laranja e fundo
+              transparente, e por isso sobem sem moldura (`recorte`). */}
+          {f.image ? (
+            <CoverMedia
+              alt={f.imageAlt}
+              label={f.title}
+              ratio="3/4"
+              recorte
+              sizes="(max-width: 560px) 100vw, (max-width: 980px) 50vw, 25vw"
+              src={f.image}
+            />
+          ) : (
+            <div
+              className="relative mb-[26px] mr-3.5 mt-[18px] w-[78%] self-start rounded-[10px] border-[1.5px] border-ink bg-bone"
+              style={{ aspectRatio: f.aspect }}
+            >
+              <DimTop>{f.top}</DimTop>
+              <DimSide>{f.side}</DimSide>
+              <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold uppercase tracking-[0.14em] text-ink-soft">
+                {f.label}
+              </span>
+            </div>
+          )}
           <h3 className="m-0 text-[19px] font-extrabold">{f.title}</h3>
           <p className="m-0 text-[13.5px] text-ink-soft">{f.text}</p>
         </div>
