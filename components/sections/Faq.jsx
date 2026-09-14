@@ -1,16 +1,18 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import Accordion from '@/components/ui/Accordion'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { waFaqHome, waLink } from '@/lib/whatsapp'
 
 export default function Faq({ items }) {
+  const t = useTranslations('Faq')
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="faq">
       <div className="wrap">
-        <SectionHeading title="Perguntas frequentes" className="reveal mb-[34px]" />
+        <SectionHeading title={t('titulo')} className="reveal mb-[34px]" />
         <Accordion
           items={items}
           idPrefix="faq-home"
@@ -20,7 +22,7 @@ export default function Faq({ items }) {
         />
         <div className="reveal mx-auto mt-9 max-w-[820px]">
           <a className="btn btn-ghost" href={waLink(waFaqHome(items[openIndex]?.q))}>
-            Falar com um especialista →
+            {t('falarEspecialista')}
           </a>
         </div>
       </div>

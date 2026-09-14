@@ -1,6 +1,5 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import ObrigadoCta from '@/components/widgets/ObrigadoCta'
@@ -13,22 +12,14 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('obrigado.titulo')
-  const descricao = t('obrigado.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/obrigado', locale),
-    robots: { index: false, follow: true },
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/obrigado',
+    locale,
+    titulo: t('obrigado.titulo'),
+    descricao: t('obrigado.descricao'),
+    noindex: true,
+  })
 }
 
 export default async function ObrigadoPage({ params, searchParams }) {
@@ -38,11 +29,12 @@ export default async function ObrigadoPage({ params, searchParams }) {
   const { origem } = await searchParams
   const origens = getOrigens(locale)
   const conteudo = origens[origem] ?? origens.padrao
+  const t = await getTranslations({ locale, namespace: 'ObrigadoPage' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Obrigado' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
@@ -65,7 +57,7 @@ export default async function ObrigadoPage({ params, searchParams }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="Próximos passos" className="reveal mb-[34px]" />
+            <SectionHeading title={t('proximosPassos')} className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
               {conteudo.passos.map((p) => (
                 <div
@@ -85,7 +77,7 @@ export default async function ObrigadoPage({ params, searchParams }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="Enquanto isso" className="reveal mb-[34px]" />
+            <SectionHeading title={t('enquantoIsso')} className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
               {getSugestoes(locale).map((s) => (
                 <Link
@@ -99,7 +91,7 @@ export default async function ObrigadoPage({ params, searchParams }) {
                   </h2>
                   <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{s.text}</p>
                   <span className="mt-auto pt-5 text-[13px] font-bold uppercase tracking-[0.1em] text-orange">
-                    Ver →
+                    {t('ver')} →
                   </span>
                 </Link>
               ))}

@@ -1,6 +1,7 @@
 import { SITE_URL } from '@/lib/constants'
 import { EMPRESA, getEmpresa } from '@/lib/empresa'
 import { TAG_HTML } from '@/i18n/routing'
+import { ID_NEGOCIO } from '@/lib/schema'
 
 // Structured data da empresa, instalado uma vez em app/layout.js — vale para o
 // site inteiro. É o que permite ao Google montar o painel de conhecimento e o
@@ -8,8 +9,6 @@ import { TAG_HTML } from '@/i18n/routing'
 //
 // Campo sem valor em lib/empresa.js é omitido: `streetAddress: ''` no schema é
 // pior que ausência de streetAddress — vira endereço vazio no índice.
-
-const ID_NEGOCIO = `${SITE_URL}/#negocio`
 
 function postalAddress({ logradouro, cep, cidade, estado, pais }) {
   return {
@@ -20,6 +19,11 @@ function postalAddress({ logradouro, cep, cidade, estado, pais }) {
     addressRegion: estado,
     addressCountry: pais,
   }
+}
+
+function geoCoordinates({ latitude, longitude }) {
+  if (!latitude || !longitude) return undefined
+  return { '@type': 'GeoCoordinates', latitude, longitude }
 }
 
 function openingHours(horarios) {
@@ -47,8 +51,9 @@ function localBusiness(empresa) {
     email: EMPRESA.email,
     foundingDate: EMPRESA.fundacao,
     address: postalAddress(EMPRESA.endereco),
+    geo: geoCoordinates(EMPRESA.geo),
     openingHoursSpecification: openingHours(EMPRESA.horarios),
-    sameAs: EMPRESA.redes,
+    sameAs: Object.values(EMPRESA.redes),
     areaServed: EMPRESA.areaServida.map((nome) => ({ '@type': 'Place', name: nome })),
     knowsAbout: [
       'Mídia Out of Home',

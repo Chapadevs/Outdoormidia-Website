@@ -1,8 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export default function FormatosGallery({ formatos }) {
+  const t = useTranslations('FormatosGallery')
   const [aberto, setAberto] = useState(null)
 
   useEffect(() => {
@@ -44,14 +46,14 @@ export default function FormatosGallery({ formatos }) {
 
       {aberto && (
         <div
-          aria-label={`Formato ${aberto.name}`}
+          aria-label={t('formato', { nome: aberto.name })}
           aria-modal="true"
           className="fixed inset-0 z-[100] grid place-items-center bg-ink/85 p-6 backdrop-blur-[3px]"
           onClick={() => setAberto(null)}
           role="dialog"
         >
           <button
-            aria-label="Fechar"
+            aria-label={t('fechar')}
             className="absolute right-6 top-6 grid size-11 cursor-pointer place-items-center rounded-full border border-white/40 text-[22px] text-white transition-colors duration-150 hover:bg-white hover:text-ink"
             onClick={() => setAberto(null)}
             type="button"

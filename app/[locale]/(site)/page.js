@@ -13,9 +13,23 @@ import NovaCampanha from '@/components/sections/NovaCampanha'
 import Faq from '@/components/sections/Faq'
 import { getFaqsHome } from '@/lib/faq'
 import HomeTimeline from '@/components/widgets/HomeTimeline'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { metaDe } from '@/lib/seo'
 
 export const revalidate = 3600
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Site' })
+
+  return metaDe({
+    path: '/',
+    locale,
+    titulo: t('titulo'),
+    descricao: t('descricao'),
+    openGraph: { description: t('descricaoCurta') },
+  })
+}
 
 export default async function Home({ params }) {
   const { locale } = await params

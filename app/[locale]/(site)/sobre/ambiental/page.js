@@ -1,6 +1,5 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
@@ -15,22 +14,14 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('ambiental.titulo')
-  const descricao = t('ambiental.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/sobre/ambiental', locale),
-    robots: { index: false, follow: true },
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/sobre/ambiental',
+    locale,
+    titulo: t('ambiental.titulo'),
+    descricao: t('ambiental.descricao'),
+    noindex: true,
+  })
 }
 
 export default async function AmbientalPage({ params }) {

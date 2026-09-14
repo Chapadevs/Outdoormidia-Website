@@ -66,6 +66,14 @@ const LEGADO = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Data do build, congelada no bundle. É o `lastmod` das rotas estáticas do
+  // sitemap: o conteúdo delas vive no repositório e só muda em deploy, então a
+  // data do deploy é a data verdadeira. Gerar `new Date()` a cada requisição
+  // dizia ao Google que as 140 URLs mudam a cada hora, e ele passa a ignorar
+  // o campo quando ele nunca bate com o conteúdo.
+  env: {
+    BUILD_DATE: new Date().toISOString(),
+  },
   turbopack: {
     root: fileURLToPath(new URL('.', import.meta.url)),
   },

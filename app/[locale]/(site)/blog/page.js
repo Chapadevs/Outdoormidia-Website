@@ -1,14 +1,13 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import { listPublishedPosts } from '@/lib/blog/posts'
 import { listPublishedCases } from '@/lib/cases/cases'
-import { readingTimeLabel } from '@/lib/blog/readingTime'
-import { DATA_LONGA } from '@/lib/format'
+import { readingTimeMinutes } from '@/lib/blog/readingTime'
+import { dataLonga } from '@/lib/format'
 import { getPodcast, getEpisodios } from '@/lib/podcast'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
@@ -16,21 +15,13 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('blog.titulo')
-  const descricao = t('blog.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/blog', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/blog',
+    locale,
+    titulo: t('blog.titulo'),
+    descricao: t('blog.descricao'),
+  })
 }
 
 export const revalidate = 300
@@ -50,6 +41,8 @@ async function fetchContent() {
 export default async function BlogPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'BlogPage' })
+  const tb = await getTranslations({ locale, namespace: 'Blog' })
   const podcast = getPodcast(locale)
   const episodios = getEpisodios(locale)
 
@@ -62,17 +55,16 @@ export default async function BlogPage({ params }) {
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Blog' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Conteúdo Out of Home</div>
+            <div className="eyebrow reveal">{t('eyebrow')}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Blog.
+              {t('h1')}
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Três leituras da mesma rua: o que já aconteceu nela, nos cases; o que você precisa
-              saber antes de ocupá-la, nos artigos; e quem decide onde a marca aparece, no podcast.
+              {t('lead')}
             </p>
           </div>
         </section>
@@ -80,7 +72,7 @@ export default async function BlogPage({ params }) {
         {destaque && (
           <section className="pb-[110px] max-mob:pb-[72px]">
             <div className="wrap">
-              <SectionHeading title="Em destaque" className="reveal mb-[34px]" />
+              <SectionHeading title={t('emDestaque')} className="reveal mb-[34px]" />
               <Link
                 href={`/blog/${destaque.slug}`}
                 className="ticks reveal group grid grid-cols-[1.1fr_1fr] items-stretch overflow-hidden rounded-[16px] border border-line bg-white transition-colors duration-200 hover:border-orange max-tab:grid-cols-1"
@@ -88,15 +80,15 @@ export default async function BlogPage({ params }) {
                 <CoverMedia
                   src={destaque.coverImage}
                   alt={destaque.coverAlt || destaque.title}
-                  label="Artigo"
+                  label={tb('artigo')}
                   sizes={DESTAQUE_SIZES}
                   className="rounded-none border-0"
                 />
                 <div className="flex flex-col justify-center gap-4 p-11 max-mob:p-7">
                   <span className="eyebrow">
-                    Artigo
-                    {destaque.publishedAt && ` · ${DATA_LONGA.format(new Date(destaque.publishedAt))}`}
-                    {` · ${readingTimeLabel(destaque.content)}`}
+                    {tb('artigo')}
+                    {destaque.publishedAt && ` · ${dataLonga(locale).format(new Date(destaque.publishedAt))}`}
+                    {` · ${tb('minLeitura', { n: readingTimeMinutes(destaque.content) })}`}
                   </span>
                   <h2 className="m-0 text-[clamp(26px,3.4vw,38px)] font-extrabold leading-[1.1] text-ink transition-colors duration-200 group-hover:text-orange">
                     {destaque.title}
@@ -105,7 +97,7 @@ export default async function BlogPage({ params }) {
                     {destaque.excerpt}
                   </p>
                   <span className="mt-2 flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange">
-                    Ler artigo
+                    {tb('lerArtigo')}
                     <span
                       aria-hidden
                       className="text-base transition-transform duration-200 group-hover:translate-x-1"
@@ -122,7 +114,7 @@ export default async function BlogPage({ params }) {
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
             <SectionHeading
-              title="Por onde começar"
+              title={t('porOndeComecar')}
               className="reveal mb-[34px]"
             />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
@@ -136,18 +128,17 @@ export default async function BlogPage({ params }) {
                 }
               >
                 <span className="relative z-[2] self-start rounded-full bg-white/18 px-[11px] py-[7px] text-[11px] font-bold uppercase tracking-[0.16em]">
-                  Prova
+                  {t('cases.tag')}
                 </span>
                 <div className="relative z-[2]">
                   <h3 className="m-0 font-display text-[clamp(34px,5vw,54px)] uppercase leading-[0.9]">
-                    Cases
+                    {t('cases.titulo')}
                   </h3>
                   <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-white/85">
-                    Campanhas que já ocuparam a rua: marca, praça e resultado. Filtre por
-                    segmento e veja o que o Out of Home entrega.
+                    {t('cases.texto')}
                   </p>
                   <span className="mt-5 flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em]">
-                    Ver cases
+                    {t('cases.cta')}
                     <span
                       aria-hidden
                       className="text-base transition-transform duration-200 group-hover:translate-x-1"
@@ -162,14 +153,13 @@ export default async function BlogPage({ params }) {
                 href="/blog/artigos"
                 className="ticks reveal group flex min-h-[340px] flex-col justify-between rounded-[16px] border border-line bg-white p-10 transition-colors duration-200 hover:border-orange max-mob:min-h-[260px] max-mob:p-7"
               >
-                <span className="eyebrow">Aprender</span>
+                <span className="eyebrow">{t('artigos.tag')}</span>
                 <div>
                   <h3 className="m-0 font-display text-[clamp(34px,5vw,54px)] uppercase leading-[0.9] text-ink transition-colors duration-200 group-hover:text-orange">
-                    Artigos
+                    {t('artigos.titulo')}
                   </h3>
                   <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-ink-soft">
-                    Métricas, formatos, escolha de praça e o que muda entre um outdoor e um
-                    painel digital. Para decidir antes de contratar.
+                    {t('artigos.texto')}
                   </p>
                   {recentes.length > 0 && (
                     <ul className="m-0 mt-6 flex list-none flex-col gap-2 border-t border-line p-0 pt-5">
@@ -184,7 +174,7 @@ export default async function BlogPage({ params }) {
                     </ul>
                   )}
                   <span className="mt-5 flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
-                    Ver artigos
+                    {t('artigos.cta')}
                     <span
                       aria-hidden
                       className="text-base transition-transform duration-200 group-hover:translate-x-1"
@@ -199,13 +189,13 @@ export default async function BlogPage({ params }) {
                 href="/blog/podcast"
                 className="ticks reveal group flex min-h-[340px] flex-col justify-between rounded-[16px] border border-line bg-bone p-10 transition-colors duration-200 hover:border-orange max-mob:min-h-[260px] max-mob:p-7"
               >
-                <span className="eyebrow">Ouvir</span>
+                <span className="eyebrow">{t('podcast.tag')}</span>
                 <div>
                   <h3 className="m-0 font-display text-[clamp(34px,5vw,54px)] uppercase leading-[0.9] text-ink transition-colors duration-200 group-hover:text-orange">
-                    Podcast
+                    {t('podcast.titulo')}
                   </h3>
                   <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-ink-soft">
-                    {podcast.tagline} Conversas com quem decide onde uma marca aparece.
+                    {podcast.tagline} {t('podcast.texto')}
                   </p>
                   <ul className="m-0 mt-6 flex list-none flex-col gap-2 border-t border-line p-0 pt-5">
                     {episodios.slice(0, 3).map((ep) => (
@@ -215,7 +205,7 @@ export default async function BlogPage({ params }) {
                     ))}
                   </ul>
                   <span className="mt-5 flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
-                    Ver episódios
+                    {t('podcast.cta')}
                     <span
                       aria-hidden
                       className="text-base transition-transform duration-200 group-hover:translate-x-1"
@@ -229,7 +219,7 @@ export default async function BlogPage({ params }) {
 
             {posts.length === 0 && cases.length === 0 && (
               <p className="reveal mt-9 text-lg text-ink-soft">
-                Ainda não há conteúdo publicado. Volte em breve.
+                {t('vazio')}
               </p>
             )}
           </div>

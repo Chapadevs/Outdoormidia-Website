@@ -86,7 +86,7 @@ export default function Process({ title }) {
           rule={false}
           title={title ?? t('tituloPadrao')}
         />
-        <p className="reveal mb-4 text-lg text-ink-soft">Do objetivo à notoriedade</p>
+        <p className="reveal mb-4 text-lg text-ink-soft">{t('subtitulo')}</p>
         <p className="reveal mx-auto max-w-[72ch] text-ink-soft">
           {t('lead')}
         </p>

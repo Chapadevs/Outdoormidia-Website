@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { posterDoVideo } from '@/lib/videoPoster'
 
 // Capa com fallback. Com `video`, toca em loop mudo dentro do próprio card, em
@@ -52,6 +53,7 @@ export default function CoverMedia({
   recorte = false,
   foco = 'centro',
 }) {
+  const t = useTranslations('CoverMedia')
   // `recorte` é a peça que já chega recortada, com fundo transparente (o logo
   // da Eco Local Recicla na Ambiental; as três fotos de Digital Signage usaram
   // até 13/09/2026). Ela não entra em moldura: borda e canto arredondado
@@ -96,7 +98,7 @@ export default function CoverMedia({
   // na marca. Nunca em string vazia — isso marcaria a capa como decorativa e a
   // tiraria da leitura de quem usa leitor de tela e dos rastreadores.
   if (src) {
-    const textoAlt = alt || label || 'Outdoormídia, mídia Out of Home'
+    const textoAlt = alt || label || t('altPadrao')
     return (
       <div className={`${base} ${className}`}>
         <Image

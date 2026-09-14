@@ -139,7 +139,31 @@
     }
   },
   "PlatformPage": {
-    "falarComercial": "Talk to our sales team"
+    "falarComercial": "Talk to our sales team",
+    "mapasExternos": {
+      "paineis": {
+        "titulo": "Installed panels",
+        "texto": "The Highway panels already in operation along the corridors of Paraná and Santa Catarina, point by point on Google Maps.",
+        "botao": "See the Highway panels",
+        "alt": "Google map with the installed Highway panels between Curitiba, the Paraná coast, Joinville and Itajaí"
+      },
+      "simulacoes": {
+        "titulo": "On-demand simulations",
+        "texto": "The points where a panel can be built for your campaign, from Guarapuava to the coast, on Google Maps.",
+        "botao": "See the on-demand simulations",
+        "alt": "Google map with the on-demand panel simulations between Guarapuava, Curitiba, the coast and Joinville"
+      }
+    },
+    "naoEncontrada": "Platform not found | Outdoormídia",
+    "breadcrumb": "Platforms",
+    "quandoTitulo": "When this platform is the right choice",
+    "ativosEmDestaque": "Featured assets",
+    "comoFuncionaSobDemanda": "How On Demand works",
+    "sobDemanda": "On Demand",
+    "formatos": "Formats",
+    "mapaDaRede": "Network map",
+    "mapaDaRedeLead": "The corridors the network runs along between Ponta Grossa and Florianópolis, through the Paraná coast and Joinville. The panel is built on demand, at the point the campaign needs along these routes.",
+    "cases": "Case studies"
   },
   "PlataformasPage": {
     "eyebrow": "Catalogue · {n} platforms",
@@ -388,7 +412,42 @@
     "subtitulo": "Success stories in practice",
     "lead": "From first-time advertisers to those managing major brands, the experience of people who have already put their message on the streets of Southern Brazil.",
     "carrosselLabel": "Client testimonials",
-    "fechar": "Close"
+    "fechar": "Close",
+    "assistir": "Watch the testimonial from {nome}, {duracao}",
+    "depoimentoDe": "Testimonial from {nome}",
+    "acessarCases": "Go to case studies",
+    "itens": [
+      {
+        "quote": "The main advantage we see in this kind of campaign is the measurement.",
+        "role": "Marketing Specialist · Claro"
+      },
+      {
+        "quote": "It brought us not only the complete success of the campaign, but a sales record in a single weekend.",
+        "role": "Director · Agência Verbal",
+        "contexto": "Case: Auto Shopping Curitiba"
+      },
+      {
+        "titulo": "When the whole neighbourhood gets to know your brand",
+        "role": "Owner · Cia do Pastel"
+      },
+      {
+        "quote": "The number of people who came because of the billboard was unbelievable. People would say: “I saw yours on the billboard, how cool is your work, right?”",
+        "role": "Outdoormídia client"
+      },
+      {
+        "quote": "I noticed a difference: people would message me, “Wow, Gabi, I was passing by such-and-such place and I saw you”.",
+        "role": "Owner · Andrioli Estética"
+      },
+      {
+        "quote": "I would definitely recommend it! It was an extraordinary experience.",
+        "role": "Afinco Imóveis"
+      },
+      {
+        "quote": "These strategies bring a qualified audience to the event. The audience will find what they are looking for here.",
+        "role": "Marketing Coordinator · Expo MotorHome",
+        "contexto": "Expo MotorHome fair · Expotrade"
+      }
+    ]
   },
   "NovaCampanha": {
     "kicker": "New campaign",
@@ -570,7 +629,11 @@
   },
   "BlogTeaser": {
     "lead": "Ideas, data and outdoor media strategies for putting your brand on the streets of Paraná and Santa Catarina.",
-    "vazio": "There are no published articles yet. Check back soon."
+    "vazio": "There are no published articles yet. Check back soon.",
+    "titulo": "Blog",
+    "verTodos": "See all →",
+    "verTodosArtigos": "See all articles →",
+    "publicados": "{n, plural, one {# article published} other {# articles published}}"
   },
   "SolucoesHero": {
     "eyebrow": "Commercial hub · PR + SC",
@@ -592,7 +655,25 @@
       "Itajaí",
       "Balneário Camboriú",
       "PR-SC highways"
-    ]
+    ],
+    "tiposTitulo": "Media types",
+    "tiposLead": "Technology and exposure dynamics: choose between the programmable reach of digital and the continuous presence of static.",
+    "tiposMidia": [
+      {
+        "title": "Digital (DOOH)",
+        "text": "Scheduled airing on LED screens with cutting-edge technology, content flexibility and high visual impact. Ideal for dynamic, segmented, real-time campaigns."
+      },
+      {
+        "title": "Front Light (Static)",
+        "text": "Traditional, continuous media with strong physical presence, prolonged visibility and high recall. Ideal for brand reinforcement and strategic occupation of territory."
+      }
+    ],
+    "formatosTitulo": "Formats",
+    "formatosLead": "Physical and visual variations of our products.",
+    "formatosTexto": "Each format was developed to combine aesthetics, impact and performance, adapting to different urban contexts and brand goals.",
+    "ajudaLembrarTitulo": "Easy to remember:",
+    "ajudaLembrarTexto": "Top (vertical, our reel in digital) · Poster (horizon, horizontal, our YouTube video in digital) · anything called super is 2x bigger.",
+    "techBike": "Mobile media: trio of sequential bikes / static"
   },
   "LinhaDoTempo": {
     "lead": "What has changed since the first face on the street, and what has not.",
@@ -604,7 +685,9 @@
     "proximo": "Next project",
     "anterior": "Previous project",
     "legendaRegenerativo": "Before → after",
-    "legendaElegancy": "Light as a signature"
+    "legendaElegancy": "Light as a signature",
+    "ativoAnterior": "Previous asset",
+    "proximoAtivo": "Next asset"
   },
   "MapaCobertura": {
     "legendaCombinada": "combines urban media and highways",
@@ -655,7 +738,12 @@
     "legendaApoio": "Support point",
     "legendaCorredor": "Highway corridor",
     "notaSaoPaulo": "The São Paulo marker indicates distance, not coverage.",
-    "mapaAlt": "Map of the highway corridors served between Paraná and Santa Catarina"
+    "mapaAlt": "Map of the highway corridors served between Paraná and Santa Catarina",
+    "todaARede": "Whole network",
+    "grupoPontos": "Points",
+    "grupoVias": "Roads",
+    "legendaPolo": "Hub city",
+    "legendaSentido": "Traffic direction"
   },
   "Ticker": {
     "itens": [
@@ -711,7 +799,8 @@
   },
   "LegalDoc": {
     "sumario": "Contents",
-    "nestaPagina": "On this page"
+    "nestaPagina": "On this page",
+    "atualizadoEm": "Updated on {data}"
   },
   "Mapas": {
     "coberturaAria": "Coverage map of Paraná and Santa Catarina",
@@ -725,7 +814,13 @@
     "whatsappComercial": "Outdoormídia sales WhatsApp",
     "enviarCurriculo": "Send CV by e-mail",
     "adiantarWhatsapp": "Get ahead on WhatsApp",
-    "falarWhatsapp": "Talk on WhatsApp"
+    "falarWhatsapp": "Talk on WhatsApp",
+    "cookiesTexto": "This site only uses the cookies it needs to work, with no tracking and no advertising. By continuing to browse, you agree to their use. Details in the",
+    "cookiesLink": "Privacy policy",
+    "cookiesEntendi": "Got it",
+    "voltarInicio": "Back to home",
+    "ativarSom": "Turn video sound on",
+    "desativarSom": "Turn video sound off"
   },
   "NotFound": {
     "eyebrow": "Error",
@@ -760,5 +855,330 @@
     "ajudaTitulo": "Looking for something specific?",
     "ajudaTexto": "Tell us what you were trying to find and we will send the link, or the answer itself.",
     "ajudaCta": "Ask on WhatsApp"
+  },
+  "PraticasGrid": {
+    "naPratica": "In practice:"
+  },
+  "Faq": {
+    "titulo": "Frequently asked questions",
+    "falarEspecialista": "Talk to a specialist →",
+    "naoEncontrou": "Didn't find your question?",
+    "faleEspecialistaWhatsapp": "Talk to a specialist on WhatsApp.",
+    "faleTimeWhatsapp": "Talk to our team on WhatsApp."
+  },
+  "Cases": {
+    "titulo": "Case studies",
+    "verTodos": "See all →",
+    "rotuloCapa": "Case study"
+  },
+  "ProposalForm": {
+    "voltarSite": "← Back to the site",
+    "breadcrumb": "Request a proposal",
+    "eyebrow": "Briefing",
+    "tituloA": "I want a",
+    "tituloB": "proposal.",
+    "lead": "Tell us briefly about your campaign. Within 1 business day we get back to you with markets, formats and pricing tailored to your goal.",
+    "campos": {
+      "nome": "Name",
+      "empresa": "Company",
+      "email": "Email",
+      "cidade": "Where do you want to appear?",
+      "formato": "Format of interest",
+      "periodo": "Campaign period",
+      "objetivo": "Campaign goal"
+    },
+    "placeholders": {
+      "nome": "Your name",
+      "empresa": "Company name",
+      "cidade": "Select the market",
+      "formato": "Select the format",
+      "periodo": "Select the duration",
+      "objetivo": "E.g.: announce a launch, drive traffic to the store, strengthen the brand in the region…"
+    },
+    "opcoes": {
+      "biSemana": "2 weeks (bi-week)",
+      "umMes": "1 month",
+      "tresMeses": "3 months",
+      "seisMeses": "6 months or more",
+      "outraPraca": "Another market",
+      "naoSei": "I don't know yet"
+    },
+    "opcional": "(optional)",
+    "enviando": "Sending…",
+    "enviar": "Send briefing"
+  },
+  "DiagnosticoQuiz": {
+    "degrauLabel": "Step {n} · {nome}",
+    "respondidas": "<b>{n}</b> of {total} answered",
+    "instrucao": "Drag or click the bar and give each question a score from <b>0 to 10</b>. It takes less than a minute; answer honestly, because the result is only useful if it is.",
+    "parcial": "Partial",
+    "comece": "Start with the first question. Your step appears once all {total} are answered.",
+    "faltam": "{n, plural, one {# answer} other {# answers}} left before your step appears.",
+    "tudoRespondido": "All answered: see which step your brand is on.",
+    "verResultado": "See my result",
+    "resultadoFinal": "Final result",
+    "pontoFragil": "Your weakest point today is",
+    "falarEspecialista": "Talk to a specialist →",
+    "fechoTituloA": "Moving up a step is",
+    "fechoTituloB": "a media decision.",
+    "fechoTexto": "Presence is not built with a single campaign. It is built by **showing up where your audience passes every day, all year long**. That is what Outdoormídia has been doing for 67 years in Curitiba, the Metropolitan Region, the Paraná coast, Joinville, Itajaí and Balneário Camboriú.",
+    "simulacao": "Want to see how your brand would look on a panel before we talk? Build the simulation in",
+    "suaMarcaNoOoh": "Your brand in OOH",
+    "emailPergunta": "Want to receive this diagnosis by email?",
+    "emailPlaceholder": "Your best email",
+    "emailInvalido": "Check the email you typed.",
+    "emailErro": "We could not save it right now. Please try again.",
+    "emailPronto": "Done, we have received your email.",
+    "enviando": "Sending…",
+    "enviar": "Send",
+    "refazer": "Redo the diagnosis"
+  },
+  "AnunciantePage": {
+    "breadcrumb": "Advertiser area",
+    "eyebrow": "Self-service · {n} tools",
+    "tituloA": "Advertiser",
+    "tituloB": "area.",
+    "lead": "Everything you can sort out without talking to a salesperson is here. When you do reach out to the sales team, you will already know what to ask for.",
+    "ferramentas": "The tools",
+    "cards": {
+      "diagnostico": {
+        "eyebrow": "Tool · 10 questions",
+        "title": "Brand presence diagnostic",
+        "text": "Is your brand the first one people remember, or only recognised once someone says the name? In just 1 minute, understand how the market sees your brand today.",
+        "cta": "Take the diagnostic"
+      },
+      "suaMarca": {
+        "eyebrow": "Tool · Preview",
+        "title": "Your brand in OOH",
+        "text": "Choose the platform and the panel, upload your logo as a PNG and see your brand applied to a real panel. Download the image and send it to whoever decides.",
+        "cta": "See my brand on the panel"
+      },
+      "praticas": {
+        "eyebrow": "Content · {n} practices",
+        "title": "Best practices",
+        "text": "Content and ideas to get more out of your campaign: how to choose the right market, what works in each format and the practices that make a brand memorable in out-of-home media.",
+        "cta": "See the practices"
+      },
+      "faq": {
+        "eyebrow": "Questions · {n} questions",
+        "title": "FAQ",
+        "text": "Pricing, campaign duration, who produces the artwork, exclusivity of the site and how to know your campaign ran. The questions our sales team hears most, answered before the conversation.",
+        "cta": "Get answers"
+      }
+    },
+    "prefereDireto": "Would you rather sort it out directly with us?",
+    "faleEspecialista": "Talk to a specialist on WhatsApp."
+  },
+  "FaqPage": {
+    "breadcrumbPai": "Advertiser area",
+    "breadcrumb": "FAQ",
+    "eyebrow": "Advertiser area · Questions",
+    "tituloA": "Frequently asked",
+    "tituloB": "questions.",
+    "lead": "What our team hears most, answered before you need to ask. If anything is missing, WhatsApp is at the bottom of the page."
+  },
+  "MelhoresPraticasPage": {
+    "breadcrumbPai": "Advertiser area",
+    "breadcrumb": "Best practices",
+    "eyebrow": "Advertiser area · {n} practices",
+    "tituloA": "Best",
+    "tituloB": "practices.",
+    "lead": "Eight decisions that separate the campaign that works from the campaign that merely appears. None of them depends on a big budget; all of them depend on choosing before buying.",
+    "asPraticas": "The eight practices",
+    "paraOndeIr": "Where to go next"
+  },
+  "DiagnosticoPage": {
+    "breadcrumbPai": "Advertiser area",
+    "breadcrumb": "Brand presence diagnostic",
+    "eyebrow": "Diagnostic",
+    "eyebrowForte": "10 questions",
+    "tituloA": "Brand",
+    "tituloB": "presence",
+    "tituloC": "diagnostic.",
+    "lead": "Every brand occupies a space in the customer's mind. Answer in just one minute and find out which step yours is on today.",
+    "heroAlt": "The Presence Ladder theory: a person climbing five concrete steps, named existence, discovery, recognition, preference and reference, up to a lit Outdoormídia billboard at the top.",
+    "escadaTitulo": "Being the reference is not luck. Nobody reaches the top in one go.",
+    "escadaTexto1": "In Brazil, out-of-home media reaches 89% of the population and is the second most consumed medium in the country. The space exists, and it is already occupied by someone. The question was never whether your brand can be seen, but how many times it has already been seen by the same person, because repetition is what turns those who saw into those who remember.",
+    "escadaTexto2": "Every company occupies a step on this ladder, and each step changes how the customer decides. Before answering, see the whole path.",
+    "fonte": "Source: Kantar Ibope Media, Target Group Index, 2024."
+  },
+  "Blog": {
+    "artigo": "Article",
+    "minLeitura": "{n} min read",
+    "por": "By {autor}",
+    "lerArtigo": "Read article"
+  },
+  "BlogPage": {
+    "breadcrumb": "Blog",
+    "eyebrow": "Out of Home content",
+    "h1": "Blog.",
+    "lead": "Three readings of the same street: what has already happened on it, in the case studies; what you need to know before occupying it, in the articles; and who decides where the brand appears, on the podcast.",
+    "emDestaque": "Featured",
+    "porOndeComecar": "Where to start",
+    "cases": {
+      "tag": "Proof",
+      "titulo": "Case studies",
+      "texto": "Campaigns that have already occupied the street: brand, market and result. Filter by segment and see what Out of Home delivers.",
+      "cta": "See case studies"
+    },
+    "artigos": {
+      "tag": "Learn",
+      "titulo": "Articles",
+      "texto": "Metrics, formats, choosing a market and what changes between a billboard and a digital panel. To decide before you buy.",
+      "cta": "See articles"
+    },
+    "podcast": {
+      "tag": "Listen",
+      "titulo": "Podcast",
+      "texto": "Conversations with the people who decide where a brand appears.",
+      "cta": "See episodes"
+    },
+    "vazio": "No content published yet. Check back soon."
+  },
+  "ArtigosPage": {
+    "breadcrumbPai": "Blog",
+    "breadcrumb": "Articles",
+    "eyebrow": "Blog",
+    "eyebrowForte": "Out of Home content",
+    "h1": "Articles.",
+    "lead": "Ideas, data and out-of-home media strategies to put your brand on the streets of Paraná and Santa Catarina.",
+    "ultimos": "Latest articles",
+    "vazio": "No articles published yet. Check back soon."
+  },
+  "PostPage": {
+    "naoEncontrado": "Post not found | Outdoormídia",
+    "breadcrumbBlog": "Blog",
+    "breadcrumbArtigos": "Articles",
+    "todosArtigos": "← All articles",
+    "escritoPor": "Written by",
+    "compartilhar": "Share",
+    "ctaTitulo": "Want to bring <b>visibility</b> to your brand?",
+    "pedirProposta": "Request a proposal",
+    "verMaisArtigos": "See more articles"
+  },
+  "PodcastPage": {
+    "breadcrumbPai": "Blog",
+    "breadcrumb": "Podcast",
+    "eyebrow": "Blog",
+    "h1": "Podcast.",
+    "episodios": "Episodes",
+    "ouvir": "Listen to the episode",
+    "emProducao": "Recording in production",
+    "aviso": "Episodes will appear here as soon as they are recorded, and on audio platforms too."
+  },
+  "CasesPage": {
+    "breadcrumb": "Case studies",
+    "eyebrow": "Results · Out of Home",
+    "h1": "Case studies.",
+    "lead": "Real campaigns on the streets of Paraná and Santa Catarina, from the launch that took over Curitiba to the segmented circuit that spoke to the right audience. Filter by segment and see what Out of Home delivers.",
+    "todos": "All case studies"
+  },
+  "ObrigadoPage": {
+    "breadcrumb": "Thank you",
+    "proximosPassos": "Next steps",
+    "enquantoIsso": "In the meantime",
+    "ver": "See"
+  },
+  "PrivacidadePage": {
+    "breadcrumb": "Privacy policy",
+    "eyebrow": "Legal",
+    "eyebrowForte": "LGPD",
+    "h1": "Privacy policy.",
+    "lead": "What data we ask for, why we ask for it, who we share it with and how long we keep it. In plain language, no fine print.",
+    "direitos": "Check your rights under the LGPD"
+  },
+  "TermosPage": {
+    "breadcrumb": "Terms of use",
+    "eyebrow": "Legal",
+    "eyebrowForte": "Terms",
+    "h1": "Terms of use.",
+    "lead": "What you can do with the content of this site, what our numbers mean and how far each side's responsibility goes."
+  },
+  "RegioesPage": {
+    "breadcrumbPai": "Solutions",
+    "breadcrumb": "Regions / Coverage",
+    "eyebrow": "Coverage",
+    "eyebrowForte": "+530 million impressions per month",
+    "h1": "Regions.",
+    "lead": "From Batel to the coast, from the highways to the beaches of Santa Catarina. See below which regions Outdoormídia operates in and which platforms exist in each one."
+  },
+  "TrabalheConoscoPage": {
+    "breadcrumb": "Careers",
+    "eyebrow": "Careers",
+    "h1": "Work with us.",
+    "lead": "For 67 years we have been putting brands on the streets of Paraná and Santa Catarina. If you want to work with media the whole city sees, your place may be here.",
+    "capaAlt": "Aerial view of the Outdoormídia head office in Curitiba: the warehouses with solar panels and the branded façade"
+  },
+  "DiferenciaisPage": {
+    "breadcrumbPai": "Solutions",
+    "breadcrumb": "Differentiators",
+    "eyebrow": "Solutions · {n} differentiators",
+    "h1": "Differentiators.",
+    "lead": "Everyone sells out-of-home media. What changes is the exclusivity of the site, the measurement of the audience and who answers when the campaign goes live.",
+    "osDiferenciais": "The differentiators",
+    "aProva": "The proof",
+    "provaLead": "None of the numbers above relies on trust: all of them are measured and can be checked with our team.",
+    "prova": [
+      "Impressions per month",
+      "Digital screens",
+      "Live cameras",
+      "MUB circuits"
+    ]
+  },
+  "DiferencialPage": {
+    "naoEncontrado": "Differentiator not found | Outdoormídia",
+    "breadcrumbSolucoes": "Solutions",
+    "breadcrumbDiferenciais": "Differentiators",
+    "eyebrow": "Differentiator · Solutions",
+    "verNaPratica": "See it in practice",
+    "oQueE": "What it is",
+    "conferirPrivacidade": "Read the privacy policy",
+    "aProva": "The proof",
+    "aplicacaoPratica": "Practical application",
+    "miniCaseAviso": "Mini-case numbers to be confirmed with the sales team before publishing.",
+    "comparacao": "The right ways to do Face Única",
+    "outrosDiferenciais": "Other differentiators",
+    "verTodos": "See all →"
+  },
+  "IconicosPage": {
+    "breadcrumbPai": "Platforms",
+    "breadcrumb": "Iconic Projects",
+    "eyebrow": "Icons · Signature street furniture",
+    "h1": "Iconic.",
+    "lead": "There are addresses the city already recognises. The Iconic Projects occupy these spots with structures designed one by one, with no catalogue mould. It is the product Outdoormídia designs, not the one it replicates.",
+    "cta": "I want to evaluate an Iconic",
+    "cardTexto": "The difference from the 8 catalogue platforms is the starting point: here the structure is born from the address. Every project goes through briefing, feasibility study and design before it exists on the street.",
+    "cardFluxo": "Briefing → feasibility → structure",
+    "numeros": [
+      {
+        "n": "4",
+        "label": "Signature icons"
+      },
+      {
+        "n": "3",
+        "label": "Exclusive lines"
+      },
+      {
+        "n": "up to 1M",
+        "label": "Impressions/month per digital corner"
+      },
+      {
+        "n": "800K",
+        "label": "Impressions/month in the Media District"
+      }
+    ]
+  },
+  "IconicoPage": {
+    "naoEncontrado": "Project not found | Outdoormídia",
+    "breadcrumbPlataformas": "Platforms",
+    "breadcrumbIconicos": "Iconic Projects",
+    "verNaRua": "See what is on the street",
+    "oQueE": "What it is",
+    "naRuaHoje": "On the street today",
+    "dimensoesAviso": "Final dimensions come from the feasibility study of each address; confirm with the sales team before finalising the artwork.",
+    "cases": "Case studies",
+    "verTodosCases": "See all case studies",
+    "osOutrosDois": "The other two",
+    "verTodos": "See all →"
   }
 }

@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import CoverMedia from '@/components/ui/CoverMedia'
 
 // Componente C7 do handoff: a anatomia fixa do produto (kicker em caixa alta,
@@ -7,9 +8,8 @@ import CoverMedia from '@/components/ui/CoverMedia'
 // `specsPor.estatico` seguir vazio (pendência 2 do handoff). `imagemPor` é o
 // mapa tecnologia → foto de `lib/produtos.js`; onde só uma tecnologia tem foto
 // (Poster Sight, Billboard), sobe uma imagem só, sem legenda de tecnologia.
-const ROTULOS = { estatico: 'Estático', digital: 'Digital' }
-
 export default function ProdutoCard({ produto }) {
+  const t = useTranslations('Tecnologia')
   const { name, kicker, text, specs, specsPor, pontos, selo, imagemPor, image, imageAlt, imageRatio } =
     produto
 
@@ -43,7 +43,7 @@ export default function ProdutoCard({ produto }) {
                 src={foto.src}
               />
               {fotos.length > 1 && (
-                <p className="eyebrow m-0 mt-2 text-ink-soft/70">{ROTULOS[opcao]}</p>
+                <p className="eyebrow m-0 mt-2 text-ink-soft/70">{t(opcao)}</p>
               )}
             </div>
           ))}

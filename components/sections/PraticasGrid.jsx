@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from '@/i18n/navigation'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { getPraticas } from '@/lib/melhoresPraticas'
 
 // Só o ícone vive aqui: título, corpo e linha de aplicação vêm de
@@ -54,6 +54,7 @@ function LinhaDeAplicacao({ pratica, praticaLink }) {
 
 export default function PraticasGrid() {
   const locale = useLocale()
+  const t = useTranslations('PraticasGrid')
   const PRATICAS = getPraticas(locale)
   const total = PRATICAS.length
   const listaRef = useRef(null)
@@ -167,7 +168,7 @@ export default function PraticasGrid() {
                 <p className="m-0 mt-auto flex gap-3 rounded-[10px] bg-orange/8 p-4 text-[15.5px] leading-relaxed text-ink">
                   <Zap size={20} className="mt-0.5 shrink-0 text-orange" />
                   <span>
-                    <strong className="font-extrabold">Na prática:</strong>{' '}
+                    <strong className="font-extrabold">{t('naPratica')}</strong>{' '}
                     <LinhaDeAplicacao pratica={p.pratica} praticaLink={p.praticaLink} />
                   </span>
                 </p>

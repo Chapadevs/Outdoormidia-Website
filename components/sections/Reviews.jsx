@@ -47,6 +47,10 @@ import SectionHeading from '@/components/ui/SectionHeading'
 //
 // O card 03 não é citação: é título editorial, e por isso vem sem aspas e sem o
 // glifo de abertura. Entre aspas e com o nome embaixo viraria fala fabricada.
+//
+// Nos outros idiomas, citação, cargo e contexto vêm de `Reviews.itens` em
+// messages/*.json, por posição sobre esta lista: a fala é tradução da
+// transcrição literal, e os vídeos seguem em português com a legenda embutida.
 const REVIEWS = [
   {
     quote: 'A principal vantagem que a gente vê neste tipo de campanha é a mensuração.',
@@ -180,7 +184,8 @@ export default function Reviews() {
           velocidade={0.055}
           width="clamp(228px,70vw,290px)"
         >
-          {REVIEWS.map((r) => {
+          {REVIEWS.map((base, i) => {
+            const r = { ...base, ...t.raw('itens')[i] }
             const texto = r.quote ? `“${r.quote}”` : r.titulo
 
             return (
@@ -217,7 +222,7 @@ export default function Reviews() {
 
                   {r.video && (
                     <button
-                      aria-label={`Assistir ao depoimento de ${r.name}, ${r.duracao}`}
+                      aria-label={t('assistir', { nome: r.name, duracao: r.duracao })}
                       className="absolute inset-0 z-[4] grid cursor-pointer place-items-center"
                       onClick={() => setAberto(r)}
                       type="button"
@@ -244,14 +249,14 @@ export default function Reviews() {
       <div className="wrap">
         <div className="reveal mt-9 flex justify-center">
           <Link className="btn btn-ghost" href="/cases">
-            Acessar cases
+            {t('acessarCases')}
           </Link>
         </div>
       </div>
 
       {aberto && (
         <div
-          aria-label={`Depoimento de ${aberto.name}`}
+          aria-label={t('depoimentoDe', { nome: aberto.name })}
           aria-modal="true"
           className="fixed inset-0 z-[100] grid place-items-center bg-ink/85 p-6 backdrop-blur-[3px]"
           onClick={() => setAberto(null)}

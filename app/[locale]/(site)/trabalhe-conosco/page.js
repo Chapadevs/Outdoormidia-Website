@@ -1,7 +1,6 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import CoverMedia from '@/components/ui/CoverMedia'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import Culture from '@/components/sections/Culture'
 import BancoDeTalentos from '@/components/sections/BancoDeTalentos'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
@@ -12,31 +11,24 @@ const SEDE = '/media/trabalhe-conosco/foto-da-sede.webp'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('trabalheConosco.titulo')
-  const descricao = t('trabalheConosco.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/trabalhe-conosco', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/trabalhe-conosco',
+    locale,
+    titulo: t('trabalheConosco.titulo'),
+    descricao: t('trabalheConosco.descricao'),
+  })
 }
 
 export default async function TrabalheConoscoPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'TrabalheConoscoPage' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Trabalhe Conosco' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             {/* Mesmo hero de duas colunas das páginas de plataforma: texto à
@@ -46,18 +38,17 @@ export default async function TrabalheConoscoPage({ params }) {
             <div className="grid grid-cols-[1fr_1fr] items-center gap-[50px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <div>
                 <div className="eyebrow reveal">
-                  Carreiras · <b>PR + SC</b>
+                  {t('eyebrow')} · <b>PR + SC</b>
                 </div>
                 <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-                  Trabalhe conosco.
+                  {t('h1')}
                 </h1>
                 <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">
-                  Há 67 anos colocamos marcas nas ruas do Paraná e de Santa Catarina. Se você quer
-                  trabalhar com mídia que a cidade inteira vê, seu lugar pode ser aqui.
+                  {t('lead')}
                 </p>
               </div>
               <CoverMedia
-                alt="Vista aérea da sede da Outdoormídia, em Curitiba: os galpões com placas solares e a fachada com a marca"
+                alt={t('capaAlt')}
                 className="reveal"
                 priority
                 ratio="16/9"

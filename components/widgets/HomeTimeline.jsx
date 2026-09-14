@@ -1,5 +1,6 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 /* Trilho vertical fixo no vão esquerdo da home: um traço por seção, com o número
    e o nome. O nome de cada seção só aparece quando ela é a seção em tela (ou no
@@ -12,23 +13,26 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 // onde o trilho inteiro precisa inverter para branco para não sumir.
 // `corNome` sobrescreve só a cor do nome da seção, sem mexer no traço nem no
 // número, para a seção que pede um destaque próprio.
+// O nome de cada seção vive em `HomeTimeline.secoes` nos messages/*.json,
+// chaveado pelo id.
 const SECOES = [
-  { id: 'inicio', nome: 'Início', inv: true },
-  { id: 'institucional', nome: 'Empresa', inv: false },
-  { id: 'diferenciais', nome: 'Diferenciais', inv: false, corNome: '#FF6900' },
-  { id: 'plataformas', nome: 'Plataformas', inv: false },
-  { id: 'cobertura', nome: 'Cobertura', inv: false },
-  { id: 'depoimentos', nome: 'Depoimentos', inv: false },
-  { id: 'cases', nome: 'Cases', inv: false },
-  { id: 'processo', nome: 'Processo', inv: false },
-  { id: 'nova-campanha', nome: 'Anunciar', inv: true },
-  { id: 'blog', nome: 'Blog', inv: false },
-  { id: 'faq', nome: 'Perguntas', inv: false },
+  { id: 'inicio', inv: true },
+  { id: 'institucional', inv: false },
+  { id: 'diferenciais', inv: false, corNome: '#FF6900' },
+  { id: 'plataformas', inv: false },
+  { id: 'cobertura', inv: false },
+  { id: 'depoimentos', inv: false },
+  { id: 'cases', inv: false },
+  { id: 'processo', inv: false },
+  { id: 'nova-campanha', inv: true },
+  { id: 'blog', inv: false },
+  { id: 'faq', inv: false },
 ]
 
 const NUM = (i) => String(i + 1).padStart(2, '0')
 
 export default function HomeTimeline() {
+  const t = useTranslations('HomeTimeline')
   const toposRef = useRef([])
   const docRef = useRef(1)
   const rafRef = useRef(0)
@@ -145,7 +149,7 @@ export default function HomeTimeline() {
   return (
     <nav
       aria-hidden={noRodape || undefined}
-      aria-label="Seções desta página"
+      aria-label={t('aria')}
       className={`fixed left-4 top-1/2 z-[55] -translate-y-1/2 transition-opacity duration-300 ${
         noRodape ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
@@ -218,7 +222,7 @@ export default function HomeTimeline() {
                   transition: suave,
                 }}
               >
-                {s.nome}
+                {t(`secoes.${s.id}`)}
               </span>
             </button>
           )

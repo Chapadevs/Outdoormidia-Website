@@ -1,6 +1,5 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CasesExplorer from '@/components/cases/CasesExplorer'
 import Reviews from '@/components/sections/Reviews'
@@ -13,21 +12,13 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('cases.titulo')
-  const descricao = t('cases.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/cases', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/cases',
+    locale,
+    titulo: t('cases.titulo'),
+    descricao: t('cases.descricao'),
+  })
 }
 
 export const revalidate = 300
@@ -47,22 +38,21 @@ export default async function CasesPage({ params }) {
   setRequestLocale(locale)
 
   const [cases, tags, groups] = await fetchContent()
+  const t = await getTranslations({ locale, namespace: 'CasesPage' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Cases' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Resultados · Out of Home</div>
+            <div className="eyebrow reveal">{t('eyebrow')}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Cases.
+              {t('h1')}
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Campanhas reais nas ruas do Paraná e de Santa Catarina, do lançamento que ocupou
-              Curitiba ao circuito segmentado que falou com o público certo. Filtre por segmento e
-              veja o que o Out of Home entrega.
+              {t('lead')}
             </p>
           </div>
         </section>
@@ -70,7 +60,7 @@ export default async function CasesPage({ params }) {
         {cases.length > 0 && (
           <section className="pb-[110px] max-mob:pb-[72px]">
             <div className="wrap">
-              <SectionHeading title="Todos os cases" className="reveal mb-[34px]" />
+              <SectionHeading title={t('todos')} className="reveal mb-[34px]" />
               <CasesExplorer cases={cases} tags={tags} groups={groups} />
             </div>
           </section>

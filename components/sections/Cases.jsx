@@ -2,6 +2,7 @@ import { Link } from '@/i18n/navigation'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { listPublishedCases } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
+import { getTranslations } from 'next-intl/server'
 
 // Sem credenciais do Firestore (ex.: build no CI), a seção é omitida — a
 // regeneração (ISR) preenche em runtime, onde as credenciais existem.
@@ -19,17 +20,18 @@ export default async function Cases() {
   if (featured.length === 0) return null
 
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
+  const t = await getTranslations('Cases')
 
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="cases">
       <div className="wrap">
         <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-          <SectionHeading title="Cases" className="flex-1" />
+          <SectionHeading title={t('titulo')} className="flex-1" />
           <Link
             className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
             href="/cases"
           >
-            Ver todos →
+            {t('verTodos')}
           </Link>
         </div>
       </div>

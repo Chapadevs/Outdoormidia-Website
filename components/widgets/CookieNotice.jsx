@@ -1,6 +1,7 @@
 'use client'
 import { useSyncExternalStore } from 'react'
 import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 
 const STORAGE_KEY = 'om-aviso-cookies'
 
@@ -25,6 +26,7 @@ function lerDispensa() {
 const dispensaNoServidor = () => '1'
 
 export default function CookieNotice() {
+  const t = useTranslations('Widgets')
   const dispensado = useSyncExternalStore(subscribe, lerDispensa, dispensaNoServidor)
 
   function fechar() {
@@ -39,24 +41,22 @@ export default function CookieNotice() {
   return (
     <div
       role="region"
-      aria-label="Aviso de cookies"
+      aria-label={t('avisoCookies')}
       className="fixed inset-x-0 bottom-0 z-[80] border-t border-line bg-paper shadow-[0_-14px_40px_-18px_rgba(22,17,13,.35)]"
     >
       <div className="wrap flex items-center gap-8 py-6 pr-[88px] max-tab:flex-col max-tab:items-start max-tab:gap-4 max-mob:gap-2.5 max-mob:py-3.5 max-mob:pr-[72px]">
         <div className="flex-1">
           <p className="eyebrow text-orange max-mob:text-[10px] max-mob:tracking-[0.16em]">Cookies</p>
           <p className="mt-2 max-w-[70ch] text-[15px] leading-[1.5] text-ink-soft max-mob:mt-1 max-mob:text-[12.5px] max-mob:leading-[1.45]">
-            Este site usa apenas cookies necessários para funcionar, sem
-            rastreamento e sem publicidade. Ao continuar navegando, você concorda
-            com o uso deles. Detalhes na{' '}
+            {t('cookiesTexto')}{' '}
             <Link href="/privacidade" className="font-bold text-orange hover:underline">
-              Política de privacidade
+              {t('cookiesLink')}
             </Link>
             .
           </p>
         </div>
         <button type="button" onClick={fechar} className="btn btn-ghost shrink-0 max-mob:px-4 max-mob:py-2 max-mob:text-[12px]">
-          Entendi
+          {t('cookiesEntendi')}
         </button>
       </div>
     </div>

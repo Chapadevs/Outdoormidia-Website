@@ -1,6 +1,5 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import NovaCampanha from '@/components/sections/NovaCampanha'
@@ -23,64 +22,55 @@ import { PRATICAS, getSaidas } from '@/lib/melhoresPraticas'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('melhoresPraticas.titulo')
-  const descricao = t('melhoresPraticas.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/area-do-anunciante/melhores-praticas', locale),
-    robots: { index: false },
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/area-do-anunciante/melhores-praticas',
+    locale,
+    titulo: t('melhoresPraticas.titulo'),
+    descricao: t('melhoresPraticas.descricao'),
+    noindex: true,
+  })
 }
 
 export default async function MelhoresPraticasPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'MelhoresPraticasPage' })
 
   return (
     <>
       <main>
         <Breadcrumb
           items={[
-            { label: 'Área do anunciante', href: '/area-do-anunciante' },
-            { label: 'Melhores práticas' },
+            { label: t('breadcrumbPai'), href: '/area-do-anunciante' },
+            { label: t('breadcrumb') },
           ]}
         />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Área do anunciante · {PRATICAS.length} práticas</div>
+            <div className="eyebrow reveal">{t('eyebrow', { n: PRATICAS.length })}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Melhores
+              {t('tituloA')}
               <br />
-              práticas.
+              {t('tituloB')}
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Oito decisões que separam a campanha que funciona da campanha que só aparece.
-              Nenhuma delas depende de orçamento grande, todas dependem de escolher antes de
-              comprar.
+              {t('lead')}
             </p>
           </div>
         </section>
 
         <section className="py-[110px] max-tab:py-[92px] max-mob:py-[72px]">
           <div className="wrap">
-            <SectionHeading title="As oito práticas" className="reveal mb-[34px]" />
+            <SectionHeading title={t('asPraticas')} className="reveal mb-[34px]" />
             <PraticasGrid />
           </div>
         </section>
 
         <section className="bg-bone py-[110px] max-tab:py-[92px] max-mob:py-[72px]">
           <div className="wrap">
-            <SectionHeading title="Para onde ir depois" className="reveal mb-[34px]" />
+            <SectionHeading title={t('paraOndeIr')} className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
               {getSaidas(locale).map((s) => (
                 <Link

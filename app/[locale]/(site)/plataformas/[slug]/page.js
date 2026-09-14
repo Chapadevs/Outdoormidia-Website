@@ -1,6 +1,8 @@
+import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
+import Schema from '@/components/widgets/Schema'
+import { service } from '@/lib/schema'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -45,20 +47,17 @@ async function fetchCases(slug) {
 export async function generateMetadata({ params }) {
   const { locale, slug } = await params
   const platform = getPlatformBySlugLocale(slug, locale)
-  if (!platform) return { title: 'Plataforma não encontrada | Outdoormídia' }
-
-  return {
-    title: `${platform.name} | Outdoormídia`,
-    description: platform.intro,
-    alternates: alternatesDe(`/plataformas/${platform.slug}`, locale),
-    openGraph: {
-      title: `${platform.name} | Outdoormídia`,
-      description: platform.intro,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
+  if (!platform) {
+    const t = await getTranslations({ locale, namespace: 'PlatformPage' })
+    return { title: t('naoEncontrada') }
   }
+
+  return metaDe({
+    path: `/plataformas/${platform.slug}`,
+    locale,
+    titulo: `${platform.name} | Outdoormídia`,
+    descricao: platform.intro,
+  })
 }
 
 export default async function PlatformPage({ params }) {
@@ -90,8 +89,9 @@ export default async function PlatformPage({ params }) {
   return (
     <>
       <main>
+        <Schema data={service(platform, locale)} />
         <Breadcrumb
-          items={[{ label: 'Plataformas', href: '/plataformas' }, { label: platform.name }]}
+          items={[{ label: t('breadcrumb'), href: '/plataformas' }, { label: platform.name }]}
         />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
@@ -134,7 +134,7 @@ export default async function PlatformPage({ params }) {
                   </h2>
                 ) : (
                   <h2 className="m-0 text-[clamp(21px,2.2vw,27px)] font-extrabold leading-tight tracking-[-0.01em] text-ink">
-                    Quando essa plataforma é a escolha certa
+                    {t('quandoTitulo')}
                   </h2>
                 )}
                 <ul
@@ -218,7 +218,7 @@ export default async function PlatformPage({ params }) {
         {ativos.length > 0 && (
           <section className="border-t border-line bg-bone py-[90px] max-mob:py-[60px]">
             <div className="wrap">
-              <SectionHeading title="Ativos em destaque" className="reveal mb-[34px]" />
+              <SectionHeading title={t('ativosEmDestaque')} className="reveal mb-[34px]" />
               <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
                 {ativos.map((ativo) => (
                   <AtivoCard ativo={ativo} key={ativo.slug} />
@@ -232,7 +232,7 @@ export default async function PlatformPage({ params }) {
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
               <SectionHeading
-                title="Como funciona o Sob Demanda"
+                title={t('comoFuncionaSobDemanda')}
                 className="reveal mb-[34px]"
               />
               <ol className="m-0 grid list-none grid-cols-3 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
@@ -274,7 +274,7 @@ export default async function PlatformPage({ params }) {
               {platform.passosVideo && (
                 <CoverMedia
                   className="reveal mt-8"
-                  label="Sob Demanda"
+                  label={t('sobDemanda')}
                   ratio="16/9"
                   video={platform.passosVideo}
                 />
@@ -311,7 +311,7 @@ export default async function PlatformPage({ params }) {
                 </>
               ) : (
                 <>
-                  <SectionHeading title="Formatos" className="reveal mb-[34px]" />
+                  <SectionHeading title={t('formatos')} className="reveal mb-[34px]" />
                   <FormatSpecCard formats={platform.formats} />
                 </>
               )}
@@ -322,13 +322,53 @@ export default async function PlatformPage({ params }) {
         {platform.mapaRede && (
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
-              <SectionHeading title="Mapa da rede" className="reveal mb-[34px]" />
+              <SectionHeading title={t('mapaDaRede')} className="reveal mb-[34px]" />
               <p className="reveal mb-8 max-w-[62ch] text-[15.5px] leading-relaxed text-ink-soft">
-                Os corredores que a rede percorre entre Ponta Grossa e Florianópolis, passando
-                pelo litoral do Paraná e por Joinville. O painel é construído sob demanda, no
-                ponto que a campanha pedir dentro desses trajetos.
+                {t('mapaDaRedeLead')}
               </p>
               <MapaRodovias />
+
+              {/* As capturas dos dois mapas têm proporções opostas (uma em
+                  retrato, outra em paisagem) e os marcadores vão até a borda
+                  de cada uma: cortar com `object-cover` levaria Curitiba ou
+                  Itajaí. A caixa quadrada com a imagem contida é o que deixa
+                  os dois cards da mesma altura sem perder marcador nenhum. */}
+              {platform.mapasExternos && (
+                <div className="mt-[18px] grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
+                  {platform.mapasExternos.map((mapa) => (
+                    <article
+                      className="ticks reveal flex flex-col overflow-hidden rounded-[16px] border border-line bg-white"
+                      key={mapa.id}
+                    >
+                      <div className="relative aspect-square w-full bg-bone">
+                        <Image
+                          alt={t(`mapasExternos.${mapa.id}.alt`)}
+                          className="object-contain"
+                          fill
+                          sizes="(max-width: 560px) 100vw, 50vw"
+                          src={mapa.image}
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col gap-3 p-7 max-mob:p-5">
+                        <h3 className="text-[19px] font-bold leading-tight text-ink">
+                          {t(`mapasExternos.${mapa.id}.titulo`)}
+                        </h3>
+                        <p className="text-[15px] leading-relaxed text-ink-soft">
+                          {t(`mapasExternos.${mapa.id}.texto`)}
+                        </p>
+                        <a
+                          className="btn btn-ghost mt-auto self-start max-mob:whitespace-normal max-mob:text-center"
+                          href={mapa.href}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {t(`mapasExternos.${mapa.id}.botao`)}
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -336,7 +376,7 @@ export default async function PlatformPage({ params }) {
         {cases.length > 0 && (
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
-              <SectionHeading title="Cases" className="reveal mb-[34px]" />
+              <SectionHeading title={t('cases')} className="reveal mb-[34px]" />
               <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
                 {cases.map((caseItem) => (
                   <div className="reveal flex" key={caseItem.id}>

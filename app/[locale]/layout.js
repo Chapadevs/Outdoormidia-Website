@@ -25,6 +25,9 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
+// Só o que vale para o site inteiro. Canonical e hreflang ficam em cada
+// page.js (a home inclusive, via metaDe): declarados aqui eles vazariam para
+// a 404, que herdaria um canonical apontando para a home.
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Site' })
@@ -33,17 +36,25 @@ export async function generateMetadata({ params }) {
     metadataBase: new URL(SITE_URL),
     title: t('titulo'),
     description: t('descricao'),
-    // Canonical da home. As demais rotas declaram a sua em `alternates` —
-    // caminho relativo, resolvido contra o metadataBase.
-    alternates: { canonical: locale === routing.defaultLocale ? '/' : `/${locale}` },
     openGraph: {
-      title: t('titulo'),
-      description: t('descricaoCurta'),
       siteName: 'Outdoormídia',
-      url: SITE_URL,
       locale: TAG_OG[locale],
-      alternateLocale: routing.locales.filter((l) => l !== locale).map((l) => TAG_OG[l]),
       type: 'website',
+    },
+    // Sem isto o Google limita o preview de imagem e o tamanho do snippet
+    // que pode mostrar (Discover e AI Overviews usam os dois). Página com
+    // `robots` próprio (noindex) substitui este bloco inteiro, e é o que
+    // deve acontecer.
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
     },
   }
 }

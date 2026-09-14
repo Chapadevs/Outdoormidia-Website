@@ -1,6 +1,5 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import SuaMarcaNoOoh from '@/components/forms/SuaMarcaNoOoh'
 import NovaCampanha from '@/components/sections/NovaCampanha'
 import { getPlatformsListagem } from '@/lib/platforms'
@@ -11,21 +10,13 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('suaMarcaNoOoh.titulo')
-  const descricao = t('suaMarcaNoOoh.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/area-do-anunciante/sua-marca-no-ooh', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/area-do-anunciante/sua-marca-no-ooh',
+    locale,
+    titulo: t('suaMarcaNoOoh.titulo'),
+    descricao: t('suaMarcaNoOoh.descricao'),
+  })
 }
 
 export const revalidate = 3600

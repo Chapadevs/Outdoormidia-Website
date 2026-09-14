@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import Accordion from '@/components/ui/Accordion'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { waFaqPage, waLink } from '@/lib/whatsapp'
@@ -7,6 +8,7 @@ import { waFaqPage, waLink } from '@/lib/whatsapp'
 // Uma pergunta aberta por vez em toda a página — o estado guarda a categoria e o
 // índice dentro dela, porque o link de WhatsApp leva a pergunta em foco.
 export default function FaqCategorias({ faqs, categorias }) {
+  const t = useTranslations('Faq')
   const [aberta, setAberta] = useState({ categoria: categorias[0], index: 0 })
 
   const grupos = categorias.map((categoria) => ({
@@ -38,9 +40,9 @@ export default function FaqCategorias({ faqs, categorias }) {
       <section className="pb-[110px] max-mob:pb-[72px]">
         <div className="wrap">
           <p className="reveal mx-auto max-w-[820px] text-[15px] text-ink-soft">
-            Não encontrou sua dúvida?{' '}
+            {t('naoEncontrou')}{' '}
             <a href={waLink(waFaqPage(emFoco))} className="font-bold text-orange hover:underline">
-              Fale com um especialista no WhatsApp.
+              {t('faleEspecialistaWhatsapp')}
             </a>
           </p>
         </div>
