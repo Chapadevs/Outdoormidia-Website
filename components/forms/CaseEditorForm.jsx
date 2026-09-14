@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { slugify } from '@/lib/slugify'
-import { PLATFORMS } from '@/lib/platforms'
+import { PLATFORMS, slugAtual } from '@/lib/platforms'
 import { ICONICOS } from '@/lib/iconicos'
 
 // Um case pode apontar tanto para o catálogo quanto para um projeto icônico.
@@ -29,7 +29,11 @@ const EMPTY = {
 
 export default function CaseEditorForm({ initialCase = null, allTags = [], groups = [] }) {
   const router = useRouter()
-  const [caseItem, setCaseItem] = useState(initialCase ? { ...EMPTY, ...initialCase } : EMPTY)
+  const [caseItem, setCaseItem] = useState(
+    initialCase
+      ? { ...EMPTY, ...initialCase, platforms: (initialCase.platforms ?? []).map(slugAtual) }
+      : EMPTY
+  )
   const [slugTouched, setSlugTouched] = useState(Boolean(initialCase))
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)

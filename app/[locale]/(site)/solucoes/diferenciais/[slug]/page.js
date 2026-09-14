@@ -88,6 +88,7 @@ export default async function DiferencialPage({ params }) {
   // O hero usa `subtitulo` onde o documento de copy separou o texto da página do
   // texto do card da home; sem ele os dois continuam sendo o mesmo `intro`.
   const textoHero = diferencial.subtitulo ?? diferencial.intro
+  const paragrafosHero = Array.isArray(textoHero) ? textoHero : [textoHero]
 
   // O mesmo hero veste headings de 11 a 25 caracteres. No teto de 92px cabe
   // cerca de 21 caracteres na largura do .wrap: acima disso a linha encosta na
@@ -127,7 +128,14 @@ export default async function DiferencialPage({ params }) {
                 >
                   {diferencial.heading}
                 </h1>
-                <p className={`${LEAD} mt-6 max-mob:mt-[18px]`}>{textoHero}</p>
+                {paragrafosHero.map((paragrafo, i) => (
+                  <p
+                    key={paragrafo}
+                    className={`${LEAD} ${i === 0 ? 'mt-6 max-mob:mt-[18px]' : 'mt-4'}`}
+                  >
+                    {paragrafo}
+                  </p>
+                ))}
                 {/* `semCta` é decisão de copy, não falta de conteúdo: onde os
                     botões saíram, o subtítulo é o único lugar da página em que a
                     tese aparece escrita. */}
