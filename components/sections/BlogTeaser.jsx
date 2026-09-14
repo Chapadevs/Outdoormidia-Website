@@ -3,6 +3,7 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import PostCard from '@/components/blog/PostCard'
 import { listPublishedPosts } from '@/lib/blog/posts'
 import { listTags } from '@/lib/tags/tags'
+import { getTranslations } from 'next-intl/server'
 
 // Sem credenciais do Firestore (ex.: build no CI), a seção cai no estado vazio — a
 // regeneração (ISR) preenche em runtime, onde as credenciais existem.
@@ -15,6 +16,7 @@ async function fetchLatest() {
 }
 
 export default async function BlogTeaser() {
+  const t = await getTranslations('BlogTeaser')
   const [posts, tags] = await fetchLatest()
   const latest = posts.slice(0, 3)
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
@@ -28,22 +30,21 @@ export default async function BlogTeaser() {
     <section className="py-[110px] max-mob:py-[72px]" id="blog">
       <div className="wrap">
         <div className="reveal mb-[18px] flex items-end justify-between gap-5">
-          <SectionHeading title="Blog" className="flex-1" />
+          <SectionHeading title={t('titulo')} className="flex-1" />
           <Link
             className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
             href="/blog/artigos"
           >
-            Ver todos →
+            {t('verTodos')}
           </Link>
         </div>
         <p className="reveal mb-[34px] max-w-[62ch] text-lg text-ink-soft">
-          Ideias, dados e estratégias de mídia exterior para colocar a sua marca nas ruas do
-          Paraná e de Santa Catarina.
+          {t('lead')}
         </p>
 
         {latest.length === 0 ? (
           <p className="reveal text-lg text-ink-soft">
-            Ainda não há artigos publicados. Volte em breve.
+            {t('vazio')}
           </p>
         ) : (
           <>
@@ -64,10 +65,10 @@ export default async function BlogTeaser() {
 
             <div className="reveal mt-[34px] flex items-center justify-between gap-5 max-mob:flex-col max-mob:items-start">
               <span className="eyebrow text-ink-soft">
-                {posts.length} {posts.length === 1 ? 'artigo publicado' : 'artigos publicados'}
+                {t('publicados', { n: posts.length })}
               </span>
               <Link className="btn btn-ghost" href="/blog/artigos">
-                Ver todos os artigos →
+                {t('verTodosArtigos')}
               </Link>
             </div>
           </>

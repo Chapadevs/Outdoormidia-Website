@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { useRouter } from 'next/navigation'
 import HeaderShell from '@/components/layout/HeaderShell'
@@ -7,17 +8,34 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import { CHAVE_BRIEFING } from '@/lib/constants'
 import { enviarLead } from '@/lib/leads/enviarLead'
 
-const PERIODOS = ['2 semanas (bi-semana)', '1 mês', '3 meses', '6 meses ou mais']
+// O valor de cada opção fixa segue em português nos quatro idiomas: é o que
+// vai para o lead, que o comercial lê em português. O que o visitante vê é a
+// tradução da `chave` em `ProposalForm.opcoes` (messages/*.json).
+const PERIODOS = [
+  { chave: 'biSemana', valor: '2 semanas (bi-semana)' },
+  { chave: 'umMes', valor: '1 mês' },
+  { chave: 'tresMeses', valor: '3 meses' },
+  { chave: 'seisMeses', valor: '6 meses ou mais' },
+]
+const OUTRA_PRACA = { chave: 'outraPraca', valor: 'Outra praça' }
+const NAO_SEI = { chave: 'naoSei', valor: 'Ainda não sei' }
 
 // Praças e formatos vêm da página (Firestore + catálogo). Não repetir a lista
 // aqui: já houve divergência com o inventário real, oferecendo praça que a
 // empresa não atende e escondendo praça que ela atende.
 export default function ProposalForm({ pracas = [], formatos = [] }) {
+  const t = useTranslations('ProposalForm')
   const router = useRouter()
   const [enviando, setEnviando] = useState(false)
 
-  const opcoesPraca = [...pracas.map((p) => p.name), 'Outra praça']
-  const opcoesFormato = [...formatos.map((f) => f.name), 'Ainda não sei']
+  const opcoesPraca = [
+    ...pracas.map((p) => ({ valor: p.name, rotulo: p.name })),
+    { valor: OUTRA_PRACA.valor, rotulo: t(`opcoes.${OUTRA_PRACA.chave}`) },
+  ]
+  const opcoesFormato = [
+    ...formatos.map((f) => ({ valor: f.valor ?? f.name, rotulo: f.name })),
+    { valor: NAO_SEI.valor, rotulo: t(`opcoes.${NAO_SEI.chave}`) },
+  ]
 
   // O briefing é gravado no Firestore e também atravessa a navegação pelo
   // sessionStorage — o porquê do storage está em CHAVE_BRIEFING, em
@@ -41,30 +59,29 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
     <div className="min-h-screen">
       <HeaderShell>
         <Link href="/" className="btn btn-ghost ml-auto">
-          ← Voltar ao site
+          {t('voltarSite')}
         </Link>
       </HeaderShell>
 
-      <Breadcrumb items={[{ label: 'Solicitar Proposta' }]} />
+      <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
       <section className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
         <div className="wrap">
           <div className="grid grid-cols-[0.85fr_1.15fr] items-start gap-[60px] max-tab:grid-cols-1 max-tab:gap-[34px]">
             <div>
               <div className="eyebrow">
-                <span>Briefing</span> ·{' '}
+                <span>{t('eyebrow')}</span> ·{' '}
                 <span>
                   <b>PR + SC</b>
                 </span>
               </div>
               <h1 className="display mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-                Quero uma
+                {t('tituloA')}
                 <br />
-                proposta.
+                {t('tituloB')}
               </h1>
               <p className="mt-6 max-w-[34ch] text-lg text-ink-soft">
-                Conte rápido sobre sua campanha. Em até 1 dia útil retornamos com praças, formatos
-                e valores sob medida para o seu objetivo.
+                {t('lead')}
               </p>
             </div>
 
@@ -74,7 +91,7 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
             >
               <div className="flex flex-col gap-2">
                 <label className="field-label" htmlFor="nome">
-                  Nome
+                  {t('campos.nome')}
                 </label>
                 <input
                   className="field-input"
@@ -82,21 +99,21 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
                   name="nome"
                   type="text"
                   required
-                  placeholder="Seu nome"
+                  placeholder={t('placeholders.nome')}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-5 max-mob:grid-cols-1">
                 <div className="flex flex-col gap-2">
                   <label className="field-label" htmlFor="empresa">
-                    Empresa
+                    {t('campos.empresa')}
                   </label>
                   <input
                     className="field-input"
                     id="empresa"
                     name="empresa"
                     type="text"
-                    placeholder="Nome da empresa"
+                    placeholder={t('placeholders.empresa')}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -116,7 +133,7 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
 
               <div className="flex flex-col gap-2">
                 <label className="field-label" htmlFor="email">
-                  E-mail
+                  {t('campos.email')}
                 </label>
                 <input
                   className="field-input"
@@ -131,30 +148,30 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
               <div className="grid grid-cols-2 gap-5 max-mob:grid-cols-1">
                 <div className="flex flex-col gap-2">
                   <label className="field-label" htmlFor="cidade">
-                    Onde quer aparecer?
+                    {t('campos.cidade')}
                   </label>
                   <select className="field-input field-select select-caret" id="cidade" name="cidade" required defaultValue="">
                     <option value="" disabled>
-                      Selecione a praça
+                      {t('placeholders.cidade')}
                     </option>
                     {opcoesPraca.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
+                      <option key={c.valor} value={c.valor}>
+                        {c.rotulo}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="field-label" htmlFor="formato">
-                    Formato de interesse
+                    {t('campos.formato')}
                   </label>
                   <select className="field-input field-select select-caret" id="formato" name="formato" required defaultValue="">
                     <option value="" disabled>
-                      Selecione o formato
+                      {t('placeholders.formato')}
                     </option>
                     {opcoesFormato.map((f) => (
-                      <option key={f} value={f}>
-                        {f}
+                      <option key={f.valor} value={f.valor}>
+                        {f.rotulo}
                       </option>
                     ))}
                   </select>
@@ -163,15 +180,15 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
 
               <div className="flex flex-col gap-2">
                 <label className="field-label" htmlFor="periodo">
-                  Período da campanha
+                  {t('campos.periodo')}
                 </label>
                 <select className="field-input field-select select-caret" id="periodo" name="periodo" required defaultValue="">
                   <option value="" disabled>
-                    Selecione a duração
+                    {t('placeholders.periodo')}
                   </option>
                   {PERIODOS.map((p) => (
-                    <option key={p} value={p}>
-                      {p}
+                    <option key={p.chave} value={p.valor}>
+                      {t(`opcoes.${p.chave}`)}
                     </option>
                   ))}
                 </select>
@@ -179,14 +196,14 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
 
               <div className="flex flex-col gap-2">
                 <label className="field-label" htmlFor="objetivo">
-                  Objetivo da campanha <span className="font-semibold text-line-2">(opcional)</span>
+                  {t('campos.objetivo')} <span className="font-semibold text-line-2">{t('opcional')}</span>
                 </label>
                 <textarea
                   className="field-input min-h-24 resize-y"
                   id="objetivo"
                   name="objetivo"
                   rows={4}
-                  placeholder="Ex.: divulgar lançamento, gerar fluxo na loja, reforçar marca na região…"
+                  placeholder={t('placeholders.objetivo')}
                 />
               </div>
 
@@ -206,7 +223,7 @@ export default function ProposalForm({ pracas = [], formatos = [] }) {
                 disabled={enviando}
                 className="btn btn-fill mt-1.5 justify-center py-[17px] text-[15px] disabled:opacity-60"
               >
-                {enviando ? 'Enviando…' : 'Enviar briefing'}
+                {enviando ? t('enviando') : t('enviar')}
               </button>
             </form>
           </div>

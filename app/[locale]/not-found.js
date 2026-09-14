@@ -6,6 +6,7 @@ import { getDiferenciaisNav } from '@/lib/diferenciais'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { WA_404, waLink } from '@/lib/whatsapp'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 // 404 do site inteiro. Vale para URL digitada errada e para todo notFound() das
 // rotas dinâmicas (plataformas, icônicos, posts do blog).
@@ -16,62 +17,42 @@ import { WA_404, waLink } from '@/lib/whatsapp'
 // Sem `export const metadata`: not-found.js do App Router não a suporta, o
 // título cai no do layout raiz e o status 404 é do próprio Next.
 
-const ROTAS = [
-  {
-    href: '/plataformas',
-    meta: 'Catálogo',
-    title: 'Plataformas',
-    text: 'Outdoor digital, front light, mídia indoor, aeroporto, MUB, rodovias e mídia móvel.',
-  },
-  {
-    href: '/solucoes/regioes-cobertura',
-    meta: 'Cobertura',
-    title: 'Regiões',
-    text: 'Onde temos ponto no Paraná e em Santa Catarina, praça por praça.',
-  },
-  {
-    href: '/cases',
-    meta: 'Prova',
-    title: 'Cases',
-    text: 'Campanhas reais que já ocuparam as ruas do Sul do Brasil.',
-  },
-  {
-    href: '/proposta',
-    meta: 'Comercial',
-    title: 'Solicitar proposta',
-    text: 'Conte a praça, o formato e o período. Retorno em até 1 dia útil.',
-  },
-]
+// O texto de cada card vive em `NotFound.rotas` nos quatro messages/*.json e
+// entra por posição sobre esta lista, que só guarda o destino.
+const ROTAS = ['/plataformas', '/solucoes/regioes-cobertura', '/cases', '/proposta']
 
-export default function NotFound() {
+export default async function NotFound() {
+  const locale = await getLocale()
+  const t = await getTranslations('NotFound')
+  const rotas = ROTAS.map((href, i) => ({ href, ...t.raw('rotas')[i] }))
+
   return (
     <>
-      <Header plataformas={getPlatformsNav('pt')} diferenciais={getDiferenciaisNav('pt')} />
+      <Header plataformas={getPlatformsNav(locale)} diferenciais={getDiferenciaisNav(locale)} />
       <main>
-        <Breadcrumb items={[{ label: 'Página não encontrada' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
-              Erro <b>404</b>
+              {t('eyebrow')} <b>404</b>
             </div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Esta página
+              {t('tituloA')}
               <br />
-              saiu do ar.
+              {t('tituloB')}
             </h1>
             <p className="reveal mt-6 max-w-[52ch] text-lg text-ink-soft">
-              O endereço mudou ou nunca existiu. Nossos outros +530 milhões de impactos por mês
-              continuam de pé. Escolha por onde seguir.
+              {t('lead')}
             </p>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="Para onde ir" className="reveal mb-[34px]" />
+            <SectionHeading title={t('paraOndeIr')} className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
-              {ROTAS.map((r) => (
+              {rotas.map((r) => (
                 <Link
                   className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 transition-colors duration-200 hover:border-orange max-mob:p-6"
                   href={r.href}
@@ -83,7 +64,7 @@ export default function NotFound() {
                   </h2>
                   <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{r.text}</p>
                   <span className="mt-auto pt-5 text-[13px] font-bold uppercase tracking-[0.1em] text-orange">
-                    Ver →
+                    {t('ver')} →
                   </span>
                 </Link>
               ))}
@@ -96,15 +77,14 @@ export default function NotFound() {
             <div className="ticks reveal flex items-center justify-between gap-8 rounded-[16px] border border-line bg-bone p-10 max-mob:flex-col max-mob:items-start max-mob:gap-5 max-mob:p-7">
               <div>
                 <h2 className="m-0 text-[clamp(24px,3.2vw,34px)] font-extrabold leading-tight text-ink">
-                  Procurava algo específico?
+                  {t('ajudaTitulo')}
                 </h2>
                 <p className="mt-3 max-w-[52ch] text-[15.5px] leading-relaxed text-ink-soft">
-                  Diga o que você estava tentando encontrar e mandamos o link, ou a resposta
-                  direto.
+                  {t('ajudaTexto')}
                 </p>
               </div>
               <a className="btn btn-fill whitespace-nowrap" href={waLink(WA_404)}>
-                Perguntar no WhatsApp
+                {t('ajudaCta')}
               </a>
             </div>
           </div>

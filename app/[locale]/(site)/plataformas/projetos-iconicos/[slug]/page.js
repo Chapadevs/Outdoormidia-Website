@@ -1,6 +1,5 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -12,7 +11,7 @@ import { ICONICOS, getIconicoBySlugLocale, getOutrosIconicosLocale } from '@/lib
 import { getPublishedCasesByPlatform } from '@/lib/cases/cases'
 import { listTags } from '@/lib/tags/tags'
 import { waIconico, waLink } from '@/lib/whatsapp'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 const CARD = 'ticks rounded-[16px] border border-line bg-white p-7 max-mob:p-6'
 
@@ -35,16 +34,15 @@ async function fetchCases(slug) {
 export async function generateMetadata({ params }) {
   const { locale, slug } = await params
   const iconico = getIconicoBySlugLocale(slug, locale)
-  if (!iconico) return { title: 'Projeto não encontrado | Outdoormídia' }
+  const t = await getTranslations({ locale, namespace: 'IconicoPage' })
+  if (!iconico) return { title: t('naoEncontrado') }
 
-  const title = `${iconico.name} | Projetos Icônicos | Outdoormídia`
-  return {
-    title,
-    description: iconico.intro,
-    alternates: alternatesDe(`/plataformas/projetos-iconicos/${iconico.slug}`, locale),
-    openGraph: { title, description: iconico.intro, locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]), type: 'website' },
-  }
+  return metaDe({
+    path: `/plataformas/projetos-iconicos/${iconico.slug}`,
+    locale,
+    titulo: `${iconico.name} | ${t('breadcrumbIconicos')} | Outdoormídia`,
+    descricao: iconico.intro,
+  })
 }
 
 export default async function IconicoPage({ params }) {
@@ -54,6 +52,7 @@ export default async function IconicoPage({ params }) {
   const iconico = getIconicoBySlugLocale(slug, locale)
   if (!iconico) notFound()
 
+  const t = await getTranslations({ locale, namespace: 'IconicoPage' })
   const { aside, oQueE, ativos } = iconico
   const [cases, tags] = await fetchCases(iconico.slug)
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
@@ -64,8 +63,8 @@ export default async function IconicoPage({ params }) {
       <main>
         <Breadcrumb
           items={[
-            { label: 'Plataformas', href: '/plataformas' },
-            { label: 'Projetos Icônicos', href: '/plataformas/projetos-iconicos' },
+            { label: t('breadcrumbPlataformas'), href: '/plataformas' },
+            { label: t('breadcrumbIconicos'), href: '/plataformas/projetos-iconicos' },
             { label: iconico.name },
           ]}
         />
@@ -84,7 +83,7 @@ export default async function IconicoPage({ params }) {
                     {iconico.ctaLabel}
                   </a>
                   <a className="btn btn-ghost" href="#ativos">
-                    Ver o que está na rua
+                    {t('verNaRua')}
                   </a>
                 </div>
               </div>
@@ -100,7 +99,7 @@ export default async function IconicoPage({ params }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="O que é" className="reveal mb-[34px]" />
+            <SectionHeading title={t('oQueE')} className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">{oQueE.lead}</p>
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
               {oQueE.cards.map((card) => (
@@ -120,7 +119,7 @@ export default async function IconicoPage({ params }) {
             vez só e aparece nas duas rotas. */}
         <section className="scroll-mt-24 bg-bone py-[110px] max-mob:py-[72px]" id="ativos">
           <div className="wrap">
-            <SectionHeading title="Na rua hoje" className="reveal mb-[34px]" />
+            <SectionHeading title={t('naRuaHoje')} className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[58ch] text-lg text-ink-soft">{iconico.frase}</p>
             <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
               {ativos.map((ativo) => (
@@ -128,8 +127,7 @@ export default async function IconicoPage({ params }) {
               ))}
             </div>
             <p className="mt-8 text-[13px] text-ink-soft">
-              As dimensões finais saem do estudo de viabilidade de cada endereço; confirme com o
-              time comercial antes de fechar a arte.
+              {t('dimensoesAviso')}
             </p>
           </div>
         </section>
@@ -137,7 +135,7 @@ export default async function IconicoPage({ params }) {
         {cases.length > 0 && (
           <section className="border-t border-line py-[90px] max-mob:py-[60px]">
             <div className="wrap">
-              <SectionHeading title="Cases" className="reveal mb-[34px]" />
+              <SectionHeading title={t('cases')} className="reveal mb-[34px]" />
               <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
                 {cases.map((caseItem) => (
                   <div className="reveal flex" key={caseItem.id}>
@@ -152,7 +150,7 @@ export default async function IconicoPage({ params }) {
                 className="mt-8 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 hover:text-orange"
                 href="/cases"
               >
-                Ver todos os cases <span aria-hidden>→</span>
+                {t('verTodosCases')} <span aria-hidden>→</span>
               </Link>
             </div>
           </section>
@@ -167,12 +165,12 @@ export default async function IconicoPage({ params }) {
         <section className="border-t border-line py-[90px] max-mob:py-[60px]">
           <div className="wrap">
             <div className="reveal mb-[34px] flex items-end justify-between gap-5">
-              <SectionHeading title="Os outros dois" className="flex-1" />
+              <SectionHeading title={t('osOutrosDois')} className="flex-1" />
               <Link
                 className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange"
                 href="/plataformas/projetos-iconicos"
               >
-                Ver todos →
+                {t('verTodos')}
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">

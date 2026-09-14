@@ -1,6 +1,5 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import MapaCobertura from '@/components/ui/MapaCobertura'
@@ -13,95 +12,89 @@ import NovaCampanha from '@/components/sections/NovaCampanha'
 import FormatosGallery from '@/components/sections/FormatosGallery'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-const TIPOS_MIDIA = [
-  {
-    title: 'Digital (DOOH)',
-    text: 'Veiculação programada em telas de LED com tecnologia de ponta, flexibilidade de conteúdo e alto impacto visual. Ideal para campanhas dinâmicas, segmentadas e em tempo real.',
-  },
-  {
-    title: 'Front Light (Estático)',
-    text: 'Mídia tradicional e contínua com forte presença física, visibilidade prolongada e alta memorização. Ideal para reforço de marca e ocupação estratégica de território.',
-  },
-]
-
+// Os dois cards de tipo de mídia vivem em `SolucoesPage.tiposMidia` nos
+// messages/*.json. Nos formatos, o nome é nome de produto e não se traduz;
+// `tech` e o `label` de cada foto são chaves do namespace `Tecnologia`
+// (`estatico` / `digital`), resolvidas na página. A Bike Mídia é a exceção,
+// com a linha própria em `SolucoesPage.techBike`.
 const FORMATOS = [
   {
     name: 'Top Sight',
-    tech: 'Estático / Digital',
+    tech: ['estatico', 'digital'],
     images: [
-      { src: '/media/tipos-de-midia/top-sight-estatico.jpeg', label: 'Estático' },
-      { src: '/media/tipos-de-midia/top-sight-digital.jpg', label: 'Digital' },
+      { src: '/media/tipos-de-midia/top-sight-estatico.jpeg', label: 'estatico' },
+      { src: '/media/tipos-de-midia/top-sight-digital.jpg', label: 'digital' },
     ],
   },
   {
     name: 'Top Sight Urbanity',
-    tech: 'Digital',
+    tech: ['digital'],
     images: [{ src: '/media/tipos-de-midia/top-sight-urbanity-digital.jpg' }],
   },
   {
     name: 'Super Top Urbanity',
-    tech: 'Digital',
+    tech: ['digital'],
     images: [{ src: '/media/tipos-de-midia/super-top-urbanity.jpg' }],
   },
-  { name: 'Super Top Sequencial', tech: 'Estático' },
+  { name: 'Super Top Sequencial', tech: ['estatico'] },
   {
     name: 'Super Billboard',
-    tech: 'Estático',
+    tech: ['estatico'],
     images: [{ src: '/media/tipos-de-midia/super-billboard.jpg' }],
   },
   {
     name: 'Poster Sight',
-    tech: 'Estático / Digital',
-    images: [{ src: '/media/tipos-de-midia/poster-sight-digital.jpg', label: 'Digital' }],
+    tech: ['estatico', 'digital'],
+    images: [{ src: '/media/tipos-de-midia/poster-sight-digital.jpg', label: 'digital' }],
   },
   {
     name: 'Super Poster',
-    tech: 'Estático',
+    tech: ['estatico'],
     images: [{ src: '/media/tipos-de-midia/super-poster-estatico.jpg' }],
   },
   {
     name: 'Relógio Digital',
-    tech: 'Digital',
+    tech: ['digital'],
     images: [{ src: '/media/tipos-de-midia/relogio-digital.jpg' }],
   },
   {
     name: 'Banca Horizontal',
-    tech: 'Digital',
+    tech: ['digital'],
     images: [{ src: '/media/tipos-de-midia/banca-horizontal.jpg' }],
   },
   {
     name: 'Banca Vertical',
-    tech: 'Digital',
+    tech: ['digital'],
     images: [{ src: '/media/tipos-de-midia/banca-vertical.jpg' }],
   },
   {
     name: 'Totem (Shoppings)',
-    tech: 'Digital',
+    tech: ['digital'],
     images: [{ src: '/media/tipos-de-midia/totem.jpg' }],
   },
-  { name: 'Empena (Shoppings)', tech: 'Digital' },
+  { name: 'Empena (Shoppings)', tech: ['digital'] },
   {
     name: 'Mega Banner (Shoppings)',
-    tech: 'Digital',
+    tech: ['digital'],
     images: [{ src: '/media/tipos-de-midia/mega-banner.jpg' }],
   },
   {
     name: 'Topo de Prédio',
-    tech: 'Digital / Estático',
+    tech: ['digital', 'estatico'],
     images: [
-      { src: '/media/tipos-de-midia/topo-de-predio-digital.jpg', label: 'Digital' },
-      { src: '/media/tipos-de-midia/topo-de-predio-estatico.jpg', label: 'Estático' },
+      { src: '/media/tipos-de-midia/topo-de-predio-digital.jpg', label: 'digital' },
+      { src: '/media/tipos-de-midia/topo-de-predio-estatico.jpg', label: 'estatico' },
     ],
   },
-  { name: 'Billboard', tech: 'Estático / Digital' },
+  { name: 'Billboard', tech: ['estatico', 'digital'] },
   {
     name: 'Bike Mídia',
-    tech: 'Mídia Móvel: trio bikes sequenciais / estático',
+    tech: 'bike',
     images: [{ src: '/media/tipos-de-midia/bike-midia.jpg' }],
   },
   {
     name: 'Bus Mídia',
-    tech: 'Estático',
+    tech: ['estatico'],
     images: [{ src: '/media/tipos-de-midia/busdoor.jpeg' }],
   },
 ]
@@ -110,21 +103,13 @@ const FORMATOS = [
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('solucoes.titulo')
-  const descricao = t('solucoes.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/solucoes', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/solucoes',
+    locale,
+    titulo: t('solucoes.titulo'),
+    descricao: t('solucoes.descricao'),
+  })
 }
 
 export const revalidate = 3600
@@ -133,6 +118,13 @@ export default async function SolucoesPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations('SolucoesPage')
+  const tt = await getTranslations('Tecnologia')
+
+  const formatos = FORMATOS.map((f) => ({
+    ...f,
+    tech: Array.isArray(f.tech) ? f.tech.map((k) => tt(k)).join(' / ') : t('techBike'),
+    images: f.images?.map((img) => ({ ...img, label: img.label ? tt(img.label) : undefined })),
+  }))
 
   return (
     <>
@@ -172,40 +164,32 @@ export default async function SolucoesPage({ params }) {
 
         <section className="py-[110px] max-mob:py-[72px]" id="tipos-de-midia">
           <div className="wrap">
-            <SectionHeading title="Tipos de mídia" className="reveal mb-[34px]" />
-            <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">
-              Tecnologia e dinâmica da exposição: escolha entre o alcance programável do digital
-              e a presença contínua do estático.
-            </p>
+            <SectionHeading title={t('tiposTitulo')} className="reveal mb-[34px]" />
+            <p className="reveal mb-10 max-w-[54ch] text-lg text-ink-soft">{t('tiposLead')}</p>
             <div className="grid grid-cols-2 gap-[18px] max-tab:grid-cols-1">
-              {TIPOS_MIDIA.map((t) => (
+              {t.raw('tiposMidia').map((tipo) => (
                 <div
                   className="ticks reveal flex flex-col gap-3 rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
-                  key={t.title}
+                  key={tipo.title}
                 >
                   <h3 className="m-0 text-[22px] font-extrabold leading-tight text-ink">
-                    {t.title}
+                    {tipo.title}
                   </h3>
-                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{t.text}</p>
+                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{tipo.text}</p>
                 </div>
               ))}
             </div>
 
             <h3 className="reveal mb-3 mt-[54px] text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft">
-              Formatos
+              {t('formatosTitulo')}
             </h3>
-            <p className="reveal mb-6 max-w-[54ch] text-lg text-ink-soft">
-              Variações físicas e visuais dos nossos produtos.
-            </p>
-            <FormatosGallery formatos={FORMATOS} />
+            <p className="reveal mb-6 max-w-[54ch] text-lg text-ink-soft">{t('formatosLead')}</p>
+            <FormatosGallery formatos={formatos} />
             <p className="reveal mt-6 max-w-[62ch] text-[14.5px] leading-relaxed text-ink-soft">
-              Cada formato foi desenvolvido para unir estética, impacto e performance,
-              adaptando-se a diferentes contextos urbanos e objetivos de marca.
+              {t('formatosTexto')}
             </p>
             <div className="ticks reveal mt-6 max-w-[62ch] rounded-[16px] border border-line bg-bone p-6 text-[14px] leading-relaxed text-ink-soft">
-              <strong className="text-ink">Ajuda a lembrar:</strong> Top (vertical, nosso reel
-              no digital) · Poster (horizonte, horizontal, nosso vídeo do YouTube no digital) ·
-              o que vem de super é 2x maior.
+              <strong className="text-ink">{t('ajudaLembrarTitulo')}</strong> {t('ajudaLembrarTexto')}
             </div>
           </div>
         </section>

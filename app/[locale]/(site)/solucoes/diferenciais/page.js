@@ -1,6 +1,5 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import DiferencialCard from '@/components/ui/DiferencialCard'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StatGrid from '@/components/ui/StatGrid'
@@ -9,58 +8,48 @@ import { getDiferenciais } from '@/lib/diferenciais'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 
-const PROVA = [
-  { n: '+530M', label: 'Impactos por mês' },
-  { n: '175', label: 'Telas digitais' },
-  { n: '24×7', label: 'Câmeras ao vivo' },
-  { n: '6', label: 'Circuitos MUB' },
-]
+// Os rótulos vivem em `DiferenciaisPage.prova` nos messages/*.json e entram
+// por posição sobre os números.
+const PROVA = ['+530M', '175', '24×7', '6']
 
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('diferenciais.titulo')
-  const descricao = t('diferenciais.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/solucoes/diferenciais', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/solucoes/diferenciais',
+    locale,
+    titulo: t('diferenciais.titulo'),
+    descricao: t('diferenciais.descricao'),
+  })
 }
 
 export default async function DiferenciaisPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'DiferenciaisPage' })
+  const prova = PROVA.map((n, i) => ({ n, label: t.raw('prova')[i] }))
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Soluções', href: '/solucoes' }, { label: 'Diferenciais' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumbPai'), href: '/solucoes' }, { label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
-            <div className="eyebrow reveal">Soluções · {getDiferenciais(locale).length} diferenciais</div>
+            <div className="eyebrow reveal">{t('eyebrow', { n: getDiferenciais(locale).length })}</div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Diferenciais.
+              {t('h1')}
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Mídia exterior todo mundo vende. O que muda é a exclusividade do ponto, a medição
-              do público e quem responde quando a campanha entra no ar.
+              {t('lead')}
             </p>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="Os diferenciais" className="reveal mb-[34px]" />
+            <SectionHeading title={t('osDiferenciais')} className="reveal mb-[34px]" />
             <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
               {getDiferenciais(locale).map((d) => (
                 <div className="reveal" key={d.slug}>
@@ -76,12 +65,11 @@ export default async function DiferenciaisPage({ params }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="A prova" className="reveal mb-[34px]" />
+            <SectionHeading title={t('aProva')} className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              Nenhum dos números acima depende de confiança: todos são medidos e podem ser
-              conferidos com o nosso time.
+              {t('provaLead')}
             </p>
-            <StatGrid stats={PROVA} size="md" className="reveal" />
+            <StatGrid stats={prova} size="md" className="reveal" />
           </div>
         </section>
 

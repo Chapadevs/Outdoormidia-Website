@@ -1,4 +1,5 @@
-import { DATA_LONGA } from '@/lib/format'
+import { getLocale, getTranslations } from 'next-intl/server'
+import { dataLonga } from '@/lib/format'
 import { EMPRESA } from '@/lib/empresa'
 
 // Renderizador dos dois documentos legais (/privacidade e /termos): sumário com
@@ -20,10 +21,12 @@ function Paragrafo({ children }) {
   return <p className="max-w-[72ch] text-[16.5px] leading-relaxed text-ink-soft">{children}</p>
 }
 
-export default function LegalDoc({ secoes, atualizadoEm, contato }) {
+export default async function LegalDoc({ secoes, atualizadoEm, contato }) {
+  const t = await getTranslations('LegalDoc')
+  const locale = await getLocale()
   // Data em ISO curto vira meia-noite UTC; ao meio-dia o fuso de Brasília não
   // puxa o dia para trás na formatação.
-  const atualizado = DATA_LONGA.format(new Date(`${atualizadoEm}T12:00:00`))
+  const atualizado = dataLonga(locale).format(new Date(`${atualizadoEm}T12:00:00`))
 
   const identificacao = [
     EMPRESA.razaoSocial || EMPRESA.nome,
@@ -37,13 +40,13 @@ export default function LegalDoc({ secoes, atualizadoEm, contato }) {
 
   return (
     <div className="wrap">
-      <p className="eyebrow reveal text-ink-soft">Atualizado em {atualizado}</p>
+      <p className="eyebrow reveal text-ink-soft">{t('atualizadoEm', { data: atualizado })}</p>
 
       <nav
-        aria-label="Sumário"
+        aria-label={t('sumario')}
         className="ticks reveal mt-6 rounded-[16px] border border-line bg-bone p-7 max-mob:p-6"
       >
-        <h2 className="m-0 text-xs font-bold uppercase tracking-[0.14em] text-ink">Nesta página</h2>
+        <h2 className="m-0 text-xs font-bold uppercase tracking-[0.14em] text-ink">{t('nestaPagina')}</h2>
         <ol className="mt-[18px] grid grid-cols-2 gap-x-10 gap-y-[11px] max-mob:grid-cols-1">
           {[...secoes, { id: 'contato', titulo: contato.titulo }].map((s, i) => (
             <li key={s.id}>

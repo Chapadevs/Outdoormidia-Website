@@ -1,6 +1,5 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import PostsExplorer from '@/components/blog/PostsExplorer'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { listPublishedPosts } from '@/lib/blog/posts'
@@ -12,21 +11,13 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('artigos.titulo')
-  const descricao = t('artigos.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/blog/artigos', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/blog/artigos',
+    locale,
+    titulo: t('artigos.titulo'),
+    descricao: t('artigos.descricao'),
+  })
 }
 
 export const revalidate = 300
@@ -46,33 +37,33 @@ export default async function ArtigosPage({ params }) {
   setRequestLocale(locale)
 
   const [posts, tags, groups] = await fetchContent()
+  const t = await getTranslations({ locale, namespace: 'ArtigosPage' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Blog', href: '/blog' }, { label: 'Artigos' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumbPai'), href: '/blog' }, { label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
-              Blog · <b>Conteúdo Out of Home</b>
+              {t('eyebrow')} · <b>{t('eyebrowForte')}</b>
             </div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Artigos.
+              {t('h1')}
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Ideias, dados e estratégias de mídia exterior para colocar a sua marca nas ruas
-              do Paraná e de Santa Catarina.
+              {t('lead')}
             </p>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="Últimos artigos" className="reveal mb-[34px]" />
+            <SectionHeading title={t('ultimos')} className="reveal mb-[34px]" />
             {posts.length === 0 ? (
               <p className="reveal text-lg text-ink-soft">
-                Ainda não há artigos publicados. Volte em breve.
+                {t('vazio')}
               </p>
             ) : (
               <PostsExplorer posts={posts} tags={tags} groups={groups} />

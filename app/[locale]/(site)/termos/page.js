@@ -1,6 +1,5 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import LegalDoc from '@/components/ui/LegalDoc'
 import { ATUALIZADO_EM, getContatoTermos, getTermos } from '@/lib/legal'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
@@ -9,43 +8,35 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('termos.titulo')
-  const descricao = t('termos.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/termos', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/termos',
+    locale,
+    titulo: t('termos.titulo'),
+    descricao: t('termos.descricao'),
+  })
 }
 
 export default async function TermosPage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'TermosPage' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Termos de uso' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
-              Jurídico · <b>Termos</b>
+              {t('eyebrow')} · <b>{t('eyebrowForte')}</b>
             </div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Termos de uso.
+              {t('h1')}
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              O que você pode fazer com o conteúdo deste site, o que os nossos números
-              significam e até onde vai a responsabilidade de cada lado.
+              {t('lead')}
             </p>
           </div>
         </section>

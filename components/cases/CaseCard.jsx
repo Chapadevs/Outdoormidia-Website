@@ -1,9 +1,11 @@
+import { useTranslations } from 'next-intl'
 import TagBadge from '@/components/blog/TagBadge'
 import CoverMedia from '@/components/ui/CoverMedia'
 
 const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 400px'
 
 export default function CaseCard({ caseItem, tags = [] }) {
+  const t = useTranslations('Cases')
   return (
     <article className="flex flex-1 flex-col overflow-hidden rounded-[16px] border border-line bg-white">
       {/* dentro de um card com overflow-hidden: sem borda e sem raio próprios,
@@ -11,7 +13,7 @@ export default function CaseCard({ caseItem, tags = [] }) {
       <CoverMedia
         src={caseItem.coverImage}
         alt={caseItem.coverAlt || caseItem.title}
-        label="Case"
+        label={t('rotuloCapa')}
         sizes={CARD_SIZES}
         className="rounded-none border-0 border-b"
       />

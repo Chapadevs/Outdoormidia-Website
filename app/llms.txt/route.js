@@ -4,6 +4,7 @@ import { PAGINAS_DESTAQUE, PAGINAS_INDEXAVEIS } from '@/lib/seo'
 import { PLATFORMS } from '@/lib/platforms'
 import { ICONICOS } from '@/lib/iconicos'
 import { DIFERENCIAIS_COM_PAGINA } from '@/lib/diferenciais'
+import { listPublishedPosts } from '@/lib/blog/posts'
 
 // /llms.txt — índice do site em markdown para motores generativos (ChatGPT,
 // Gemini, Claude, Perplexity). Não substitui o sitemap: o sitemap diz ao Google
@@ -11,7 +12,9 @@ import { DIFERENCIAIS_COM_PAGINA } from '@/lib/diferenciais'
 // palavras a empresa descreve o próprio negócio.
 //
 // Gerado das mesmas fontes do sitemap (lib/seo.js, lib/platforms.js,
-// lib/iconicos.js, lib/diferenciais.js) para não haver duas listas divergindo.
+// lib/iconicos.js, lib/diferenciais.js e os posts do Firestore) para não haver
+// duas listas divergindo. Os artigos são o que responde pergunta, e é o que um
+// modelo mais cita: sem eles o índice só apontava para páginas de catálogo.
 
 export const dynamic = 'force-static'
 export const revalidate = 3600
@@ -22,7 +25,7 @@ const link = (titulo, path, resumo) => `- [${titulo}](${SITE_URL}${path})${resum
 const destaqueSet = new Set(PAGINAS_DESTAQUE.map((p) => p.path))
 const SECUNDARIAS = PAGINAS_INDEXAVEIS.filter((p) => !destaqueSet.has(p.path))
 
-function build() {
+function build(artigos) {
   const { endereco } = EMPRESA
   const localizacao = [endereco.logradouro, endereco.cep, `${endereco.cidade} - ${endereco.estado}`]
     .filter(Boolean)
@@ -41,6 +44,7 @@ ${EMPRESA.nome} é uma empresa de ${EMPRESA.servico} fundada em ${EMPRESA.fundac
 - E-mail: ${EMPRESA.email}
 - Localização: ${localizacao}
 - Praças atendidas: ${EMPRESA.areaServida.join(', ')}
+- Redes sociais: ${Object.values(EMPRESA.redes).join(', ')}
 
 ## Páginas principais
 
@@ -60,6 +64,10 @@ ${ICONICOS.map((i) => link(i.name, `/plataformas/projetos-iconicos/${i.slug}`, i
 
 ${DIFERENCIAIS_COM_PAGINA.map((d) => link(d.title, `/solucoes/diferenciais/${d.slug}`, d.resumo)).join('\n')}
 
+## Artigos
+
+${artigos.length ? artigos.map((p) => link(p.title, `/blog/${p.slug}`, p.excerpt)).join('\n') : '- Em breve.'}
+
 ## Outras páginas
 
 ${SECUNDARIAS.map((p) => link(p.titulo, p.path, p.resumo)).join('\n')}
@@ -71,8 +79,17 @@ ${SECUNDARIAS.map((p) => link(p.titulo, p.path, p.resumo)).join('\n')}
 `
 }
 
-export function GET() {
-  return new Response(build(), {
+export async function GET() {
+  // Mesma regra do sitemap: o Firestore é a única fonte que pode falhar, e a
+  // falha derruba só a seção de artigos, nunca o arquivo.
+  let artigos = []
+  try {
+    artigos = await listPublishedPosts()
+  } catch (error) {
+    console.error('[llms.txt] posts do blog indisponíveis:', error)
+  }
+
+  return new Response(build(artigos), {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
       'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',

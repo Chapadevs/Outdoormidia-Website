@@ -79,7 +79,7 @@ export default function MapaRodovias({ className = '' }) {
           <div className="eyebrow mb-3">Rodovias</div>
           <div className="flex flex-col gap-2 max-tab:flex-row max-tab:flex-wrap">
             <Chip ativo={br === null} onClick={() => setBr(null)}>
-              Toda a rede
+              {t('todaARede')}
             </Chip>
             <div className="grid grid-cols-2 gap-2 max-tab:contents">
               {BRS.map((sigla) => (
@@ -92,14 +92,14 @@ export default function MapaRodovias({ className = '' }) {
         </div>
 
         <div className="reveal grid gap-6 border-t border-line pt-7 max-tab:order-3 max-tab:w-full max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-5">
-          <Grupo titulo="Pontos">
-            <Item amostra={<Polo />}>Cidade polo</Item>
+          <Grupo titulo={t('grupoPontos')}>
+            <Item amostra={<Polo />}>{t('legendaPolo')}</Item>
             <Item amostra={<Secundaria />}>{t('legendaCidade')}</Item>
             <Item amostra={<Apoio />}>{t('legendaApoio')}</Item>
           </Grupo>
-          <Grupo titulo="Vias">
+          <Grupo titulo={t('grupoVias')}>
             <Item amostra={<Via />}>{t('legendaCorredor')}</Item>
-            <Item amostra={<Sentido />}>Sentido do fluxo</Item>
+            <Item amostra={<Sentido />}>{t('legendaSentido')}</Item>
           </Grupo>
         </div>
       </div>

@@ -1,31 +1,22 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import SectionHeading from '@/components/ui/SectionHeading'
 import NovaCampanha from '@/components/sections/NovaCampanha'
-import { PODCAST, getPodcast, getEpisodios } from '@/lib/podcast'
+import { getPodcast, getEpisodios } from '@/lib/podcast'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('podcast.titulo')
-  const descricao = t('podcast.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/blog/podcast', locale),
-    robots: { index: false, follow: true },
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/blog/podcast',
+    locale,
+    titulo: t('podcast.titulo'),
+    descricao: t('podcast.descricao'),
+    noindex: true,
+  })
 }
 
 export default async function PodcastPage({ params }) {
@@ -33,19 +24,20 @@ export default async function PodcastPage({ params }) {
   setRequestLocale(locale)
   const podcast = getPodcast(locale)
   const episodios = getEpisodios(locale)
+  const t = await getTranslations({ locale, namespace: 'PodcastPage' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Blog', href: '/blog' }, { label: 'Podcast' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumbPai'), href: '/blog' }, { label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
-              Blog · <b>{PODCAST.title}</b>
+              {t('eyebrow')} · <b>{podcast.title}</b>
             </div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Podcast.
+              {t('h1')}
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{podcast.text}</p>
           </div>
@@ -53,7 +45,7 @@ export default async function PodcastPage({ params }) {
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="Episódios" className="reveal mb-[34px]" />
+            <SectionHeading title={t('episodios')} className="reveal mb-[34px]" />
 
             <ul className="m-0 grid list-none grid-cols-3 gap-[18px] p-0 max-tab:grid-cols-2 max-mob:grid-cols-1">
               {episodios.map((ep) => (
@@ -84,11 +76,11 @@ export default async function PodcastPage({ params }) {
                         rel="noopener noreferrer"
                         className="btn-ghost self-start"
                       >
-                        Ouvir episódio
+                        {t('ouvir')}
                       </a>
                     ) : (
                       <span className="text-[13px] font-bold uppercase tracking-[0.1em] text-line-2">
-                        Gravação em produção
+                        {t('emProducao')}
                       </span>
                     )}
                   </div>
@@ -97,8 +89,7 @@ export default async function PodcastPage({ params }) {
             </ul>
 
             <p className="reveal mt-9 max-w-[62ch] text-[15px] leading-relaxed text-ink-soft">
-              {podcast.tagline} Os episódios entram aqui assim que forem gravados, e também
-              nas plataformas de áudio.
+              {podcast.tagline} {t('aviso')}
             </p>
           </div>
         </section>

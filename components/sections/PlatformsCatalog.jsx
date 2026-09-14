@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import CarrosselContinuo from '@/components/ui/CarrosselContinuo'
 import PlatformShowcaseCard from '@/components/ui/PlatformShowcaseCard'
 
@@ -14,6 +15,7 @@ import PlatformShowcaseCard from '@/components/ui/PlatformShowcaseCard'
 // hash só existe no navegador, então a centralização acontece depois da
 // montagem, sem quebrar a hidratação.
 export default function PlatformsCatalog({ plataformas }) {
+  const t = useTranslations('PlatformsCatalog')
   const [inicial, setInicial] = useState(0)
 
   useEffect(() => {
@@ -30,15 +32,14 @@ export default function PlatformsCatalog({ plataformas }) {
   return (
     <>
       <p className="reveal mb-[26px] max-w-[52ch] text-[14.5px] leading-relaxed text-ink-soft">
-        Arraste para os dois lados, use o trackpad ou as setas do teclado para percorrer as{' '}
-        {plataformas.length} plataformas.
+        {t('lead', { n: plataformas.length })}
       </p>
       <div className="reveal">
         <CarrosselContinuo
           alturaClasse="h-[calc(var(--cw)*0.5625)] max-mob:h-[calc(var(--cw)*1.25)]"
           gap={26}
           inicial={inicial}
-          label="Catálogo de plataformas Outdoormídia"
+          label={t('carrosselLabel')}
           velocidade={0.055}
           width="min(820px,74vw)"
         >

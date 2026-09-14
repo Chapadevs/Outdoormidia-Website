@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import EscadaPresenca from '@/components/ui/EscadaPresenca'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import {
   NOTA_MAXIMA,
   PERGUNTAS,
@@ -21,6 +21,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function DiagnosticoQuiz() {
   const locale = useLocale()
+  const t = useTranslations('DiagnosticoQuiz')
   const GRUPOS = gruposDePerguntas(locale)
   const ESCALA = getEscala(locale)
   const PERGUNTAS_L = getPerguntas(locale)
@@ -41,7 +42,7 @@ export default function DiagnosticoQuiz() {
   // normalização e sem regra de três.
   const score = notas.reduce((total, n) => total + (n ?? 0), 0)
   const degrau = degrauDoScore(score, locale)
-  const degrauLabel = `Degrau ${degrau.n} · ${degrau.nome}`
+  const degrauLabel = t('degrauLabel', { n: degrau.n, nome: degrau.nome })
   const mostrarResultado = concluido && completo
   const maisFragil = pontoMaisFragil(notas)
   const fragil = maisFragil === -1 ? null : PERGUNTAS_L[maisFragil]
@@ -134,7 +135,7 @@ export default function DiagnosticoQuiz() {
       <div className="wrap">
         <div className="flex items-center gap-5 border-t border-line py-4 max-mob:gap-3 max-mob:py-3.5">
           <span className="eyebrow whitespace-nowrap max-mob:text-[10px] max-mob:tracking-[0.16em]">
-            <b>{respondidas}</b> de {PERGUNTAS.length} respondidas
+            {t.rich('respondidas', { n: respondidas, total: PERGUNTAS.length, b: (c) => <b>{c}</b> })}
           </span>
           <span className="h-1 flex-1 rounded-full bg-line">
             <span
@@ -146,9 +147,7 @@ export default function DiagnosticoQuiz() {
 
         <div className="reveal mb-9 flex flex-wrap items-center gap-7 rounded-[16px] border border-line bg-white px-6 py-5 max-mob:mb-6 max-mob:flex-col max-mob:items-stretch max-mob:gap-4 max-mob:px-5 max-mob:py-4">
           <p className="min-w-[280px] flex-1 text-sm leading-relaxed text-ink-soft max-mob:min-w-0 max-mob:flex-none max-mob:text-[13.5px]">
-            Arraste ou clique na barra e dê uma nota de <b className="text-ink">0 a 10</b> em cada
-            pergunta. Leve menos de um minuto e responda com sinceridade: o resultado só serve se for
-            honesto.
+            {t.rich('instrucao', { b: (c) => <b className="text-ink">{c}</b> })}
           </p>
           <ul className="flex gap-[22px] max-mob:justify-between max-mob:gap-3 max-mob:border-t max-mob:border-line max-mob:pt-4">
             {ESCALA.map(({ faixa: intervalo, rotulo }) => (
@@ -273,7 +272,7 @@ export default function DiagnosticoQuiz() {
           {!mostrarResultado && (
             <div className="sticky bottom-[18px] z-30 flex flex-wrap items-center gap-6 rounded-[16px] bg-ink px-6 py-[18px] text-paper shadow-[0_14px_34px_rgba(22,17,13,.22)] max-mob:bottom-[84px] max-mob:gap-x-3 max-mob:gap-y-2 max-mob:px-4 max-mob:py-3">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-paper/55 max-mob:hidden">
-                Parcial
+                {t('parcial')}
               </span>
               <span className="flex items-baseline gap-1">
                 <span className="font-display text-[34px] leading-none max-mob:text-[26px]">
@@ -288,10 +287,10 @@ export default function DiagnosticoQuiz() {
                 className="min-w-[180px] flex-1 text-[13px] leading-[1.5] text-paper/70 max-mob:order-last max-mob:min-w-0 max-mob:basis-full max-mob:text-[11.5px] max-mob:leading-[1.45]"
               >
                 {respondidas === 0
-                  ? `Comece pela primeira pergunta. O seu degrau aparece quando as ${PERGUNTAS.length} estiverem respondidas.`
+                  ? t('comece', { total: PERGUNTAS.length })
                   : !completo
-                    ? `Faltam ${faltam} ${faltam === 1 ? 'resposta' : 'respostas'} para o seu degrau aparecer.`
-                    : 'Tudo respondido: veja em qual degrau a sua marca está.'}
+                    ? t('faltam', { n: faltam })
+                    : t('tudoRespondido')}
               </p>
               <button
                 ref={botaoRef}
@@ -303,7 +302,7 @@ export default function DiagnosticoQuiz() {
                     : 'bg-white/10 text-paper/50 hover:bg-white/[.18]'
                 }`}
               >
-                Ver meu resultado
+                {t('verResultado')}
               </button>
             </div>
           )}
@@ -315,7 +314,7 @@ export default function DiagnosticoQuiz() {
               <div className="grid grid-cols-[170px_1fr] items-start gap-8 max-mob:grid-cols-1 max-mob:gap-4">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-[0.22em] opacity-70 max-mob:text-[10px] max-mob:tracking-[0.16em]">
-                    Resultado final
+                    {t('resultadoFinal')}
                   </div>
                   <div className="mt-2 font-display text-[clamp(56px,10vw,88px)] leading-[0.9]">
                     {score}
@@ -332,7 +331,7 @@ export default function DiagnosticoQuiz() {
                   {fragil && (
                     <div className="mt-7 border-b border-current/20 pb-7">
                       <p className="m-0 text-[15px] font-bold leading-[1.5]">
-                        Seu ponto mais frágil hoje é{' '}
+                        {t('pontoFragil')}{' '}
                         <span className="font-extrabold">&ldquo;{fragil.pergunta}&rdquo;</span>
                       </p>
                       <p className={`mt-2.5 text-[14.5px] leading-[1.65] ${degrau.soft}`}>
@@ -356,7 +355,7 @@ export default function DiagnosticoQuiz() {
                         className={`${degrau.btn} mt-5`}
                         href={waLink(waDiagnosticoFragil(degrauLabel, fragil.pergunta))}
                       >
-                        Falar com um especialista →
+                        {t('falarEspecialista')}
                       </a>
                     </div>
                   )}
@@ -374,31 +373,28 @@ export default function DiagnosticoQuiz() {
 
             <div className="mt-4 rounded-[16px] border border-orange bg-orange p-[38px] text-white max-mob:p-6">
               <h3 className="m-0 font-display text-[clamp(28px,4.6vw,48px)] font-normal uppercase leading-[0.9]">
-                Subir de degrau é
+                {t('fechoTituloA')}
                 <br />
-                decisão de mídia.
+                {t('fechoTituloB')}
               </h3>
               <p className="mt-4 max-w-[62ch] text-white/[.92]">
-                {comDestaque(
-                  'Presença não se constrói com uma campanha. Se constrói **aparecendo onde o seu público passa todo dia, o ano inteiro**. É isso que a Outdoormídia faz há 67 anos em Curitiba, Região Metropolitana, Litoral do Paraná, Joinville, Itajaí e Balneário Camboriú.',
-                )}
+                {comDestaque(t('fechoTexto'))}
               </p>
               <div className="mt-[30px] flex flex-wrap gap-3 max-mob:mt-6">
                 <a
                   className="btn btn-on-orange"
                   href={waLink(waDiagnostico(score, NOTA_MAXIMA, degrauLabel))}
                 >
-                  Falar com um especialista →
+                  {t('falarEspecialista')}
                 </a>
               </div>
               <p className="mt-6 max-w-[62ch] text-[14.5px] text-white/[.92]">
-                Quer ver como a sua marca ficaria em um painel antes de conversar? Monte a simulação
-                em{' '}
+                {t('simulacao')}{' '}
                 <Link
                   className="font-bold underline underline-offset-4 hover:no-underline"
                   href="/area-do-anunciante/sua-marca-no-ooh"
                 >
-                  Sua marca no OOH
+                  {t('suaMarcaNoOoh')}
                 </Link>
                 .
               </p>
@@ -414,7 +410,7 @@ export default function DiagnosticoQuiz() {
             >
               <div className="min-w-[260px] flex-1">
                 <label className="field-label" htmlFor="diagnostico-email">
-                  Quer receber esse diagnóstico por e-mail?
+                  {t('emailPergunta')}
                 </label>
                 <input
                   autoComplete="email"
@@ -424,17 +420,17 @@ export default function DiagnosticoQuiz() {
                     setEmail(e.target.value)
                     if (envio !== 'parado') setEnvio('parado')
                   }}
-                  placeholder="Seu melhor e-mail"
+                  placeholder={t('emailPlaceholder')}
                   type="email"
                   value={email}
                 />
-                {envio === 'invalido' && <p className="field-error">Confira o e-mail digitado.</p>}
+                {envio === 'invalido' && <p className="field-error">{t('emailInvalido')}</p>}
                 {envio === 'erro' && (
-                  <p className="field-error">Não foi possível registrar agora. Tente de novo.</p>
+                  <p className="field-error">{t('emailErro')}</p>
                 )}
                 {envio === 'pronto' && (
                   <p className="mt-1.5 text-[13px] font-bold text-orange">
-                    Pronto, recebemos o seu e-mail.
+                    {t('emailPronto')}
                   </p>
                 )}
               </div>
@@ -455,13 +451,13 @@ export default function DiagnosticoQuiz() {
                 disabled={envio === 'enviando' || envio === 'pronto'}
                 type="submit"
               >
-                {envio === 'enviando' ? 'Enviando…' : 'Enviar'}
+                {envio === 'enviando' ? t('enviando') : t('enviar')}
               </button>
             </form>
 
             <div className="mt-4 flex justify-center">
               <button className="btn btn-ghost" onClick={refazer} type="button">
-                Refazer diagnóstico
+                {t('refazer')}
               </button>
             </div>
           </div>

@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useSyncExternalStore } from 'react'
 import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import { CHAVE_BRIEFING, MAILTO_RH } from '@/lib/constants'
 import { WA_OBRIGADO, waBriefing, waLink } from '@/lib/whatsapp'
 
@@ -28,6 +29,7 @@ function lerBriefing() {
 const briefingNoServidor = () => null
 
 export default function ObrigadoCta({ origem }) {
+  const t = useTranslations('Widgets')
   const guardado = useSyncExternalStore(subscribe, lerBriefing, briefingNoServidor)
 
   // Ao sair da tela o briefing é descartado — dado pessoal não precisa
@@ -51,10 +53,10 @@ export default function ObrigadoCta({ origem }) {
 
   const principal =
     origem === 'talentos'
-      ? { href: MAILTO_RH, label: 'Enviar currículo por e-mail' }
+      ? { href: MAILTO_RH, label: t('enviarCurriculo') }
       : {
           href: whatsapp(),
-          label: origem === 'proposta' ? 'Adiantar pelo WhatsApp' : 'Falar pelo WhatsApp',
+          label: origem === 'proposta' ? t('adiantarWhatsapp') : t('falarWhatsapp'),
         }
 
   return (
@@ -63,7 +65,7 @@ export default function ObrigadoCta({ origem }) {
         {principal.label}
       </a>
       <Link className="btn btn-ghost" href="/">
-        Voltar ao início
+        {t('voltarInicio')}
       </Link>
     </div>
   )

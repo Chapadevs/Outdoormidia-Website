@@ -1,6 +1,5 @@
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
@@ -19,21 +18,13 @@ function comDestaque(texto) {
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('governanca.titulo')
-  const descricao = t('governanca.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/sobre/governanca', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/sobre/governanca',
+    locale,
+    titulo: t('governanca.titulo'),
+    descricao: t('governanca.descricao'),
+  })
 }
 
 export default async function GovernancaPage({ params }) {

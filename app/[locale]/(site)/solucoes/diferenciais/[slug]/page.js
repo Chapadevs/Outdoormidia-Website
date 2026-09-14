@@ -1,6 +1,5 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -13,7 +12,7 @@ import {
   getOutrosDiferenciaisLocale,
 } from '@/lib/diferenciais'
 import { waDiferencial, waLink } from '@/lib/whatsapp'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 const CARD = 'ticks rounded-[16px] border border-line bg-white p-7 max-mob:p-6'
 
@@ -38,19 +37,19 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { locale, slug } = await params
   const diferencial = getDiferencialBySlugLocale(slug, locale)
-  if (!diferencial) return { title: 'Diferencial não encontrado | Outdoormídia' }
+  if (!diferencial) {
+    const t = await getTranslations({ locale, namespace: 'DiferencialPage' })
+    return { title: t('naoEncontrado') }
+  }
 
   // `seo` só existe onde o documento de copy fechou title e description
   // próprios; sem ele vale o padrão, montado do nome e do texto de abertura.
-  const title = diferencial.seo?.title ?? `${diferencial.title} | Outdoormídia`
-  const description = diferencial.seo?.description ?? diferencial.intro
-  return {
-    title,
-    description,
-    alternates: alternatesDe(`/solucoes/diferenciais/${diferencial.slug}`, locale),
-    openGraph: { title, description, locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]), type: 'website' },
-  }
+  return metaDe({
+    path: `/solucoes/diferenciais/${diferencial.slug}`,
+    locale,
+    titulo: diferencial.seo?.title ?? `${diferencial.title} | Outdoormídia`,
+    descricao: diferencial.seo?.description ?? diferencial.intro,
+  })
 }
 
 export default async function DiferencialPage({ params }) {
@@ -60,6 +59,7 @@ export default async function DiferencialPage({ params }) {
   const diferencial = getDiferencialBySlugLocale(slug, locale)
   if (!diferencial) notFound()
 
+  const t = await getTranslations({ locale, namespace: 'DiferencialPage' })
   const {
     aside,
     oQueE,
@@ -105,8 +105,8 @@ export default async function DiferencialPage({ params }) {
       <main>
         <Breadcrumb
           items={[
-            { label: 'Soluções', href: '/solucoes' },
-            { label: 'Diferenciais', href: '/solucoes/diferenciais' },
+            { label: t('breadcrumbSolucoes'), href: '/solucoes' },
+            { label: t('breadcrumbDiferenciais'), href: '/solucoes/diferenciais' },
             { label: diferencial.title },
           ]}
         />
@@ -121,7 +121,7 @@ export default async function DiferencialPage({ params }) {
               }
             >
               <div>
-                <div className="eyebrow reveal">Diferencial · Soluções</div>
+                <div className="eyebrow reveal">{t('eyebrow')}</div>
                 <h1
                   className={`display reveal mt-[18px] text-balance text-ink max-mob:mt-3.5 ${heroFontSize}`}
                 >
@@ -149,7 +149,7 @@ export default async function DiferencialPage({ params }) {
                     ) : (
                       aplicacao && (
                         <a href="#aplicacao" className="btn btn-ghost">
-                          Ver na prática
+                          {t('verNaPratica')}
                         </a>
                       )
                     )}
@@ -187,7 +187,7 @@ export default async function DiferencialPage({ params }) {
         {leadOQueE && (
           <section className={SECAO}>
             <div className="wrap">
-              <SectionHeading title="O que é" className={TITULO_SECAO} />
+              <SectionHeading title={t('oQueE')} className={TITULO_SECAO} />
               <div
                 className={`${LEAD} mb-[54px] flex flex-col gap-5 max-tab:mb-[42px] max-mob:mb-8 max-mob:gap-4`}
               >
@@ -424,7 +424,7 @@ export default async function DiferencialPage({ params }) {
                   className="btn btn-ghost mt-1 self-start max-mob:whitespace-normal max-mob:text-center"
                   href="/privacidade"
                 >
-                  Conferir política de privacidade
+                  {t('conferirPrivacidade')}
                 </Link>
               </div>
             </div>
@@ -434,7 +434,7 @@ export default async function DiferencialPage({ params }) {
         {prova && (
           <section className={`bg-bone ${SECAO_Y}`}>
             <div className="wrap">
-              <SectionHeading title="A prova" className={TITULO_SECAO} />
+              <SectionHeading title={t('aProva')} className={TITULO_SECAO} />
               <p className={`${LEAD} mb-[54px] max-w-[54ch] max-tab:mb-[42px] max-mob:mb-8`}>
                 {prova.lead}
               </p>
@@ -446,7 +446,7 @@ export default async function DiferencialPage({ params }) {
         {aplicacao && (
         <section className={SECAO_Y} id="aplicacao">
           <div className="wrap">
-            <SectionHeading title="Aplicação prática" className={TITULO_SECAO} />
+            <SectionHeading title={t('aplicacaoPratica')} className={TITULO_SECAO} />
             <p className={`${LEAD} mb-[54px] max-w-[54ch] max-tab:mb-[42px] max-mob:mb-8`}>
               {aplicacao.lead}
             </p>
@@ -529,7 +529,7 @@ export default async function DiferencialPage({ params }) {
               </div>
             </div>
             <p className="mt-3.5 text-[13px] text-ink-soft">
-              Números do mini-case a confirmar com o time comercial antes de publicar.
+              {t('miniCaseAviso')}
             </p>
           </div>
         </section>
@@ -538,7 +538,7 @@ export default async function DiferencialPage({ params }) {
         {comparativo && (
           <section className={SECAO} id="comparacao">
             <div className="wrap">
-              <SectionHeading title="Comparação" className={TITULO_SECAO} />
+              <SectionHeading title={t('comparacao')} className={TITULO_SECAO} />
               <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
                 {[comparativo.amador, comparativo.especialista].map((lado) => (
                   <article className={`${CARD} reveal flex flex-col gap-4`} key={lado.label}>
@@ -569,14 +569,14 @@ export default async function DiferencialPage({ params }) {
           <div className="wrap">
             <div className="reveal mb-[34px] flex items-end justify-between gap-5 max-tab:mb-[30px] max-mob:mb-6 max-mob:flex-col max-mob:items-start max-mob:gap-3.5">
               <SectionHeading
-                title="Outros diferenciais"
+                title={t('outrosDiferenciais')}
                 className="flex-1 max-mob:w-full"
               />
               <Link
                 className="eyebrow self-end whitespace-nowrap transition-colors duration-150 hover:text-orange max-mob:self-start"
                 href="/solucoes/diferenciais"
               >
-                Ver todos →
+                {t('verTodos')}
               </Link>
             </div>
             <div className="grid grid-cols-5 gap-[18px] max-lap:grid-cols-3 max-tab:grid-cols-2 max-mob:grid-cols-1">

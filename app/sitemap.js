@@ -9,6 +9,10 @@ import { listPublishedPosts } from '@/lib/blog/posts'
 // Reconstruído a cada hora junto com o ISR das rotas de conteúdo.
 export const revalidate = 3600
 
+// Ver `env.BUILD_DATE` em next.config.mjs. O `??` cobre só ambiente sem
+// bundle (teste isolado do módulo).
+const DATA_BUILD = new Date(process.env.BUILD_DATE ?? Date.now())
+
 const url = (path) => `${SITE_URL}${path}`
 
 // Uma entrada por idioma, cada uma declarando as outras três em `alternates`.
@@ -27,21 +31,19 @@ function porIdioma(path, resto) {
 }
 
 export default async function sitemap() {
-  const agora = new Date()
-
   const estaticas = PAGINAS_INDEXAVEIS.flatMap((p) =>
     porIdioma(p.path, {
-      lastModified: agora,
+      lastModified: DATA_BUILD,
       changeFrequency: p.changeFrequency,
       priority: p.priority,
     })
   )
 
   // O catálogo, os icônicos e os diferenciais são dados estáticos do repositório:
-  // a data de alteração é a do deploy, que é o que `agora` representa aqui.
+  // a data de alteração é a do deploy.
   const plataformas = PLATFORMS.flatMap((p) =>
     porIdioma(`/plataformas/${p.slug}`, {
-      lastModified: agora,
+      lastModified: DATA_BUILD,
       changeFrequency: 'monthly',
       priority: 0.8,
     })
@@ -49,7 +51,7 @@ export default async function sitemap() {
 
   const iconicos = ICONICOS.flatMap((i) =>
     porIdioma(`/plataformas/projetos-iconicos/${i.slug}`, {
-      lastModified: agora,
+      lastModified: DATA_BUILD,
       changeFrequency: 'monthly',
       priority: 0.6,
     })
@@ -57,7 +59,7 @@ export default async function sitemap() {
 
   const diferenciais = DIFERENCIAIS_COM_PAGINA.flatMap((d) =>
     porIdioma(`/solucoes/diferenciais/${d.slug}`, {
-      lastModified: agora,
+      lastModified: DATA_BUILD,
       changeFrequency: 'monthly',
       priority: 0.6,
     })
@@ -65,16 +67,19 @@ export default async function sitemap() {
 
   // O Firestore é a única fonte que pode falhar aqui. Sitemap quebrado tira do
   // ar a descoberta do site inteiro, então a falha derruba só os posts.
+  //
+  // O post existe só em português, então entra uma vez, sem `alternates`:
+  // anunciar /en/blog/x como versão inglesa de um texto em PT é hreflang
+  // inválido. O canonical da página diz o mesmo (ver `somentePt` em lib/seo.js).
   let artigos = []
   try {
     const posts = await listPublishedPosts()
-    artigos = posts.flatMap((post) =>
-      porIdioma(`/blog/${post.slug}`, {
-        lastModified: new Date(post.updatedAt || post.publishedAt || agora),
-        changeFrequency: 'monthly',
-        priority: 0.6,
-      })
-    )
+    artigos = posts.map((post) => ({
+      url: url(`/blog/${post.slug}`),
+      lastModified: new Date(post.updatedAt || post.publishedAt || DATA_BUILD),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }))
   } catch (error) {
     console.error('[sitemap] posts do blog indisponíveis:', error)
   }

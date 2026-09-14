@@ -1,9 +1,11 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import PostCard from '@/components/blog/PostCard'
 import TagFilter, { contarPorTag, groupTagRows } from '@/components/ui/TagFilter'
 
 export default function PostsExplorer({ posts, tags, groups }) {
+  const t = useTranslations('Explorers')
   const [selected, setSelected] = useState({})
   const tagMap = new Map(tags.map((tag) => [tag.slug, tag]))
   const rows = groupTagRows(tags, groups)
@@ -29,7 +31,7 @@ export default function PostsExplorer({ posts, tags, groups }) {
         />
       )}
       {filtered.length === 0 ? (
-        <p className="text-lg text-ink-soft">Nenhum artigo com essa combinação de filtros.</p>
+        <p className="text-lg text-ink-soft">{t('semArtigos')}</p>
       ) : (
         <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1">
           {filtered.map((post) => (

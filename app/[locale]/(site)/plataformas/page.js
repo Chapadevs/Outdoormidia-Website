@@ -1,6 +1,5 @@
 import { Images } from 'lucide-react'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import CoverMedia from '@/components/ui/CoverMedia'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -17,21 +16,13 @@ import { Link } from '@/i18n/navigation'
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('plataformas.titulo')
-  const descricao = t('plataformas.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/plataformas', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/plataformas',
+    locale,
+    titulo: t('plataformas.titulo'),
+    descricao: t('plataformas.descricao'),
+  })
 }
 
 export default async function PlataformasPage({ params }) {

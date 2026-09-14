@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import AtivoCard from '@/components/ui/AtivoCard'
 import AuroraField from '@/components/ui/AuroraField'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { getIconicos } from '@/lib/iconicos'
 
 // `linkTitulo` desliga o link do h2: dentro de /plataformas/projetos-iconicos
@@ -19,6 +19,7 @@ import { getIconicos } from '@/lib/iconicos'
 // mesma lista, e o visitante rolava a página inteira para chegar nela.
 export default function Iconicos({ linkTitulo = true }) {
   const locale = useLocale()
+  const t = useTranslations('Iconicos')
   const ICONICOS = getIconicos(locale)
 
   const [active, setActive] = useState(0)
@@ -93,16 +94,16 @@ export default function Iconicos({ linkTitulo = true }) {
                   className="text-white transition-opacity duration-150 hover:opacity-70"
                   href="/plataformas/projetos-iconicos"
                 >
-                  Icônicos
+                  {t('titulo')}
                 </Link>
               ) : (
-                'Icônicos'
+                t('titulo')
               )}
             </h2>
             <span className="h-px flex-1 bg-white/40"></span>
             <div className="flex shrink-0 gap-2.5 max-tab:hidden">
               <button
-                aria-label="Ativo anterior"
+                aria-label={t('ativoAnterior')}
                 className="radial-reveal grid size-[46px] cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.25)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)]"
                 onClick={() => go(active - 1)}
                 type="button"
@@ -110,7 +111,7 @@ export default function Iconicos({ linkTitulo = true }) {
                 <ChevronLeft size={20} />
               </button>
               <button
-                aria-label="Próximo ativo"
+                aria-label={t('proximoAtivo')}
                 className="radial-reveal grid size-[46px] cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.25)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)]"
                 onClick={() => go(active + 1)}
                 type="button"
@@ -191,7 +192,7 @@ export default function Iconicos({ linkTitulo = true }) {
                   </span>
                   <div className="flex gap-2.5">
                     <button
-                      aria-label="Ativo anterior"
+                      aria-label={t('ativoAnterior')}
                       className="radial-reveal grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
                       onClick={() => go(card - 1)}
                       type="button"
@@ -199,7 +200,7 @@ export default function Iconicos({ linkTitulo = true }) {
                       <ChevronLeft size={20} />
                     </button>
                     <button
-                      aria-label="Próximo ativo"
+                      aria-label={t('proximoAtivo')}
                       className="radial-reveal grid size-11 cursor-pointer place-items-center rounded-full bg-white text-ink shadow-[0_8px_20px_rgba(22,17,13,.3)] transition-colors duration-200 hover:text-white [--rr-fill:var(--color-ink)] max-mob:size-9"
                       onClick={() => go(card + 1)}
                       type="button"

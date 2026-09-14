@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 const ICONS = {
   whatsapp: (
@@ -56,22 +57,18 @@ const ICONS = {
 const NETWORKS = [
   {
     id: 'whatsapp',
-    label: 'Compartilhar no WhatsApp',
     href: (url, title) => `https://wa.me/?text=${encodeURIComponent(`${title} ${url}`)}`,
   },
   {
     id: 'linkedin',
-    label: 'Compartilhar no LinkedIn',
     href: (url) => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
   },
   {
     id: 'facebook',
-    label: 'Compartilhar no Facebook',
     href: (url) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
   },
   {
     id: 'x',
-    label: 'Compartilhar no X',
     href: (url, title) =>
       `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
   },
@@ -81,6 +78,7 @@ const BTN =
   'flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink-soft transition duration-150 hover:border-orange hover:bg-white hover:text-orange'
 
 export default function ShareButtons({ url, title }) {
+  const t = useTranslations('Share')
   const [copied, setCopied] = useState(false)
 
   async function copyLink() {
@@ -101,8 +99,8 @@ export default function ShareButtons({ url, title }) {
           href={network.href(url, title)}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={network.label}
-          title={network.label}
+          aria-label={t(network.id)}
+          title={t(network.id)}
           className={BTN}
         >
           {ICONS[network.id]}
@@ -111,8 +109,8 @@ export default function ShareButtons({ url, title }) {
       <button
         type="button"
         onClick={copyLink}
-        aria-label={copied ? 'Link copiado' : 'Copiar link'}
-        title={copied ? 'Link copiado' : 'Copiar link'}
+        aria-label={copied ? t('copiado') : t('copiar')}
+        title={copied ? t('copiado') : t('copiar')}
         className={`${BTN} ${copied ? 'border-orange text-orange' : ''}`}
       >
         {copied ? ICONS.check : ICONS.link}

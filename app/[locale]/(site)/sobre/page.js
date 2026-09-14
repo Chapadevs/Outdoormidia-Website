@@ -1,6 +1,5 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import CoverMedia from '@/components/ui/CoverMedia'
 import PracaChips from '@/components/ui/PracaChips'
@@ -41,21 +40,13 @@ const COMPROMISSO = [
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('sobre.titulo')
-  const descricao = t('sobre.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/sobre', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/sobre',
+    locale,
+    titulo: t('sobre.titulo'),
+    descricao: t('sobre.descricao'),
+  })
 }
 
 export default async function SobrePage({ params }) {

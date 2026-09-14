@@ -1,8 +1,9 @@
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
+import { useLocale, useTranslations } from 'next-intl'
 import TagBadge from '@/components/blog/TagBadge'
-import { readingTimeLabel } from '@/lib/blog/readingTime'
-import { DATA_LONGA } from '@/lib/format'
+import { readingTimeMinutes } from '@/lib/blog/readingTime'
+import { dataLonga } from '@/lib/format'
 
 const CARD_SIZES = '(max-width: 560px) 100vw, (max-width: 980px) 50vw, 400px'
 const DESTAQUE_SIZES = '(max-width: 980px) 100vw, 620px'
@@ -10,8 +11,10 @@ const DESTAQUE_SIZES = '(max-width: 980px) 100vw, 620px'
 // `destaque` deita o card: capa à esquerda, texto à direita, título maior. É o
 // formato de quem abre a listagem quando não há três artigos para encher a grade.
 export default function PostCard({ post, tags = [], destaque = false }) {
+  const t = useTranslations('Blog')
+  const locale = useLocale()
   const href = `/blog/${post.slug}`
-  const leitura = readingTimeLabel(post.content)
+  const leitura = t('minLeitura', { n: readingTimeMinutes(post.content) })
 
   return (
     <article
@@ -46,7 +49,7 @@ export default function PostCard({ post, tags = [], destaque = false }) {
 
       <div className={`flex flex-1 flex-col gap-3 ${destaque ? 'p-8 max-mob:p-6' : 'p-6'}`}>
         {post.publishedAt && (
-          <span className="eyebrow">{DATA_LONGA.format(new Date(post.publishedAt))}</span>
+          <span className="eyebrow">{dataLonga(locale).format(new Date(post.publishedAt))}</span>
         )}
         <h3
           className={`m-0 font-extrabold leading-[1.15] ${
@@ -62,7 +65,7 @@ export default function PostCard({ post, tags = [], destaque = false }) {
             {post.title}
           </Link>
         </h3>
-        {post.author && <p className="m-0 text-sm text-ink-soft">Por {post.author}</p>}
+        {post.author && <p className="m-0 text-sm text-ink-soft">{t('por', { autor: post.author })}</p>}
         <p
           className={`m-0 leading-[1.55] text-ink-soft ${destaque ? 'text-[17px]' : 'text-[15px]'}`}
         >
@@ -76,7 +79,7 @@ export default function PostCard({ post, tags = [], destaque = false }) {
           </div>
         )}
         <span className="mt-auto flex items-center gap-2 pt-2 text-sm font-bold uppercase tracking-[0.1em] text-orange">
-          Ler artigo
+          {t('lerArtigo')}
           <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
         </span>
       </div>

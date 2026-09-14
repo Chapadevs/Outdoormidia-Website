@@ -139,7 +139,31 @@
     }
   },
   "PlatformPage": {
-    "falarComercial": "联系销售团队"
+    "falarComercial": "联系销售团队",
+    "mapasExternos": {
+      "paineis": {
+        "titulo": "已安装的广告牌",
+        "texto": "巴拉那州和圣卡塔琳娜州各走廊上已投入运营的公路广告牌，在 Google 地图上逐点查看。",
+        "botao": "查看公路广告牌",
+        "alt": "Google 地图，显示库里蒂巴、巴拉那海岸、若因维利和伊塔雅伊之间已安装的公路广告牌"
+      },
+      "simulacoes": {
+        "titulo": "按需模拟点位",
+        "texto": "从瓜拉普阿瓦到海岸，可为您的广告活动搭建广告牌的点位，在 Google 地图上查看。",
+        "botao": "查看按需模拟点位",
+        "alt": "Google 地图，显示瓜拉普阿瓦、库里蒂巴、海岸和若因维利之间的按需广告牌模拟点位"
+      }
+    },
+    "naoEncontrada": "未找到该媒体平台 | Outdoormídia",
+    "breadcrumb": "媒体平台",
+    "quandoTitulo": "何时该选择这个平台",
+    "ativosEmDestaque": "重点资产",
+    "comoFuncionaSobDemanda": "按需模式如何运作",
+    "sobDemanda": "按需",
+    "formatos": "形式",
+    "mapaDaRede": "网络地图",
+    "mapaDaRedeLead": "网络覆盖蓬塔格罗萨与弗洛里亚诺波利斯之间的走廊，途经巴拉那海岸和若因维利。广告牌按需搭建，位置由广告活动在这些路线内的需求决定。",
+    "cases": "案例"
   },
   "PlataformasPage": {
     "eyebrow": "产品目录 · {n} 个媒体平台",
@@ -388,7 +412,42 @@
     "subtitulo": "来自实践的成功故事",
     "lead": "从第一次投放广告的客户，到管理大型品牌的操盘手，这些都是已经把信息放上巴西南部街头的人的真实体验。",
     "carrosselLabel": "客户评价",
-    "fechar": "关闭"
+    "fechar": "关闭",
+    "assistir": "观看 {nome} 的评价，{duracao}",
+    "depoimentoDe": "{nome} 的评价",
+    "acessarCases": "查看案例",
+    "itens": [
+      {
+        "quote": "我们在这类广告活动中看到的最大优势，就是可测量。",
+        "role": "市场专员 · Claro"
+      },
+      {
+        "quote": "它带给我们的不仅是活动的全面成功，还有单个周末的销售纪录。",
+        "role": "总监 · Agência Verbal",
+        "contexto": "案例：Auto Shopping Curitiba"
+      },
+      {
+        "titulo": "当整个街区都认识了你的品牌",
+        "role": "店主 · Cia do Pastel"
+      },
+      {
+        "quote": "通过户外广告牌来的客人多得难以置信。大家会说：“我在广告牌上看到你了，你的作品真棒，对吧？”",
+        "role": "Outdoormídia 客户"
+      },
+      {
+        "quote": "我感受到了变化：人们会发消息说，“Gabi，我刚路过某个地方，看到你了”。",
+        "role": "院长 · Andrioli Estética"
+      },
+      {
+        "quote": "我一定会推荐！这是一次非凡的体验。",
+        "role": "Afinco Imóveis"
+      },
+      {
+        "quote": "这些策略为展会带来了高质量的观众。观众会在这里找到他们想要的。",
+        "role": "市场协调员 · Expo MotorHome",
+        "contexto": "Expo MotorHome 展会 · Expotrade"
+      }
+    ]
   },
   "NovaCampanha": {
     "kicker": "开启新战役",
@@ -570,7 +629,11 @@
   },
   "BlogTeaser": {
     "lead": "关于户外媒体的观点、数据与策略，助您把品牌带上巴拉那州与圣卡塔琳娜州的街头。",
-    "vazio": "目前尚无已发布的文章，敬请期待。"
+    "vazio": "目前尚无已发布的文章，敬请期待。",
+    "titulo": "博客",
+    "verTodos": "查看全部 →",
+    "verTodosArtigos": "查看全部文章 →",
+    "publicados": "{n, plural, other {已发布 # 篇文章}}"
   },
   "SolucoesHero": {
     "eyebrow": "商务中心 · 巴拉那州与圣卡塔琳娜州",
@@ -592,7 +655,25 @@
       "伊塔雅伊",
       "坎布里乌海滨市",
       "PR-SC 高速公路"
-    ]
+    ],
+    "tiposTitulo": "媒体类型",
+    "tiposLead": "技术与曝光方式：在数字媒体的可编程覆盖与静态媒体的持续存在之间做出选择。",
+    "tiposMidia": [
+      {
+        "title": "数字（DOOH）",
+        "text": "在 LED 屏幕上按排期播放，技术先进，内容灵活，视觉冲击力强。适合动态、细分和实时的广告活动。"
+      },
+      {
+        "title": "Front Light（静态）",
+        "text": "传统而持续的媒体，实体存在感强，曝光时间长，记忆度高。适合品牌强化和对区域的战略性占据。"
+      }
+    ],
+    "formatosTitulo": "形式",
+    "formatosLead": "我们产品的实体与视觉变体。",
+    "formatosTexto": "每种形式都为兼顾美感、冲击力和效果而设计，适应不同的城市环境和品牌目标。",
+    "ajudaLembrarTitulo": "便于记忆：",
+    "ajudaLembrarTexto": "Top（竖版，相当于数字端的 Reel）· Poster（横版，相当于数字端的 YouTube 视频）· 带 super 的尺寸大 2 倍。",
+    "techBike": "移动媒体：三辆连续自行车 / 静态"
   },
   "LinhaDoTempo": {
     "lead": "从街头第一块广告画面至今，什么变了，什么没变。",
@@ -604,7 +685,9 @@
     "proximo": "下一个项目",
     "anterior": "上一个项目",
     "legendaRegenerativo": "改造前 → 改造后",
-    "legendaElegancy": "以光为签名"
+    "legendaElegancy": "以光为签名",
+    "ativoAnterior": "上一个资产",
+    "proximoAtivo": "下一个资产"
   },
   "MapaCobertura": {
     "legendaCombinada": "城市媒体与高速公路兼具",
@@ -655,7 +738,12 @@
     "legendaApoio": "支持点位",
     "legendaCorredor": "公路走廊",
     "notaSaoPaulo": "圣保罗标记表示距离参照，并非覆盖范围。",
-    "mapaAlt": "巴拉那州与圣卡塔琳娜州之间所覆盖公路走廊的地图"
+    "mapaAlt": "巴拉那州与圣卡塔琳娜州之间所覆盖公路走廊的地图",
+    "todaARede": "整个网络",
+    "grupoPontos": "点位",
+    "grupoVias": "道路",
+    "legendaPolo": "中心城市",
+    "legendaSentido": "车流方向"
   },
   "Ticker": {
     "itens": [
@@ -711,7 +799,8 @@
   },
   "LegalDoc": {
     "sumario": "目录",
-    "nestaPagina": "本页内容"
+    "nestaPagina": "本页内容",
+    "atualizadoEm": "更新于 {data}"
   },
   "Mapas": {
     "coberturaAria": "巴拉那州与圣卡塔琳娜州覆盖地图",
@@ -725,7 +814,13 @@
     "whatsappComercial": "Outdoormídia 商务 WhatsApp",
     "enviarCurriculo": "通过电子邮件投递简历",
     "adiantarWhatsapp": "通过 WhatsApp 先聊",
-    "falarWhatsapp": "通过 WhatsApp 联系"
+    "falarWhatsapp": "通过 WhatsApp 联系",
+    "cookiesTexto": "本网站仅使用运行所必需的 Cookie，不进行跟踪，也没有广告。继续浏览即表示您同意使用这些 Cookie。详情请见",
+    "cookiesLink": "隐私政策",
+    "cookiesEntendi": "知道了",
+    "voltarInicio": "返回首页",
+    "ativarSom": "开启视频声音",
+    "desativarSom": "关闭视频声音"
   },
   "NotFound": {
     "eyebrow": "错误",
@@ -760,5 +855,330 @@
     "ajudaTitulo": "在找某个具体的页面？",
     "ajudaTexto": "告诉我们您想找什么，我们会把链接、或者直接把答案发给您。",
     "ajudaCta": "通过 WhatsApp 询问"
+  },
+  "PraticasGrid": {
+    "naPratica": "实际应用："
+  },
+  "Faq": {
+    "titulo": "常见问题",
+    "falarEspecialista": "联系专家 →",
+    "naoEncontrou": "没有找到您的问题？",
+    "faleEspecialistaWhatsapp": "通过 WhatsApp 联系专家。",
+    "faleTimeWhatsapp": "通过 WhatsApp 联系我们的团队。"
+  },
+  "Cases": {
+    "titulo": "案例",
+    "verTodos": "查看全部 →",
+    "rotuloCapa": "案例"
+  },
+  "ProposalForm": {
+    "voltarSite": "← 返回网站",
+    "breadcrumb": "索取方案",
+    "eyebrow": "需求简报",
+    "tituloA": "我想要一份",
+    "tituloB": "方案。",
+    "lead": "简单介绍一下您的广告活动。我们会在 1 个工作日内回复，为您的目标量身定制城市、形式和报价。",
+    "campos": {
+      "nome": "姓名",
+      "empresa": "公司",
+      "email": "电子邮件",
+      "cidade": "您想在哪里投放？",
+      "formato": "感兴趣的形式",
+      "periodo": "投放周期",
+      "objetivo": "广告目标"
+    },
+    "placeholders": {
+      "nome": "您的姓名",
+      "empresa": "公司名称",
+      "cidade": "选择城市",
+      "formato": "选择形式",
+      "periodo": "选择时长",
+      "objetivo": "例如：宣传新品上市、为门店引流、在区域内强化品牌……"
+    },
+    "opcoes": {
+      "biSemana": "2 周（双周）",
+      "umMes": "1 个月",
+      "tresMeses": "3 个月",
+      "seisMeses": "6 个月或以上",
+      "outraPraca": "其他城市",
+      "naoSei": "还不确定"
+    },
+    "opcional": "（可选）",
+    "enviando": "发送中……",
+    "enviar": "发送简报"
+  },
+  "DiagnosticoQuiz": {
+    "degrauLabel": "第 {n} 级 · {nome}",
+    "respondidas": "已回答 <b>{n}</b> / {total}",
+    "instrucao": "拖动或点击进度条，为每个问题打 <b>0 到 10</b> 分。不到一分钟即可完成；请如实作答，结果只有在诚实的前提下才有意义。",
+    "parcial": "当前",
+    "comece": "从第一个问题开始。回答完全部 {total} 个问题后，您的等级就会显示。",
+    "faltam": "{n, plural, other {还有 # 个问题待回答，之后即可查看您的等级。}}",
+    "tudoRespondido": "全部回答完毕：看看您的品牌处于哪一级。",
+    "verResultado": "查看我的结果",
+    "resultadoFinal": "最终结果",
+    "pontoFragil": "您目前最薄弱的一点是",
+    "falarEspecialista": "联系专家 →",
+    "fechoTituloA": "更上一级，",
+    "fechoTituloB": "是媒体决策。",
+    "fechoTexto": "品牌存在感不是靠一次广告活动建立的，而是靠**全年出现在受众每天经过的地方**。这正是 Outdoormídia 67 年来在库里蒂巴、大都会区、巴拉那海岸、若因维利、伊塔雅伊和巴内阿里奥坎博里乌所做的事。",
+    "simulacao": "想在沟通之前先看看您的品牌出现在广告牌上的效果？前往以下页面进行模拟：",
+    "suaMarcaNoOoh": "您的品牌在户外",
+    "emailPergunta": "想通过电子邮件接收这份诊断吗？",
+    "emailPlaceholder": "您的常用邮箱",
+    "emailInvalido": "请检查输入的邮箱。",
+    "emailErro": "目前无法记录，请重试。",
+    "emailPronto": "好的，我们已收到您的邮箱。",
+    "enviando": "发送中……",
+    "enviar": "发送",
+    "refazer": "重新诊断"
+  },
+  "AnunciantePage": {
+    "breadcrumb": "广告主专区",
+    "eyebrow": "自助服务 · {n} 个工具",
+    "tituloA": "广告主",
+    "tituloB": "专区。",
+    "lead": "无需联系销售就能解决的一切都在这里。当您联系销售团队时，已经清楚该提出什么需求。",
+    "ferramentas": "工具",
+    "cards": {
+      "diagnostico": {
+        "eyebrow": "工具 · 10 个问题",
+        "title": "品牌存在感诊断",
+        "text": "您的品牌是第一个被想起的，还是只有别人说出名字后才被认出？只需 1 分钟，了解市场今天如何看待您的品牌。",
+        "cta": "开始诊断"
+      },
+      "suaMarca": {
+        "eyebrow": "工具 · 效果预览",
+        "title": "您的品牌在户外",
+        "text": "选择平台和广告牌，上传 PNG 格式的品牌标志，即可看到您的品牌出现在真实广告牌上。下载图片，发送给决策者。",
+        "cta": "查看我的品牌上牌效果"
+      },
+      "praticas": {
+        "eyebrow": "内容 · {n} 条实践",
+        "title": "最佳实践",
+        "text": "让广告活动效果更好的内容与思路：如何选择合适的城市、每种形式适合什么，以及让品牌在户外媒体中被记住的做法。",
+        "cta": "查看实践"
+      },
+      "faq": {
+        "eyebrow": "疑问 · {n} 个问题",
+        "title": "常见问题",
+        "text": "价格、投放周期、谁来制作画面、点位独占以及如何确认广告已上刊。销售团队最常被问到的问题，在沟通前先给出答案。",
+        "cta": "解答疑问"
+      }
+    },
+    "prefereDireto": "更希望直接与我们沟通？",
+    "faleEspecialista": "通过 WhatsApp 联系专家。"
+  },
+  "FaqPage": {
+    "breadcrumbPai": "广告主专区",
+    "breadcrumb": "常见问题",
+    "eyebrow": "广告主专区 · 疑问",
+    "tituloA": "常见",
+    "tituloB": "问题。",
+    "lead": "我们团队最常听到的问题，在您开口之前就已解答。如有遗漏，页面底部有 WhatsApp。"
+  },
+  "MelhoresPraticasPage": {
+    "breadcrumbPai": "广告主专区",
+    "breadcrumb": "最佳实践",
+    "eyebrow": "广告主专区 · {n} 条实践",
+    "tituloA": "最佳",
+    "tituloB": "实践。",
+    "lead": "八个决定，区分了真正有效的广告活动和只是露过面的广告活动。没有一个取决于大预算，全部取决于在购买之前做出选择。",
+    "asPraticas": "八条实践",
+    "paraOndeIr": "接下来去哪里"
+  },
+  "DiagnosticoPage": {
+    "breadcrumbPai": "广告主专区",
+    "breadcrumb": "品牌存在感诊断",
+    "eyebrow": "诊断",
+    "eyebrowForte": "10 个问题",
+    "tituloA": "品牌",
+    "tituloB": "存在感",
+    "tituloC": "诊断。",
+    "lead": "每个品牌都在客户心中占据一个位置。只需一分钟作答，看看您的品牌今天处于哪一级。",
+    "heroAlt": "“存在感阶梯”理论：一个人登上五级混凝土台阶，分别命名为存在、发现、认知、偏好和标杆，顶端是一块亮灯的 Outdoormídia 户外广告牌。",
+    "escadaTitulo": "成为标杆不是靠运气。没有人一步登顶。",
+    "escadaTexto1": "在巴西，户外媒体覆盖 89% 的人口，是全国消费量第二大的媒介。空间是存在的，而且已经被别人占据。问题从来不是您的品牌能否被看见，而是同一个人已经看见它多少次，因为正是重复让“看过”变成“记住”。",
+    "escadaTexto2": "每家企业都处于这个阶梯的某一级，而每一级都会改变客户的决策方式。作答之前，先看看完整的路径。",
+    "fonte": "来源：Kantar Ibope Media，Target Group Index，2024。"
+  },
+  "Blog": {
+    "artigo": "文章",
+    "minLeitura": "阅读约 {n} 分钟",
+    "por": "作者：{autor}",
+    "lerArtigo": "阅读文章"
+  },
+  "BlogPage": {
+    "breadcrumb": "博客",
+    "eyebrow": "户外媒体内容",
+    "h1": "博客。",
+    "lead": "同一条街道的三种解读：案例讲述它已经发生了什么；文章告诉您占据它之前需要了解什么；播客则由决定品牌出现在哪里的人来讲述。",
+    "emDestaque": "精选",
+    "porOndeComecar": "从哪里开始",
+    "cases": {
+      "tag": "实证",
+      "titulo": "案例",
+      "texto": "已经占据街道的广告活动：品牌、城市与成果。按行业筛选，看看户外媒体带来的效果。",
+      "cta": "查看案例"
+    },
+    "artigos": {
+      "tag": "学习",
+      "titulo": "文章",
+      "texto": "指标、形式、城市选择，以及传统广告牌与数字屏之间的区别。帮您在签约前做出决定。",
+      "cta": "查看文章"
+    },
+    "podcast": {
+      "tag": "收听",
+      "titulo": "播客",
+      "texto": "与决定品牌出现在哪里的人对话。",
+      "cta": "查看节目"
+    },
+    "vazio": "尚未发布内容，敬请期待。"
+  },
+  "ArtigosPage": {
+    "breadcrumbPai": "博客",
+    "breadcrumb": "文章",
+    "eyebrow": "博客",
+    "eyebrowForte": "户外媒体内容",
+    "h1": "文章。",
+    "lead": "关于户外媒体的思路、数据和策略，帮助您的品牌走上巴拉那州和圣卡塔琳娜州的街头。",
+    "ultimos": "最新文章",
+    "vazio": "尚未发布文章，敬请期待。"
+  },
+  "PostPage": {
+    "naoEncontrado": "未找到文章 | Outdoormídia",
+    "breadcrumbBlog": "博客",
+    "breadcrumbArtigos": "文章",
+    "todosArtigos": "← 全部文章",
+    "escritoPor": "撰文",
+    "compartilhar": "分享",
+    "ctaTitulo": "想为您的品牌带来<b>曝光</b>吗？",
+    "pedirProposta": "索取方案",
+    "verMaisArtigos": "查看更多文章"
+  },
+  "PodcastPage": {
+    "breadcrumbPai": "博客",
+    "breadcrumb": "播客",
+    "eyebrow": "博客",
+    "h1": "播客。",
+    "episodios": "节目",
+    "ouvir": "收听本期",
+    "emProducao": "录制中",
+    "aviso": "节目录制完成后会在此上线，同时登陆各音频平台。"
+  },
+  "CasesPage": {
+    "breadcrumb": "案例",
+    "eyebrow": "成果 · 户外媒体",
+    "h1": "案例。",
+    "lead": "巴拉那州和圣卡塔琳娜州街头的真实广告活动：从占领库里蒂巴的新品上市，到精准触达目标受众的细分线路。按行业筛选，看看户外媒体带来的效果。",
+    "todos": "全部案例"
+  },
+  "ObrigadoPage": {
+    "breadcrumb": "感谢",
+    "proximosPassos": "接下来",
+    "enquantoIsso": "与此同时",
+    "ver": "查看"
+  },
+  "PrivacidadePage": {
+    "breadcrumb": "隐私政策",
+    "eyebrow": "法律",
+    "eyebrowForte": "LGPD",
+    "h1": "隐私政策。",
+    "lead": "我们收集哪些数据、为什么收集、与谁共享、保存多久。语言直白，没有小字条款。",
+    "direitos": "查看您在 LGPD 下的权利"
+  },
+  "TermosPage": {
+    "breadcrumb": "使用条款",
+    "eyebrow": "法律",
+    "eyebrowForte": "条款",
+    "h1": "使用条款。",
+    "lead": "您可以如何使用本网站的内容、我们的数据意味着什么，以及双方责任的边界。"
+  },
+  "RegioesPage": {
+    "breadcrumbPai": "解决方案",
+    "breadcrumb": "区域与覆盖",
+    "eyebrow": "覆盖",
+    "eyebrowForte": "每月 5.3 亿以上曝光",
+    "h1": "区域。",
+    "lead": "从巴特尔到海岸，从公路到圣卡塔琳娜州的海滩。下方可查看 Outdoormídia 覆盖哪些区域，以及每个区域拥有哪些媒体平台。"
+  },
+  "TrabalheConoscoPage": {
+    "breadcrumb": "加入我们",
+    "eyebrow": "职业发展",
+    "h1": "加入我们。",
+    "lead": "67 年来，我们让品牌走上巴拉那州和圣卡塔琳娜州的街头。如果您想与全城可见的媒体一起工作，这里可能就是您的位置。",
+    "capaAlt": "Outdoormídia 库里蒂巴总部鸟瞰：装有太阳能板的厂房和带品牌标识的外墙"
+  },
+  "DiferenciaisPage": {
+    "breadcrumbPai": "解决方案",
+    "breadcrumb": "核心优势",
+    "eyebrow": "解决方案 · {n} 项核心优势",
+    "h1": "核心优势。",
+    "lead": "户外媒体人人都在卖。不同之处在于点位的独占性、受众的测量，以及广告上线后由谁负责。",
+    "osDiferenciais": "核心优势",
+    "aProva": "实证",
+    "provaLead": "以上数字没有一个依赖信任：全部经过测量，均可与我们的团队核实。",
+    "prova": [
+      "每月曝光",
+      "数字屏幕",
+      "实时摄像头",
+      "MUB 线路"
+    ]
+  },
+  "DiferencialPage": {
+    "naoEncontrado": "未找到该核心优势 | Outdoormídia",
+    "breadcrumbSolucoes": "解决方案",
+    "breadcrumbDiferenciais": "核心优势",
+    "eyebrow": "核心优势 · 解决方案",
+    "verNaPratica": "查看实际应用",
+    "oQueE": "是什么",
+    "conferirPrivacidade": "查看隐私政策",
+    "aProva": "实证",
+    "aplicacaoPratica": "实际应用",
+    "miniCaseAviso": "小型案例的数字需经销售团队确认后再发布。",
+    "comparacao": "Face Única 的正确做法",
+    "outrosDiferenciais": "其他核心优势",
+    "verTodos": "查看全部 →"
+  },
+  "IconicosPage": {
+    "breadcrumbPai": "媒体平台",
+    "breadcrumb": "标志性项目",
+    "eyebrow": "地标 · 标志性城市家具",
+    "h1": "标志性项目。",
+    "lead": "有些地址是城市早已熟悉的。标志性项目用逐一设计的结构占据这些点位，没有目录模板。这是 Outdoormídia 设计的产品，而不是复制的产品。",
+    "cta": "我想评估一个标志性项目",
+    "cardTexto": "与目录中 8 个平台的区别在于起点：这里的结构源于地址本身。每个项目在落地街头之前，都要经过需求简报、可行性研究和设计。",
+    "cardFluxo": "需求简报 → 可行性 → 结构",
+    "numeros": [
+      {
+        "n": "4",
+        "label": "标志性地标"
+      },
+      {
+        "n": "3",
+        "label": "专属产品线"
+      },
+      {
+        "n": "最高 100 万",
+        "label": "每个数字街角的月曝光"
+      },
+      {
+        "n": "80 万",
+        "label": "媒体区的月曝光"
+      }
+    ]
+  },
+  "IconicoPage": {
+    "naoEncontrado": "未找到该项目 | Outdoormídia",
+    "breadcrumbPlataformas": "媒体平台",
+    "breadcrumbIconicos": "标志性项目",
+    "verNaRua": "看看街头有什么",
+    "oQueE": "是什么",
+    "naRuaHoje": "今天在街头",
+    "dimensoesAviso": "最终尺寸由每个地址的可行性研究决定；定稿画面前请与销售团队确认。",
+    "cases": "案例",
+    "verTodosCases": "查看全部案例",
+    "osOutrosDois": "另外两条产品线",
+    "verTodos": "查看全部 →"
   }
 }

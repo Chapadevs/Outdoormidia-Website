@@ -1,6 +1,5 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
 import { CircleQuestionMark, Gauge, Lightbulb, Presentation } from 'lucide-react'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -20,95 +19,60 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 // investimento. Foram o kicker "Estimativa" e a palavra "Simulador" que criaram
 // essa expectativa, e por isso os dois saíram. O nome Simulador OOH fica
 // reservado para o dia em que existir cálculo real de audiência ou investimento.
+//
+// Kicker, título, texto e CTA de cada card vivem em `AnunciantePage.cards` nos
+// messages/*.json, chaveados pelo id; aqui fica só o que não se traduz. As
+// contagens de práticas e de perguntas são derivadas de PRATICAS e FAQS, para
+// não divergir das páginas (o checklist pedia "18 perguntas", contagem
+// anterior à revisão do FAQ de 26/08/2026, que fechou em 19).
 const FERRAMENTAS = [
-  {
-    href: '/area-do-anunciante/diagnostico-de-presenca',
-    Icone: Gauge,
-    eyebrow: 'Ferramenta · 10 perguntas',
-    title: 'Diagnóstico de presença',
-    text: 'Sua marca é lembrada primeiro, ou só reconhecida depois que alguém diz o nome? Em apenas 1 minuto, entenda como o mercado enxerga a sua marca hoje.',
-    cta: 'Fazer o diagnóstico',
-  },
-  {
-    href: '/area-do-anunciante/sua-marca-no-ooh',
-    Icone: Presentation,
-    eyebrow: 'Ferramenta · Pré-visualização',
-    title: 'Sua marca no OOH',
-    text: 'Escolha a plataforma e o painel, suba a sua logo em PNG e veja a sua marca aplicada no painel real. Baixe a imagem e mande para quem decide.',
-    cta: 'Ver minha marca no painel',
-  },
-  {
-    // O kicker segue o padrão dos cards de Diagnóstico e FAQ, que já trazem
-    // número. A contagem é derivada de PRATICAS, para não divergir da página.
-    href: '/area-do-anunciante/melhores-praticas',
-    Icone: Lightbulb,
-    eyebrow: `Conteúdo · ${PRATICAS.length} práticas`,
-    title: 'Melhores práticas',
-    text: 'Conteúdos e ideias para tirar mais da sua campanha: como escolher a praça certa, o que funciona em cada formato e as práticas que fazem uma marca ser lembrada na mídia exterior.',
-    cta: 'Ver as práticas',
-  },
-  {
-    // O checklist pedia "18 perguntas", contagem anterior à revisão do FAQ de
-    // 26/08/2026, que fechou em 19. O número acompanha o que está publicado:
-    // kicker com contagem errada é a primeira coisa que o visitante confere.
-    href: '/area-do-anunciante/faq',
-    Icone: CircleQuestionMark,
-    eyebrow: `Dúvidas · ${FAQS.length} perguntas`,
-    title: 'FAQ',
-    text: 'Preço, prazo de veiculação, quem faz a arte, exclusividade do ponto e como saber se a campanha veiculou. As perguntas que o comercial mais recebe, respondidas antes da conversa.',
-    cta: 'Tirar dúvidas',
-  },
+  { id: 'diagnostico', href: '/area-do-anunciante/diagnostico-de-presenca', Icone: Gauge },
+  { id: 'suaMarca', href: '/area-do-anunciante/sua-marca-no-ooh', Icone: Presentation },
+  { id: 'praticas', href: '/area-do-anunciante/melhores-praticas', Icone: Lightbulb, n: PRATICAS.length },
+  { id: 'faq', href: '/area-do-anunciante/faq', Icone: CircleQuestionMark, n: FAQS.length },
 ]
 
 export async function generateMetadata({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Meta' })
-  const titulo = t('areaDoAnunciante.titulo')
-  const descricao = t('areaDoAnunciante.descricao')
 
-  return {
-    title: titulo,
-    description: descricao,
-    alternates: alternatesDe('/area-do-anunciante', locale),
-    openGraph: {
-      title: titulo,
-      description: descricao,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
-      type: 'website',
-    },
-  }
+  return metaDe({
+    path: '/area-do-anunciante',
+    locale,
+    titulo: t('areaDoAnunciante.titulo'),
+    descricao: t('areaDoAnunciante.descricao'),
+  })
 }
 
 export default async function AnunciantePage({ params }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'AnunciantePage' })
 
   return (
     <>
       <main>
-        <Breadcrumb items={[{ label: 'Área do anunciante' }]} />
+        <Breadcrumb items={[{ label: t('breadcrumb') }]} />
 
         <section className="pb-[70px] pt-[54px] max-mob:pb-12 max-mob:pt-9">
           <div className="wrap">
             <div className="eyebrow reveal">
-              Autoatendimento · {FERRAMENTAS.length} ferramentas
+              {t('eyebrow', { n: FERRAMENTAS.length })}
             </div>
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
-              Área do
+              {t('tituloA')}
               <br />
-              anunciante.
+              {t('tituloB')}
             </h1>
             <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">
-              Tudo o que dá para resolver sem falar com vendedor está aqui. Quando você
-              procurar o time comercial, já vai saber o que pedir.
+              {t('lead')}
             </p>
           </div>
         </section>
 
         <section className="pb-[110px] max-mob:pb-[72px]">
           <div className="wrap">
-            <SectionHeading title="As ferramentas" className="reveal mb-[34px]" />
+            <SectionHeading title={t('ferramentas')} className="reveal mb-[34px]" />
             <div className="grid grid-cols-2 gap-[18px] max-mob:grid-cols-1">
               {FERRAMENTAS.map((f, i) => (
                 <Link
@@ -123,13 +87,13 @@ export default async function AnunciantePage({ params }) {
                   key={f.href}
                 >
                   <f.Icone size={24} className="text-orange" />
-                  <span className="eyebrow">{f.eyebrow}</span>
+                  <span className="eyebrow">{t(`cards.${f.id}.eyebrow`, { n: f.n })}</span>
                   <h2 className="m-0 text-[25px] font-extrabold leading-tight text-ink transition-colors duration-200 group-hover:text-orange">
-                    {f.title}
+                    {t(`cards.${f.id}.title`)}
                   </h2>
-                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{f.text}</p>
+                  <p className="m-0 text-[15.5px] leading-relaxed text-ink-soft">{t(`cards.${f.id}.text`)}</p>
                   <span className="mt-auto flex items-center gap-2 pt-5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink-soft transition-colors duration-200 group-hover:text-orange">
-                    {f.cta}
+                    {t(`cards.${f.id}.cta`)}
                     <span
                       aria-hidden
                       className="text-base transition-transform duration-200 group-hover:translate-x-1"
@@ -141,12 +105,12 @@ export default async function AnunciantePage({ params }) {
               ))}
             </div>
             <p className="reveal mt-9 text-[15px] text-ink-soft">
-              Prefere resolver diretamente com a gente?{' '}
+              {t('prefereDireto')}{' '}
               <a
                 href={waLink(WA_ANUNCIANTE)}
                 className="font-bold text-orange hover:underline"
               >
-                Fale com um especialista no WhatsApp.
+                {t('faleEspecialista')}
               </a>
             </p>
           </div>

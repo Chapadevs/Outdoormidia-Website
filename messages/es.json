@@ -139,7 +139,31 @@
     }
   },
   "PlatformPage": {
-    "falarComercial": "Hablar con el equipo comercial"
+    "falarComercial": "Hablar con el equipo comercial",
+    "mapasExternos": {
+      "paineis": {
+        "titulo": "Paneles instalados",
+        "texto": "Los paneles Carreteras que ya operan en los corredores de Paraná y Santa Catarina, punto por punto en Google Maps.",
+        "botao": "Ver los paneles Carreteras",
+        "alt": "Mapa de Google con los paneles Carreteras instalados entre Curitiba, el litoral de Paraná, Joinville e Itajaí"
+      },
+      "simulacoes": {
+        "titulo": "Simulaciones bajo demanda",
+        "texto": "Los puntos donde se puede construir un panel para tu campaña, de Guarapuava al litoral, en Google Maps.",
+        "botao": "Ver las simulaciones bajo demanda",
+        "alt": "Mapa de Google con las simulaciones de paneles bajo demanda entre Guarapuava, Curitiba, el litoral y Joinville"
+      }
+    },
+    "naoEncontrada": "Plataforma no encontrada | Outdoormídia",
+    "breadcrumb": "Plataformas",
+    "quandoTitulo": "Cuándo esta plataforma es la elección correcta",
+    "ativosEmDestaque": "Activos destacados",
+    "comoFuncionaSobDemanda": "Cómo funciona el Bajo Demanda",
+    "sobDemanda": "Bajo Demanda",
+    "formatos": "Formatos",
+    "mapaDaRede": "Mapa de la red",
+    "mapaDaRedeLead": "Los corredores que la red recorre entre Ponta Grossa y Florianópolis, pasando por el litoral de Paraná y por Joinville. El panel se construye bajo demanda, en el punto que la campaña pida dentro de esos trayectos.",
+    "cases": "Casos"
   },
   "PlataformasPage": {
     "eyebrow": "Catálogo · {n} plataformas",
@@ -388,7 +412,42 @@
     "subtitulo": "Historias de éxito en la práctica",
     "lead": "De quien anuncia por primera vez a quien gestiona grandes marcas, la experiencia de quien ya puso su mensaje en las calles del Sur de Brasil.",
     "carrosselLabel": "Testimonios de clientes",
-    "fechar": "Cerrar"
+    "fechar": "Cerrar",
+    "assistir": "Ver el testimonio de {nome}, {duracao}",
+    "depoimentoDe": "Testimonio de {nome}",
+    "acessarCases": "Ver casos",
+    "itens": [
+      {
+        "quote": "La principal ventaja que vemos en este tipo de campaña es la medición.",
+        "role": "Especialista de Marketing · Claro"
+      },
+      {
+        "quote": "Nos trajo no solo el éxito completo de la campaña, sino el récord de ventas en un único fin de semana.",
+        "role": "Director · Agência Verbal",
+        "contexto": "Caso: Auto Shopping Curitiba"
+      },
+      {
+        "titulo": "Cuando todo el barrio pasa a conocer tu marca",
+        "role": "Propietaria · Cia do Pastel"
+      },
+      {
+        "quote": "Fue absurda la cantidad de gente que llegó a través de la valla. La gente decía: “Vi la tuya en la valla, qué lindo tu trabajo, ¿no?”",
+        "role": "Cliente Outdoormídia"
+      },
+      {
+        "quote": "Noté una diferencia: la gente me mandaba mensajes, “Gabi, estaba pasando por tal lugar y te vi”.",
+        "role": "Propietaria · Andrioli Estética"
+      },
+      {
+        "quote": "¡Lo recomendaría sin duda! Fue una experiencia extraordinaria.",
+        "role": "Afinco Imóveis"
+      },
+      {
+        "quote": "Estas estrategias traen un público calificado al evento. El público va a encontrar aquí lo que busca.",
+        "role": "Coordinador de Marketing · Expo MotorHome",
+        "contexto": "Feria Expo MotorHome · Expotrade"
+      }
+    ]
   },
   "NovaCampanha": {
     "kicker": "Nueva campaña",
@@ -570,7 +629,11 @@
   },
   "BlogTeaser": {
     "lead": "Ideas, datos y estrategias de medios exteriores para colocar tu marca en las calles de Paraná y de Santa Catarina.",
-    "vazio": "Todavía no hay artículos publicados. Vuelve pronto."
+    "vazio": "Todavía no hay artículos publicados. Vuelve pronto.",
+    "titulo": "Blog",
+    "verTodos": "Ver todos →",
+    "verTodosArtigos": "Ver todos los artículos →",
+    "publicados": "{n, plural, one {# artículo publicado} other {# artículos publicados}}"
   },
   "SolucoesHero": {
     "eyebrow": "Núcleo comercial · PR + SC",
@@ -592,7 +655,25 @@
       "Itajaí",
       "Balneário Camboriú",
       "Carreteras PR-SC"
-    ]
+    ],
+    "tiposTitulo": "Tipos de medios",
+    "tiposLead": "Tecnología y dinámica de la exposición: elige entre el alcance programable del digital y la presencia continua del estático.",
+    "tiposMidia": [
+      {
+        "title": "Digital (DOOH)",
+        "text": "Exhibición programada en pantallas LED con tecnología de punta, flexibilidad de contenido y alto impacto visual. Ideal para campañas dinámicas, segmentadas y en tiempo real."
+      },
+      {
+        "title": "Front Light (Estático)",
+        "text": "Medio tradicional y continuo con fuerte presencia física, visibilidad prolongada y alta memorización. Ideal para refuerzo de marca y ocupación estratégica del territorio."
+      }
+    ],
+    "formatosTitulo": "Formatos",
+    "formatosLead": "Variaciones físicas y visuales de nuestros productos.",
+    "formatosTexto": "Cada formato fue desarrollado para unir estética, impacto y rendimiento, adaptándose a distintos contextos urbanos y objetivos de marca.",
+    "ajudaLembrarTitulo": "Para recordar:",
+    "ajudaLembrarTexto": "Top (vertical, nuestro reel en digital) · Poster (horizonte, horizontal, nuestro video de YouTube en digital) · lo que lleva super es 2x más grande.",
+    "techBike": "Medio móvil: trío de bicis secuenciales / estático"
   },
   "LinhaDoTempo": {
     "lead": "Qué cambió desde la primera cara en la calle, y qué no cambió.",
@@ -604,7 +685,9 @@
     "proximo": "Próximo proyecto",
     "anterior": "Proyecto anterior",
     "legendaRegenerativo": "Antes → después",
-    "legendaElegancy": "Luz como firma"
+    "legendaElegancy": "Luz como firma",
+    "ativoAnterior": "Activo anterior",
+    "proximoAtivo": "Siguiente activo"
   },
   "MapaCobertura": {
     "legendaCombinada": "combina medios urbanos y carreteras",
@@ -655,7 +738,12 @@
     "legendaApoio": "Punto de apoyo",
     "legendaCorredor": "Corredor vial",
     "notaSaoPaulo": "El marcador de São Paulo indica distancia, no cobertura.",
-    "mapaAlt": "Mapa de los corredores viales atendidos entre Paraná y Santa Catarina"
+    "mapaAlt": "Mapa de los corredores viales atendidos entre Paraná y Santa Catarina",
+    "todaARede": "Toda la red",
+    "grupoPontos": "Puntos",
+    "grupoVias": "Vías",
+    "legendaPolo": "Ciudad polo",
+    "legendaSentido": "Sentido del flujo"
   },
   "Ticker": {
     "itens": [
@@ -711,7 +799,8 @@
   },
   "LegalDoc": {
     "sumario": "Sumario",
-    "nestaPagina": "En esta página"
+    "nestaPagina": "En esta página",
+    "atualizadoEm": "Actualizado el {data}"
   },
   "Mapas": {
     "coberturaAria": "Mapa de cobertura de Paraná y Santa Catarina",
@@ -725,7 +814,13 @@
     "whatsappComercial": "WhatsApp comercial de Outdoormídia",
     "enviarCurriculo": "Enviar currículum por e-mail",
     "adiantarWhatsapp": "Adelantar por WhatsApp",
-    "falarWhatsapp": "Hablar por WhatsApp"
+    "falarWhatsapp": "Hablar por WhatsApp",
+    "cookiesTexto": "Este sitio usa solo las cookies necesarias para funcionar, sin rastreo y sin publicidad. Al seguir navegando, aceptas su uso. Detalles en la",
+    "cookiesLink": "Política de privacidad",
+    "cookiesEntendi": "Entendido",
+    "voltarInicio": "Volver al inicio",
+    "ativarSom": "Activar el sonido del video",
+    "desativarSom": "Desactivar el sonido del video"
   },
   "NotFound": {
     "eyebrow": "Error",
@@ -760,5 +855,330 @@
     "ajudaTitulo": "¿Buscabas algo específico?",
     "ajudaTexto": "Dinos qué intentabas encontrar y te mandamos el enlace, o la respuesta directamente.",
     "ajudaCta": "Preguntar por WhatsApp"
+  },
+  "PraticasGrid": {
+    "naPratica": "En la práctica:"
+  },
+  "Faq": {
+    "titulo": "Preguntas frecuentes",
+    "falarEspecialista": "Hablar con un especialista →",
+    "naoEncontrou": "¿No encontraste tu duda?",
+    "faleEspecialistaWhatsapp": "Habla con un especialista por WhatsApp.",
+    "faleTimeWhatsapp": "Habla con nuestro equipo por WhatsApp."
+  },
+  "Cases": {
+    "titulo": "Casos",
+    "verTodos": "Ver todos →",
+    "rotuloCapa": "Caso"
+  },
+  "ProposalForm": {
+    "voltarSite": "← Volver al sitio",
+    "breadcrumb": "Solicitar propuesta",
+    "eyebrow": "Briefing",
+    "tituloA": "Quiero una",
+    "tituloB": "propuesta.",
+    "lead": "Cuéntanos rápido sobre tu campaña. En hasta 1 día hábil respondemos con plazas, formatos y valores a la medida de tu objetivo.",
+    "campos": {
+      "nome": "Nombre",
+      "empresa": "Empresa",
+      "email": "Correo electrónico",
+      "cidade": "¿Dónde quieres aparecer?",
+      "formato": "Formato de interés",
+      "periodo": "Período de la campaña",
+      "objetivo": "Objetivo de la campaña"
+    },
+    "placeholders": {
+      "nome": "Tu nombre",
+      "empresa": "Nombre de la empresa",
+      "cidade": "Selecciona la plaza",
+      "formato": "Selecciona el formato",
+      "periodo": "Selecciona la duración",
+      "objetivo": "Ej.: divulgar un lanzamiento, generar flujo en la tienda, reforzar la marca en la región…"
+    },
+    "opcoes": {
+      "biSemana": "2 semanas (bisemana)",
+      "umMes": "1 mes",
+      "tresMeses": "3 meses",
+      "seisMeses": "6 meses o más",
+      "outraPraca": "Otra plaza",
+      "naoSei": "Todavía no sé"
+    },
+    "opcional": "(opcional)",
+    "enviando": "Enviando…",
+    "enviar": "Enviar briefing"
+  },
+  "DiagnosticoQuiz": {
+    "degrauLabel": "Peldaño {n} · {nome}",
+    "respondidas": "<b>{n}</b> de {total} respondidas",
+    "instrucao": "Arrastra o haz clic en la barra y da una nota de <b>0 a 10</b> en cada pregunta. Toma menos de un minuto; responde con sinceridad, porque el resultado solo sirve si es honesto.",
+    "parcial": "Parcial",
+    "comece": "Empieza por la primera pregunta. Tu peldaño aparece cuando las {total} estén respondidas.",
+    "faltam": "{n, plural, one {Falta # respuesta} other {Faltan # respuestas}} para que aparezca tu peldaño.",
+    "tudoRespondido": "Todo respondido: mira en qué peldaño está tu marca.",
+    "verResultado": "Ver mi resultado",
+    "resultadoFinal": "Resultado final",
+    "pontoFragil": "Tu punto más frágil hoy es",
+    "falarEspecialista": "Hablar con un especialista →",
+    "fechoTituloA": "Subir de peldaño es",
+    "fechoTituloB": "una decisión de medios.",
+    "fechoTexto": "La presencia no se construye con una campaña. Se construye **apareciendo donde tu público pasa todos los días, todo el año**. Es lo que Outdoormídia hace desde hace 67 años en Curitiba, la Región Metropolitana, el litoral de Paraná, Joinville, Itajaí y Balneário Camboriú.",
+    "simulacao": "¿Quieres ver cómo quedaría tu marca en un panel antes de conversar? Arma la simulación en",
+    "suaMarcaNoOoh": "Tu marca en OOH",
+    "emailPergunta": "¿Quieres recibir este diagnóstico por correo?",
+    "emailPlaceholder": "Tu mejor correo",
+    "emailInvalido": "Revisa el correo que escribiste.",
+    "emailErro": "No fue posible registrarlo ahora. Inténtalo de nuevo.",
+    "emailPronto": "Listo, recibimos tu correo.",
+    "enviando": "Enviando…",
+    "enviar": "Enviar",
+    "refazer": "Rehacer el diagnóstico"
+  },
+  "AnunciantePage": {
+    "breadcrumb": "Área del anunciante",
+    "eyebrow": "Autoservicio · {n} herramientas",
+    "tituloA": "Área del",
+    "tituloB": "anunciante.",
+    "lead": "Todo lo que se puede resolver sin hablar con un vendedor está aquí. Cuando busques al equipo comercial, ya sabrás qué pedir.",
+    "ferramentas": "Las herramientas",
+    "cards": {
+      "diagnostico": {
+        "eyebrow": "Herramienta · 10 preguntas",
+        "title": "Diagnóstico de presencia",
+        "text": "¿Tu marca es la primera que recuerdan, o solo la reconocen cuando alguien dice el nombre? En apenas 1 minuto, entiende cómo el mercado ve tu marca hoy.",
+        "cta": "Hacer el diagnóstico"
+      },
+      "suaMarca": {
+        "eyebrow": "Herramienta · Vista previa",
+        "title": "Tu marca en OOH",
+        "text": "Elige la plataforma y el panel, sube tu logo en PNG y mira tu marca aplicada en el panel real. Descarga la imagen y envíasela a quien decide.",
+        "cta": "Ver mi marca en el panel"
+      },
+      "praticas": {
+        "eyebrow": "Contenido · {n} prácticas",
+        "title": "Mejores prácticas",
+        "text": "Contenidos e ideas para sacarle más a tu campaña: cómo elegir la plaza correcta, qué funciona en cada formato y las prácticas que hacen que una marca sea recordada en la publicidad exterior.",
+        "cta": "Ver las prácticas"
+      },
+      "faq": {
+        "eyebrow": "Dudas · {n} preguntas",
+        "title": "FAQ",
+        "text": "Precio, plazo de exhibición, quién hace el arte, exclusividad del punto y cómo saber si la campaña salió al aire. Las preguntas que más recibe el equipo comercial, respondidas antes de la conversación.",
+        "cta": "Resolver dudas"
+      }
+    },
+    "prefereDireto": "¿Prefieres resolverlo directamente con nosotros?",
+    "faleEspecialista": "Habla con un especialista por WhatsApp."
+  },
+  "FaqPage": {
+    "breadcrumbPai": "Área del anunciante",
+    "breadcrumb": "FAQ",
+    "eyebrow": "Área del anunciante · Dudas",
+    "tituloA": "Preguntas",
+    "tituloB": "frecuentes.",
+    "lead": "Lo que más escucha nuestro equipo, respondido antes de que necesites preguntar. Si falta alguna, el WhatsApp está al final de la página."
+  },
+  "MelhoresPraticasPage": {
+    "breadcrumbPai": "Área del anunciante",
+    "breadcrumb": "Mejores prácticas",
+    "eyebrow": "Área del anunciante · {n} prácticas",
+    "tituloA": "Mejores",
+    "tituloB": "prácticas.",
+    "lead": "Ocho decisiones que separan la campaña que funciona de la campaña que solo aparece. Ninguna depende de un presupuesto grande; todas dependen de elegir antes de comprar.",
+    "asPraticas": "Las ocho prácticas",
+    "paraOndeIr": "Adónde ir después"
+  },
+  "DiagnosticoPage": {
+    "breadcrumbPai": "Área del anunciante",
+    "breadcrumb": "Diagnóstico de presencia",
+    "eyebrow": "Diagnóstico",
+    "eyebrowForte": "10 preguntas",
+    "tituloA": "Diagnóstico de",
+    "tituloB": "presencia de",
+    "tituloC": "marca.",
+    "lead": "Toda marca ocupa un espacio en la cabeza del cliente. Responde en apenas un minuto y descubre en qué peldaño está la tuya hoy.",
+    "heroAlt": "La teoría de la Escalera de la Presencia: una persona subiendo cinco peldaños de concreto, llamados existencia, descubrimiento, reconocimiento, preferencia y referencia, hasta una valla iluminada de Outdoormídia en la cima.",
+    "escadaTitulo": "Ser referencia no es suerte. Nadie llega a la cima de una vez.",
+    "escadaTexto1": "En Brasil, la publicidad exterior alcanza al 89% de la población y es el segundo medio más consumido del país. El espacio existe, y ya está ocupado por alguien. La pregunta nunca fue si tu marca puede ser vista, sino cuántas veces ya fue vista por la misma persona, porque es la repetición la que convierte a quien vio en quien recuerda.",
+    "escadaTexto2": "Toda empresa ocupa un peldaño en esta escala, y cada peldaño cambia la forma en que el cliente decide. Antes de responder, mira el camino completo.",
+    "fonte": "Fuente: Kantar Ibope Media, Target Group Index, 2024."
+  },
+  "Blog": {
+    "artigo": "Artículo",
+    "minLeitura": "{n} min de lectura",
+    "por": "Por {autor}",
+    "lerArtigo": "Leer artículo"
+  },
+  "BlogPage": {
+    "breadcrumb": "Blog",
+    "eyebrow": "Contenido Out of Home",
+    "h1": "Blog.",
+    "lead": "Tres lecturas de la misma calle: lo que ya pasó en ella, en los casos; lo que necesitas saber antes de ocuparla, en los artículos; y quién decide dónde aparece la marca, en el podcast.",
+    "emDestaque": "Destacado",
+    "porOndeComecar": "Por dónde empezar",
+    "cases": {
+      "tag": "Prueba",
+      "titulo": "Casos",
+      "texto": "Campañas que ya ocuparon la calle: marca, plaza y resultado. Filtra por segmento y mira lo que entrega el Out of Home.",
+      "cta": "Ver casos"
+    },
+    "artigos": {
+      "tag": "Aprender",
+      "titulo": "Artículos",
+      "texto": "Métricas, formatos, elección de plaza y lo que cambia entre una valla y un panel digital. Para decidir antes de contratar.",
+      "cta": "Ver artículos"
+    },
+    "podcast": {
+      "tag": "Escuchar",
+      "titulo": "Podcast",
+      "texto": "Conversaciones con quienes deciden dónde aparece una marca.",
+      "cta": "Ver episodios"
+    },
+    "vazio": "Todavía no hay contenido publicado. Vuelve pronto."
+  },
+  "ArtigosPage": {
+    "breadcrumbPai": "Blog",
+    "breadcrumb": "Artículos",
+    "eyebrow": "Blog",
+    "eyebrowForte": "Contenido Out of Home",
+    "h1": "Artículos.",
+    "lead": "Ideas, datos y estrategias de publicidad exterior para poner tu marca en las calles de Paraná y Santa Catarina.",
+    "ultimos": "Últimos artículos",
+    "vazio": "Todavía no hay artículos publicados. Vuelve pronto."
+  },
+  "PostPage": {
+    "naoEncontrado": "Post no encontrado | Outdoormídia",
+    "breadcrumbBlog": "Blog",
+    "breadcrumbArtigos": "Artículos",
+    "todosArtigos": "← Todos los artículos",
+    "escritoPor": "Escrito por",
+    "compartilhar": "Compartir",
+    "ctaTitulo": "¿Quieres darle <b>visibilidad</b> a tu marca?",
+    "pedirProposta": "Pedir una propuesta",
+    "verMaisArtigos": "Ver más artículos"
+  },
+  "PodcastPage": {
+    "breadcrumbPai": "Blog",
+    "breadcrumb": "Podcast",
+    "eyebrow": "Blog",
+    "h1": "Podcast.",
+    "episodios": "Episodios",
+    "ouvir": "Escuchar episodio",
+    "emProducao": "Grabación en producción",
+    "aviso": "Los episodios aparecerán aquí en cuanto se graben, y también en las plataformas de audio."
+  },
+  "CasesPage": {
+    "breadcrumb": "Casos",
+    "eyebrow": "Resultados · Out of Home",
+    "h1": "Casos.",
+    "lead": "Campañas reales en las calles de Paraná y Santa Catarina, desde el lanzamiento que ocupó Curitiba hasta el circuito segmentado que habló con el público correcto. Filtra por segmento y mira lo que entrega el Out of Home.",
+    "todos": "Todos los casos"
+  },
+  "ObrigadoPage": {
+    "breadcrumb": "Gracias",
+    "proximosPassos": "Próximos pasos",
+    "enquantoIsso": "Mientras tanto",
+    "ver": "Ver"
+  },
+  "PrivacidadePage": {
+    "breadcrumb": "Política de privacidad",
+    "eyebrow": "Jurídico",
+    "eyebrowForte": "LGPD",
+    "h1": "Política de privacidad.",
+    "lead": "Qué datos pedimos, por qué los pedimos, con quién los compartimos y por cuánto tiempo los guardamos. En lenguaje claro, sin letra pequeña.",
+    "direitos": "Consultar tus derechos en la LGPD"
+  },
+  "TermosPage": {
+    "breadcrumb": "Términos de uso",
+    "eyebrow": "Jurídico",
+    "eyebrowForte": "Términos",
+    "h1": "Términos de uso.",
+    "lead": "Qué puedes hacer con el contenido de este sitio, qué significan nuestros números y hasta dónde llega la responsabilidad de cada parte."
+  },
+  "RegioesPage": {
+    "breadcrumbPai": "Soluciones",
+    "breadcrumb": "Regiones / Cobertura",
+    "eyebrow": "Cobertura",
+    "eyebrowForte": "+530 millones de impactos por mes",
+    "h1": "Regiones.",
+    "lead": "Del Batel al litoral, de las carreteras a las playas de Santa Catarina. Mira abajo en qué regiones opera Outdoormídia y qué plataformas existen en cada una."
+  },
+  "TrabalheConoscoPage": {
+    "breadcrumb": "Trabaje con nosotros",
+    "eyebrow": "Carreras",
+    "h1": "Trabaja con nosotros.",
+    "lead": "Hace 67 años que ponemos marcas en las calles de Paraná y Santa Catarina. Si quieres trabajar con medios que toda la ciudad ve, tu lugar puede estar aquí.",
+    "capaAlt": "Vista aérea de la sede de Outdoormídia, en Curitiba: los galpones con placas solares y la fachada con la marca"
+  },
+  "DiferenciaisPage": {
+    "breadcrumbPai": "Soluciones",
+    "breadcrumb": "Diferenciales",
+    "eyebrow": "Soluciones · {n} diferenciales",
+    "h1": "Diferenciales.",
+    "lead": "Publicidad exterior vende todo el mundo. Lo que cambia es la exclusividad del punto, la medición del público y quién responde cuando la campaña sale al aire.",
+    "osDiferenciais": "Los diferenciales",
+    "aProva": "La prueba",
+    "provaLead": "Ninguno de los números de arriba depende de la confianza: todos se miden y pueden verificarse con nuestro equipo.",
+    "prova": [
+      "Impactos por mes",
+      "Pantallas digitales",
+      "Cámaras en vivo",
+      "Circuitos MUB"
+    ]
+  },
+  "DiferencialPage": {
+    "naoEncontrado": "Diferencial no encontrado | Outdoormídia",
+    "breadcrumbSolucoes": "Soluciones",
+    "breadcrumbDiferenciais": "Diferenciales",
+    "eyebrow": "Diferencial · Soluciones",
+    "verNaPratica": "Ver en la práctica",
+    "oQueE": "Qué es",
+    "conferirPrivacidade": "Consultar la política de privacidad",
+    "aProva": "La prueba",
+    "aplicacaoPratica": "Aplicación práctica",
+    "miniCaseAviso": "Números del minicaso por confirmar con el equipo comercial antes de publicar.",
+    "comparacao": "Maneras correctas de Face Única",
+    "outrosDiferenciais": "Otros diferenciales",
+    "verTodos": "Ver todos →"
+  },
+  "IconicosPage": {
+    "breadcrumbPai": "Plataformas",
+    "breadcrumb": "Proyectos Icónicos",
+    "eyebrow": "Íconos · Mobiliario de autor",
+    "h1": "Icónicos.",
+    "lead": "Hay direcciones que la ciudad ya reconoce. Los Proyectos Icónicos ocupan esos puntos con estructuras diseñadas una a una, sin molde de catálogo. Es el producto que Outdoormídia proyecta, no el que replica.",
+    "cta": "Quiero evaluar un Icónico",
+    "cardTexto": "La diferencia con las 8 plataformas del catálogo es el punto de partida: aquí la estructura nace de la dirección. Cada proyecto pasa por briefing, estudio de viabilidad y diseño antes de existir en la calle.",
+    "cardFluxo": "Briefing → viabilidad → estructura",
+    "numeros": [
+      {
+        "n": "4",
+        "label": "Íconos de autor"
+      },
+      {
+        "n": "3",
+        "label": "Líneas exclusivas"
+      },
+      {
+        "n": "hasta 1 M",
+        "label": "Impactos/mes por esquina digital"
+      },
+      {
+        "n": "800 mil",
+        "label": "Impactos/mes en el Distrito de Medios"
+      }
+    ]
+  },
+  "IconicoPage": {
+    "naoEncontrado": "Proyecto no encontrado | Outdoormídia",
+    "breadcrumbPlataformas": "Plataformas",
+    "breadcrumbIconicos": "Proyectos Icónicos",
+    "verNaRua": "Ver lo que está en la calle",
+    "oQueE": "Qué es",
+    "naRuaHoje": "En la calle hoy",
+    "dimensoesAviso": "Las dimensiones finales salen del estudio de viabilidad de cada dirección; confírmalas con el equipo comercial antes de cerrar el arte.",
+    "cases": "Casos",
+    "verTodosCases": "Ver todos los casos",
+    "osOutrosDois": "Los otros dos",
+    "verTodos": "Ver todos →"
   }
 }

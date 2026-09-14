@@ -2,10 +2,12 @@
 
 import { useRef, useState } from 'react'
 import { Volume2, VolumeX } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 // Vídeo institucional nasce mudo (autoplay exige isso); o botão libera o áudio
 // sob gesto do usuário, sobreposto ao canto do próprio vídeo.
 export default function VideoComSom({ src, className = '' }) {
+  const t = useTranslations('Widgets')
   const videoRef = useRef(null)
   const [comSom, setComSom] = useState(false)
 
@@ -31,7 +33,7 @@ export default function VideoComSom({ src, className = '' }) {
       <button
         type="button"
         onClick={alternar}
-        aria-label={comSom ? 'Desativar som do vídeo' : 'Ativar som do vídeo'}
+        aria-label={comSom ? t('desativarSom') : t('ativarSom')}
         aria-pressed={comSom}
         className="radial-reveal absolute right-4 bottom-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-ink/60 text-white [--rr-fill:var(--color-orange)]"
       >

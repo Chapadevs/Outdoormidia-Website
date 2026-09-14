@@ -1,6 +1,7 @@
 import { Link } from '@/i18n/navigation'
-import { LOCALES, TAG_OG } from '@/i18n/routing'
-import { alternatesDe } from '@/lib/seo'
+import { metaDe } from '@/lib/seo'
+import Schema from '@/components/widgets/Schema'
+import { article } from '@/lib/schema'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -9,34 +10,38 @@ import TagBadge from '@/components/blog/TagBadge'
 import ShareButtons from '@/components/blog/ShareButtons'
 import { getPublishedPostBySlug } from '@/lib/blog/posts'
 import { getTagsBySlugs } from '@/lib/tags/tags'
-import { readingTimeLabel } from '@/lib/blog/readingTime'
-import { DATA_LONGA } from '@/lib/format'
+import { readingTimeMinutes } from '@/lib/blog/readingTime'
+import { dataLonga } from '@/lib/format'
 import { SITE_URL } from '@/lib/constants'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 export const revalidate = 300
 
 export async function generateMetadata({ params }) {
   const { locale, slug } = await params
   const post = await getPublishedPostBySlug(slug)
-  if (!post) return { title: 'Post não encontrado | Outdoormídia' }
+  if (!post) {
+    const t = await getTranslations({ locale, namespace: 'PostPage' })
+    return { title: t('naoEncontrado') }
+  }
 
-  return {
-    title: `${post.title} | Outdoormídia`,
-    description: post.excerpt,
-    alternates: alternatesDe(`/blog/${post.slug}`, locale),
+  // O post existe só em português: o canonical de /en, /es e /zh aponta para
+  // a URL sem prefixo e não sai hreflang. Ver `somentePt` em lib/seo.js.
+  return metaDe({
+    path: `/blog/${post.slug}`,
+    locale,
+    titulo: `${post.title} | Outdoormídia`,
+    descricao: post.excerpt,
+    imagem: post.coverImage ? { url: post.coverImage, alt: post.coverAlt || post.title } : undefined,
+    somentePt: true,
     openGraph: {
       title: post.title,
-      description: post.excerpt,
-      locale: TAG_OG[locale],
-      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => TAG_OG[l]),
       type: 'article',
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
       authors: post.author ? [post.author] : undefined,
-      images: post.coverImage ? [{ url: post.coverImage, alt: post.coverAlt || post.title }] : [],
     },
-  }
+  })
 }
 
 export default async function BlogPostPage({ params }) {
@@ -46,6 +51,8 @@ export default async function BlogPostPage({ params }) {
   const post = await getPublishedPostBySlug(slug)
   if (!post) notFound()
 
+  const t = await getTranslations({ locale, namespace: 'PostPage' })
+  const tb = await getTranslations({ locale, namespace: 'Blog' })
   const tags = await getTagsBySlugs('blog', post.tags)
 
   const shareUrl = `${SITE_URL}/blog/${post.slug}`
@@ -53,22 +60,24 @@ export default async function BlogPostPage({ params }) {
   return (
     <>
       <main>
+        <Schema data={article(post, tags)} />
         <Breadcrumb
           items={[
-            { label: 'Blog', href: '/blog' },
-            { label: 'Artigos', href: '/blog/artigos' },
+            { label: t('breadcrumbBlog'), href: '/blog' },
+            { label: t('breadcrumbArtigos'), href: '/blog/artigos' },
             { label: post.title },
           ]}
         />
         <article className="pb-[110px] pt-[54px] max-mob:pb-[72px] max-mob:pt-9">
           <div className="wrap max-w-[860px]">
             <Link href="/blog/artigos" className="eyebrow hover:text-orange">
-              ← Todos os artigos
+              {t('todosArtigos')}
             </Link>
             {post.publishedAt && (
               <p className="eyebrow mt-9">
-                <b>{DATA_LONGA.format(new Date(post.publishedAt))}</b>
-                {post.author && <> · Por {post.author}</>} · {readingTimeLabel(post.content)}
+                <b>{dataLonga(locale).format(new Date(post.publishedAt))}</b>
+                {post.author && <> · {tb('por', { autor: post.author })}</>} ·{' '}
+                {tb('minLeitura', { n: readingTimeMinutes(post.content) })}
               </p>
             )}
             <h1 className="display mt-4 text-[clamp(36px,5.6vw,72px)] text-ink">
@@ -108,29 +117,29 @@ export default async function BlogPostPage({ params }) {
             <div className="mt-14 flex flex-wrap items-end gap-6 border-t border-line pt-8">
               {post.author && (
                 <div>
-                  <p className="eyebrow">Escrito por</p>
+                  <p className="eyebrow">{t('escritoPor')}</p>
                   <p className="mt-1.5 text-lg font-extrabold text-ink">{post.author}</p>
                 </div>
               )}
               <div className="ml-auto max-mob:ml-0 max-mob:w-full">
-                <p className="eyebrow mb-2.5">Compartilhar</p>
+                <p className="eyebrow mb-2.5">{t('compartilhar')}</p>
                 <ShareButtons url={shareUrl} title={post.title} />
               </div>
             </div>
 
             <div className="mt-14 border-t border-line pt-9">
               <p className="eyebrow">
-                Quer trazer <b>visibilidade</b> à sua marca?
+                {t.rich('ctaTitulo', { b: (c) => <b>{c}</b> })}
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <Link href="/proposta" className="btn btn-fill">
-                  Pedir uma proposta
+                  {t('pedirProposta')}
                 </Link>
                 <Link
                   href="/blog/artigos"
                   className="btn border-ink text-ink [--rr-fill:transparent] hover:border-orange hover:text-orange"
                 >
-                  Ver mais artigos
+                  {t('verMaisArtigos')}
                 </Link>
               </div>
             </div>

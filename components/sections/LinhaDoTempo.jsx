@@ -163,7 +163,7 @@ export default function LinhaDoTempo({ marcos }) {
   return (
     <section className="py-[110px] max-mob:py-[72px]" id="linha-do-tempo">
       <div className="wrap">
-        <SectionHeading className="reveal mb-[34px]" title="Linha do tempo" />
+        <SectionHeading className="reveal mb-[34px]" title={t('titulo')} />
         <p className="reveal max-w-[54ch] text-lg text-ink-soft">
           {t('lead')}
         </p>
