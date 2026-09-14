@@ -180,32 +180,36 @@ export default async function PlatformPage({ params }) {
                 className="reveal mb-[34px]"
               />
               <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-1">
-                {platform.blocos.map((bloco) => (
-                  <article
-                    className="ticks reveal flex flex-col rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
-                    key={bloco.title}
-                  >
-                    {bloco.image && (
-                      <CoverMedia
-                        alt={bloco.imageAlt}
-                        className="mb-5"
-                        label={bloco.title}
-                        ratio="16/9"
-                        sizes="(max-width: 980px) 100vw, 33vw"
-                        src={bloco.image}
-                      />
-                    )}
-                    <h3 className="m-0 text-[19px] font-extrabold leading-tight text-ink">
-                      {bloco.title}
-                    </h3>
-                    <p className="m-0 mt-4 text-[15.5px] leading-relaxed text-ink-soft">
-                      {bloco.text}
-                    </p>
-                    {bloco.apoio && (
-                      <p className="eyebrow mt-auto pt-6 text-ink-soft">{bloco.apoio}</p>
-                    )}
-                  </article>
-                ))}
+                {platform.blocos.map((bloco, i) => {
+                  const Icone = platform.blocosIcones?.[i]
+                  return (
+                    <article
+                      className="ticks reveal flex flex-col rounded-[16px] border border-line bg-white p-7 max-mob:p-6"
+                      key={bloco.title}
+                    >
+                      {Icone && <Icone className="mb-4 text-orange" size={24} />}
+                      {bloco.image && (
+                        <CoverMedia
+                          alt={bloco.imageAlt}
+                          className="mb-5"
+                          label={bloco.title}
+                          ratio="16/9"
+                          sizes="(max-width: 980px) 100vw, 33vw"
+                          src={bloco.image}
+                        />
+                      )}
+                      <h3 className="m-0 text-[19px] font-extrabold leading-tight text-ink">
+                        {bloco.title}
+                      </h3>
+                      <p className="m-0 mt-4 text-[15.5px] leading-relaxed text-ink-soft">
+                        {bloco.text}
+                      </p>
+                      {bloco.apoio && (
+                        <p className="eyebrow mt-auto pt-6 text-ink-soft">{bloco.apoio}</p>
+                      )}
+                    </article>
+                  )
+                })}
               </div>
             </div>
           </section>

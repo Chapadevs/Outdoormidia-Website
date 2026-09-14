@@ -29,11 +29,7 @@ export default function CasesExplorer({ cases, tags, groups }) {
         />
       )}
       {filtered.length === 0 ? (
-        <p className="text-lg text-ink-soft">
-          {cases.length === 0
-            ? 'Nenhum case publicado ainda. Volte em breve.'
-            : 'Nenhum case com essa combinação de filtros.'}
-        </p>
+        <p className="text-lg text-ink-soft">Nenhum case com essa combinação de filtros.</p>
       ) : (
         <div className="grid grid-cols-3 gap-[18px] max-tab:grid-cols-2 max-mob:grid-cols-1 max-mob:gap-4">
           {filtered.map((caseItem) => (

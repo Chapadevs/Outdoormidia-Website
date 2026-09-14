@@ -34,7 +34,7 @@ function comDestaque(texto) {
 const COMPROMISSO = [
   { href: '/sobre/ambiental', image: '/media/sobre-nos/ambiental.webp' },
   { href: '/sobre/social', image: '/media/sobre-nos/social.webp' },
-  { href: '/sobre/governanca', image: '/media/governanca/halisson-pontarola.jpg', foco: 'topo' },
+  { href: '/sobre/governanca', image: '/media/governanca/halisson-pontarola.jpg', foco: 'rosto' },
 ]
 
 

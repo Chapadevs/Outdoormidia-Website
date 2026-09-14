@@ -6,6 +6,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHeading from '@/components/ui/SectionHeading'
 import CoverMedia from '@/components/ui/CoverMedia'
 import NovaCampanha from '@/components/sections/NovaCampanha'
+import { comDestaque } from '@/lib/texto'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 
@@ -46,7 +47,7 @@ export default async function SocialPage({ params }) {
             <h1 className="display reveal mt-[18px] text-[clamp(44px,7vw,92px)] text-ink">
               {t('h1')}
             </h1>
-            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{t('lead')}</p>
+            <p className="reveal mt-6 max-w-[62ch] text-lg text-ink-soft">{comDestaque(t('lead'))}</p>
           </div>
         </section>
 
@@ -55,10 +56,10 @@ export default async function SocialPage({ params }) {
             <SectionHeading title="Corajosamente Éticos" className="reveal mb-[34px]" />
             <div className="reveal grid grid-cols-[minmax(0,1fr)_minmax(200px,240px)] items-center gap-[54px] max-tab:grid-cols-1 max-tab:gap-[34px]">
               <div>
-                <p className="mb-6 text-lg text-ink-soft">{t('eticosP1')}</p>
+                <p className="mb-6 text-lg text-ink-soft">{comDestaque(t('eticosP1'))}</p>
                 <div className="flex flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
-                  <p className="m-0">{t('eticosP2')}</p>
-                  <p className="m-0">{t('eticosP3')}</p>
+                  <p className="m-0">{comDestaque(t('eticosP2'))}</p>
+                  <p className="m-0">{comDestaque(t('eticosP3'))}</p>
                 </div>
                 <a
                   className="group mt-7 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-orange"
@@ -105,9 +106,9 @@ export default async function SocialPage({ params }) {
                   {t('lojaH2')}
                 </h2>
                 <div className="reveal mt-6 flex flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
-                  <p className="m-0">{t('lojaP1')}</p>
-                  <p className="m-0">{t('lojaP2')}</p>
-                  <p className="m-0">{t('lojaP3')}</p>
+                  <p className="m-0">{comDestaque(t('lojaP1'))}</p>
+                  <p className="m-0">{comDestaque(t('lojaP2'))}</p>
+                  <p className="m-0">{comDestaque(t('lojaP3'))}</p>
                 </div>
               </div>
             </div>
@@ -126,8 +127,8 @@ export default async function SocialPage({ params }) {
                   Caminho do Renascer
                 </h3>
                 <div className="mt-4 flex max-w-[62ch] flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-                  <p className="m-0">{t('renascerP1')}</p>
-                  <p className="m-0">{t('renascerP2')}</p>
+                  <p className="m-0">{comDestaque(t('renascerP1'))}</p>
+                  <p className="m-0">{comDestaque(t('renascerP2'))}</p>
                 </div>
               </div>
             </div>
@@ -146,15 +147,15 @@ export default async function SocialPage({ params }) {
                     {t('tampinhasTitulo')}
                   </h3>
                   <div className="mt-4 flex max-w-[62ch] flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-                    <p className="m-0">{t('tampinhasP1')}</p>
-                    <p className="m-0">{t('tampinhasP2')}</p>
+                    <p className="m-0">{comDestaque(t('tampinhasP1'))}</p>
+                    <p className="m-0">{comDestaque(t('tampinhasP2'))}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <p className="reveal mt-[34px] max-w-[70ch] text-[15.5px] leading-relaxed text-ink-soft">
-              {t('lojaNota')}
+              {comDestaque(t('lojaNota'))}
             </p>
 
             <Link
@@ -176,9 +177,9 @@ export default async function SocialPage({ params }) {
           <div className="wrap">
             <SectionHeading title={t('anunciandoTitulo')} className="reveal mb-[34px]" />
             <div className="reveal flex max-w-[70ch] flex-col gap-4 text-[16.5px] leading-relaxed text-ink-soft">
-              <p className="m-0">{t('anunciandoP1')}</p>
-              <p className="m-0">{t('anunciandoP2')}</p>
-              <p className="m-0">{t('anunciandoP3')}</p>
+              <p className="m-0">{comDestaque(t('anunciandoP1'))}</p>
+              <p className="m-0">{comDestaque(t('anunciandoP2'))}</p>
+              <p className="m-0">{comDestaque(t('anunciandoP3'))}</p>
             </div>
             <div className="ticks reveal mt-[34px] flex max-w-[380px] flex-col gap-2 rounded-[16px] border border-line bg-white p-8">
               <span className="eyebrow text-orange">{t('anunciandoStatLabel')}</span>
@@ -194,7 +195,7 @@ export default async function SocialPage({ params }) {
           <div className="wrap">
             <SectionHeading title={t('redeTitulo')} className="reveal mb-[34px]" />
             <p className="reveal mb-[54px] max-w-[54ch] text-lg text-ink-soft">
-              {t('redeLead')}
+              {comDestaque(t('redeLead'))}
             </p>
             <article className="ticks reveal grid grid-cols-2 items-start gap-[34px] rounded-[16px] border border-line bg-white p-10 max-tab:grid-cols-1 max-mob:p-7">
               <CoverMedia
@@ -210,10 +211,10 @@ export default async function SocialPage({ params }) {
                   {t('regLabel')}
                 </h2>
                 <div className="mt-5 flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-                  <p className="m-0">{t('regP1')}</p>
-                  <p className="m-0">{t('regP2')}</p>
-                  <p className="m-0">{t('regP3')}</p>
-                  <p className="m-0">{t('regP4')}</p>
+                  <p className="m-0">{comDestaque(t('regP1'))}</p>
+                  <p className="m-0">{comDestaque(t('regP2'))}</p>
+                  <p className="m-0">{comDestaque(t('regP3'))}</p>
+                  <p className="m-0">{comDestaque(t('regP4'))}</p>
                 </div>
               </div>
             </article>

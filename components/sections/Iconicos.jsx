@@ -100,7 +100,6 @@ export default function Iconicos({ linkTitulo = true }) {
               )}
             </h2>
             <span className="h-px flex-1 bg-white/40"></span>
-            <span className="eyebrow shrink-0 text-white/85 max-tab:hidden">Fora do catálogo</span>
             <div className="flex shrink-0 gap-2.5 max-tab:hidden">
               <button
                 aria-label="Ativo anterior"
@@ -179,7 +178,7 @@ export default function Iconicos({ linkTitulo = true }) {
                 {ICONICOS.map((linha, li) =>
                   linha.ativos.map((ativo, ci) => (
                     <div hidden={li !== active || ci !== card} key={ativo.slug}>
-                      <AtivoCard ativo={ativo} />
+                      <AtivoCard ativo={ativo} reveal={false} />
                     </div>
                   )),
                 )}
